@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { awards } from "@/lib/content";
 import Icon, { Laurel } from "../ui/Icon";
 import Reveal, { LineReveal } from "../ui/Reveal";
@@ -33,8 +34,8 @@ export default function Awards() {
           const on = hover === i;
           return (
             <Reveal key={a.title} delay={i < 5 ? i * 80 : 0} variant="fade">
-              <a
-                href="#"
+              <Link
+                href="/awards"
                 onMouseEnter={() => setHover(i)}
                 className="relative flex flex-col gap-2 border-b border-line py-6 transition-all duration-300 md:flex-row md:items-center md:justify-between md:py-8"
               >
@@ -60,7 +61,7 @@ export default function Awards() {
                 >
                   <Badge color={a.color} title={a.title} />
                 </div>
-              </a>
+              </Link>
             </Reveal>
           );
         })}

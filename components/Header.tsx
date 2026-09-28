@@ -1,19 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { brand, nav } from "@/lib/content";
 import Button from "./ui/Button";
 import Icon from "./ui/Icon";
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <a href="#" className={`flex items-center gap-2 ${className}`} aria-label={brand.name}>
+    <Link href="/" className={`flex items-center gap-2 ${className}`} aria-label={brand.name}>
       <svg viewBox="0 0 32 32" className="size-8" aria-hidden>
         <rect width="32" height="32" rx="8" fill="#1a69fd" />
         <path d="M11 8v16M22 8l-9 8 9 8" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
       <span className="text-[1.35rem] font-bold tracking-tight text-white">{brand.name.toLowerCase()}</span>
-    </a>
+    </Link>
   );
 }
 
@@ -24,6 +26,15 @@ export default function Header() {
   const [open, setOpen] = useState<string | null>(null);
   const [mobile, setMobile] = useState(false);
   const [mobileGroup, setMobileGroup] = useState<string | null>(null);
+  const pathname = usePathname();
+
+  // Close menus whenever the route changes.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setOpen(null);
+    setMobile(false);
+  }
 
   // Solid after the first scroll; slides away on scroll down, returns on scroll up.
   useEffect(() => {
@@ -53,7 +64,7 @@ export default function Header() {
       {strip && (
         <div className="relative flex h-10 items-center justify-center gap-3 bg-primary px-10 text-center text-xs font-medium text-white sm:text-sm">
           <span className="hidden rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase sm:inline">New</span>
-          <span className="truncate">The Enterprise AI Playbook 2026 is live. Get your free copy</span>
+          <Link href="/blog/agentic-ai-enterprise-playbook" className="truncate hover:underline">The Enterprise AI Playbook 2026 is live. Get your free copy</Link>
           <Icon name="arrow" className="hidden size-4 sm:block" />
           <button onClick={() => setStrip(false)} aria-label="Dismiss" className="absolute right-3 opacity-80 hover:opacity-100">
             <Icon name="close" className="size-4" />
@@ -67,8 +78,9 @@ export default function Header() {
 
           <nav className="hidden h-full items-center lg:flex">
             {nav.map((item) => (
-              <button
+              <Link
                 key={item.label}
+                href={item.href}
                 onMouseEnter={() => setOpen(item.label)}
                 onFocus={() => setOpen(item.label)}
                 className={`relative flex h-full items-center gap-1.5 px-4 text-[15px] font-medium transition-colors ${open === item.label ? "text-white" : "text-white/80 hover:text-white"}`}
@@ -76,7 +88,7 @@ export default function Header() {
                 {item.label}
                 <Icon name="chevron" className={`size-3.5 transition-transform duration-300 ${open === item.label ? "rotate-180" : ""}`} />
                 <span className={`absolute inset-x-4 bottom-0 h-0.5 origin-left bg-primary transition-transform duration-300 ${open === item.label ? "scale-x-100" : "scale-x-0"}`} />
-              </button>
+              </Link>
             ))}
           </nav>
 
@@ -101,11 +113,11 @@ export default function Header() {
                     <p className="mb-5 border-b border-line pb-3 text-xs font-semibold tracking-[.2em] text-muted uppercase">{g.title}</p>
                     <ul className="space-y-3.5">
                       {g.links.map((l) => (
-                        <li key={l}>
-                          <a href="#" className="group flex items-center justify-between text-[15px] text-white/85 transition-colors hover:text-white">
-                            <span className="u-link">{l}</span>
+                        <li key={l.href}>
+                          <Link href={l.href} className="group flex items-center justify-between text-[15px] text-white/85 transition-colors hover:text-white">
+                            <span className="u-link">{l.label}</span>
                             <Icon name="upRight" className="size-4 -translate-x-2 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
-                          </a>
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -118,13 +130,13 @@ export default function Header() {
                 <p className="mt-3 text-sm leading-relaxed text-white/75">
                   {active.featured?.text ?? "Talk to our experts and find the right path for your business."}
                 </p>
-                <Button variant="white" className="mt-8 !px-6 !py-3">Learn More</Button>
+                <Button variant="white" href={active.featured?.href ?? active.href} className="mt-8 !px-6 !py-3">Learn More</Button>
               </div>
             </div>
             <div className="border-t border-line bg-card">
               <div className="wrap flex items-center justify-between gap-6 py-5">
                 <span className="text-sm text-white/75">Didn&apos;t find what you&apos;re looking for? Tell us your needs and we&apos;ll tailor a solution for you.</span>
-                <a href="#contact" className="shrink-0 text-sm font-semibold text-white underline-offset-4 hover:underline">Schedule Free Consultation →</a>
+                <Link href="/contact" className="shrink-0 text-sm font-semibold text-white underline-offset-4 hover:underline">Schedule Free Consultation →</Link>
               </div>
             </div>
           </div>
@@ -153,9 +165,9 @@ export default function Header() {
                       <div key={g.title} className="mb-4">
                         <p className="mb-2 text-xs font-semibold tracking-[.2em] text-muted uppercase">{g.title}</p>
                         {g.links.map((l) => (
-                          <a key={l} href="#" onClick={() => setMobile(false)} className="block py-1.5 text-white/80">
-                            {l}
-                          </a>
+                          <Link key={l.href} href={l.href} className="block py-1.5 text-white/80">
+                            {l.label}
+                          </Link>
                         ))}
                       </div>
                     ))}
@@ -165,7 +177,7 @@ export default function Header() {
             ))}
           </div>
           <div className="wrap py-5">
-            <Button className="w-full justify-center" onClick={() => { setMobile(false); location.hash = "contact"; }}>
+            <Button className="w-full justify-center" href="/contact">
               Contact Us
             </Button>
           </div>

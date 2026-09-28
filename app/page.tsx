@@ -1,6 +1,3 @@
-import BackToTop from "@/components/BackToTop";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import AiSection from "@/components/sections/AiSection";
 import Awards from "@/components/sections/Awards";
 import CaseStudies from "@/components/sections/CaseStudies";
@@ -19,25 +16,20 @@ import Testimonials from "@/components/sections/Testimonials";
 export default function Home() {
   return (
     <>
-      <Header />
-      <main>
-        <Hero />
-        <Services />
-        <CaseStudies />
-        <GrowthCta />
-        <Stats />
-        <AiSection />
-        <Testimonials />
-        <Clients />
-        <Awards />
-        <Compliance />
-        <StrategyCta />
-        <Partners />
-        <Industries />
-        <Faq />
-      </main>
-      <Footer />
-      <BackToTop />
+      <Hero />
+      <Services />
+      <CaseStudies />
+      <GrowthCta />
+      <Stats />
+      <AiSection />
+      <Testimonials />
+      <Clients />
+      <Awards />
+      <Compliance />
+      <StrategyCta />
+      <Partners />
+      <Industries />
+      <Faq />
     </>
   );
 }

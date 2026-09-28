@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { brand, footer } from "@/lib/content";
 import { Logo } from "./Header";
 import Icon from "./ui/Icon";
@@ -13,7 +14,7 @@ const socials = [
   { label: "YouTube", short: "▶" },
 ];
 
-function Office({ o }: { o: (typeof footer.offices)[number] }) {
+export function Office({ o }: { o: (typeof footer.offices)[number] }) {
   const [i, setI] = useState(0);
   const n = o.addresses.length;
   return (
@@ -90,8 +91,8 @@ export default function Footer() {
               <p className="mb-5 text-xs font-semibold tracking-[.2em] text-muted uppercase">{c.title}</p>
               <ul className="space-y-3">
                 {c.links.map((l) => (
-                  <li key={l}>
-                    <a href="#" className="u-link fs-para font-medium text-white/85 hover:text-white">{l}</a>
+                  <li key={l.href}>
+                    <Link href={l.href} className="u-link fs-para font-medium text-white/85 hover:text-white">{l.label}</Link>
                   </li>
                 ))}
               </ul>
@@ -114,8 +115,8 @@ export default function Footer() {
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-line pt-8 text-sm text-muted md:flex-row">
           <p>© {new Date().getFullYear()} {brand.name}. All rights reserved.</p>
           <div className="flex flex-wrap justify-center gap-6">
-            {["Privacy Policy", "Terms & Conditions", "Cookie Policy", "Sitemap"].map((l) => (
-              <a key={l} href="#" className="hover:text-white">{l}</a>
+            {[["Privacy Policy", "/privacy-policy"], ["Terms & Conditions", "/terms"], ["Cookie Policy", "/cookie-policy"], ["Sitemap", "/sitemap"]].map(([l, h]) => (
+              <Link key={h} href={h} className="hover:text-white">{l}</Link>
             ))}
           </div>
         </div>

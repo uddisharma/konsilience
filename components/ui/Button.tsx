@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 
 const Arrow = () => (
   <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -9,7 +10,7 @@ const Arrow = () => (
 // Pill button whose label rolls up and whose arrow flies out on hover.
 export default function Button({
   children,
-  href = "#contact",
+  href = "/contact",
   variant = "primary",
   icon = true,
   className = "",
@@ -41,6 +42,12 @@ export default function Button({
       <button type="button" onClick={onClick} className={`swap-btn ${variant} ${className}`}>
         {inner}
       </button>
+    );
+  if (href.startsWith("/"))
+    return (
+      <Link href={href} className={`swap-btn ${variant} ${className}`}>
+        {inner}
+      </Link>
     );
   return (
     <a href={href} className={`swap-btn ${variant} ${className}`}>

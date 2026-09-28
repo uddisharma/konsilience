@@ -8,50 +8,98 @@ export const brand = {
   email: "hello@konsilience.com",
 };
 
-export type NavGroup = { title: string; links: string[] };
-export type NavItem = { label: string; groups: NavGroup[]; featured?: { title: string; text: string } };
+import { aiSolutions, industryList, projects, serviceCategories, serviceList } from "./catalog";
+
+export type NavLink = { label: string; href: string };
+export type NavGroup = { title: string; links: NavLink[] };
+export type NavItem = { label: string; href: string; groups: NavGroup[]; featured?: { title: string; text: string; href: string } };
 
 export const nav: NavItem[] = [
   {
-    label: "KonAI",
+    label: brand.ai,
+    href: "/konai",
     groups: [
-      { title: "AI Solutions", links: ["Agentic AI", "Generative AI", "AI Copilots", "Computer Vision", "Conversational AI"] },
-      { title: "AI Knowledge Hub", links: ["AI Readiness Guide", "LLM Evaluation Playbook", "RAG Architecture Patterns", "AI Governance Checklist"] },
+      { title: "AI Solutions", links: aiSolutions.map((a) => ({ label: a.name, href: `/konai/${a.slug}` })) },
+      {
+        title: "AI Knowledge Hub",
+        links: [
+          { label: "RAG Architecture Patterns", href: "/blog/rag-architecture-patterns" },
+          { label: "Agentic AI Playbook", href: "/blog/agentic-ai-enterprise-playbook" },
+          { label: "AI Guides", href: "/resources/guides" },
+          { label: "AI Webinars", href: "/resources/webinars" },
+        ],
+      },
     ],
-    featured: { title: "Explore KonAI", text: "Production-grade AI systems built around your data and workflows." },
+    featured: { title: `Explore ${brand.ai}`, text: "Production-grade AI systems built around your data and workflows.", href: "/konai" },
   },
   {
     label: "About",
+    href: "/about",
     groups: [
-      { title: "Company", links: ["About Us", "Core Team", "How We Work", "Careers", "CSR"] },
-      { title: "Trust", links: ["Client Portfolio", "Testimonials", "Awards", "Compliances", "Security", "FAQ"] },
+      {
+        title: "Company",
+        links: [
+          { label: "About Us", href: "/about" },
+          { label: "Leadership Team", href: "/about/team" },
+          { label: "How We Work", href: "/how-we-work" },
+          { label: "Careers", href: "/careers" },
+          { label: "CSR", href: "/csr" },
+        ],
+      },
+      {
+        title: "Trust",
+        links: [
+          { label: "Client Portfolio", href: "/portfolio" },
+          { label: "Testimonials", href: "/testimonials" },
+          { label: "Awards", href: "/awards" },
+          { label: "Compliance", href: "/compliance" },
+          { label: "Security", href: "/security" },
+          { label: "FAQ", href: "/faq" },
+        ],
+      },
     ],
+    featured: { title: "Meet Konsilience", text: "The story, people and principles behind our work.", href: "/about" },
   },
   {
     label: "Services",
-    groups: [
-      { title: "Product Engineering", links: ["UI/UX Design", "Mobile App Development", "Software Development", "QA & Testing", "DevOps", "Product Management"] },
-      { title: "Digital Transformation", links: ["Legacy Modernization", "Cloud Services", "Blockchain", "Cybersecurity", "IoT", "AR / VR"] },
-      { title: "Consulting", links: ["IT Consulting", "Software Consulting", "FinTech Consulting", "Mobile Consulting"] },
-      { title: "Data & Managed IT", links: ["Big Data", "Data Analytics", "Business Intelligence", "Managed IT", "Dedicated Teams"] },
-    ],
+    href: "/services",
+    groups: serviceCategories.map((c) => ({
+      title: c.name,
+      links: serviceList.filter((s) => s.category === c.name).map((s) => ({ label: s.name, href: `/services/${s.slug}` })),
+    })),
+    featured: { title: "All Services", text: "End-to-end capabilities from strategy to scale.", href: "/services" },
   },
   {
     label: "Industries",
-    groups: [
-      { title: "Core", links: ["Healthcare", "Finance", "Retail & Ecommerce", "Logistics", "Education", "Real Estate"] },
-      { title: "Emerging", links: ["eMobility", "Wearables", "Energy", "Agriculture", "Gaming", "OTT & Media"] },
-      { title: "Services", links: ["On-Demand", "Food Delivery", "Travel", "Aviation", "Telecom", "Startups"] },
-    ],
+    href: "/industries",
+    groups: [0, 1, 2].map((g) => ({
+      title: ["Core", "Emerging", "Services"][g],
+      links: industryList.slice(g * 6, g * 6 + 6).map((i) => ({ label: i.name, href: `/industries/${i.slug}` })),
+    })),
+    featured: { title: "35+ industries", text: "Deep domain expertise in regulated, data-intensive sectors.", href: "/industries" },
   },
   {
     label: "Portfolio",
-    groups: [{ title: "Featured Work", links: ["Freshly Market", "Voyagr Air", "Kinetik", "LedgerLine", "Medora Health", "Urbanest"] }],
-    featured: { title: "3000+ products shipped", text: "See how we help brands launch, scale and modernize." },
+    href: "/portfolio",
+    groups: [{ title: "Featured Work", links: projects.slice(0, 6).map((p) => ({ label: p.client, href: `/portfolio/${p.slug}` })) }],
+    featured: { title: "3000+ products shipped", text: "See how we help brands launch, scale and modernize.", href: "/portfolio" },
   },
   {
     label: "Resources",
-    groups: [{ title: "Learn", links: ["Blog", "Guides", "Whitepapers", "Press Releases", "Webinars"] }],
+    href: "/blog",
+    groups: [
+      {
+        title: "Learn",
+        links: [
+          { label: "Blog", href: "/blog" },
+          { label: "Guides", href: "/resources/guides" },
+          { label: "Whitepapers", href: "/resources/whitepapers" },
+          { label: "Press Releases", href: "/resources/press-releases" },
+          { label: "Webinars", href: "/resources/webinars" },
+        ],
+      },
+    ],
+    featured: { title: "Insights", text: "Ideas and playbooks from our engineers, designers and AI team.", href: "/blog" },
   },
 ];
 
@@ -66,33 +114,14 @@ export const heroAwards = [
 ];
 
 export const services = [
-  { icon: "compass", title: ["Strategic Technology", "Consulting"], text: "Define the right technology strategy to solve complex business challenges.", links: ["IT Consulting", "Software Consulting", "Mobile App Consulting", "AI Consulting"] },
-  { icon: "layers", title: ["Digital Product Development", "& Engineering"], text: "Design, build and scale digital products engineered for performance.", links: ["Mobile App Development", "Web Development", "Custom Software", "UI/UX Design"] },
-  { icon: "spark", title: ["AI, Data &", "Analytics"], text: "Turn data into intelligent systems that drive real business decisions.", links: ["Generative AI", "Machine Learning", "Data Engineering", "Business Intelligence"] },
-  { icon: "shield", title: ["Cloud Operations", "& Cybersecurity"], text: "Run resilient, secure cloud infrastructure that scales with your growth.", links: ["Cloud Migration", "DevSecOps", "Managed Cloud", "Cybersecurity"] },
+  { icon: "compass", title: ["Strategic Technology", "Consulting"], text: "Define the right technology strategy to solve complex business challenges.", links: [["IT Consulting", "/services/it-consulting"], ["Software Consulting", "/services/software-consulting"], ["Mobile App Consulting", "/services/mobile-app-consulting"], ["FinTech Consulting", "/services/fintech-consulting"]] },
+  { icon: "layers", title: ["Digital Product Development", "& Engineering"], text: "Design, build and scale digital products engineered for performance.", links: [["Mobile App Development", "/services/mobile-app-development"], ["Web Development", "/services/web-development"], ["Custom Software", "/services/custom-software-development"], ["UI/UX Design", "/services/ui-ux-design"]] },
+  { icon: "spark", title: ["AI, Data &", "Analytics"], text: "Turn data into intelligent systems that drive real business decisions.", links: [["Generative AI", "/konai/generative-ai"], ["Agentic AI", "/konai/agentic-ai"], ["Big Data", "/services/big-data"], ["Business Intelligence", "/services/business-intelligence"]] },
+  { icon: "shield", title: ["Cloud Operations", "& Cybersecurity"], text: "Run resilient, secure cloud infrastructure that scales with your growth.", links: [["Cloud Services", "/services/cloud-services"], ["DevOps", "/services/devops"], ["Managed IT", "/services/managed-it-services"], ["Cybersecurity", "/services/cybersecurity"]] },
 ];
 
-export type CaseStudy = {
-  client: string;
-  text: string;
-  metrics: [string, string][];
-  bg: string;
-  dark: boolean; // true = light text on dark card
-  accent: string;
-};
-
-export const caseStudies: CaseStudy[] = [
-  { client: "Freshly Market", text: "Engineered a predictive logistics core for a 400-store grocery chain.", metrics: [["100%", "increase in dispatch automation"], ["4X", "improvement in ops standards"]], bg: "#fefbdc", dark: false, accent: "#f59e0b" },
-  { client: "Voyagr Air", text: "Re-engineered the digital passenger journey with an AI-native mobile ecosystem.", metrics: [["31%", "higher booking conversion"], ["4.8★", "app store rating"]], bg: "#cbfffd", dark: false, accent: "#0891b2" },
-  { client: "Shiftly", text: "Modernized legacy data infrastructure to drive real-time analytics.", metrics: [["90%", "faster report load time"], ["1,000+", "locations with unified data"]], bg: "#191918", dark: true, accent: "#1a69fd" },
-  { client: "Brewline", text: "Built a unified commerce ecosystem across 7 markets to reclaim direct orders.", metrics: [["50%", "of orders through the native app"], ["22%", "increase in conversion"]], bg: "#f40027", dark: true, accent: "#ffd372" },
-  { client: "Orbitly", text: "Architected a multi-agent GenAI system that works as an autonomous consultant.", metrics: [["70%", "tickets resolved by agents"], ["3X", "faster research cycles"]], bg: "#ffffff", dark: false, accent: "#7c3aed" },
-  { client: "Kinetik", text: "Connected workouts across wearables for a global sportswear brand.", metrics: [["2M+", "downloads"], ["500K", "new users acquired"]], bg: "#e9ff9b", dark: false, accent: "#16a34a" },
-  { client: "Medora Health", text: "HIPAA-ready telehealth platform serving patients across 12 states.", metrics: [["500K", "consultations"], ["30%", "lower infra cost"]], bg: "#341ad4", dark: true, accent: "#cbfffd" },
-  { client: "Urbanest", text: "Real-time inventory visibility across flagship home-furnishing stores.", metrics: [["7+", "stores enabled"], ["3X", "faster stock checks"]], bg: "#fff09b", dark: false, accent: "#1a69fd" },
-  { client: "LedgerLine", text: "Digital-first banking with instant onboarding for SMEs.", metrics: [["90%", "faster onboarding"], ["$2B", "processed yearly"]], bg: "#f0e7ff", dark: false, accent: "#7c3aed" },
-  { client: "Harbor Hotels", text: "Blockchain-secured reservation management for a luxury hotel group.", metrics: [["40%", "fewer booking disputes"], ["24/7", "automated check-in"]], bg: "#ffd372", dark: false, accent: "#b45309" },
-];
+// Portfolio cards on the home page come from the project catalog.
+export const caseStudies = projects;
 
 export const stats = [
   { value: 12, suffix: "+", label: ["Years of", "Experience"], text: "as an enterprise technology consulting and digital engineering services firm", hue: 220 },
@@ -148,25 +177,7 @@ export const partners = [
   "HubSpot", "Docker", "Kubernetes", "Salesforce", "Stripe", "MongoDB", "Twilio", "Shopify", "Figma",
 ];
 
-export const industries = [
-  { name: "Healthcare", icon: "heart", hue: 190 },
-  { name: "Finance", icon: "chart", hue: 220 },
-  { name: "Banking", icon: "bank", hue: 240 },
-  { name: "Restaurant", icon: "food", hue: 10 },
-  { name: "eCommerce", icon: "cart", hue: 280 },
-  { name: "EV", icon: "bolt", hue: 140 },
-  { name: "SaaS", icon: "cloud", hue: 200 },
-  { name: "Travel", icon: "plane", hue: 30 },
-  { name: "Entertainment", icon: "play", hue: 320 },
-  { name: "On-Demand", icon: "rocket", hue: 260 },
-  { name: "Logistics", icon: "truck", hue: 45 },
-  { name: "Education", icon: "book", hue: 170 },
-  { name: "Real Estate", icon: "home", hue: 25 },
-  { name: "Aviation", icon: "plane", hue: 210 },
-  { name: "Agriculture", icon: "leaf", hue: 100 },
-  { name: "Insurance", icon: "shield", hue: 230 },
-  { name: "Manufacturing", icon: "grid", hue: 0 },
-];
+export const industries = industryList;
 
 export const faqs = [
   { q: "What types of digital product engineering services do you offer?", a: "We cover the full lifecycle: strategy and discovery, UX/UI design, mobile and web engineering, AI/ML, cloud, QA and long-term product support." },
@@ -181,10 +192,10 @@ export const faqs = [
 
 export const footer = {
   columns: [
-    { title: "Services", links: ["Mobile App Development", "Web Development", "AI Development", "Cloud Services", "UI/UX Design", "QA & Testing"] },
-    { title: "Industries", links: ["Healthcare", "FinTech", "Retail", "Logistics", "Education", "Real Estate"] },
-    { title: "Company", links: ["About Us", "Careers", "Portfolio", "Testimonials", "Awards", "Contact"] },
-    { title: "Resources", links: ["Blog", "Guides", "Whitepapers", "Press Releases", "FAQ"] },
+    { title: "Services", links: [{ label: "Mobile App Development", href: "/services/mobile-app-development" }, { label: "Web Development", href: "/services/web-development" }, { label: "Generative AI", href: "/konai/generative-ai" }, { label: "Cloud Services", href: "/services/cloud-services" }, { label: "UI/UX Design", href: "/services/ui-ux-design" }, { label: "QA & Testing", href: "/services/qa-and-testing" }] },
+    { title: "Industries", links: [{ label: "Healthcare", href: "/industries/healthcare" }, { label: "Finance", href: "/industries/finance" }, { label: "Retail & Ecommerce", href: "/industries/retail-and-ecommerce" }, { label: "Logistics", href: "/industries/logistics" }, { label: "Education", href: "/industries/education" }, { label: "Real Estate", href: "/industries/real-estate" }] },
+    { title: "Company", links: [{ label: "About Us", href: "/about" }, { label: "Careers", href: "/careers" }, { label: "Portfolio", href: "/portfolio" }, { label: "Testimonials", href: "/testimonials" }, { label: "Awards", href: "/awards" }, { label: "Contact", href: "/contact" }] },
+    { title: "Resources", links: [{ label: "Blog", href: "/blog" }, { label: "Guides", href: "/resources/guides" }, { label: "Whitepapers", href: "/resources/whitepapers" }, { label: "Press Releases", href: "/resources/press-releases" }, { label: "FAQ", href: "/faq" }] },
   ],
   offices: [
     { country: "United States", flag: "US", addresses: ["120 Hudson St,\nManhattan,\nNY 10013, USA", "1900 Market St, Suite 600,\nSan Francisco,\nCA 94103"] },

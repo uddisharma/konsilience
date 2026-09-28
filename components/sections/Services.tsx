@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { services } from "@/lib/content";
 import Button from "../ui/Button";
 import Icon from "../ui/Icon";
@@ -25,13 +26,13 @@ function Card({ s }: { s: (typeof services)[number] }) {
           <p className="fs-base font-medium text-black/65">{s.text}</p>
         </div>
         <nav className="flex flex-col">
-          {s.links.map((l) => (
-            <a key={l} href="#" className="group/l flex items-center justify-between border-t border-black/10 py-3 text-[15px] font-medium transition-colors hover:text-primary">
+          {s.links.map(([l, href]) => (
+            <Link key={href} href={href} className="group/l flex items-center justify-between border-t border-black/10 py-3 text-[15px] font-medium transition-colors hover:text-primary">
               {l}
               <span className="grid size-7 place-items-center rounded-full border border-black/15 transition-all duration-300 group-hover/l:rotate-45 group-hover/l:border-primary group-hover/l:bg-primary group-hover/l:text-white">
                 <Icon name="upRight" className="size-3.5" strokeWidth={2} />
               </span>
-            </a>
+            </Link>
           ))}
         </nav>
       </div>
@@ -72,7 +73,7 @@ export default function Services() {
       </div>
 
       <div className="pb-20 text-center lg:pb-28">
-        <Button>View All Services</Button>
+        <Button href="/services">View All Services</Button>
       </div>
     </section>
   );

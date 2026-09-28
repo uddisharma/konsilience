@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { caseStudies } from "@/lib/content";
 import { PhoneArt } from "../ui/Artwork";
 import Icon from "../ui/Icon";
@@ -115,9 +116,9 @@ export default function CaseStudies() {
           {caseStudies.map((c, i) => {
             const txt = c.dark ? "text-white" : "text-[#111]";
             return (
-              <a
+              <Link
                 key={c.client}
-                href="#"
+                href={`/portfolio/${c.slug}`}
                 draggable={false}
                 className={`group relative flex h-[560px] w-[82vw] shrink-0 flex-col justify-between overflow-hidden rounded-3xl p-7 sm:w-[400px] xl:h-[600px] ${txt} ${i % 2 ? "lg:mt-16" : ""}`}
                 style={{ backgroundColor: c.bg }}
@@ -146,7 +147,7 @@ export default function CaseStudies() {
                 <span className={`absolute top-7 right-7 grid size-10 place-items-center rounded-full transition-all duration-500 group-hover:rotate-45 ${c.dark ? "bg-white text-black" : "bg-black text-white"}`}>
                   <Icon name="upRight" className="size-4" strokeWidth={2} />
                 </span>
-              </a>
+              </Link>
             );
           })}
         </div>

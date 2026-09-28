@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { compliance } from "@/lib/content";
 import Icon from "../ui/Icon";
 import Reveal, { LineReveal } from "../ui/Reveal";
@@ -36,7 +37,7 @@ export default function Compliance() {
               <LineReveal className="h2" lines={["Building With", "Compliance and", "Risk in Mind"]} />
               <Reveal delay={250}>
                 <p className="fs-base max-w-md font-medium text-white/85">
-                  We integrate <a href="#" className="underline underline-offset-4">compliance</a> into every layer of our engineering process,
+                  We integrate <Link href="/compliance" className="underline underline-offset-4">compliance</Link> into every layer of our engineering process,
                   so your enterprise can navigate complex regulations while moving fast.
                 </p>
               </Reveal>

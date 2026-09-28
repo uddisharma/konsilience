@@ -70,7 +70,7 @@ export default function AiSection() {
           </div>
           <div className="flex flex-col gap-4 sm:flex-row">
             <Button variant="white">Book Your AI Advisory Session</Button>
-            <Button variant="outline">Discover {brand.ai}</Button>
+            <Button variant="outline" href="/konai">Discover {brand.ai}</Button>
           </div>
         </div>
       </div>
