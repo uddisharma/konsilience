@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { services } from "@/lib/content";
 import Button from "../ui/Button";
 import Icon from "../ui/Icon";
@@ -42,14 +43,32 @@ function Card({ s }: { s: (typeof services)[number] }) {
 
 export default function Services() {
   const [ref, p] = useScrollProgress<HTMLDivElement>();
+  const pinned = useRef<HTMLDivElement>(null);
+  const [box, setBox] = useState({ h: 0, top: 0 });
+
+  // Size the pinned block to its content. If it is taller than the screen, stick it
+  // bottom-aligned (negative top) so the cards and button stay fully visible while pinned.
+  useEffect(() => {
+    const el = pinned.current;
+    if (!el) return;
+    const measure = () => setBox({ h: el.offsetHeight, top: Math.min(0, window.innerHeight - el.offsetHeight) });
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
 
   return (
     <section id="services" className="bg-cream text-[#111]">
       {/* Desktop: pinned section; cards rise into place one after another as you scroll */}
-      <div ref={ref} className="relative hidden lg:block lg:h-[260vh]">
-        <div className="sticky top-0 flex h-screen flex-col overflow-hidden pt-24">
+      <div ref={ref} className="relative hidden lg:block" style={{ height: box.h ? `calc(${box.h}px + 160vh)` : "260vh" }}>
+        <div ref={pinned} className="sticky flex min-h-screen flex-col pt-24 pb-16" style={{ top: box.top }}>
           <LineReveal className="h2 wrap-sm text-center" lines={["Technology Services Built", "Around Your Business Goals"]} />
-          <div className="wrap mt-10 grid flex-1 grid-cols-4 pb-10 [&>div+div>div]:border-l-0">
+          <div className="wrap mt-10 grid flex-1 grid-cols-4 overflow-hidden [&>div+div>div]:border-l-0">
             {services.map((s, i) => {
               const t = ease(clamp((p - i * 0.14) / 0.42));
               return (
@@ -58,6 +77,9 @@ export default function Services() {
                 </div>
               );
             })}
+          </div>
+          <div className="mt-12 text-center" style={{ opacity: clamp((p - 0.55) / 0.2) }}>
+            <Button href="/services">View All Services</Button>
           </div>
         </div>
       </div>
@@ -70,10 +92,9 @@ export default function Services() {
             <Card key={s.title[0]} s={s} />
           ))}
         </div>
-      </div>
-
-      <div className="pb-20 text-center lg:pb-28">
-        <Button href="/services">View All Services</Button>
+        <div className="mt-12 text-center">
+          <Button href="/services">View All Services</Button>
+        </div>
       </div>
     </section>
   );
