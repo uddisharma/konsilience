@@ -19,7 +19,7 @@ export default function ProjectCard({ p }: { p: Project }) {
           </span>
           <div>
             <p className="subtitle leading-tight">{p.client}</p>
-            <p className={`text-xs font-semibold ${muted}`}>{p.industry}</p>
+            <p className={`text-xs font-semibold ${muted}`}>{p.style}-style · {p.industry}</p>
           </div>
         </div>
         <p className={`fs-para font-medium ${muted}`}>{p.text}</p>

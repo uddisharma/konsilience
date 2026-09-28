@@ -19,15 +19,15 @@ export default function GrowthCta() {
             <div className="flex flex-col gap-12 p-8 sm:p-12 lg:p-16">
               <div className="flex flex-col gap-6">
                 <p className="h3 font-normal">
-                  You&apos;ve seen how we helped
+                  From <b className="font-extrabold">helpdesks</b> and <b className="font-extrabold">legal suites</b>
                   <br />
-                  <b className="font-extrabold">Freshly, Shiftly</b>, and <b className="font-extrabold">Kinetik</b>
+                  to <b className="font-extrabold">field-service</b> and <b className="font-extrabold">telehealth</b> apps,
                   <br />
-                  reclaim their market edge.
+                  we&apos;ve built it before.
                 </p>
                 <p className="fs-base max-w-xl font-medium text-white/85">
-                  From 90% faster reporting to <b className="font-extrabold text-white">4x operational improvements</b>, our engineering goes
-                  beyond code to deliver measurable ROI.
+                  <b className="font-extrabold text-white">15+ SaaS platforms</b> across support, legal, HR, real estate, healthcare and construction, engineered to
+                  scale from day one.
                 </p>
               </div>
               <div>

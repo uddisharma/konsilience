@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Chips, CtaBand, NumberedRows, SectionHead, Split } from "@/components/page/Blocks";
+import { CardGrid, Chips, CtaBand, SectionHead, Split } from "@/components/page/Blocks";
 import PageHero from "@/components/page/PageHero";
 import ProjectCard from "@/components/page/ProjectCard";
 import { PhoneArt } from "@/components/ui/Artwork";
@@ -9,7 +9,6 @@ import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
 import { projects, serviceList } from "@/lib/catalog";
-import { testimonials } from "@/lib/content";
 
 const find = (slug: string) => projects.find((p) => p.slug === slug);
 
@@ -19,7 +18,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/portfolio/[slug]">): Promise<Metadata> {
   const p = find((await params).slug);
-  return p ? { title: `${p.client} Case Study`, description: p.text } : {};
+  return p ? { title: `${p.client} | Case Study`, description: p.text } : {};
 }
 
 export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[slug]">) {
@@ -28,22 +27,28 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
 
   const idx = projects.indexOf(p);
   const next = projects[(idx + 1) % projects.length];
-  const more = projects.filter((x) => x.slug !== p.slug).slice(0, 3);
-  const quote = testimonials.find((t) => t.role.includes(p.client)) ?? testimonials[idx % testimonials.length];
+  const more = [...projects.filter((x) => x.slug !== p.slug && x.industry === p.industry), ...projects.filter((x) => x.slug !== p.slug && x.industry !== p.industry)].slice(0, 3);
   const service = serviceList.find((s) => s.name === p.service);
 
   return (
     <>
       <PageHero
         crumbs={[{ label: "Portfolio", href: "/portfolio" }, { label: p.client }]}
-        eyebrow={`${p.industry} · ${p.year}`}
+        eyebrow={p.category}
         title={[p.client]}
         text={p.text}
-        actions={<Button>Build Something Similar</Button>}
-        stats={[...p.metrics, [p.year, "Year delivered"], [String(p.tech.length), "Core technologies"]]}
+        actions={
+          <>
+            <Button>Build a Platform Like This</Button>
+            <span className="flex items-center gap-2 self-center rounded-full border border-line bg-card px-4 py-2.5 text-sm text-white/80">
+              <Icon name="layers" className="size-4 text-primary" /> {p.style}-style platform
+            </span>
+          </>
+        }
+        stats={[...p.metrics, [String(p.platforms.length), "Platforms"], [String(p.tech.length), "Core technologies"]]}
       />
 
-      {/* Showcase banner in the client's brand colour */}
+      {/* Showcase banner */}
       <section className="bg-black">
         <Reveal variant="zoom" className="wrap">
           <div className="relative flex h-[420px] items-end justify-center overflow-hidden rounded-3xl sm:h-[560px]" style={{ backgroundColor: p.bg }}>
@@ -54,6 +59,30 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
       </section>
 
       <section className="sec bg-black">
+        <Split title={["About the", "Platform"]}>
+          <div className="flex flex-col gap-8">
+            <Reveal>
+              <p className="subtitle !font-normal text-white/85">{p.about}</p>
+            </Reveal>
+            <Reveal delay={100}>
+              <dl className="grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-3">
+                {[
+                  ["Industry", p.industry],
+                  ["Category", p.category],
+                  ["Comparable to", p.style],
+                ].map(([k, v]) => (
+                  <div key={k} className="bg-card p-6">
+                    <dt className="text-xs font-semibold tracking-[.2em] text-muted uppercase">{k}</dt>
+                    <dd className="subtitle mt-2">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
+          </div>
+        </Split>
+      </section>
+
+      <section className="sec bg-black pt-0">
         <Split title={["The Challenge"]}>
           <Reveal>
             <p className="subtitle !font-normal text-white/85">{p.challenge}</p>
@@ -61,20 +90,23 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
         </Split>
       </section>
 
-      <section className="sec bg-black pt-0">
-        <Split title={["Our Solution"]} text="What we designed, built and shipped.">
-          <NumberedRows items={p.solution.map((s) => ({ title: s, text: "Delivered in agile sprints with weekly demos, automated testing and continuous deployment." }))} />
-        </Split>
+      <section className="sec bg-black">
+        <div className="wrap">
+          <SectionHead title={["What We Built"]} text="The core capabilities we designed, engineered and shipped." />
+          <div className="mt-14">
+            <CardGrid items={p.solution.map((s) => ({ title: s }))} />
+          </div>
+        </div>
       </section>
 
       <section className="sec bg-black">
         <div className="wrap">
-          <SectionHead title={["The Results"]} />
+          <SectionHead title={["The Outcome"]} />
           <div className="mt-14 grid gap-3 md:grid-cols-2">
             {p.metrics.map(([v, l], i) => (
               <Reveal key={l} delay={i * 120}>
                 <div className="rounded-3xl border border-line bg-card p-10">
-                  <p className="font-condensed text-7xl font-medium text-primary sm:text-8xl">{v}</p>
+                  <p className="font-condensed text-6xl font-medium text-primary sm:text-7xl">{v}</p>
                   <p className="subtitle mt-4">{l}</p>
                 </div>
               </Reveal>
@@ -84,32 +116,27 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
       </section>
 
       <section className="sec bg-black">
-        <div className="wrap">
-          <SectionHead title={["Tech Stack"]} />
-          <div className="mt-12">
-            <Chips items={p.tech} />
-          </div>
-          {service && (
-            <Link href={`/services/${service.slug}`} className="u-link mt-10 inline-flex items-center gap-2 font-semibold text-primary">
+        <div className="wrap grid gap-14 lg:grid-cols-3">
+          {[
+            ["Tech Stack", p.tech],
+            ["Integrations & Tools", p.tools],
+            ["Platforms", p.platforms],
+          ].map(([title, items]) => (
+            <div key={title as string}>
+              <Reveal>
+                <h2 className="h3 mb-8 font-semibold">{title as string}</h2>
+              </Reveal>
+              <Chips items={items as string[]} />
+            </div>
+          ))}
+        </div>
+        {service && (
+          <div className="wrap mt-12">
+            <Link href={`/services/${service.slug}`} className="u-link inline-flex items-center gap-2 font-semibold text-primary">
               Explore our {service.name} services <Icon name="arrow" className="size-4" />
             </Link>
-          )}
-        </div>
-      </section>
-
-      <section className="sec bg-black">
-        <Reveal className="wrap-sm">
-          <figure className="rounded-3xl bg-white p-8 text-[#111] sm:p-14">
-            <svg viewBox="0 0 48 36" className="h-9 w-12 text-primary" fill="currentColor" aria-hidden>
-              <path d="M0 36V20C0 8.4 6 1.7 18 0l2 5.4C13.5 7 10.4 10.6 10 16h9v20H0Zm28 0V20C28 8.4 34 1.7 46 0l2 5.4C41.5 7 38.4 10.6 38 16h9v20H28Z" />
-            </svg>
-            <blockquote className="h3 mt-6 font-semibold">{quote.quote}</blockquote>
-            <figcaption className="mt-8">
-              <p className="font-extrabold">{quote.name}</p>
-              <p className="text-sm font-semibold text-black/50">{quote.role}</p>
-            </figcaption>
-          </figure>
-        </Reveal>
+          </div>
+        )}
       </section>
 
       {/* Next project */}
@@ -138,7 +165,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
         </div>
       </section>
 
-      <CtaBand title="Want results like these?" text={`Let's discuss how we can do the same for your ${p.industry.toLowerCase()} business.`} />
+      <CtaBand title={`Planning a product like ${p.client}?`} text="We've built this before. Let's talk about yours." />
     </>
   );
 }

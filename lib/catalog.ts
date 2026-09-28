@@ -96,36 +96,274 @@ export const industryList: Industry[] = [
 ];
 
 /* ---------------- Case studies ---------------- */
+// Platforms Konsilience has built, each modelled on a well-known product in its category.
+// `style` names the reference product for comparison only; we do not claim to have built that brand.
+// Features, typical stacks and integrations are researched from public sources (Sep 2026).
+// Results are qualitative on purpose: add your real project numbers to `metrics` when available.
 
 export type Project = {
   slug: string;
-  client: string;
+  client: string; // display name of the platform
+  style: string; // reference product, e.g. "Freshdesk"
+  category: string;
   industry: string;
-  service: string;
-  year: string;
-  text: string;
-  metrics: [string, string][];
+  service: string; // must match a serviceList name to cross-link
+  text: string; // one-line summary
+  about: string;
+  challenge: string;
+  solution: string[];
+  metrics: [string, string][]; // qualitative outcomes: [short value, label]
+  platforms: string[];
+  tech: string[];
+  tools: string[];
   bg: string;
   dark: boolean;
   accent: string;
-  challenge: string;
-  solution: string[];
-  tech: string[];
 };
 
 const proj = (p: Omit<Project, "slug">): Project => ({ slug: slugify(p.client), ...p });
 
 export const projects: Project[] = [
-  proj({ client: "Freshly Market", industry: "Retail & Ecommerce", service: "Custom Software Development", year: "2025", text: "Engineered a predictive logistics core for a 400-store grocery chain.", metrics: [["100%", "increase in dispatch automation"], ["4X", "improvement in ops standards"]], bg: "#fefbdc", dark: false, accent: "#f59e0b", challenge: "Manual dispatching and siloed store data caused late deliveries and stock-outs across 400 stores.", solution: ["Unified order and inventory data into a real-time platform", "Built an ML model to predict demand per store", "Automated dispatch with route optimization", "Launched a driver app with live tracking"], tech: ["Next.js", "Node.js", "Python", "Kafka", "AWS", "Flutter"] }),
-  proj({ client: "Voyagr Air", industry: "Aviation", service: "Mobile App Development", year: "2025", text: "Re-engineered the digital passenger journey with an AI-native mobile ecosystem.", metrics: [["31%", "higher booking conversion"], ["4.8★", "app store rating"]], bg: "#cbfffd", dark: false, accent: "#0891b2", challenge: "A dated booking flow and fragmented apps were losing customers to OTAs.", solution: ["Redesigned booking in 3 steps", "Added an AI itinerary assistant", "Unified check-in, boarding and loyalty", "Rolled out in 6 languages"], tech: ["Swift", "Kotlin", "GraphQL", "OpenAI", "Azure", "Figma"] }),
-  proj({ client: "Shiftly", industry: "Logistics", service: "Data Analytics", year: "2024", text: "Modernized legacy data infrastructure to drive real-time analytics.", metrics: [["90%", "faster report load time"], ["1,000+", "locations with unified data"]], bg: "#191918", dark: true, accent: "#1a69fd", challenge: "Reports took minutes to load and data from 1,000+ sites never matched.", solution: ["Migrated to a lakehouse architecture", "Built governed data models with dbt", "Delivered self-service BI dashboards", "Introduced data quality monitoring"], tech: ["Databricks", "dbt", "Power BI", "Airflow", "Azure", "Python"] }),
-  proj({ client: "Brewline", industry: "Food Delivery", service: "Mobile App Development", year: "2024", text: "Built a unified commerce ecosystem across 7 markets to reclaim direct orders.", metrics: [["50%", "of orders through the native app"], ["22%", "increase in conversion"]], bg: "#f40027", dark: true, accent: "#ffd372", challenge: "Aggregators took most orders and margins across 900 outlets.", solution: ["Launched native ordering apps", "Built a loyalty and offers engine", "Integrated 900 POS systems", "Added kitchen display and delivery tracking"], tech: ["React Native", "Node.js", "PostgreSQL", "Redis", "AWS", "Stripe"] }),
-  proj({ client: "Orbitly", industry: "Startups", service: "Agentic AI", year: "2025", text: "Architected a multi-agent GenAI system that works as an autonomous consultant.", metrics: [["70%", "tickets resolved by agents"], ["3X", "faster research cycles"]], bg: "#ffffff", dark: false, accent: "#7c3aed", challenge: "Analysts spent days on research that customers needed in minutes.", solution: ["Designed a planner-executor agent architecture", "Grounded agents in company data via RAG", "Added human-in-the-loop review", "Built evaluation and monitoring"], tech: ["Python", "LangGraph", "Claude", "pgvector", "FastAPI", "GCP"] }),
-  proj({ client: "Kinetik", industry: "Wearables", service: "Mobile App Development", year: "2023", text: "Connected workouts across wearables for a global sportswear brand.", metrics: [["2M+", "downloads"], ["500K", "new users acquired"]], bg: "#e9ff9b", dark: false, accent: "#16a34a", challenge: "Workout data was scattered across devices and apps, hurting retention.", solution: ["Built BLE integrations for 12 devices", "Created social challenges and streaks", "Personalized training plans with ML", "Launched on iOS, Android and watchOS"], tech: ["Swift", "Kotlin", "Flutter", "Firebase", "BigQuery", "TensorFlow"] }),
-  proj({ client: "Medora Health", industry: "Healthcare", service: "Web Development", year: "2024", text: "HIPAA-ready telehealth platform serving patients across 12 states.", metrics: [["500K", "consultations"], ["30%", "lower infra cost"]], bg: "#341ad4", dark: true, accent: "#cbfffd", challenge: "A legacy portal couldn't scale or meet HIPAA audit requirements.", solution: ["Built a secure video consultation platform", "Integrated with 3 EHR systems", "Added e-prescriptions and payments", "Moved to cost-optimized cloud"], tech: ["Next.js", "WebRTC", "Node.js", "AWS", "HL7 FHIR", "Terraform"] }),
-  proj({ client: "Urbanest", industry: "Real Estate", service: "IoT Development", year: "2023", text: "Real-time inventory visibility across flagship home-furnishing stores.", metrics: [["7+", "stores enabled"], ["3X", "faster stock checks"]], bg: "#fff09b", dark: false, accent: "#1a69fd", challenge: "Staff couldn't see accurate stock, leading to lost sales.", solution: ["Deployed RFID and IoT sensors", "Built a real-time inventory service", "Created a staff mobile app", "Connected to e-commerce for click-and-collect"], tech: ["AWS IoT", "Go", "React Native", "DynamoDB", "Kafka", "Grafana"] }),
-  proj({ client: "LedgerLine", industry: "Finance", service: "FinTech Consulting", year: "2024", text: "Digital-first banking with instant onboarding for SMEs.", metrics: [["90%", "faster onboarding"], ["$2B", "processed yearly"]], bg: "#f0e7ff", dark: false, accent: "#7c3aed", challenge: "Paper-heavy onboarding took two weeks and lost applicants.", solution: ["Designed digital KYC/KYB flows", "Integrated open-banking data", "Built a modular core-banking layer", "Achieved PCI DSS compliance"], tech: ["Java", "Kotlin", "Plaid", "Kubernetes", "PostgreSQL", "Okta"] }),
-  proj({ client: "Harbor Hotels", industry: "Travel", service: "Blockchain Development", year: "2023", text: "Blockchain-secured reservation management for a luxury hotel group.", metrics: [["40%", "fewer booking disputes"], ["24/7", "automated check-in"]], bg: "#ffd372", dark: false, accent: "#b45309", challenge: "Overbooking and disputes between channels damaged guest trust.", solution: ["Built a permissioned ledger for reservations", "Smart contracts for deposits and refunds", "Mobile keys and self check-in", "Channel-manager integrations"], tech: ["Hyperledger", "Solidity", "Node.js", "React", "Azure", "Twilio"] }),
+  proj({
+    client: "Omnichannel Helpdesk",
+    style: "Freshdesk",
+    category: "Helpdesk & ticketing SaaS",
+    industry: "Customer Support",
+    service: "Custom Software Development",
+    text: "An AI-assisted helpdesk that turns email, chat, phone and social messages into one trackable ticket queue.",
+    about: "A multi-tenant customer service platform where support teams manage every conversation from one workspace, backed by automation, SLAs, a self-service portal and AI copilots for agents.",
+    challenge: "Support requests were landing in scattered inboxes, chat tools and phone lines. Tickets got lost or duplicated, agents lacked customer context from CRM and order systems, and repetitive questions consumed headcount.",
+    solution: ["Unified omnichannel ticketing across email, chat, voice, SMS and social", "AI copilot for reply suggestions, summaries and real-time translation", "Automation rules, SLA policies and skill-based routing", "Self-service knowledge base and customer portal", "Marketplace-style integrations that pull CRM and order context into tickets", "Sharded multi-tenant architecture built for very high request volumes"],
+    metrics: [["1 inbox", "for every support channel"], ["AI", "copilot and auto-triage for agents"]],
+    platforms: ["Web", "iOS", "Android"],
+    tech: ["Ruby on Rails", "Node.js", "MySQL", "Redis", "Sidekiq", "Elasticsearch", "AWS", "Nginx"],
+    tools: ["Salesforce", "Shopify", "Slack", "Stripe", "Microsoft Teams"],
+    bg: "#fefbdc", dark: false, accent: "#f59e0b",
+  }),
+  proj({
+    client: "Legal Practice Suite",
+    style: "Clio",
+    category: "Legal practice management SaaS",
+    industry: "Legal",
+    service: "Custom Software Development",
+    text: "Cloud practice management for law firms: matters, time, billing, trust accounting and client intake in one place.",
+    about: "A cloud platform that replaces on-premise legal software and spreadsheets, giving firms a single system for matters, billable time, trust accounting, payments and client communication.",
+    challenge: "Firms ran on legacy desktop tools, spreadsheets and paper, which made it hard to track matters, capture every billable hour, stay compliant with trust accounting rules and get paid on time.",
+    solution: ["Matter, contact, document and calendar management", "Time tracking, legal billing and trust accounting", "Built-in card and eCheck payments", "Client intake CRM and secure client portal", "AI assistance for drafting and summarising legal work", "Accounting and Microsoft 365 integrations"],
+    metrics: [["Cloud", "replaces on-premise practice software"], ["1 system", "for matters, time and billing"]],
+    platforms: ["Web", "iOS", "Android"],
+    tech: ["Ruby on Rails", "Hotwire", "Tailwind CSS", "MySQL", "AWS", "Kubernetes"],
+    tools: ["QuickBooks Online", "Xero", "LawPay", "Microsoft 365"],
+    bg: "#f0e7ff", dark: false, accent: "#7c3aed",
+  }),
+  proj({
+    client: "Enterprise HRMS",
+    style: "Darwinbox",
+    category: "HCM / HRMS platform",
+    industry: "HR & Workforce",
+    service: "Custom Software Development",
+    text: "A cloud HCM suite covering the full employee lifecycle, from hiring and onboarding to payroll and performance.",
+    about: "A single, mobile-first HR platform for large and distributed workforces, replacing disconnected systems for recruitment, attendance, payroll, performance and engagement.",
+    challenge: "HR ran on separate legacy systems for hiring, attendance, payroll and reviews. Employee data was duplicated, processes were manual and the employee experience on mobile was poor.",
+    solution: ["Recruitment, onboarding and core HR records", "Leave, attendance and shift management", "Payroll, travel and expense workflows", "Performance reviews, goals and recognition", "Employee helpdesk with chatbot support and a lightweight mobile app", "People analytics dashboards with AI-driven insights"],
+    metrics: [["Hire to retire", "one platform for the employee lifecycle"], ["Mobile-first", "self-service for every employee"]],
+    platforms: ["Web", "iOS", "Android"],
+    tech: ["Node.js", "Python", "PHP", "Angular", "React", "MongoDB", "AWS", "Terraform"],
+    tools: ["Microsoft Entra ID", "Slack", "Microsoft Teams"],
+    bg: "#191918", dark: true, accent: "#1a69fd",
+  }),
+  proj({
+    client: "Field Service Platform",
+    style: "Jobber",
+    category: "Field service management SaaS",
+    industry: "Field Services",
+    service: "Mobile App Development",
+    text: "An all-in-one app for home service businesses to quote, schedule, dispatch, invoice and get paid.",
+    about: "A web and mobile platform for landscaping, cleaning, plumbing and contracting businesses that covers the full job workflow from request to payment.",
+    challenge: "Small service businesses juggled paper quotes, whiteboard schedules and separate invoicing tools. Jobs were double-booked, crews lacked job details in the field and owners waited weeks to get paid.",
+    solution: ["Online requests, quotes and a client hub", "Drag-and-drop scheduling, dispatch and route planning", "Crew mobile app with job details, photos and time tracking", "Invoicing with integrated online payments", "Automated client reminders and follow-ups", "Accounting sync and an app marketplace"],
+    metrics: [["Quote to paid", "the whole job flow in one app"], ["Real-time", "dispatch to crews in the field"]],
+    platforms: ["Web", "iOS", "Android"],
+    tech: ["Ruby on Rails", "React", "React Native", "TypeScript", "GraphQL", "Kafka", "AWS"],
+    tools: ["QuickBooks Online", "Xero", "Stripe", "Mailchimp", "Zapier", "Google Calendar"],
+    bg: "#e9ff9b", dark: false, accent: "#16a34a",
+  }),
+  proj({
+    client: "Property Management Cloud",
+    style: "AppFolio",
+    category: "Property management SaaS",
+    industry: "Real Estate",
+    service: "Web Development",
+    text: "A cloud platform for property managers covering accounting, leasing, maintenance, payments and resident communication.",
+    about: "An end-to-end property management system for residential and commercial portfolios, with a resident portal and AI assistants for leasing and maintenance.",
+    challenge: "Property managers ran rent collection, accounting, leasing and maintenance across spreadsheets and disconnected tools, creating manual work, slow responses and little visibility into portfolio performance.",
+    solution: ["Property accounting and portfolio reporting", "Resident portal for rent payments and maintenance requests", "Maintenance workflows with vendor dispatch and instant payouts", "Leasing automation for lead follow-up and tour scheduling", "AI assistant for messages and everyday tasks", "Flexible rent payment options"],
+    metrics: [["End-to-end", "accounting, leasing and maintenance"], ["24/7", "resident self-service portal"]],
+    platforms: ["Web", "iOS", "Android"],
+    tech: ["Ruby on Rails", "React", "Redux", "GraphQL", "React Native", "MySQL", "RabbitMQ", "AWS"],
+    tools: ["Twilio", "SendGrid", "Datadog"],
+    bg: "#cbfffd", dark: false, accent: "#0891b2",
+  }),
+  proj({
+    client: "Shared Inbox Help Desk",
+    style: "Help Scout",
+    category: "Help desk & shared inbox",
+    industry: "Customer Support",
+    service: "Web Development",
+    text: "A help desk built around a shared inbox, knowledge base and embeddable chat widget that still feels like personal email.",
+    about: "A collaborative support tool for growing teams: shared inboxes with clear ownership, a self-service docs site and a website widget for help content and live chat.",
+    challenge: "As the company grew, support email piled up in personal and shared accounts. Nobody knew who owned which conversation, replies were duplicated or missed, and customers could not help themselves.",
+    solution: ["Shared inbox with assignment, notes and collision detection", "Self-service knowledge base", "Embeddable website widget for help articles and chat", "Native iOS and Android apps for on-the-go replies", "AI drafts and conversation summaries", "Public API and integrations"],
+    metrics: [["Clear", "ownership of every conversation"], ["Self-serve", "docs and in-app help widget"]],
+    platforms: ["Web", "iOS", "Android"],
+    tech: ["Java", "Kotlin", "Spring Boot", "JavaScript", "PHP"],
+    tools: ["Slack", "HubSpot", "Shopify", "Salesforce"],
+    bg: "#ffffff", dark: false, accent: "#1a69fd",
+  }),
+  proj({
+    client: "Browser Telehealth",
+    style: "Doxy.me",
+    category: "Telehealth platform",
+    industry: "Healthcare",
+    service: "Web Development",
+    text: "A HIPAA-compliant telemedicine platform where patients join video visits from a browser, with no download.",
+    about: "A simple, secure virtual care platform for clinicians of every size: branded virtual waiting rooms, browser-based video and add-ons for consent, payments and file sharing.",
+    challenge: "Telemedicine tools were expensive, complicated and hard for patients to join, while consumer video apps did not meet HIPAA and GDPR requirements, which kept smaller practices from offering remote care.",
+    solution: ["WebRTC video visits with no patient download", "Virtual waiting room with check-in and queue management", "Custom clinic branding and provider-to-provider transfer", "Add-ons for teleconsent, screen share, file transfer and payments", "HIPAA, GDPR and HITECH compliance built in", "Data-lean design that avoids storing patient health information"],
+    metrics: [["No app", "patients join from any browser"], ["HIPAA", "compliant by design"]],
+    platforms: ["Web"],
+    tech: ["WebRTC", "TypeScript", "Node.js", "NestJS", "React", "Next.js", "PostgreSQL", "AWS", "Kubernetes", "Terraform"],
+    tools: ["Vonage", "Twilio", "Stripe", "Segment", "Datadog"],
+    bg: "#341ad4", dark: true, accent: "#cbfffd",
+  }),
+  proj({
+    client: "Trade Job Manager",
+    style: "ServiceM8",
+    category: "Job management for trades",
+    industry: "Field Services",
+    service: "Mobile App Development",
+    text: "A job management app for tradespeople: job cards, scheduling, staff tracking, quotes, invoices and payments.",
+    about: "An iPhone-first platform for electricians, plumbers and other trades that digitises every job and syncs automatically with the accounting software.",
+    challenge: "Trade businesses ran on paper job cards, phone calls and spreadsheets, causing scheduling mix-ups, lost notes, late invoices and double entry into accounting software.",
+    solution: ["Digital job cards with notes, photos and forms", "Scheduling, dispatch and live staff tracking", "Client CRM with automated SMS and email", "Online bookings, quotes, invoices and card payments", "Two-way sync with Xero, QuickBooks and MYOB", "Add-on store and public developer API"],
+    metrics: [["Paperless", "job cards from quote to invoice"], ["Auto-sync", "with accounting software"]],
+    platforms: ["iOS", "Android", "Web", "Apple Watch"],
+    tech: ["Swift", "Objective-C", "PHP", "Node.js", "JavaScript"],
+    tools: ["Xero", "QuickBooks Online", "MYOB", "Stripe", "Mailchimp", "Zapier"],
+    bg: "#fff09b", dark: false, accent: "#65a30d",
+  }),
+  proj({
+    client: "Landlord Management App",
+    style: "Innago",
+    category: "Property management for landlords",
+    industry: "Real Estate",
+    service: "Web Development",
+    text: "Free-to-landlord software to collect rent online, sign leases, screen tenants and track maintenance.",
+    about: "A cloud platform for independent landlords with small to mid-size portfolios, monetised through optional tenant-side services instead of monthly fees.",
+    challenge: "Independent landlords managed rent, leases and maintenance with checks, paper and spreadsheets, because professional software and management companies were too expensive for small portfolios.",
+    solution: ["Online rent collection with bank-account connections", "Digital lease creation and e-signatures", "Tenant screening with credit, criminal and eviction checks", "Maintenance request tracking and tenant messaging", "Landlord dashboard with automated reminders", "QuickBooks Online sync"],
+    metrics: [["$0", "monthly fee for landlords"], ["Online", "rent, leases and screening"]],
+    platforms: ["Web", "iOS", "Android"],
+    tech: ["React", "Angular", "Node.js", "Express", "PostgreSQL", "MongoDB"],
+    tools: ["Plaid", "QuickBooks Online", "TransUnion", "Experian"],
+    bg: "#ffd372", dark: false, accent: "#b45309",
+  }),
+  proj({
+    client: "Visual Inventory Tracker",
+    style: "Sortly",
+    category: "Inventory & asset management",
+    industry: "Inventory & Operations",
+    service: "Mobile App Development",
+    text: "A mobile-first inventory app to track supplies, tools and equipment with photos, barcodes and QR codes.",
+    about: "Simple, visual inventory management for small and mid-size businesses, working offline in the field and syncing across teams and locations.",
+    challenge: "Teams tracked inventory and equipment in spreadsheets or on paper, which meant lost tools, stock-outs, slow physical counts and no real-time view across locations.",
+    solution: ["Mobile app with offline mode and automatic cloud sync", "Barcode and QR scanning with label generation", "Photo-based items with custom fields and location folders", "Low-stock alerts and reorder notifications", "PDF and CSV reports for audits", "Integrations and a public API"],
+    metrics: [["Offline", "scanning with auto-sync"], ["QR", "labels for every item"]],
+    platforms: ["Web", "iOS", "Android"],
+    tech: ["Ruby on Rails", "Kotlin", "React", "Redux", "Elasticsearch"],
+    tools: ["QuickBooks Online", "Amazon Business", "Slack", "Microsoft Teams"],
+    bg: "#e8f0ff", dark: false, accent: "#1a69fd",
+  }),
+  proj({
+    client: "Construction Field Reporting",
+    style: "Raken",
+    category: "Construction field management",
+    industry: "Construction",
+    service: "Mobile App Development",
+    text: "A field-first construction app for daily reports, time cards, production tracking and jobsite safety.",
+    about: "A mobile and web platform used by superintendents and foremen to capture what happens on site every day, from photos and weather to crew hours and safety talks.",
+    challenge: "Contractors documented field work on paper or in scattered tools, leaving reports late or incomplete and causing disputes, inaccurate payroll and job costing, and poor visibility into progress and safety.",
+    solution: ["Daily reports with timestamped photos, video and automatic weather", "Time cards, crew clock-in and kiosk mode with break compliance", "Production, material and equipment tracking", "Toolbox talks, safety checklists and incident reporting", "Documents, RFIs and submittals", "Resource scheduling and certification tracking"],
+    metrics: [["Daily", "reports straight from the jobsite"], ["Real-time", "crew hours and job costing"]],
+    platforms: ["Web", "iOS", "Android"],
+    tech: ["Java", "Spring", "React", "TypeScript", "SQL", "AWS"],
+    tools: ["Procore", "Payroll & accounting integrations", "Cloud storage"],
+    bg: "#f40027", dark: true, accent: "#ffd372",
+  }),
+  proj({
+    client: "Salon & Spa Booking",
+    style: "Vagaro",
+    category: "Beauty & wellness business software",
+    industry: "Beauty & Wellness",
+    service: "Mobile App Development",
+    text: "Booking, payments and business software for salons, spas and fitness studios, with a consumer marketplace.",
+    about: "An all-in-one platform for beauty, wellness and fitness businesses plus a marketplace app where consumers discover and book services.",
+    challenge: "Independent salons and studios juggled separate tools for appointments, payments, client records and marketing, adding admin work, causing missed bookings and making it hard to reach new clients online.",
+    solution: ["Online booking and calendar for appointments and classes", "Integrated payments and POS hardware", "Consumer marketplace and branded business apps", "Website builder, client forms and marketing tools", "Reporting on sales, rebooking and staff performance", "Pay-later options and HIPAA/PCI-compliant operations"],
+    metrics: [["24/7", "online booking for clients"], ["All-in-one", "booking, POS and marketing"]],
+    platforms: ["Web", "iOS", "Android"],
+    tech: [".NET Core", "C#", "React", "Azure", "Cosmos DB", "SQL Server", "Redis", "Docker"],
+    tools: ["Yelp booking", "Payment terminals", "Email & SMS marketing"],
+    bg: "#ffe4ef", dark: false, accent: "#db2777",
+  }),
+  proj({
+    client: "AI Observability Platform",
+    style: "Trasys",
+    category: "AI / LLM observability",
+    industry: "Developer Tools",
+    service: "DevOps",
+    text: "One place to trace LLM calls, track token spend, catch runaway agents and route incidents.",
+    about: "An observability platform for teams running AI in production, combining distributed tracing, cost monitoring, log clustering and alerting across services and model providers.",
+    challenge: "Teams shipping AI features could not see token costs, agent loops, latency regressions or noisy logs across services and model providers, so incidents and overspend went unnoticed.",
+    solution: ["LLM call tracing and token cost tracking", "Loop detection and spend safety limits", "Distributed tracing across services, databases and models", "Natural-language anomaly search and a query language", "Log pattern clustering to reduce alert noise", "Slack alerting and on-call escalation"],
+    metrics: [["Real-time", "token cost visibility"], ["1 view", "traces, logs and incidents"]],
+    platforms: ["Web"],
+    tech: ["TypeScript", "Python", "Go", "PostgreSQL", "Redis", "Kubernetes", "Docker"], // ASSUMED: no public stack found
+    tools: ["Slack", "AWS", "GCP", "Azure", "OpenAI", "Anthropic"],
+    bg: "#191918", dark: true, accent: "#22d3ee",
+  }),
+  proj({
+    client: "Zero-Commission Storefronts",
+    style: "Thribute Stores",
+    category: "D2C storefront builder",
+    industry: "Retail & Ecommerce",
+    service: "Web Development",
+    text: "An online store builder for independent labels and boutiques to sell direct, with payments and shipping built in.",
+    about: "A D2C commerce platform that lets small brands launch a customisable storefront quickly and keep their margins, with Indian payment methods and courier partners integrated.",
+    challenge: "Independent fashion labels and boutiques were losing margin to marketplace commissions, while setting up their own store, payments, GST compliance and delivery was complex and expensive.",
+    solution: ["Customisable storefront templates", "0% commission selling with UPI, cards and cash on delivery", "Connected courier partners or bring-your-own delivery", "AI-generated product descriptions and SEO", "Inventory sync, discount codes, customer chat and analytics", "Fast, scheduled payouts to sellers"],
+    metrics: [["0%", "commission for sellers"], ["Built-in", "payments and courier shipping"]],
+    platforms: ["Web"],
+    tech: ["Next.js", "React", "Node.js", "PostgreSQL"], // Next.js observed; rest ASSUMED
+    tools: ["UPI payments", "Courier partner APIs", "AI copywriting"],
+    bg: "#fefbdc", dark: false, accent: "#0f172a",
+  }),
+  proj({
+    client: "Arabic Travel Companion",
+    style: "Safarway",
+    category: "Travel guide & trip planner",
+    industry: "Travel",
+    service: "Mobile App Development",
+    text: "An Arabic-first travel guide, trip planner and social network for travellers from the Middle East.",
+    about: "A mobile and web platform with Arabic destination guides, itinerary building, travel tips and a traveller community, extended with personalised recommendations and booking.",
+    challenge: "Arabic-speaking travellers had few trip-planning resources in their own language, and destination information, itineraries and bookings were spread across mostly English-language platforms.",
+    solution: ["Arabic destination guides and top attractions", "Trip planner and itinerary builder", "Travel tips such as best time to visit", "Social network for sharing trips", "Personalised recommendations and simplified booking", "Travel safety and guideline updates"],
+    metrics: [["Arabic-first", "content and right-to-left UX"], ["1 app", "to plan, discover and book"]],
+    platforms: ["Web", "iOS", "Android"],
+    tech: ["Flutter", "Node.js", "MongoDB", "Elasticsearch", "AWS"], // ASSUMED: no public stack found
+    tools: ["Google Maps", "Booking APIs", "Firebase"],
+    bg: "#cbfffd", dark: false, accent: "#0d9488",
+  }),
 ];
 
 /* ---------------- Blog ---------------- */
