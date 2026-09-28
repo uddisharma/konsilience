@@ -1,9 +1,7 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 import { brand, footer } from "@/lib/content";
 import { Logo } from "./Header";
+import { OfficeDetails, OfficeMap } from "./Office";
 import Icon from "./ui/Icon";
 
 const socials = [
@@ -13,33 +11,6 @@ const socials = [
   { label: "Instagram", short: "ig" },
   { label: "YouTube", short: "▶" },
 ];
-
-export function Office({ o }: { o: (typeof footer.offices)[number] }) {
-  const [i, setI] = useState(0);
-  const n = o.addresses.length;
-  return (
-    <div className="flex min-h-[220px] flex-col justify-between gap-6 rounded-3xl border border-line bg-card p-6 transition-colors hover:border-[#5e5e5c]">
-      <div className="flex flex-col gap-5">
-        <span className="flex w-fit items-center gap-2 rounded-full border border-line bg-black px-3 py-1.5 text-xs font-bold tracking-widest"><Icon name="pin" className="size-3.5 text-primary" strokeWidth={2} />{o.flag}</span>
-        <h3 className="fs-base font-semibold">{o.country}</h3>
-        <p key={i} className="fs-para anim-fade-up font-medium whitespace-pre-line text-white/75">{o.addresses[i]}</p>
-      </div>
-      {n > 1 && (
-        <div className="flex items-center justify-between">
-          <div className="flex gap-2">
-            <button onClick={() => setI((i - 1 + n) % n)} aria-label="Previous address" className="grid size-8 place-items-center rounded-full border border-line hover:border-white">
-              <Icon name="arrowLeft" className="size-3.5" />
-            </button>
-            <button onClick={() => setI((i + 1) % n)} aria-label="Next address" className="grid size-8 place-items-center rounded-full border border-line hover:border-white">
-              <Icon name="arrow" className="size-3.5" />
-            </button>
-          </div>
-          <span className="fs-para font-medium text-muted">{i + 1}/{n}</span>
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function Footer() {
   return (
@@ -79,10 +50,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          {footer.offices.map((o) => (
-            <Office key={o.country} o={o} />
-          ))}
+        <div className="mt-14 grid gap-3 lg:grid-cols-[1fr_2fr]">
+          <OfficeDetails compact />
+          <OfficeMap className="min-h-[260px]" />
         </div>
 
         <div className="mt-16 grid gap-10 border-t border-line pt-14 sm:grid-cols-2 lg:grid-cols-[repeat(4,1fr)_1.3fr]">

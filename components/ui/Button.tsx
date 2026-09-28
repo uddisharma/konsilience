@@ -49,8 +49,9 @@ export default function Button({
         {inner}
       </Link>
     );
+  const external = href.startsWith("http");
   return (
-    <a href={href} className={`swap-btn ${variant} ${className}`}>
+    <a href={href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} className={`swap-btn ${variant} ${className}`}>
       {inner}
     </a>
   );

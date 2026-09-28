@@ -27,10 +27,10 @@ const values = [
 const timeline = [
   { year: "2014", title: "Founded", text: "Started as a five-person product studio building mobile apps for startups." },
   { year: "2017", title: "Enterprise practice", text: "Launched enterprise engineering and delivered our first Fortune 500 platform." },
-  { year: "2019", title: "Going global", text: "Opened offices in the US and UAE to serve clients across three continents." },
+  { year: "2019", title: "Going global", text: "Began serving clients across three continents from Chandigarh." },
   { year: "2021", title: "Data & Cloud", text: "Built dedicated data engineering and cloud practices with 200+ specialists." },
   { year: "2023", title: `${brand.ai} launched`, text: "Our AI center of excellence for agentic and generative AI systems." },
-  { year: "2026", title: "1,500+ experts", text: "Serving clients in 35+ industries from 5 global delivery centers." },
+  { year: "2026", title: "1,500+ experts", text: "Serving clients in 35+ industries from our Chandigarh headquarters." },
 ];
 
 export default function AboutPage() {

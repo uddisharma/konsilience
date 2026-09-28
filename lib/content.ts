@@ -1,4 +1,5 @@
 // All site copy lives here so the brand and content can be swapped in one place.
+import type { StatVisualName } from "@/components/ui/StatVisual";
 
 export const brand = {
   name: "Konsilience",
@@ -123,13 +124,13 @@ export const services = [
 // Portfolio cards on the home page come from the project catalog.
 export const caseStudies = projects;
 
-export const stats = [
-  { value: 12, suffix: "+", label: ["Years of", "Experience"], text: "as an enterprise technology consulting and digital engineering services firm", hue: 220 },
-  { value: 1500, suffix: "+", label: ["Technology", "Specialists"], text: "designing and building AI-led, cloud-native systems at enterprise scale", hue: 260 },
-  { value: 3000, suffix: "+", label: ["Solutions", "Delivered"], text: "across consulting, engineering and large-scale digital transformation", hue: 190 },
-  { value: 180, suffix: "+", label: ["AI Models", "Deployed"], text: "operationalized across production systems, workflows and decision platforms", hue: 280 },
-  { value: 35, suffix: "+", label: ["Industries", "Mastered"], text: "with deep exposure to compliance-heavy, regulated, data-intensive sectors", hue: 160 },
-  { value: 20, suffix: "+", label: ["Global Recognitions", "& Awards"], text: "acknowledging our engineering excellence, growth and delivery capability", hue: 40 },
+export const stats: { value: number; suffix: string; label: string[]; text: string; visual: StatVisualName }[] = [
+  { value: 12, suffix: "+", label: ["Years of", "Experience"], text: "as an enterprise technology consulting and digital engineering services firm", visual: "timeline" },
+  { value: 1500, suffix: "+", label: ["Technology", "Specialists"], text: "designing and building AI-led, cloud-native systems at enterprise scale", visual: "people" },
+  { value: 3000, suffix: "+", label: ["Solutions", "Delivered"], text: "across consulting, engineering and large-scale digital transformation", visual: "devices" },
+  { value: 180, suffix: "+", label: ["AI Models", "Deployed"], text: "operationalized across production systems, workflows and decision platforms", visual: "network" },
+  { value: 35, suffix: "+", label: ["Industries", "Mastered"], text: "with deep exposure to compliance-heavy, regulated, data-intensive sectors", visual: "industries" },
+  { value: 20, suffix: "+", label: ["Global Recognitions", "& Awards"], text: "acknowledging our engineering excellence, growth and delivery capability", visual: "award" },
 ];
 
 export const aiPillars = [
@@ -172,11 +173,6 @@ export const compliance = [
   { title: "Compliance for Cloud & SaaS", items: ["CSA Cloud Controls Matrix", "SOC 2", "FedRAMP for Cloud"] },
 ];
 
-export const partners = [
-  "Amazon Web Services", "Google Cloud", "Microsoft Azure", "Databricks", "Snowflake", "ServiceNow", "Adobe",
-  "HubSpot", "Docker", "Kubernetes", "Salesforce", "Stripe", "MongoDB", "Twilio", "Shopify", "Figma",
-];
-
 export const industries = industryList;
 
 export const faqs = [
@@ -197,11 +193,15 @@ export const footer = {
     { title: "Company", links: [{ label: "About Us", href: "/about" }, { label: "Careers", href: "/careers" }, { label: "Portfolio", href: "/portfolio" }, { label: "Testimonials", href: "/testimonials" }, { label: "Awards", href: "/awards" }, { label: "Contact", href: "/contact" }] },
     { title: "Resources", links: [{ label: "Blog", href: "/blog" }, { label: "Guides", href: "/resources/guides" }, { label: "Whitepapers", href: "/resources/whitepapers" }, { label: "Press Releases", href: "/resources/press-releases" }, { label: "FAQ", href: "/faq" }] },
   ],
-  offices: [
-    { country: "United States", flag: "US", addresses: ["120 Hudson St,\nManhattan,\nNY 10013, USA", "1900 Market St, Suite 600,\nSan Francisco,\nCA 94103"] },
-    { country: "UAE", flag: "AE", addresses: ["Business Bay,\nTower B, 6th floor,\nDubai"] },
-    { country: "Australia", flag: "AU", addresses: ["96 Harbour Street,\nSydney,\nNSW 2000"] },
-    { country: "India", flag: "IN", addresses: ["Outer Ring Road,\nBengaluru,\nKA 560103", "Sector 62,\nNoida,\nUP 201309"] },
-    { country: "United Kingdom", flag: "GB", addresses: ["22 Bishopsgate,\nLondon,\nEC2N 4BQ"] },
-  ],
+};
+
+// Single office. PLACEHOLDER street address: fill in the exact address and phone.
+export const office = {
+  label: "Headquarters",
+  city: "Chandigarh",
+  country: "India",
+  code: "IN",
+  address: "Chandigarh, India",
+  hours: "Mon – Fri, 9:30 AM – 6:30 PM IST",
+  mapQuery: "Chandigarh, India",
 };

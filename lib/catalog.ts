@@ -245,7 +245,7 @@ export const resourceTypes = [
     cta: "Read More",
     items: [
       { title: "Konsilience launches KonAI center of excellence", text: "New practice focused on agentic and generative AI for enterprises.", meta: "Sep 2026" },
-      { title: "Konsilience opens new delivery center in London", text: "Expanding support for clients across the UK and Europe.", meta: "Jun 2026" },
+      { title: "Konsilience expands its Chandigarh headquarters", text: "A bigger home for our growing engineering, design and AI teams.", meta: "Jun 2026" },
       { title: "Konsilience named a fastest-growing tech company", text: "Recognised for growth and engineering excellence.", meta: "Mar 2026" },
     ],
   },

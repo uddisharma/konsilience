@@ -40,7 +40,7 @@ export default function CareersPage() {
         text="Join 1,500+ engineers, designers and AI specialists building products used by millions."
         actions={<Button href="#openings">View Open Roles</Button>}
         aside={<SceneArt hue={250} icon="users" label="Life at Konsilience" className="hidden aspect-[4/3] rounded-3xl lg:block" />}
-        stats={[["1,500+", "Team members"], ["30+", "Nationalities"], ["4.6/5", "Employee rating"], ["5", "Global offices"]]}
+        stats={[["1,500+", "Team members"], ["30+", "Nationalities"], ["4.6/5", "Employee rating"], ["HQ", "Chandigarh, India"]]}
       />
 
       <section className="sec bg-black">

@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import FaqList from "@/components/FaqList";
-import { Office } from "@/components/Footer";
+import { OfficeDetails, OfficeMap } from "@/components/Office";
 import { CardGrid, ProcessSteps, SectionHead } from "@/components/page/Blocks";
 import PageHero from "@/components/page/PageHero";
 import Clients from "@/components/sections/Clients";
-import { SceneArt } from "@/components/ui/Artwork";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
-import { brand, faqs, footer } from "@/lib/content";
+import { brand, faqs, office } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -73,17 +72,15 @@ export default function ContactPage() {
 
       <section className="sec bg-black">
         <div className="wrap">
-          <SectionHead title={["Our Global Offices"]} text="Delivery centers and client offices across five countries." />
-          <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {footer.offices.map((o, i) => (
-              <Reveal key={o.country} delay={i * 80}>
-                <Office o={o} />
-              </Reveal>
-            ))}
+          <SectionHead title={["Visit Our Office"]} text={`Our team works out of our ${office.city} headquarters.`} />
+          <div className="mt-14 grid gap-3 lg:grid-cols-[1fr_1.6fr]">
+            <Reveal variant="left">
+              <OfficeDetails />
+            </Reveal>
+            <Reveal variant="right">
+              <OfficeMap className="h-full min-h-[380px]" />
+            </Reveal>
           </div>
-          <Reveal className="mt-3">
-            <SceneArt hue={215} icon="globe" label="Map placeholder: embed Google Maps here" className="aspect-[21/9] rounded-3xl" />
-          </Reveal>
         </div>
       </section>
 
