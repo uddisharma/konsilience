@@ -25,7 +25,7 @@ export default function TeamPage() {
         crumbs={[{ label: "About", href: "/about" }, { label: "Our Team" }]}
         eyebrow="Our people"
         title={["Small Team.", <span key="b" className="text-primary">Big Output.</span>]}
-        text={`${brand.name} is a ${brand.teamSize}-person, AI-first team of engineers, designers and product people based in Chandigarh.`}
+        text={`${brand.name} is a ${brand.teamSize}-person, AI-first team of engineers, designers and product people based in Mohali, Punjab.`}
         actions={<Button href="/careers">Join the Team</Button>}
         stats={[[String(brand.founded), "Founded"], [String(brand.teamSize), "Core team members"], [String(brand.founders.length), "Co-founders"], [String(team.length), "Disciplines"]]}
       />

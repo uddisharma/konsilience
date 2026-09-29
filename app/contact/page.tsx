@@ -64,7 +64,7 @@ export default function ContactPage() {
               { icon: "mail", title: "Email Us", text: brand.email, href: `mailto:${brand.email}` },
               { icon: "phone", title: "Call Us", text: brand.phone, href: `tel:${brand.phoneHref}` },
               { icon: "users", title: "Careers", text: "See open roles and apply", href: "/careers" },
-              { icon: "pin", title: "Visit Us", text: "Chandigarh, India", href: "#office" },
+              { icon: "pin", title: "Visit Us", text: "Sector 75, Mohali, Punjab", href: "#office" },
             ]}
           />
         </div>

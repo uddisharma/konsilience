@@ -38,10 +38,10 @@ export default function CareersPage() {
         crumbs={[{ label: "Careers" }]}
         eyebrow="We're hiring"
         title={["Build What's Next", <span key="w" className="text-primary">With Us</span>]}
-        text="Join a small, senior, AI-first team building SaaS platforms, apps and AI systems from Chandigarh."
+        text="Join a small, senior, AI-first team building SaaS platforms, apps and AI systems from Mohali."
         actions={<Button href="#openings">View Open Roles</Button>}
         aside={<SceneArt hue={250} icon="users" label="Life at Konsilience" className="hidden aspect-[4/3] rounded-3xl lg:block" />}
-        stats={[[String(brand.teamSize), "Team members"], [String(facts.platforms), "Platforms shipped"], ["AI-first", "Tooling"], ["HQ", "Chandigarh, India"]]}
+        stats={[[String(brand.teamSize), "Team members"], [String(facts.platforms), "Platforms shipped"], ["AI-first", "Tooling"], ["HQ", "Mohali, Punjab"]]}
       />
 
       <section className="sec bg-black">

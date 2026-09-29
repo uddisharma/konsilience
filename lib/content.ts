@@ -202,13 +202,13 @@ export const footer = {
   ],
 };
 
-// Single office. PLACEHOLDER street address: fill in the exact address and phone.
+// Single office.
 export const office = {
   label: "Headquarters",
-  city: "Chandigarh",
+  city: "Mohali",
   country: "India",
   code: "IN",
-  address: "Chandigarh, India",
+  address: "Industrial Area, Sector 75,\nSahibzada Ajit Singh Nagar,\nMohali, Punjab 160071",
   hours: "Mon – Fri, 9:30 AM – 6:30 PM IST",
-  mapQuery: "Chandigarh, India",
+  mapQuery: "Industrial Area, Sector 75, Sahibzada Ajit Singh Nagar, Mohali, Punjab 160071",
 };

@@ -2,6 +2,7 @@
 
 import { useId, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { honeypotProps, submitForm } from "@/lib/submitForm";
 import Icon from "./ui/Icon";
 
 const budgets = ["Still Evaluating", "Less than $50K", "$50K - $100K", "$100K - $250K", "More than $250K"];
@@ -28,7 +29,7 @@ function Field({ id, label, type = "text", required = true }: { id: string; labe
   );
 }
 
-// Blue-gradient lead form card. No backend yet: connect `submit` to an API route or form service.
+// Brand-gradient lead form card. Submissions are emailed to the sales inbox via /api/contact.
 export default function ContactForm({
   title = "Didn't Find What You Were Looking For?",
   text = "We've got more answers waiting for you. If your question didn't make the list, reach out.",
@@ -41,17 +42,25 @@ export default function ContactForm({
   const uid = useId().replace(/:/g, "");
   const router = useRouter();
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
   const f = (name: string) => `${uid}-${name}`;
 
-  const submit = (e: FormEvent<HTMLFormElement>) => {
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSending(true);
-    router.push("/thank-you");
+    setError("");
+    const res = await submitForm(e.currentTarget, "contact");
+    if (res.ok) router.push("/thank-you");
+    else {
+      setError(res.error);
+      setSending(false);
+    }
   };
 
   return (
     <div className={`rounded-3xl border border-line bg-[linear-gradient(180deg,rgb(var(--brand-deep-rgb))_0%,rgb(var(--brand-strong-rgb))_100%)] p-7 sm:p-9 ${className}`}>
-      <form onSubmit={submit} className="flex flex-col gap-9">
+      <form onSubmit={submit} className="relative flex flex-col gap-9">
+        <input {...honeypotProps} />
         <div className="flex flex-col gap-3">
           <p className="subtitle !font-extrabold">{title}</p>
           <p className="fs-para font-medium text-white/85">{text}</p>
@@ -96,6 +105,11 @@ export default function ContactForm({
             </span>
           </button>
         </div>
+        {error && (
+          <p role="alert" className="anim-fade-up rounded-xl border border-[#ff4246]/40 bg-[#ff4246]/15 px-4 py-3 text-sm text-white">
+            {error}
+          </p>
+        )}
       </form>
     </div>
   );

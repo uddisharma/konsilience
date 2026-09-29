@@ -399,13 +399,87 @@ export const posts = [
 
 /* ---------------- Careers ---------------- */
 
-export const jobs = [
-  { slug: "senior-react-developer", title: "Senior React / Next.js Developer", team: "Engineering", location: "Remote / Hybrid", type: "Full-time", exp: "5+ years" },
-  { slug: "ai-ml-engineer", title: "AI / ML Engineer", team: "AI", location: "Hybrid", type: "Full-time", exp: "3+ years" },
-  { slug: "flutter-developer", title: "Flutter Developer", team: "Mobile", location: "Remote", type: "Full-time", exp: "3+ years" },
-  { slug: "product-designer", title: "Senior Product Designer", team: "Design", location: "Hybrid", type: "Full-time", exp: "4+ years" },
-  { slug: "devops-engineer", title: "DevOps Engineer", team: "Cloud", location: "Remote", type: "Full-time", exp: "4+ years" },
-  { slug: "business-analyst", title: "Business Analyst", team: "Delivery", location: "On-site", type: "Full-time", exp: "2+ years" },
+export type Job = {
+  slug: string;
+  title: string;
+  team: string;
+  location: string;
+  type: string;
+  exp: string;
+  summary: string;
+  responsibilities: string[];
+  requirements: string[];
+  niceToHave: string[];
+  skills: string[];
+};
+
+export const jobs: Job[] = [
+  {
+    slug: "backend-engineer-golang",
+    title: "Backend Engineer (Golang)",
+    team: "Engineering",
+    location: "Mohali, Punjab",
+    type: "Full-time",
+    exp: "3+ years",
+    summary:
+      "Design and build the high-performance services behind our SaaS platforms and Trasys AI, from APIs and data pipelines to real-time tracing and alerting at scale.",
+    responsibilities: [
+      "Design, build and own backend services and APIs in Go",
+      "Model data and write efficient queries for PostgreSQL, Redis and other stores",
+      "Build event-driven and concurrent systems (queues, workers, streaming)",
+      "Instrument services with logging, metrics and tracing, and keep them fast and reliable",
+      "Write tests, review code and help shape our backend architecture",
+      "Work closely with frontend, mobile and AI engineers to ship features end to end",
+    ],
+    requirements: [
+      "3+ years of professional backend development, with strong hands-on Go experience",
+      "Solid understanding of REST/gRPC API design, concurrency and goroutines",
+      "Experience with SQL databases (PostgreSQL or MySQL) and caching (Redis)",
+      "Comfortable with Docker, CI/CD and deploying to a cloud provider (AWS, GCP or Azure)",
+      "Good grasp of testing, debugging and performance profiling",
+      "Clear communication in English and ownership of your work",
+    ],
+    niceToHave: [
+      "Kubernetes and infrastructure-as-code (Terraform)",
+      "Experience with observability tools (OpenTelemetry, Prometheus, Grafana)",
+      "Message brokers such as Kafka, NATS or RabbitMQ",
+      "Experience integrating LLM APIs or building AI-backed features",
+    ],
+    skills: ["Go", "PostgreSQL", "Redis", "gRPC", "REST", "Docker", "Kubernetes", "AWS"],
+  },
+  {
+    slug: "motion-graphics-designer",
+    title: "Motion Graphics Designer",
+    team: "Design",
+    location: "Mohali, Punjab",
+    type: "Full-time",
+    exp: "2+ years",
+    summary:
+      "Bring our products and brand to life with motion: product demos, UI animations, social content and launch videos for Konsilience, Trasys AI and our clients.",
+    responsibilities: [
+      "Create motion graphics for product demos, explainers, social media and ads",
+      "Animate UI flows and micro-interactions for web and mobile products",
+      "Produce launch and marketing videos, from storyboard to final export",
+      "Build reusable motion templates and keep them on-brand",
+      "Hand off Lottie / web-ready animations to engineers",
+      "Collaborate with product designers, engineers and the founders on campaigns",
+    ],
+    requirements: [
+      "2+ years of professional motion design experience",
+      "Strong skills in Adobe After Effects and Premiere Pro",
+      "Solid sense of timing, typography, composition and colour",
+      "Experience with Figma and animating UI designs",
+      "A portfolio or showreel of motion work",
+      "Ability to take feedback and deliver to deadlines",
+    ],
+    niceToHave: [
+      "Lottie / Bodymovin exports for web and apps",
+      "3D tools such as Blender or Cinema 4D",
+      "Rive or other interactive animation tools",
+      "Experience with SaaS or tech product marketing",
+    ],
+    skills: ["After Effects", "Premiere Pro", "Figma", "Lottie", "Illustrator", "Blender"],
+  },
 ];
 
 /* ---------------- Team ---------------- */
@@ -500,7 +574,7 @@ export const resourceTypes = [
     cta: "Read More",
     items: [
       { title: "Konsilience launches Trasys AI", text: "Our AI observability platform for teams running LLMs and agents in production.", meta: "Sep 2026" },
-      { title: "Konsilience expands its Chandigarh headquarters", text: "A bigger home for our growing engineering, design and AI teams.", meta: "Jun 2026" },
+      { title: "Konsilience moves into its new Mohali office", text: "A bigger home for our growing engineering, design and AI teams.", meta: "Jun 2026" },
       { title: "15 platforms and counting", text: "A look back at the SaaS products our team has shipped so far.", meta: "Mar 2026" },
     ],
   },

@@ -1,16 +1,26 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { honeypotProps, submitForm } from "@/lib/submitForm";
 import Icon from "../ui/Icon";
 import Reveal from "../ui/Reveal";
 
-// Newsletter signup banner. No backend yet: wire `submit` to your email provider.
+// Newsletter signup banner. Sign-ups are emailed to the sales inbox via /api/contact.
 export default function Newsletter() {
   const [done, setDone] = useState(false);
-  const submit = (e: FormEvent) => {
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setDone(true);
+    setSending(true);
+    setError("");
+    const res = await submitForm(e.currentTarget, "newsletter");
+    setSending(false);
+    if (res.ok) setDone(true);
+    else setError(res.error);
   };
+
   return (
     <section className="sec bg-black">
       <Reveal variant="zoom" className="wrap">
@@ -24,12 +34,16 @@ export default function Newsletter() {
               <Icon name="check" className="size-5" strokeWidth={2.5} /> You&apos;re subscribed!
             </p>
           ) : (
-            <form onSubmit={submit} className="flex w-full max-w-md overflow-hidden rounded-full border border-line bg-black focus-within:border-primary">
-              <input type="email" required placeholder="Your work email" className="min-w-0 flex-1 bg-transparent px-5 py-4 text-sm outline-none" />
-              <button type="submit" className="m-1.5 rounded-full bg-primary px-6 text-sm font-semibold transition-colors hover:bg-primary-hover">
-                Subscribe
-              </button>
-            </form>
+            <div className="w-full max-w-md">
+              <form onSubmit={submit} className="relative flex overflow-hidden rounded-full border border-line bg-black focus-within:border-primary">
+                <input {...honeypotProps} />
+                <input name="email" type="email" required placeholder="Your work email" className="min-w-0 flex-1 bg-transparent px-5 py-4 text-sm outline-none" />
+                <button type="submit" disabled={sending} className="m-1.5 rounded-full bg-primary px-6 text-sm font-semibold transition-colors hover:bg-primary-hover disabled:opacity-60">
+                  {sending ? "..." : "Subscribe"}
+                </button>
+              </form>
+              {error && <p role="alert" className="mt-3 text-sm text-[#ff8a8c]">{error}</p>}
+            </div>
           )}
         </div>
       </Reveal>

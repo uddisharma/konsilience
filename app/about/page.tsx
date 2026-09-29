@@ -12,7 +12,7 @@ import { brand, facts } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: `${brand.name} is an AI-first product studio from Chandigarh: a small senior team building SaaS platforms, apps and AI systems.`,
+  description: `${brand.name} is an AI-first product studio from Mohali: a small senior team building SaaS platforms, apps and AI systems.`,
 };
 
 const values = [
@@ -25,7 +25,7 @@ const values = [
 
 // Journey. Only the founding year is confirmed; the middle steps are ordered, not dated.
 const timeline = [
-  { year: String(brand.founded), title: "Founded in Chandigarh", text: `Started by ${brand.founders.map((f) => f.name.split(" ")[0]).join(", ").replace(/, ([^,]*)$/, " and $1")} with one goal: build products the right way.` },
+  { year: String(brand.founded), title: `${brand.name} founded`, text: `Started by ${brand.founders.map((f) => f.name.split(" ")[0]).join(", ").replace(/, ([^,]*)$/, " and $1")} with one goal: build products the right way.` },
   { year: "Step 2", title: "First platform shipped", text: "Delivered our first SaaS build end to end, from discovery to launch." },
   { year: "Step 3", title: `${brand.product.name} launched`, text: "Our own AI observability platform for teams running LLMs in production." },
   { year: String(new Date().getFullYear()), title: `${facts.platforms} platforms built`, text: `Support, legal, HR, real estate, healthcare and more, across ${facts.industries} industries.` },
@@ -39,7 +39,7 @@ export default function AboutPage() {
         crumbs={[{ label: "About Us" }]}
         eyebrow="About Konsilience"
         title={["A Young Studio", "With a Proven", <span key="p" className="text-primary">Portfolio</span>]}
-        text={`${brand.name} is an AI-first product studio in Chandigarh. Our ${brand.teamSize}-person team brings strategy, design, engineering and AI together to build products that last.`}
+        text={`${brand.name} is an AI-first product studio in Mohali, Punjab. Our ${brand.teamSize}-person team brings strategy, design, engineering and AI together to build products that last.`}
         actions={
           <>
             <Button>Work With Us</Button>
