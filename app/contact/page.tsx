@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     title: "Contact Konsilience | Digital Engineering & AI Studio",
     description: "Get a free 24-hour consultation and estimate for your software engineering or custom AI project.",
     url: `${siteUrl}/contact`,
-    images: [{ url: `${siteUrl}/og?title=Contact%20Konsilience&subtitle=Get%20a%20Free%20Project%20Consultation` }],
+    images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630, alt: "Contact Konsilience | Digital Engineering & AI Studio" }],
   },
 };
 

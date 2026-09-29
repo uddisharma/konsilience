@@ -79,7 +79,7 @@ export const metadata: Metadata = {
       "Build secure, scalable SaaS platforms, mobile apps, and custom agentic AI systems with senior engineers at Konsilience.",
     images: [
       {
-        url: `${siteUrl}/og`,
+        url: `${siteUrl}/og-image.png`,
         width: 1200,
         height: 630,
         alt: `${brand.name} - AI-First Digital Engineering & Product Studio`,
@@ -91,7 +91,7 @@ export const metadata: Metadata = {
     title: `${brand.name} | AI-First Digital Engineering Studio`,
     description:
       "Senior software and AI engineering studio building SaaS platforms, custom AI agents, and mobile applications.",
-    images: [`${siteUrl}/og`],
+    images: [`${siteUrl}/og-image.png`],
     creator: "@konsilience",
   },
   manifest: "/manifest.webmanifest",

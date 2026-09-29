@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     title: "Enterprise AI & Agentic Solutions | Konsilience",
     description: "Agentic, generative and multimodal AI solutions engineered for production by Konsilience.",
     url: `${siteUrl}/ai-solutions`,
-    images: [{ url: `${siteUrl}/og?title=Enterprise%20AI%20Solutions` }],
+    images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630, alt: "Enterprise AI & Agentic Solutions | Konsilience" }],
   },
 };
 

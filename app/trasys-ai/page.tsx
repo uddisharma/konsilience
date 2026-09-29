@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     title: `${p.name} | AI Observability & LLM Tracing Platform`,
     description: p.tagline,
     url: `${siteUrl}/trasys-ai`,
-    images: [{ url: `${siteUrl}/og?title=Trasys%20AI&subtitle=AI%20Observability%20%26%20LLM%20Tracing` }],
+    images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630, alt: `${p.name} | AI Observability & LLM Tracing Platform` }],
   },
 };
 

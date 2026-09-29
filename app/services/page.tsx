@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     title: "Technology & Software Engineering Services | Konsilience",
     description: "End-to-end capabilities from strategy and UI/UX design to full-stack engineering, AI, and cloud operations.",
     url: `${siteUrl}/services`,
-    images: [{ url: `${siteUrl}/og?title=Digital%20Engineering%20Services` }],
+    images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630, alt: "Technology & Software Engineering Services | Konsilience" }],
   },
 };
 
