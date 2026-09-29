@@ -19,7 +19,38 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {
   const p = find((await params).slug);
-  return p ? { title: p.title, description: p.excerpt } : {};
+  if (!p) return {};
+  const url = `${siteUrl}/blog/${p.slug}`;
+  const authorName = p.author?.name ?? `${brand.name} Team`;
+  return {
+    title: `${p.title} | ${brand.name} Insights`,
+    description: p.excerpt,
+    keywords: [p.category, ...(p.tags ?? []), "Software Engineering Insights", "AI Development Blog", "Konsilience"],
+    authors: [{ name: authorName }],
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      title: `${p.title} | ${brand.name}`,
+      description: p.excerpt,
+      url,
+      publishedTime: p.date,
+      authors: [authorName],
+      images: [
+        {
+          url: `${siteUrl}/og?title=${encodeURIComponent(p.title)}&subtitle=${encodeURIComponent(p.excerpt)}`,
+          width: 1200,
+          height: 630,
+          alt: p.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: p.title,
+      description: p.excerpt,
+      images: [`${siteUrl}/og?title=${encodeURIComponent(p.title)}`],
+    },
+  };
 }
 
 // PLACEHOLDER BODY: replace with real article content (e.g. MDX or a headless CMS).

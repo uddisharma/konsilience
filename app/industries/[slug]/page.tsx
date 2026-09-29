@@ -10,6 +10,7 @@ import { SceneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import { industryList, projects, serviceList, techStack, whyUs } from "@/lib/catalog";
+import { siteUrl } from "@/lib/routes";
 
 const find = (slug: string) => industryList.find((i) => i.slug === slug);
 
@@ -19,7 +20,33 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/industries/[slug]">): Promise<Metadata> {
   const ind = find((await params).slug);
-  return ind ? { title: `${ind.name} Software Development`, description: ind.short } : {};
+  if (!ind) return {};
+  const url = `${siteUrl}/industries/${ind.slug}`;
+  return {
+    title: `${ind.name} Software & AI Engineering`,
+    description: `${ind.short} Custom software, SaaS platforms & AI solutions engineered for ${ind.name.toLowerCase()} companies.`,
+    keywords: [ind.name, `${ind.name} Software`, `${ind.name} AI`, "Industry Solutions", "Konsilience"],
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${ind.name} Engineering & AI | Konsilience`,
+      description: ind.short,
+      url,
+      images: [
+        {
+          url: `${siteUrl}/og?title=${encodeURIComponent(ind.name + " Engineering")}&subtitle=${encodeURIComponent(ind.short)}`,
+          width: 1200,
+          height: 630,
+          alt: `${ind.name} Software Development`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${ind.name} Engineering | Konsilience`,
+      description: ind.short,
+      images: [`${siteUrl}/og?title=${encodeURIComponent(ind.name + " Engineering")}`],
+    },
+  };
 }
 
 export default async function IndustryPage({ params }: PageProps<"/industries/[slug]">) {

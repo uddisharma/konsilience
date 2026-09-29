@@ -9,10 +9,19 @@ import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import { aiProcess, aiSolutions, aiStack, projects, responsibleAi } from "@/lib/catalog";
 import { brand } from "@/lib/content";
+import { siteUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "AI Solutions",
-  description: `Agentic, generative and multimodal AI solutions built by ${brand.name}.`,
+  title: "Enterprise AI & Agentic Solutions",
+  description: "Agentic AI systems, custom LLM fine-tuning, RAG architecture, and production copilots built by Konsilience.",
+  keywords: ["Agentic AI", "Enterprise AI Solutions", "Custom LLM Development", "RAG Systems", "AI Copilots", "AI Observability"],
+  alternates: { canonical: `${siteUrl}/ai-solutions` },
+  openGraph: {
+    title: "Enterprise AI & Agentic Solutions | Konsilience",
+    description: "Agentic, generative and multimodal AI solutions engineered for production by Konsilience.",
+    url: `${siteUrl}/ai-solutions`,
+    images: [{ url: `${siteUrl}/og?title=Enterprise%20AI%20Solutions` }],
+  },
 };
 
 export default function AiSolutionsPage() {

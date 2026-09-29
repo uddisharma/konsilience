@@ -7,9 +7,19 @@ import Button from "@/components/ui/Button";
 import { deliveryProcess, engagementModels, serviceCategories, serviceList, techStack } from "@/lib/catalog";
 import { brand, facts } from "@/lib/content";
 
+import { siteUrl } from "@/lib/routes";
+
 export const metadata: Metadata = {
-  title: "Services",
-  description: "Product engineering, digital transformation, consulting, data and managed IT services from Konsilience.",
+  title: "Digital Engineering & Technology Services",
+  description: "Product engineering, cloud architecture, custom SaaS development, AI integration, and consulting services from Konsilience.",
+  keywords: ["Software Engineering Services", "SaaS Development", "AI Integration", "Cloud Architecture", "CTO Consulting"],
+  alternates: { canonical: `${siteUrl}/services` },
+  openGraph: {
+    title: "Technology & Software Engineering Services | Konsilience",
+    description: "End-to-end capabilities from strategy and UI/UX design to full-stack engineering, AI, and cloud operations.",
+    url: `${siteUrl}/services`,
+    images: [{ url: `${siteUrl}/og?title=Digital%20Engineering%20Services` }],
+  },
 };
 
 export default function ServicesPage() {

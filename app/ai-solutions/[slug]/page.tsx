@@ -6,6 +6,7 @@ import Faq from "@/components/sections/Faq";
 import { SceneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import { aiProcess, aiSolutions, aiStack, industryList, responsibleAi } from "@/lib/catalog";
+import { siteUrl } from "@/lib/routes";
 
 const find = (slug: string) => aiSolutions.find((a) => a.slug === slug);
 
@@ -15,7 +16,33 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/ai-solutions/[slug]">): Promise<Metadata> {
   const a = find((await params).slug);
-  return a ? { title: `${a.name} Development`, description: a.short } : {};
+  if (!a) return {};
+  const url = `${siteUrl}/ai-solutions/${a.slug}`;
+  return {
+    title: `${a.name} Solutions & Development | Agentic AI`,
+    description: `${a.short} Build custom, production-grade ${a.name.toLowerCase()} with senior AI engineers at Konsilience.`,
+    keywords: [a.name, `${a.name} Development`, "AI Solutions", "Agentic AI", "LLM Integration", "Konsilience"],
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${a.name} Solutions | Konsilience AI Studio`,
+      description: a.short,
+      url,
+      images: [
+        {
+          url: `${siteUrl}/og?title=${encodeURIComponent(a.name + " Solutions")}&subtitle=${encodeURIComponent(a.short)}`,
+          width: 1200,
+          height: 630,
+          alt: `${a.name} Solutions`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${a.name} Solutions | Konsilience`,
+      description: a.short,
+      images: [`${siteUrl}/og?title=${encodeURIComponent(a.name + " Solutions")}`],
+    },
+  };
 }
 
 export default async function AiSolutionPage({ params }: PageProps<"/ai-solutions/[slug]">) {

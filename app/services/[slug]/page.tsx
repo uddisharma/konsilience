@@ -9,6 +9,7 @@ import { SceneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import { deliveryProcess, engagementModels, projects, serviceList, whyUs } from "@/lib/catalog";
+import { siteUrl } from "@/lib/routes";
 
 const find = (slug: string) => serviceList.find((s) => s.slug === slug);
 
@@ -18,7 +19,33 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/services/[slug]">): Promise<Metadata> {
   const s = find((await params).slug);
-  return s ? { title: `${s.name} Services`, description: s.short } : {};
+  if (!s) return {};
+  const url = `${siteUrl}/services/${s.slug}`;
+  return {
+    title: `${s.name} Services | Custom Software & AI Engineering`,
+    description: `${s.short} Partner with senior Konsilience engineers for scalable, enterprise-grade ${s.name.toLowerCase()} services.`,
+    keywords: [s.name, `${s.name} Services`, `${s.name} Development`, "Digital Engineering", ...s.tech],
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${s.name} Services | Konsilience`,
+      description: s.short,
+      url,
+      images: [
+        {
+          url: `${siteUrl}/og?title=${encodeURIComponent(s.name + " Services")}&subtitle=${encodeURIComponent(s.short)}`,
+          width: 1200,
+          height: 630,
+          alt: `${s.name} Services`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${s.name} Services | Konsilience`,
+      description: s.short,
+      images: [`${siteUrl}/og?title=${encodeURIComponent(s.name + " Services")}`],
+    },
+  };
 }
 
 export default async function ServicePage({ params }: PageProps<"/services/[slug]">) {

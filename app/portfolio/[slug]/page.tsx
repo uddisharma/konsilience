@@ -9,6 +9,7 @@ import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
 import { projects, serviceList } from "@/lib/catalog";
+import { siteUrl } from "@/lib/routes";
 
 const find = (slug: string) => projects.find((p) => p.slug === slug);
 
@@ -18,7 +19,33 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/portfolio/[slug]">): Promise<Metadata> {
   const p = find((await params).slug);
-  return p ? { title: `${p.client} | Case Study`, description: p.text } : {};
+  if (!p) return {};
+  const url = `${siteUrl}/portfolio/${p.slug}`;
+  return {
+    title: `${p.client} Case Study | ${p.category}`,
+    description: `${p.text} Engineered by Konsilience.`,
+    keywords: [p.client, p.category, p.service, p.industry, ...p.tech, "Case Study", "Konsilience Portfolio"],
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${p.client} Case Study | Konsilience`,
+      description: p.text,
+      url,
+      images: [
+        {
+          url: `${siteUrl}/og?title=${encodeURIComponent(p.client + " Case Study")}&subtitle=${encodeURIComponent(p.category)}`,
+          width: 1200,
+          height: 630,
+          alt: `${p.client} Case Study`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${p.client} Case Study | Konsilience`,
+      description: p.text,
+      images: [`${siteUrl}/og?title=${encodeURIComponent(p.client + " Case Study")}`],
+    },
+  };
 }
 
 export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[slug]">) {

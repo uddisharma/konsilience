@@ -386,15 +386,26 @@ export const projects: Project[] = [
 
 /* ---------------- Blog ---------------- */
 
+export type Post = {
+  slug: string;
+  title: string;
+  category: string;
+  date: string;
+  read: number;
+  excerpt: string;
+  tags?: string[];
+  author?: { name: string; role?: string };
+};
+
 export const blogCategories = ["AI", "Engineering", "Design", "Cloud", "Business"];
 
-export const posts = [
-  { slug: "agentic-ai-enterprise-playbook", title: "The Enterprise Playbook for Agentic AI in 2026", category: "AI", date: "2026-09-12", read: 9, excerpt: "How to move from chatbot pilots to agents that complete real work, safely and measurably." },
-  { slug: "modernize-legacy-without-downtime", title: "How to Modernize a Legacy System Without Downtime", category: "Engineering", date: "2026-08-28", read: 7, excerpt: "A phased strangler-fig approach that keeps the business running while you rebuild." },
-  { slug: "design-systems-that-scale", title: "Design Systems That Actually Scale Across Teams", category: "Design", date: "2026-08-10", read: 6, excerpt: "Tokens, governance and the rituals that keep 20 squads shipping consistent UI." },
-  { slug: "cloud-cost-optimization-guide", title: "Cloud Cost Optimization: Cut 30% Without Cutting Corners", category: "Cloud", date: "2026-07-22", read: 8, excerpt: "Rightsizing, commitments and architecture changes that pay for themselves." },
-  { slug: "app-development-cost-2026", title: "How Much Does It Cost to Build an App in 2026?", category: "Business", date: "2026-07-05", read: 10, excerpt: "A transparent breakdown by complexity, platform, team model and region." },
-  { slug: "rag-architecture-patterns", title: "7 RAG Architecture Patterns for Production", category: "AI", date: "2026-06-18", read: 11, excerpt: "From naive retrieval to agentic RAG: what works, what breaks and how to evaluate." },
+export const posts: Post[] = [
+  { slug: "agentic-ai-enterprise-playbook", title: "The Enterprise Playbook for Agentic AI in 2026", category: "AI", date: "2026-09-12", read: 9, excerpt: "How to move from chatbot pilots to agents that complete real work, safely and measurably.", tags: ["Agentic AI", "Enterprise", "LLM"] },
+  { slug: "modernize-legacy-without-downtime", title: "How to Modernize a Legacy System Without Downtime", category: "Engineering", date: "2026-08-28", read: 7, excerpt: "A phased strangler-fig approach that keeps the business running while you rebuild.", tags: ["Legacy", "Architecture", "Refactoring"] },
+  { slug: "design-systems-that-scale", title: "Design Systems That Actually Scale Across Teams", category: "Design", date: "2026-08-10", read: 6, excerpt: "Tokens, governance and the rituals that keep 20 squads shipping consistent UI.", tags: ["Design Systems", "UI/UX", "Governance"] },
+  { slug: "cloud-cost-optimization-guide", title: "Cloud Cost Optimization: Cut 30% Without Cutting Corners", category: "Cloud", date: "2026-07-22", read: 8, excerpt: "Rightsizing, commitments and architecture changes that pay for themselves.", tags: ["Cloud", "AWS", "Cost Optimization"] },
+  { slug: "app-development-cost-2026", title: "How Much Does It Cost to Build an App in 2026?", category: "Business", date: "2026-07-05", read: 10, excerpt: "A transparent breakdown by complexity, platform, team model and region.", tags: ["App Development", "Pricing", "Strategy"] },
+  { slug: "rag-architecture-patterns", title: "7 RAG Architecture Patterns for Production", category: "AI", date: "2026-06-18", read: 11, excerpt: "From naive retrieval to agentic RAG: what works, what breaks and how to evaluate.", tags: ["RAG", "AI", "Vector DB"] },
 ];
 
 /* ---------------- Careers ---------------- */

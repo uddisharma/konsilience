@@ -9,9 +9,19 @@ import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
 import { brand, faqs, office } from "@/lib/content";
 
+import { siteUrl } from "@/lib/routes";
+
 export const metadata: Metadata = {
-  title: "Contact Us",
-  description: `Talk to ${brand.name}. Share your idea and a solution architect will respond within one business day.`,
+  title: "Contact Us | Get a Free Project Estimate & Consultation",
+  description: `Contact ${brand.name} to discuss your SaaS, mobile app, or AI project. Speak directly with senior architects and get a detailed response within 24 hours.`,
+  keywords: ["Contact Konsilience", "Software Consultation", "AI Project Estimate", "CTO Advisory", "Mohali Tech Studio"],
+  alternates: { canonical: `${siteUrl}/contact` },
+  openGraph: {
+    title: "Contact Konsilience | Digital Engineering & AI Studio",
+    description: "Get a free 24-hour consultation and estimate for your software engineering or custom AI project.",
+    url: `${siteUrl}/contact`,
+    images: [{ url: `${siteUrl}/og?title=Contact%20Konsilience&subtitle=Get%20a%20Free%20Project%20Consultation` }],
+  },
 };
 
 export default function ContactPage() {

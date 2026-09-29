@@ -6,11 +6,21 @@ import Faq from "@/components/sections/Faq";
 import Button from "@/components/ui/Button";
 import { brand } from "@/lib/content";
 
+import { siteUrl } from "@/lib/routes";
+
 const p = brand.product;
 
 export const metadata: Metadata = {
-  title: `${p.name}: AI Observability Platform`,
-  description: p.tagline,
+  title: `${p.name} | AI Observability & LLM Tracing Platform`,
+  description: `${p.tagline} Monitor LLM token spend, trace agent loops, and catch incidents in real time with ${p.name}.`,
+  keywords: ["Trasys AI", "AI Observability", "LLM Tracing", "Token Spend Analytics", "Agent Loop Detection", "Prompt Engineering"],
+  alternates: { canonical: `${siteUrl}/trasys-ai` },
+  openGraph: {
+    title: `${p.name} | AI Observability & LLM Tracing Platform`,
+    description: p.tagline,
+    url: `${siteUrl}/trasys-ai`,
+    images: [{ url: `${siteUrl}/og?title=Trasys%20AI&subtitle=AI%20Observability%20%26%20LLM%20Tracing` }],
+  },
 };
 
 // Product copy based on the public Trasys AI site. Keep in sync with trasys.dev.
