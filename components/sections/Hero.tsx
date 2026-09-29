@@ -9,7 +9,7 @@ const lines = ["Engineering the Next", "Generation of Digital", "Systems with AI
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-black">
-      <div className="relative flex min-h-[100svh] flex-col justify-end pt-36">
+      <div className="relative flex min-h-[min(100svh,820px)] flex-col justify-center pt-36 lg:pt-40">
         {/* animated background */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_70%_20%,rgba(26,105,253,.35),transparent_60%),radial-gradient(50%_40%_at_10%_10%,rgba(94,150,254,.18),transparent_70%)]" />
@@ -42,7 +42,7 @@ export default function Hero() {
             <div className="flex flex-wrap items-center gap-x-4 gap-y-3 sm:gap-x-6">
               {["OpenAI", "Anthropic", "Gemini"].map((p, i) => (
                 <div key={p} className="flex items-center gap-4 sm:gap-6">
-                  {i > 0 && <span className="h-8 w-px bg-white/25" />}
+                  {i > 0 && <span className="hidden h-8 w-px bg-white/25 sm:block" />}
                   <span className="flex items-center gap-2 text-lg font-semibold text-white">
                     <Icon name="spark" className="size-5 text-primary" />
                     {p}

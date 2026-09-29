@@ -15,6 +15,13 @@
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 
+/* Never allow sideways scrolling: clip (unlike hidden) keeps position: sticky working. */
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
 body {
   background: #000;
   color: #fff;
@@ -60,6 +67,11 @@ body {
 }
 .reveal[data-variant="left"] { transform: translateX(-50px); }
 .reveal[data-variant="right"] { transform: translateX(50px); }
+/* On touch-size screens, slide up instead of sideways so nothing starts off-screen. */
+@media (max-width: 1023px) {
+  .reveal[data-variant="left"],
+  .reveal[data-variant="right"] { transform: translateY(40px); }
+}
 .reveal[data-variant="zoom"] { transform: scale(0.94); }
 .reveal[data-variant="fade"] { transform: none; }
 .reveal[data-shown] { opacity: 1; transform: none; }
@@ -132,6 +144,17 @@ body {
 @keyframes ping-soft { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.9); opacity: 0; } }
 @keyframes spin-slow { to { transform: rotate(360deg); } }
 @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes scan { from { left: 0%; } to { left: 100%; } }
+@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+/* Trasys dashboard preview: animate once the section is revealed */
+.tv-bar { transform: scaleX(0); transform-origin: left; }
+[data-shown] .tv-bar { animation: grow 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+.tv-line { stroke-dasharray: 1; stroke-dashoffset: 1; }
+[data-shown] .tv-line { animation: draw 1.6s ease-out forwards; }
+.tv-scan { animation: scan 3.2s linear infinite; }
+.tv-live { animation: blink 1.4s ease-in-out infinite; }
 
 @keyframes line-up { from { transform: translateY(110%) rotate(2deg); } to { transform: none; } }
 .anim-line { animation: line-up 1.2s cubic-bezier(0.19, 1, 0.22, 1) both; }
