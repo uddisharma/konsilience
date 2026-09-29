@@ -93,7 +93,7 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <a href={`tel:${brand.phone}`} aria-label="Call us" className="hidden size-11 place-items-center rounded-full border border-line text-white transition-colors hover:border-white sm:grid">
+            <a href={`tel:${brand.phoneHref}`} aria-label="Call us" className="hidden size-11 place-items-center rounded-full border border-line text-white transition-colors hover:border-white sm:grid">
               <Icon name="phone" className="size-4" />
             </a>
             <Button className="!hidden !px-6 !py-3 sm:!inline-flex">Contact Us</Button>
@@ -107,7 +107,7 @@ export default function Header() {
         {active && (
           <div key={active.label} className="anim-fade-up absolute inset-x-0 top-full hidden border-t border-line bg-black lg:block">
             <div className="wrap flex gap-12 py-12">
-              <div className={`grid flex-1 gap-10 ${active.groups.length > 2 ? "grid-cols-4" : "grid-cols-3"}`}>
+              <div className={`grid flex-1 gap-10 ${active.groups.length > 3 ? "grid-cols-4" : "grid-cols-3"}`}>
                 {active.groups.map((g, gi) => (
                   <div key={g.title} className="anim-fade-up" style={{ animationDelay: `${gi * 60}ms` }}>
                     <p className="mb-5 border-b border-line pb-3 text-xs font-semibold tracking-[.2em] text-muted uppercase">{g.title}</p>

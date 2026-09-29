@@ -82,7 +82,7 @@ export default function CareersPage() {
         </Split>
       </section>
 
-      <CtaBand title="Don't see the right role?" text="Send us your CV anyway. We're always meeting great people." label="Send Your CV" href={`mailto:careers@konsilience.com`} />
+      <CtaBand title="Don't see the right role?" text="Send us your CV anyway. We're always meeting great people." label="Send Your CV" href={`mailto:${brand.email}?subject=Job%20application`} />
     </>
   );
 }

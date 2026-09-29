@@ -67,7 +67,7 @@ export default function Footer() {
           <div>
             <p className="mb-5 text-xs font-semibold tracking-[.2em] text-muted uppercase">Get in touch</p>
             <a href={`mailto:${brand.email}`} className="u-link block text-lg font-semibold">{brand.email}</a>
-            <a href={`tel:${brand.phone}`} className="u-link mt-2 block text-white/80">{brand.phone}</a>
+            <a href={`tel:${brand.phoneHref}`} className="u-link mt-2 block text-white/80">{brand.phone}</a>
             <div className="mt-6 flex gap-2">
               {socials.map((s) => (
                 <a key={s.label} href="#" aria-label={s.label} className="grid size-10 place-items-center rounded-full border border-line text-sm font-bold transition-all hover:-translate-y-1 hover:border-primary hover:bg-primary">

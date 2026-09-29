@@ -26,7 +26,7 @@ export default function ContactPage() {
           <div className="flex flex-col gap-4">
             {[
               ["mail", brand.email, `mailto:${brand.email}`],
-              ["phone", brand.phone, `tel:${brand.phone}`],
+              ["phone", brand.phone, `tel:${brand.phoneHref}`],
             ].map(([icon, label, href]) => (
               <a key={label} href={href} className="group flex items-center gap-4">
                 <span className="grid size-12 place-items-center rounded-full border border-line transition-colors group-hover:border-primary group-hover:bg-primary">
@@ -61,16 +61,16 @@ export default function ContactPage() {
           <CardGrid
             cols={4}
             items={[
-              { icon: "briefcase", title: "Sales & Projects", text: `sales@${brand.email.split("@")[1]}` },
-              { icon: "users", title: "Careers", text: `careers@${brand.email.split("@")[1]}`, href: "/careers" },
-              { icon: "globe", title: "Partnerships", text: `partners@${brand.email.split("@")[1]}` },
-              { icon: "shield", title: "Support", text: `support@${brand.email.split("@")[1]}` },
+              { icon: "mail", title: "Email Us", text: brand.email, href: `mailto:${brand.email}` },
+              { icon: "phone", title: "Call Us", text: brand.phone, href: `tel:${brand.phoneHref}` },
+              { icon: "users", title: "Careers", text: "See open roles and apply", href: "/careers" },
+              { icon: "pin", title: "Visit Us", text: "Chandigarh, India", href: "#office" },
             ]}
           />
         </div>
       </section>
 
-      <section className="sec bg-black">
+      <section id="office" className="sec scroll-mt-24 bg-black">
         <div className="wrap">
           <SectionHead title={["Visit Our Office"]} text={`Our team works out of our ${office.city} headquarters.`} />
           <div className="mt-14 grid gap-3 lg:grid-cols-[1fr_1.6fr]">

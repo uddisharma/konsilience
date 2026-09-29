@@ -18,8 +18,9 @@ export const brand = {
     { name: "Shagun Monga", role: "Co-Founder" },
     { name: "Hardik Upadhayay", role: "Co-Founder" },
   ],
-  phone: "+1 (555) 014-2290",
-  email: "hello@konsilience.com",
+  phone: "+91 70157 13717", // display format
+  phoneHref: "+917015713717", // used in tel: links
+  email: "sales@konsilience.tech",
 };
 
 import { aiSolutions, industryList, projects, serviceCategories, serviceList } from "./catalog";
@@ -102,7 +103,14 @@ export const nav: NavItem[] = [
   {
     label: "Portfolio",
     href: "/portfolio",
-    groups: [{ title: "Featured Work", links: projects.slice(0, 6).map((p) => ({ label: p.client, href: `/portfolio/${p.slug}` })) }],
+    groups: [
+      { title: "Support & Business Ops", industries: ["Customer Support", "Legal", "HR & Workforce", "Inventory & Operations"] },
+      { title: "Field Service & Property", industries: ["Field Services", "Construction", "Real Estate"] },
+      { title: "Health, Commerce & AI", industries: ["Healthcare", "Beauty & Wellness", "Retail & Ecommerce", "Travel", "Developer Tools"] },
+    ].map((g) => ({
+      title: g.title,
+      links: projects.filter((p) => g.industries.includes(p.industry)).map((p) => ({ label: p.client, href: `/portfolio/${p.slug}` })),
+    })),
     featured: { title: `${facts.platforms} platforms shipped`, text: "SaaS products, apps and AI tools our team has designed and engineered.", href: "/portfolio" },
   },
   {

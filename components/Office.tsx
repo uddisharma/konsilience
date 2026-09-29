@@ -39,7 +39,7 @@ export function OfficeDetails({ compact = false }: { compact?: boolean }) {
         <ul className="flex flex-col gap-3 text-sm text-white/80">
           <li className="flex items-center gap-3"><Icon name="clock" className="size-4 text-primary" /> {office.hours}</li>
           <li><a href={`mailto:${brand.email}`} className="flex items-center gap-3 hover:text-white"><Icon name="mail" className="size-4 text-primary" /> <span className="u-link">{brand.email}</span></a></li>
-          <li><a href={`tel:${brand.phone}`} className="flex items-center gap-3 hover:text-white"><Icon name="phone" className="size-4 text-primary" /> <span className="u-link">{brand.phone}</span></a></li>
+          <li><a href={`tel:${brand.phoneHref}`} className="flex items-center gap-3 hover:text-white"><Icon name="phone" className="size-4 text-primary" /> <span className="u-link">{brand.phone}</span></a></li>
         </ul>
       </div>
       <div>

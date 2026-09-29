@@ -1,7 +1,7 @@
 import { aiSolutions, industryList, jobs, posts, projects, resourceTypes, serviceList } from "./catalog";
 import { brand } from "./content";
 
-export const siteUrl = "https://konsilience.com"; // ASSUMED domain: update before launch
+export const siteUrl = "https://konsilience.tech";
 
 type Route = { label: string; href: string };
 

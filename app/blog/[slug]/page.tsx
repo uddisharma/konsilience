@@ -9,6 +9,7 @@ import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
 import { posts } from "@/lib/catalog";
 import { brand } from "@/lib/content";
+import { siteUrl } from "@/lib/routes";
 
 const find = (slug: string) => posts.find((p) => p.slug === slug);
 
@@ -39,7 +40,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
   const art = categoryArt[post.category];
   const body = sections(post.title.replace(/^(How to|The|\d+)\s/i, ""));
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
-  const url = encodeURIComponent(`https://konsilience.com/blog/${post.slug}`);
+  const url = encodeURIComponent(`${siteUrl}/blog/${post.slug}`);
 
   return (
     <>
