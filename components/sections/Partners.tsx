@@ -81,7 +81,7 @@ function Card({ p }: { p: Partner }) {
 export default function Partners() {
   return (
     <section className="sec bg-black">
-      <LineReveal className="h2 wrap-sm text-center" lines={["Strategic Alliances that", "Power Innovation"]} />
+      <LineReveal className="h2 wrap-sm text-center" lines={["Technologies We", "Build With"]} />
       <div className="mt-14 flex flex-col gap-4">
         <Marquee duration={55} fadeEdges>
           {rowA.map((p) => <Card key={p.name} p={p} />)}

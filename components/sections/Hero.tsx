@@ -1,4 +1,4 @@
-import { heroAwards } from "@/lib/content";
+import { heroTags } from "@/lib/content";
 import Button from "../ui/Button";
 import Icon from "../ui/Icon";
 import Marquee from "../ui/Marquee";
@@ -29,11 +29,11 @@ export default function Hero() {
               ))}
             </h1>
             <p className="anim-hero fs-base mt-6 max-w-2xl leading-relaxed font-medium text-white/85" style={{ animationDelay: "550ms" }}>
-              Konsilience brings strategy, design, engineering and AI together to build secure, scalable digital systems,
-              helping enterprises and startups modernize platforms, operationalize intelligence and grow faster.
+              Konsilience is an AI-first product studio. Our senior team of engineers, designers and AI specialists builds
+              SaaS platforms, mobile apps and AI systems for startups and growing businesses, fast and without the agency overhead.
             </p>
             <div className="anim-hero mt-10" style={{ animationDelay: "700ms" }}>
-              <Button>Consult Our Strategy Team</Button>
+              <Button>Book a Free Consultation</Button>
             </div>
           </div>
 
@@ -56,12 +56,12 @@ export default function Hero() {
 
       <div className="relative z-10 pb-10">
         <Marquee duration={40} pauseOnHover={false}>
-          {heroAwards.map(([big, small]) => (
+          {heroTags.map(([big, small]) => (
             <div
               key={big}
               className="mr-3 flex h-[88px] w-[220px] shrink-0 items-center justify-center gap-3 border border-white/15 bg-black/20 px-4 backdrop-blur-2xl"
             >
-              <Icon name="trophy" className="size-7 shrink-0 text-white/80" strokeWidth={1.3} />
+              <Icon name="spark" className="size-6 shrink-0 text-primary" strokeWidth={1.5} />
               <div className="leading-tight">
                 <p className="text-sm font-bold tracking-wide text-white">{big}</p>
                 <p className="text-xs text-white/60">{small}</p>

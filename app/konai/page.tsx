@@ -12,7 +12,7 @@ import { brand } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: `${brand.ai}: Enterprise AI`,
-  description: `${brand.ai} is the ${brand.name} center of excellence for agentic, generative and multimodal AI.`,
+  description: `${brand.ai} is the ${brand.name} AI practice for agentic, generative and multimodal AI.`,
 };
 
 export default function KonAiPage() {
@@ -22,7 +22,7 @@ export default function KonAiPage() {
     <>
       <PageHero
         crumbs={[{ label: brand.ai }]}
-        eyebrow="AI center of excellence"
+        eyebrow="Our AI practice"
         title={["Enterprise AI,", "Engineered for", <span key="p" className="text-primary">Production</span>]}
         text={`${brand.ai} designs, builds and operates agentic systems, copilots and multimodal models that deliver measurable ROI, safely.`}
         actions={
@@ -32,7 +32,7 @@ export default function KonAiPage() {
           </>
         }
         aside={<SceneArt hue={225} icon="spark" label={brand.ai} className="hidden aspect-[4/3] rounded-3xl lg:block" />}
-        stats={[["180+", "AI models deployed"], ["60+", "AI specialists"], ["6 wks", "Average time to POC"], ["35%", "Avg. cost reduction"]]}
+        stats={[["AI-first", "Every project"], ["Model-agnostic", "OpenAI · Claude · Gemini"], ["4–6 wks", "Typical POC"], ["Evals", "Before launch"]]}
       />
 
       <AiSection />

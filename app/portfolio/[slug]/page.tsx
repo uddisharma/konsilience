@@ -29,6 +29,8 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
   const next = projects[(idx + 1) % projects.length];
   const more = [...projects.filter((x) => x.slug !== p.slug && x.industry === p.industry), ...projects.filter((x) => x.slug !== p.slug && x.industry !== p.industry)].slice(0, 3);
   const service = serviceList.find((s) => s.name === p.service);
+  const linkLabel = p.live ? "Visit Live Platform" : `Visit ${p.style}`;
+  const host = new URL(p.url).hostname.replace(/^www./, "");
 
   return (
     <>
@@ -40,6 +42,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
         actions={
           <>
             <Button>Build a Platform Like This</Button>
+            <Button variant="outline" href={p.url}>{linkLabel}</Button>
             <span className="flex items-center gap-2 self-center rounded-full border border-line bg-card px-4 py-2.5 text-sm text-white/80">
               <Icon name="layers" className="size-4 text-primary" /> {p.style}-style platform
             </span>
@@ -65,17 +68,25 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
               <p className="subtitle !font-normal text-white/85">{p.about}</p>
             </Reveal>
             <Reveal delay={100}>
-              <dl className="grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-3">
+              <dl className="grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2">
                 {[
                   ["Industry", p.industry],
                   ["Category", p.category],
-                  ["Comparable to", p.style],
+                  [p.live ? "Product" : "Comparable to", p.style],
                 ].map(([k, v]) => (
                   <div key={k} className="bg-card p-6">
                     <dt className="text-xs font-semibold tracking-[.2em] text-muted uppercase">{k}</dt>
                     <dd className="subtitle mt-2">{v}</dd>
                   </div>
                 ))}
+                <div className="bg-card p-6">
+                  <dt className="text-xs font-semibold tracking-[.2em] text-muted uppercase">Website</dt>
+                  <dd className="subtitle mt-2">
+                    <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-link inline-flex items-center gap-2 text-primary">
+                      {host} <Icon name="upRight" className="size-4" strokeWidth={2} />
+                    </a>
+                  </dd>
+                </div>
               </dl>
             </Reveal>
           </div>

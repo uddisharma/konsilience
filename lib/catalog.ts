@@ -105,6 +105,8 @@ export type Project = {
   slug: string;
   client: string; // display name of the platform
   style: string; // reference product, e.g. "Freshdesk"
+  url: string; // website link shown on the case study
+  live?: boolean; // true = `url` is the platform WE built and run (button says "Visit Live Platform"); default = reference product
   category: string;
   industry: string;
   service: string; // must match a serviceList name to cross-link
@@ -127,6 +129,7 @@ export const projects: Project[] = [
   proj({
     client: "Omnichannel Helpdesk",
     style: "Freshdesk",
+    url: "https://www.freshworks.com/freshdesk/",
     category: "Helpdesk & ticketing SaaS",
     industry: "Customer Support",
     service: "Custom Software Development",
@@ -143,6 +146,7 @@ export const projects: Project[] = [
   proj({
     client: "Legal Practice Suite",
     style: "Clio",
+    url: "https://www.clio.com",
     category: "Legal practice management SaaS",
     industry: "Legal",
     service: "Custom Software Development",
@@ -159,6 +163,7 @@ export const projects: Project[] = [
   proj({
     client: "Enterprise HRMS",
     style: "Darwinbox",
+    url: "https://darwinbox.com",
     category: "HCM / HRMS platform",
     industry: "HR & Workforce",
     service: "Custom Software Development",
@@ -175,6 +180,7 @@ export const projects: Project[] = [
   proj({
     client: "Field Service Platform",
     style: "Jobber",
+    url: "https://getjobber.com",
     category: "Field service management SaaS",
     industry: "Field Services",
     service: "Mobile App Development",
@@ -191,6 +197,7 @@ export const projects: Project[] = [
   proj({
     client: "Property Management Cloud",
     style: "AppFolio",
+    url: "https://www.appfolio.com",
     category: "Property management SaaS",
     industry: "Real Estate",
     service: "Web Development",
@@ -207,6 +214,7 @@ export const projects: Project[] = [
   proj({
     client: "Shared Inbox Help Desk",
     style: "Help Scout",
+    url: "https://www.helpscout.com",
     category: "Help desk & shared inbox",
     industry: "Customer Support",
     service: "Web Development",
@@ -223,6 +231,7 @@ export const projects: Project[] = [
   proj({
     client: "Browser Telehealth",
     style: "Doxy.me",
+    url: "https://doxy.me",
     category: "Telehealth platform",
     industry: "Healthcare",
     service: "Web Development",
@@ -239,6 +248,7 @@ export const projects: Project[] = [
   proj({
     client: "Trade Job Manager",
     style: "ServiceM8",
+    url: "https://www.servicem8.com",
     category: "Job management for trades",
     industry: "Field Services",
     service: "Mobile App Development",
@@ -255,6 +265,7 @@ export const projects: Project[] = [
   proj({
     client: "Landlord Management App",
     style: "Innago",
+    url: "https://innago.com",
     category: "Property management for landlords",
     industry: "Real Estate",
     service: "Web Development",
@@ -271,6 +282,7 @@ export const projects: Project[] = [
   proj({
     client: "Visual Inventory Tracker",
     style: "Sortly",
+    url: "https://www.sortly.com",
     category: "Inventory & asset management",
     industry: "Inventory & Operations",
     service: "Mobile App Development",
@@ -287,6 +299,7 @@ export const projects: Project[] = [
   proj({
     client: "Construction Field Reporting",
     style: "Raken",
+    url: "https://www.rakenapp.com",
     category: "Construction field management",
     industry: "Construction",
     service: "Mobile App Development",
@@ -303,6 +316,7 @@ export const projects: Project[] = [
   proj({
     client: "Salon & Spa Booking",
     style: "Vagaro",
+    url: "https://www.vagaro.com",
     category: "Beauty & wellness business software",
     industry: "Beauty & Wellness",
     service: "Mobile App Development",
@@ -319,6 +333,7 @@ export const projects: Project[] = [
   proj({
     client: "AI Observability Platform",
     style: "Trasys",
+    url: "https://www.trasys.dev",
     category: "AI / LLM observability",
     industry: "Developer Tools",
     service: "DevOps",
@@ -335,6 +350,7 @@ export const projects: Project[] = [
   proj({
     client: "Zero-Commission Storefronts",
     style: "Thribute Stores",
+    url: "https://thribute.com",
     category: "D2C storefront builder",
     industry: "Retail & Ecommerce",
     service: "Web Development",
@@ -349,19 +365,20 @@ export const projects: Project[] = [
     bg: "#fefbdc", dark: false, accent: "#0f172a",
   }),
   proj({
-    client: "Arabic Travel Companion",
-    style: "Safarway",
-    category: "Travel guide & trip planner",
+    client: "Bus Operator Platform",
+    style: "SafarWay",
+    url: "https://safarway.in",
+    category: "Bus fleet & ticketing SaaS",
     industry: "Travel",
-    service: "Mobile App Development",
-    text: "An Arabic-first travel guide, trip planner and social network for travellers from the Middle East.",
-    about: "A mobile and web platform with Arabic destination guides, itinerary building, travel tips and a traveller community, extended with personalised recommendations and booking.",
-    challenge: "Arabic-speaking travellers had few trip-planning resources in their own language, and destination information, itineraries and bookings were spread across mostly English-language platforms.",
-    solution: ["Arabic destination guides and top attractions", "Trip planner and itinerary builder", "Travel tips such as best time to visit", "Social network for sharing trips", "Personalised recommendations and simplified booking", "Travel safety and guideline updates"],
-    metrics: [["Arabic-first", "content and right-to-left UX"], ["1 app", "to plan, discover and book"]],
-    platforms: ["Web", "iOS", "Android"],
-    tech: ["Flutter", "Node.js", "MongoDB", "Elasticsearch", "AWS"], // ASSUMED: no public stack found
-    tools: ["Google Maps", "Booking APIs", "Firebase"],
+    service: "Web Development",
+    text: "A complete bus operator system: live fleet tracking, trip scheduling, QR ticketing and passenger apps under the operator's own brand.",
+    about: "A platform that helps Indian bus operators go digital and compete with large booking aggregators, with separate admin, driver and passenger experiences.",
+    challenge: "Independent bus operators relied on walk-in counters, phone bookings and aggregators that charged commissions and owned the customer relationship, with little visibility into where buses and drivers were.",
+    solution: ["Fleet management with live bus tracking on maps", "Driver app for assignments and trip tasks", "Flexible trip scheduling: daily, fixed-date and recurring", "App and walk-in ticketing with online, cash or hybrid payments", "QR-code tickets by email with scan-to-board validation", "Passenger live tracking and branded operator domains"],
+    metrics: [["QR", "tickets with scan-to-board validation"], ["Live", "bus tracking for operators and passengers"]],
+    platforms: ["Web", "Driver app", "Passenger app"],
+    tech: ["Next.js", "React", "Node.js", "Vercel", "Maps & GPS APIs"], // Next.js + Vercel observed on the site; rest ASSUMED
+    tools: ["WhatsApp", "Payment gateway", "Email delivery"],
     bg: "#cbfffd", dark: false, accent: "#0d9488",
   }),
 ];
@@ -392,15 +409,14 @@ export const jobs = [
 
 /* ---------------- Team ---------------- */
 
-export const leaders = [
-  { name: "Aarav Mehta", role: "Founder & CEO" },
-  { name: "Sara Kapoor", role: "Chief Technology Officer" },
-  { name: "Daniel Brooks", role: "Chief Operating Officer" },
-  { name: "Meera Iyer", role: "VP, KonAI" },
-  { name: "Lucas Romero", role: "VP, Engineering" },
-  { name: "Hana Sato", role: "Head of Design" },
-  { name: "Omar Haddad", role: "Head of Sales, MEA" },
-  { name: "Emily Clarke", role: "Head of People" },
+// Core team by role (12 people). Add names and photos when you want to show individuals.
+export const team = [
+  { role: "Co-Founders", count: 3, icon: "target", text: "Strategy, architecture and delivery ownership on every project." },
+  { role: "AI / ML Engineers", count: 2, icon: "spark", text: "LLM apps, agents, RAG pipelines and model evaluation." },
+  { role: "Full-Stack Engineers", count: 3, icon: "code", text: "Next.js, Node, Rails and cloud-native backends." },
+  { role: "Mobile Engineers", count: 2, icon: "phone", text: "iOS, Android and Flutter apps from MVP to scale." },
+  { role: "Product Designer", count: 1, icon: "eye", text: "Research, UX flows, UI design and design systems." },
+  { role: "QA & DevOps Engineer", count: 1, icon: "shield", text: "Test automation, CI/CD, monitoring and releases." },
 ];
 
 /* ---------------- Shared delivery content ---------------- */
@@ -470,7 +486,7 @@ export const resourceTypes = [
     intro: "In-depth research on the technologies reshaping industries.",
     cta: "Download PDF",
     items: [
-      { title: "Agentic AI in the Enterprise 2026", text: "Adoption patterns, architectures and ROI benchmarks from 50 deployments.", meta: "PDF · 3.2 MB" },
+      { title: "Agentic AI for Growing Businesses", text: "Adoption patterns, architectures and a practical ROI framework for your first agent.", meta: "PDF · Coming soon" },
       { title: "The State of Legacy Modernization", text: "Why modernization programmes fail, and how the successful ones differ.", meta: "PDF · 2.1 MB" },
       { title: "Responsible AI Governance Framework", text: "Policies, controls and tooling for trustworthy AI at scale.", meta: "PDF · 1.8 MB" },
     ],
@@ -482,9 +498,9 @@ export const resourceTypes = [
     intro: "Company news, partnerships and announcements.",
     cta: "Read More",
     items: [
-      { title: "Konsilience launches KonAI center of excellence", text: "New practice focused on agentic and generative AI for enterprises.", meta: "Sep 2026" },
+      { title: "Konsilience launches KonAI", text: "Our AI practice for agentic workflows, copilots and RAG systems.", meta: "Sep 2026" },
       { title: "Konsilience expands its Chandigarh headquarters", text: "A bigger home for our growing engineering, design and AI teams.", meta: "Jun 2026" },
-      { title: "Konsilience named a fastest-growing tech company", text: "Recognised for growth and engineering excellence.", meta: "Mar 2026" },
+      { title: "15 platforms and counting", text: "A look back at the SaaS products our team has shipped so far.", meta: "Mar 2026" },
     ],
   },
   {

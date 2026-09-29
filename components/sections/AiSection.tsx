@@ -36,11 +36,11 @@ export default function AiSection() {
         </Reveal>
         <div className="flex flex-col justify-between gap-10 px-5 py-14 sm:px-10 lg:w-1/2 lg:py-20 lg:pr-12 lg:pl-20">
           <div className="flex flex-col gap-4">
-            <LineReveal className="h2 !font-normal" lines={["Enterprise AI Engineered", <>Around <b className="font-extrabold">Agentic Systems</b></>]} />
+            <LineReveal className="h2 !font-normal" lines={["AI-First Products,", <>Built on <b className="font-extrabold">Agentic AI</b></>]} />
             <Reveal delay={200}>
               <p className="subtitle !font-normal text-white/85">
-                <strong className="font-bold text-white">{brand.ai}</strong> is our center of excellence for enterprise AI. We design, build
-                and operate agentic systems, multimodal models and the data foundations that make them reliable in production.
+                <strong className="font-bold text-white">{brand.ai}</strong> is our AI practice. We design, build and ship agentic workflows,
+                copilots and multimodal features, and the data foundations that make them reliable in production.
               </p>
             </Reveal>
           </div>

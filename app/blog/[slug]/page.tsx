@@ -7,7 +7,8 @@ import Newsletter from "@/components/page/Newsletter";
 import { SceneArt } from "@/components/ui/Artwork";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
-import { leaders, posts } from "@/lib/catalog";
+import { posts } from "@/lib/catalog";
+import { brand } from "@/lib/content";
 
 const find = (slug: string) => posts.find((p) => p.slug === slug);
 
@@ -34,8 +35,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
   const post = find((await params).slug);
   if (!post) notFound();
 
-  const idx = posts.indexOf(post);
-  const author = leaders[idx % leaders.length];
+  const author = { name: `${brand.name} Team`, role: `${post.category} practice` };
   const art = categoryArt[post.category];
   const body = sections(post.title.replace(/^(How to|The|\d+)\s/i, ""));
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);

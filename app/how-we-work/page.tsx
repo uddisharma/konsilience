@@ -14,7 +14,7 @@ const rituals = [
   { title: "Weekly demos", text: "See working software every week and steer priorities in real time." },
   { title: "Shared dashboards", text: "Live access to backlog, burn-up charts, test coverage and release status." },
   { title: "Dedicated product lead", text: "One accountable point of contact who knows your business and your roadmap." },
-  { title: "Quarterly business reviews", text: "Step back to review outcomes, risks and the next quarter's plan with leadership." },
+  { title: "Monthly roadmap reviews", text: "Step back with the founders to review outcomes, risks and the next month's priorities." },
 ];
 
 const quality = ["Code reviews on every PR", "80%+ automated test coverage", "CI/CD on every commit", "Security scanning (SAST/DAST)", "Performance budgets", "Accessibility checks (WCAG 2.2)", "Architecture decision records", "Post-release monitoring"];
@@ -26,9 +26,9 @@ export default function HowWeWorkPage() {
         crumbs={[{ label: "About", href: "/about" }, { label: "How We Work" }]}
         eyebrow="Our process"
         title={["Predictable Delivery,", <span key="e" className="text-primary">Every Sprint</span>]}
-        text="A transparent, outcome-driven way of working, refined over 3,000+ projects."
+        text="A transparent, outcome-driven way of working, refined across every platform we've shipped."
         actions={<Button>Start a Project</Button>}
-        stats={[["2 wks", "Sprint length"], ["1 wk", "To kickoff"], ["98%", "On-time milestones"], ["24/7", "Post-launch support"]]}
+        stats={[["2 wks", "Sprint length"], ["1 wk", "To kickoff"], ["Weekly", "Live demos"], ["24/7", "Post-launch support"]]}
       />
       <section className="sec bg-black">
         <div className="wrap">

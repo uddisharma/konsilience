@@ -1,3 +1,4 @@
+import { facts } from "@/lib/content";
 import Button from "../ui/Button";
 import { PhoneArt } from "../ui/Artwork";
 import Reveal from "../ui/Reveal";
@@ -26,12 +27,12 @@ export default function GrowthCta() {
                   we&apos;ve built it before.
                 </p>
                 <p className="fs-base max-w-xl font-medium text-white/85">
-                  <b className="font-extrabold text-white">15+ SaaS platforms</b> across support, legal, HR, real estate, healthcare and construction, engineered to
+                  <b className="font-extrabold text-white">{facts.platforms} SaaS platforms</b> across support, legal, HR, real estate, healthcare and construction, engineered to
                   scale from day one.
                 </p>
               </div>
               <div>
-                <Button variant="white">Consult our Experts for Growth Roadmap</Button>
+                <Button variant="white">Plan Your Product With Us</Button>
               </div>
             </div>
             <div className="relative hidden h-full min-h-[420px] lg:block">

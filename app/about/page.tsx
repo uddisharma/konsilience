@@ -1,36 +1,35 @@
 import type { Metadata } from "next";
 import { CardGrid, CtaBand, NumberedRows, SectionHead, Split } from "@/components/page/Blocks";
 import PageHero from "@/components/page/PageHero";
-import { LeaderCard } from "@/components/page/People";
-import Awards from "@/components/sections/Awards";
+import { FounderCard, RoleCard } from "@/components/page/People";
 import Clients from "@/components/sections/Clients";
 import Stats from "@/components/sections/Stats";
 import { SceneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
-import { leaders } from "@/lib/catalog";
-import { brand } from "@/lib/content";
+import { team } from "@/lib/catalog";
+import { brand, facts } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: `${brand.name} is a digital engineering company where strategy, design, engineering and AI come together.`,
+  description: `${brand.name} is an AI-first product studio from Chandigarh: a small senior team building SaaS platforms, apps and AI systems.`,
 };
 
 const values = [
-  { title: "Many disciplines, one outcome", text: "Consilience means knowledge converging. Strategists, designers, engineers and data scientists work as one team on one goal." },
+  { title: "Many disciplines, one outcome", text: "Consilience means knowledge converging. Strategy, design, engineering and AI work as one team on one goal." },
   { title: "Engineering over theatre", text: "We ship working software early and often. Demos over decks, measurable results over promises." },
-  { title: "Radical transparency", text: "Open roadmaps, honest estimates and weekly reporting. You always know where your product stands." },
+  { title: "Radical transparency", text: "Open roadmaps, honest estimates and weekly demos. You always know where your product stands." },
   { title: "Security by default", text: "Privacy, compliance and security are designed in from day one, not bolted on before launch." },
-  { title: "Long-term partnership", text: "Most of our clients stay with us for years. We measure success by the value we keep creating." },
+  { title: "Small team, senior talent", text: "You work directly with the people who build your product. No layers, no handoffs, no juniors learning on your budget." },
 ];
 
+// Journey. Only the founding year is confirmed; the middle steps are ordered, not dated.
 const timeline = [
-  { year: "2014", title: "Founded", text: "Started as a five-person product studio building mobile apps for startups." },
-  { year: "2017", title: "Enterprise practice", text: "Launched enterprise engineering and delivered our first Fortune 500 platform." },
-  { year: "2019", title: "Going global", text: "Began serving clients across three continents from Chandigarh." },
-  { year: "2021", title: "Data & Cloud", text: "Built dedicated data engineering and cloud practices with 200+ specialists." },
-  { year: "2023", title: `${brand.ai} launched`, text: "Our AI center of excellence for agentic and generative AI systems." },
-  { year: "2026", title: "1,500+ experts", text: "Serving clients in 35+ industries from our Chandigarh headquarters." },
+  { year: String(brand.founded), title: "Founded in Chandigarh", text: `Started by ${brand.founders.map((f) => f.name.split(" ")[0]).join(", ").replace(/, ([^,]*)$/, " and $1")} with one goal: build products the right way.` },
+  { year: "Step 2", title: "First platform shipped", text: "Delivered our first SaaS build end to end, from discovery to launch." },
+  { year: "Step 3", title: `${brand.ai} launched`, text: "Our AI practice for agentic workflows, copilots and RAG systems." },
+  { year: String(new Date().getFullYear()), title: `${facts.platforms} platforms built`, text: `Support, legal, HR, real estate, healthcare and more, across ${facts.industries} industries.` },
+  { year: "Next", title: "What's next", text: "Growing the team carefully and partnering with ambitious founders." },
 ];
 
 export default function AboutPage() {
@@ -39,22 +38,19 @@ export default function AboutPage() {
       <PageHero
         crumbs={[{ label: "About Us" }]}
         eyebrow="About Konsilience"
-        title={["Where Knowledge", "Converges Into", <span key="p" className="text-primary">Great Products</span>]}
-        text={`${brand.name} brings strategy, design, engineering and AI together under one roof, so ambitious companies can build digital systems that last.`}
+        title={["A Young Studio", "With a Proven", <span key="p" className="text-primary">Portfolio</span>]}
+        text={`${brand.name} is an AI-first product studio in Chandigarh. Our ${brand.teamSize}-person team brings strategy, design, engineering and AI together to build products that last.`}
         actions={
           <>
             <Button>Work With Us</Button>
             <Button variant="outline" href="/careers">Join Our Team</Button>
           </>
         }
-        stats={[["12+", "Years of experience"], ["1,500+", "Technology specialists"], ["3,000+", "Solutions delivered"], ["35+", "Industries served"]]}
+        stats={[[String(brand.founded), "Founded"], [String(facts.platforms), "Platforms built"], [String(brand.teamSize), "Core team members"], [String(facts.industries), "Industries served"]]}
       />
 
       <section className="sec bg-black">
-        <Split
-          title={["Our Story"]}
-          text="From a small product studio to a global engineering partner, one idea has stayed the same."
-        >
+        <Split title={["Our Story"]} text="Why we started, and the idea behind our name.">
           <div className="flex flex-col gap-8">
             <Reveal>
               <p className="subtitle !font-normal text-white/85">
@@ -65,8 +61,10 @@ export default function AboutPage() {
             </Reveal>
             <Reveal delay={100}>
               <p className="fs-base font-medium text-muted">
-                Today our cross-functional teams help startups find product-market fit and help enterprises modernize the platforms their
-                business runs on. Every engagement is led by senior practitioners and measured by outcomes, not hours.
+                Founded in {brand.founded} by {brand.founders.map((f) => f.name).join(", ").replace(/, ([^,]*)$/, " and $1")}, we have grown into a
+                {" "}{brand.teamSize}-person team of engineers, designers and AI specialists that has shipped {facts.platforms} platforms across{" "}
+                {facts.industries} industries. We work with startups and growing businesses that want senior talent, AI-first delivery and
+                direct access to the people building their product.
               </p>
             </Reveal>
             <Reveal delay={200}>
@@ -81,8 +79,8 @@ export default function AboutPage() {
           <CardGrid
             cols={2}
             items={[
-              { icon: "target", title: "Our Mission", text: "To help organisations turn ideas into secure, intelligent, scalable digital systems by combining every discipline it takes to get there." },
-              { icon: "globe", title: "Our Vision", text: "To be the most trusted partner for companies building the next decade of digital products, where AI and human expertise work as one." },
+              { icon: "target", title: "Our Mission", text: "To help founders and growing teams turn ideas into secure, intelligent, scalable products, combining every discipline it takes to get there." },
+              { icon: "globe", title: "Our Vision", text: "To become the go-to AI-first product partner for ambitious companies, known for quality, speed and honesty." },
             ]}
           />
         </div>
@@ -96,9 +94,9 @@ export default function AboutPage() {
 
       <section className="sec overflow-hidden bg-black">
         <div className="wrap">
-          <SectionHead title={["Our Journey"]} text="Milestones that shaped who we are today." />
+          <SectionHead title={["Our Journey"]} text="Early days, and we're just getting started." />
         </div>
-        <div className="wrap mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+        <div className="wrap mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {timeline.map((t, i) => (
             <Reveal key={t.year} delay={i * 90}>
               <div className="group relative h-full rounded-3xl border border-line bg-card p-6 transition-colors hover:border-primary">
@@ -115,18 +113,26 @@ export default function AboutPage() {
 
       <section className="sec bg-black">
         <div className="wrap">
-          <SectionHead title={["Meet Our Leadership"]} text="Experienced operators and engineers who stay close to the work." action={<Button variant="ghost" href="/about/team">View Full Team</Button>} />
-          <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {leaders.slice(0, 4).map((l, i) => (
-              <LeaderCard key={l.name} {...l} i={i} />
+          <SectionHead
+            title={["Meet the Founders"]}
+            text={`Leading a ${brand.teamSize}-person team with every discipline you need to ship.`}
+            action={<Button variant="ghost" href="/about/team">View Full Team</Button>}
+          />
+          <div className="mt-14 grid gap-3 md:grid-cols-3">
+            {brand.founders.map((f, i) => (
+              <FounderCard key={f.name} {...f} i={i} />
+            ))}
+          </div>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {team.slice(1, 4).map((t, i) => (
+              <RoleCard key={t.role} {...t} i={i} />
             ))}
           </div>
         </div>
       </section>
 
       <Clients />
-      <Awards />
-      <CtaBand title="Let's build something that lasts." text="Tell us about your goals. A solution architect will get back to you within one business day." />
+      <CtaBand title="Let's build something that lasts." text="Tell us about your idea. A senior engineer will get back to you within one business day." />
     </>
   );
 }

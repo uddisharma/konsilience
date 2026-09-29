@@ -9,6 +9,7 @@ import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
 import { industryList, projects } from "@/lib/catalog";
+import { facts } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Industries",
@@ -22,9 +23,9 @@ export default function IndustriesPage() {
         crumbs={[{ label: "Industries" }]}
         eyebrow="Industries we serve"
         title={["Solving Complex", "Challenges Across", <span key="s" className="text-primary">Every Major Sector</span>]}
-        text="Deep domain knowledge in regulated, data-intensive industries, so we understand your users, your compliance needs and your competition from day one."
+        text="We've built platforms for support, legal, HR, real estate, healthcare, construction and more, and we bring those lessons to every new domain."
         actions={<Button>Discuss Your Industry</Button>}
-        stats={[["35+", "Industries served"], ["3,000+", "Solutions delivered"], ["12", "Compliance frameworks"], ["20+", "Countries"]]}
+        stats={[[String(facts.industries), "Industries served"], [String(facts.platforms), "Platforms built"], [String(facts.technologies) + "+", "Technologies"], ["AI-first", "Delivery"]]}
       />
 
       <section className="sec bg-black">
@@ -64,7 +65,7 @@ export default function IndustriesPage() {
       </section>
 
       <Compliance />
-      <CtaBand title="Don't see your industry?" text="We've shipped products in 35+ sectors. Tell us about yours." />
+      <CtaBand title="Don't see your industry?" text="We learn domains fast. Tell us about yours." />
     </>
   );
 }

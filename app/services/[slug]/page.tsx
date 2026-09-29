@@ -49,7 +49,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           </>
         }
         aside={<SceneArt hue={220} icon={s.icon} label={s.category} className="hidden aspect-[4/3] rounded-3xl lg:block" />}
-        stats={[["150+", `${s.name.split(" ")[0]} projects`], ["4.9/5", "Client rating"], ["8–16 wks", "Typical first release"], ["100%", "IP ownership"]]}
+        stats={[["AI-first", "Delivery"], ["Senior", "Hands-on team"], ["8–16 wks", "Typical first release"], ["100%", "IP ownership"]]}
       />
 
       <section className="sec bg-black">

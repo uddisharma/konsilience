@@ -5,6 +5,7 @@ import Testimonials from "@/components/sections/Testimonials";
 import { DashboardArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import { deliveryProcess, engagementModels, serviceCategories, serviceList, techStack } from "@/lib/catalog";
+import { brand, facts } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -26,7 +27,7 @@ export default function ServicesPage() {
           </>
         }
         aside={<DashboardArt hue={220} className="hidden aspect-[4/3] rounded-3xl border border-line lg:block" />}
-        stats={[[`${serviceList.length}`, "Specialized services"], ["3,000+", "Projects delivered"], ["98%", "Client retention"], ["24/7", "Support coverage"]]}
+        stats={[[`${serviceList.length}`, "Specialized services"], [String(facts.platforms), "Platforms built"], [String(brand.teamSize), "Senior specialists"], ["24h", "Response time"]]}
       />
 
       {serviceCategories.map((c, i) => (

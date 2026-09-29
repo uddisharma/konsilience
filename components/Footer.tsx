@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { brand, footer } from "@/lib/content";
+import { brand, facts, footer } from "@/lib/content";
 import { Logo } from "./Header";
 import { OfficeDetails, OfficeMap } from "./Office";
 import Icon from "./ui/Icon";
@@ -21,7 +21,7 @@ export default function Footer() {
             <Logo />
             <p className="fs-base font-medium text-white">{brand.tagline}</p>
             <div className="flex flex-wrap gap-3">
-              {["AI Platform Partner", "Cloud Partner"].map((b) => (
+              {["AI-First Studio", "Startup Friendly", "NDA on Request"].map((b) => (
                 <span key={b} className="flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-xs font-semibold">
                   <Icon name="spark" className="size-4 text-primary" /> {b}
                 </span>
@@ -30,22 +30,18 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-10">
             <div className="text-center">
-              <p className="font-condensed text-4xl font-semibold">4.9</p>
-              <div className="flex gap-0.5 text-[#ff4246]">
-                {[0, 1, 2, 3, 4].map((k) => (
-                  <Icon key={k} name="star" className="size-4 fill-current" />
-                ))}
-              </div>
-              <p className="mt-1 text-xs text-muted">300+ verified reviews</p>
+              <p className="font-condensed text-4xl font-semibold">{facts.platforms}</p>
+              <p className="mt-1 text-xs text-muted">Platforms built</p>
             </div>
             <span className="h-14 w-px bg-line" />
-            <div className="flex items-center gap-3">
-              <Icon name="trophy" className="size-9 text-white/80" strokeWidth={1.3} />
-              <p className="text-sm leading-tight font-semibold">
-                Tech Fast 50
-                <br />
-                <span className="text-muted">Winner 2024</span>
-              </p>
+            <div className="text-center">
+              <p className="font-condensed text-4xl font-semibold">{brand.teamSize}</p>
+              <p className="mt-1 text-xs text-muted">Core team</p>
+            </div>
+            <span className="h-14 w-px bg-line" />
+            <div className="text-center">
+              <p className="font-condensed text-4xl font-semibold">24h</p>
+              <p className="mt-1 text-xs text-muted">Response time</p>
             </div>
           </div>
         </div>
@@ -83,7 +79,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-line pt-8 text-sm text-muted md:flex-row">
-          <p>© {new Date().getFullYear()} {brand.name}. All rights reserved.</p>
+          <p>© {brand.founded}–{new Date().getFullYear()} {brand.name}. All rights reserved.</p>
           <div className="flex flex-wrap justify-center gap-6">
             {[["Privacy Policy", "/privacy-policy"], ["Terms & Conditions", "/terms"], ["Cookie Policy", "/cookie-policy"], ["Sitemap", "/sitemap"]].map(([l, h]) => (
               <Link key={h} href={h} className="hover:text-white">{l}</Link>

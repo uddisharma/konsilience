@@ -9,7 +9,7 @@ const dots = {
 };
 
 function Timeline() {
-  const years = ["2014", "2017", "2019", "2021", "2023", "2026"];
+  const years = ["2021", "2022", "2023", "2024", "2025", "2026"];
   return (
     <div className="absolute inset-x-6 top-1/2 -translate-y-1/2">
       <div className="h-px bg-white/25" />
@@ -27,9 +27,9 @@ function Timeline() {
 
 function People() {
   return (
-    <div className="absolute inset-0 grid grid-cols-7 content-center gap-3 px-6">
-      {Array.from({ length: 21 }, (_, i) => (
-        <span key={i} className={`grid aspect-square place-items-center rounded-full border ${i === 10 ? "border-white bg-white text-black" : "border-white/20 text-white/40"}`}>
+    <div className="absolute inset-0 grid grid-cols-6 content-center gap-3 px-8">
+      {Array.from({ length: 12 }, (_, i) => (
+        <span key={i} className={`grid aspect-square place-items-center rounded-full border ${i === 0 ? "border-white bg-white text-black" : "border-white/20 text-white/40"}`}>
           <Icon name="users" className="size-1/2" strokeWidth={1.5} />
         </span>
       ))}

@@ -1,5 +1,4 @@
 import AiSection from "@/components/sections/AiSection";
-import Awards from "@/components/sections/Awards";
 import CaseStudies from "@/components/sections/CaseStudies";
 import Clients from "@/components/sections/Clients";
 import Compliance from "@/components/sections/Compliance";
@@ -24,7 +23,6 @@ export default function Home() {
       <AiSection />
       <Testimonials />
       <Clients />
-      <Awards />
       <Compliance />
       <StrategyCta />
       <Partners />

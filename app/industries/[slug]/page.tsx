@@ -115,7 +115,7 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
       <Faq
         title={`${ind.name} FAQs`}
         items={[
-          { q: `Do you have experience in ${n}?`, a: `Yes. We've delivered platforms for ${n} companies of every size, from startups to enterprises.` },
+          { q: `Do you have experience in ${n}?`, a: work.some((p) => p.industry === ind.name) ? `Yes. We have built ${n} platforms before; see the case studies above.` : `We have shipped platforms across many industries and learn new domains fast, starting every project with a discovery phase.` },
           { q: "How do you handle compliance?", a: "We map regulatory requirements during discovery and build controls, audit trails and documentation into the product." },
           { q: "Can you integrate with our existing systems?", a: "Yes. We integrate with ERPs, CRMs, payment providers, industry platforms and custom APIs." },
           { q: "How quickly can you start?", a: "A dedicated team can usually start within 1–2 weeks of signing." },

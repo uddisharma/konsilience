@@ -7,6 +7,7 @@ import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
 import { jobs } from "@/lib/catalog";
+import { brand, facts } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -37,10 +38,10 @@ export default function CareersPage() {
         crumbs={[{ label: "Careers" }]}
         eyebrow="We're hiring"
         title={["Build What's Next", <span key="w" className="text-primary">With Us</span>]}
-        text="Join 1,500+ engineers, designers and AI specialists building products used by millions."
+        text="Join a small, senior, AI-first team building SaaS platforms, apps and AI systems from Chandigarh."
         actions={<Button href="#openings">View Open Roles</Button>}
         aside={<SceneArt hue={250} icon="users" label="Life at Konsilience" className="hidden aspect-[4/3] rounded-3xl lg:block" />}
-        stats={[["1,500+", "Team members"], ["30+", "Nationalities"], ["4.6/5", "Employee rating"], ["HQ", "Chandigarh, India"]]}
+        stats={[[String(brand.teamSize), "Team members"], [String(facts.platforms), "Platforms shipped"], ["AI-first", "Tooling"], ["HQ", "Chandigarh, India"]]}
       />
 
       <section className="sec bg-black">

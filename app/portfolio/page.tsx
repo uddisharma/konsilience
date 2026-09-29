@@ -6,6 +6,7 @@ import Clients from "@/components/sections/Clients";
 import Testimonials from "@/components/sections/Testimonials";
 import Button from "@/components/ui/Button";
 import { projects } from "@/lib/catalog";
+import { facts } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -19,9 +20,9 @@ export default function PortfolioPage() {
         crumbs={[{ label: "Portfolio" }]}
         eyebrow="Our work"
         title={["Innovation,", <span key="e" className="text-primary">Engineered</span>]}
-        text="Products, platforms and AI systems we've shipped for ambitious brands, and the numbers that followed."
+        text="SaaS platforms, apps and AI tools our team has designed and engineered, each modelled on a proven product category."
         actions={<Button>Start Your Project</Button>}
-        stats={[["3,000+", "Products shipped"], ["500M+", "End users reached"], ["35+", "Industries"], ["4.9/5", "Average client rating"]]}
+        stats={[[String(facts.platforms), "Platforms built"], [String(facts.industries), "Industries"], [String(facts.technologies) + "+", "Technologies"], ["100%", "IP ownership"]]}
       />
       <section className="sec bg-black">
         <div className="wrap">

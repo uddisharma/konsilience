@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { testimonials } from "@/lib/content";
-import Button from "../ui/Button";
 import Icon from "../ui/Icon";
 import Reveal, { LineReveal } from "../ui/Reveal";
 
@@ -22,12 +21,13 @@ export default function Testimonials() {
     return () => clearTimeout(id);
   }, [active, paused, count]);
 
+  if (count === 0) return null;
+
   return (
     <section className="sec bg-black">
       <div className="wrap flex flex-col gap-12">
         <div className="flex flex-col items-center justify-between gap-6 text-center lg:flex-row lg:text-left">
           <LineReveal className="h2" lines={["Words From Our C-Suite Partners"]} />
-          <Button variant="ghost" href="/testimonials" className="hidden lg:inline-flex">View All Client Testimonials</Button>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[1fr_1.35fr]">
@@ -130,9 +130,6 @@ export default function Testimonials() {
               </div>
             </div>
           </Reveal>
-        </div>
-        <div className="text-center lg:hidden">
-          <Button variant="ghost" href="/testimonials">View All Client Testimonials</Button>
         </div>
       </div>
 
