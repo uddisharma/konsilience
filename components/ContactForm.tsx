@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { honeypotProps, submitForm } from "@/lib/submitForm";
 import Icon from "./ui/Icon";
@@ -29,6 +29,84 @@ function Field({ id, label, type = "text", required = true }: { id: string; labe
   );
 }
 
+function BudgetSelect({
+  id,
+  budgets,
+  value,
+  onChange,
+}: {
+  id: string;
+  budgets: string[];
+  value: string;
+  onChange: (val: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative sm:col-span-2">
+      <input type="hidden" id={id} name="budget" value={value} />
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center justify-between border-b border-white/40 bg-transparent pt-6 pb-2 text-left text-white outline-none transition-colors focus:border-white"
+        aria-expanded={open}
+        aria-haspopup="listbox"
+      >
+        <span className={value ? "text-white text-[15px]" : "text-white/60 text-[15px]"}>
+          {value || "Select a Budget Range"}
+        </span>
+        <Icon
+          name="chevron"
+          className={`size-4 text-white/70 transition-transform duration-200 ${open ? "rotate-180 text-white" : ""}`}
+        />
+      </button>
+      <label
+        htmlFor={id}
+        className={`pointer-events-none absolute left-0 text-xs text-white/70 transition-all ${value || open ? "top-1 text-xs text-white" : "top-5 text-[15px] text-white/70 opacity-0"
+          }`}
+      >
+        Budget Range
+      </label>
+
+      {open && (
+        <div
+          role="listbox"
+          className="anim-fade-up absolute left-0 right-0 top-full z-50 mt-2 max-h-60 overflow-y-auto no-scrollbar rounded-2xl border border-white/20 bg-[#171717] p-2 shadow-2xl backdrop-blur-xl"
+        >
+          {budgets.map((b) => (
+            <button
+              key={b}
+              type="button"
+              role="option"
+              aria-selected={value === b}
+              onClick={() => {
+                onChange(b);
+                setOpen(false);
+              }}
+              className={`flex w-full items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition-colors ${value === b ? "bg-primary text-white" : "text-white/80 hover:bg-white/10 hover:text-white"
+                }`}
+            >
+              <span>{b}</span>
+              {value === b && <Icon name="check" className="size-4 text-white" />}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // Brand-gradient lead form card. Submissions are emailed to the sales inbox via /api/contact.
 export default function ContactForm({
   title = "Didn't Find What You Were Looking For?",
@@ -43,6 +121,7 @@ export default function ContactForm({
   const router = useRouter();
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
+  const [budget, setBudget] = useState("");
   const f = (name: string) => `${uid}-${name}`;
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
@@ -70,16 +149,7 @@ export default function ContactForm({
           <Field id={f("designation")} label="Designation" required={false} />
           <Field id={f("phone")} label="Contact Number" type="tel" />
           <Field id={f("email")} label="Work Email" type="email" />
-          <div className="relative sm:col-span-2">
-            <label htmlFor={f("budget")} className="text-xs text-white/70">Budget Range</label>
-            <select id={f("budget")} name="budget" defaultValue="" className="w-full appearance-none border-b border-white/40 bg-transparent pt-1 pb-2 text-white outline-none focus:border-white">
-              <option value="" disabled className="text-black">Select a Budget Range</option>
-              {budgets.map((b) => (
-                <option key={b} className="text-black">{b}</option>
-              ))}
-            </select>
-            <Icon name="chevron" className="pointer-events-none absolute right-0 bottom-3 size-4" />
-          </div>
+          <BudgetSelect id={f("budget")} budgets={budgets} value={budget} onChange={setBudget} />
           <div className="relative sm:col-span-2">
             <textarea
               id={f("project")}

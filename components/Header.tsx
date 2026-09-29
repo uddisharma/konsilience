@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { brand, nav } from "@/lib/content";
@@ -9,11 +10,15 @@ import Icon from "./ui/Icon";
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <Link href="/" className={`flex items-center gap-2 ${className}`} aria-label={brand.name}>
-      <svg viewBox="0 0 32 32" className="size-8" aria-hidden>
-        <rect width="32" height="32" rx="8" style={{ fill: "rgb(var(--brand-rgb))" }} />
-        <path d="M11 8v16M22 8l-9 8 9 8" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
+    <Link href="/" className={`flex items-center ${className}`} aria-label={brand.name}>
+      <Image
+        src="/logo-white.png"
+        alt={brand.name}
+        width={40}
+        height={40}
+        className="h-10 w-auto object-contain"
+        priority
+      />
       <span className="text-[1.35rem] font-bold tracking-tight text-white">{brand.name.toLowerCase()}</span>
     </Link>
   );

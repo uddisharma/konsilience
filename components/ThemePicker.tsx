@@ -1,11 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { applyBrand, BRAND_KEY, DEFAULT_BRAND, presets } from "@/lib/theme";
 import Icon from "./ui/Icon";
 
 // Floating colour picker for trying brand colours live. Remove <ThemePicker /> from app/layout.tsx once a colour is chosen.
-export default function ThemePicker() {
+function ThemePickerContent() {
+  const searchParams = useSearchParams();
+  const isEditMode = searchParams.get("edit") === "true";
+
   const [open, setOpen] = useState(false);
   const [color, setColor] = useState(DEFAULT_BRAND);
 
@@ -25,6 +29,10 @@ export default function ThemePicker() {
       else localStorage.setItem(BRAND_KEY, hex);
     } catch {}
   };
+
+  if (!isEditMode) {
+    return null;
+  }
 
   return (
     <div className="fixed bottom-6 left-6 z-40 print:hidden">
@@ -79,5 +87,13 @@ export default function ThemePicker() {
         />
       </button>
     </div>
+  );
+}
+
+export default function ThemePicker() {
+  return (
+    <Suspense fallback={null}>
+      <ThemePickerContent />
+    </Suspense>
   );
 }

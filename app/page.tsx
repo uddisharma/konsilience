@@ -11,6 +11,7 @@ import Services from "@/components/sections/Services";
 import Stats from "@/components/sections/Stats";
 import StrategyCta from "@/components/sections/StrategyCta";
 import Testimonials from "@/components/sections/Testimonials";
+import ContactModal from "@/components/ContactModal";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
       <Partners />
       <Industries />
       <Faq />
+      <ContactModal />
     </>
   );
 }
