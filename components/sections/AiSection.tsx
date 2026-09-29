@@ -36,12 +36,12 @@ function Sparkline({ pts, accent }: { pts: number[]; accent?: boolean }) {
   const d = pts.map((v, i) => `${(i / (pts.length - 1)) * 100},${30 - (v / max) * 26}`).join(" ");
   return (
     <svg viewBox="0 0 100 32" preserveAspectRatio="none" className="mt-2 h-7 w-full" aria-hidden>
-      <polyline points={`0,32 ${d} 100,32`} fill={accent ? "rgba(26,105,253,.18)" : "rgba(255,255,255,.06)"} stroke="none" />
+      <polyline points={`0,32 ${d} 100,32`} style={{ fill: accent ? "rgb(var(--brand-rgb) / .18)" : "rgba(255,255,255,.06)" }} stroke="none" />
       <polyline
         points={d}
         pathLength={1}
         fill="none"
-        stroke={accent ? "#1a69fd" : "rgba(255,255,255,.7)"}
+        style={{ stroke: accent ? "rgb(var(--brand-rgb))" : "rgba(255,255,255,.7)" }}
         strokeWidth="1.6"
         vectorEffect="non-scaling-stroke"
         className="tv-line"
@@ -52,8 +52,8 @@ function Sparkline({ pts, accent }: { pts: number[]; accent?: boolean }) {
 
 function TrasysVisual() {
   return (
-    <div className="relative h-full min-h-[640px] overflow-hidden bg-[#020615] sm:min-h-[720px]">
-      <div className="absolute inset-0 bg-[radial-gradient(70%_55%_at_45%_55%,rgba(26,105,253,.42),transparent_70%)]" />
+    <div className="relative h-full min-h-[640px] overflow-hidden bg-[rgb(var(--brand-ink-rgb))] sm:min-h-[720px]">
+      <div className="absolute inset-0 bg-[radial-gradient(70%_55%_at_45%_55%,rgb(var(--brand-rgb)/.42),transparent_70%)]" />
       <div
         className="absolute inset-0 opacity-40"
         style={{ backgroundImage: "radial-gradient(rgba(255,255,255,.14) 1px, transparent 1px)", backgroundSize: "22px 22px" }}
@@ -71,7 +71,7 @@ function TrasysVisual() {
 
       {/* dashboard window, vertically centred; the alert card hangs off its bottom edge */}
       <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 sm:inset-x-8 lg:inset-x-10">
-      <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/70 shadow-[0_30px_80px_-20px_rgba(26,105,253,.45)] backdrop-blur-xl">
+      <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/70 shadow-[0_30px_80px_-20px_rgb(var(--brand-rgb)/.45)] backdrop-blur-xl">
         {/* title bar */}
         <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 text-[11px] text-white/60">
           <div className="flex items-center gap-3">
@@ -191,7 +191,7 @@ function TrasysVisual() {
       <div className="float-a absolute top-8 right-4 z-10 hidden items-center gap-3 rounded-2xl border border-white/10 bg-black/80 px-4 py-2.5 backdrop-blur-xl sm:flex lg:top-10 lg:right-8">
         <svg viewBox="0 0 36 36" className="size-9 -rotate-90" aria-hidden>
           <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,.12)" strokeWidth="4" />
-          <circle cx="18" cy="18" r="15" fill="none" stroke="#1a69fd" strokeWidth="4" strokeLinecap="round" pathLength={100} strokeDasharray="72 100" />
+          <circle cx="18" cy="18" r="15" fill="none" style={{ stroke: "rgb(var(--brand-rgb))" }} strokeWidth="4" strokeLinecap="round" pathLength={100} strokeDasharray="72 100" />
         </svg>
         <div className="text-xs">
           <p className="font-semibold text-white">Monthly budget</p>

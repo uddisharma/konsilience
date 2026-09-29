@@ -30,7 +30,16 @@ export default function HeroCanvas() {
     window.addEventListener("mousemove", onMove);
 
     const COLS = 96, ROWS = 42;
+    // Brand colour from the --brand-rgb CSS variable, re-read so the colour picker updates it live.
+    let brand = [26, 105, 253];
+    let frame = 0;
+    const readBrand = () => {
+      const v = getComputedStyle(document.documentElement).getPropertyValue("--brand-rgb").trim().split(/s+/).map(Number);
+      if (v.length === 3 && v.every((n) => !Number.isNaN(n))) brand = v;
+    };
+    readBrand();
     const draw = (t: number) => {
+      if (++frame % 30 === 0) readBrand();
       mouse.x += (mouse.tx - mouse.x) * 0.04;
       mouse.y += (mouse.ty - mouse.y) * 0.04;
       ctx.clearRect(0, 0, w, h);
@@ -52,7 +61,9 @@ export default function HeroCanvas() {
           const depth = 1 - r / ROWS;
           const size = Math.max(0.9, 3.4 / z);
           const glow = 0.25 + (wave + 0.9) * 0.45;
-          ctx.fillStyle = `rgba(${60 + glow * 60},${120 + glow * 70},255,${Math.min(1, depth * glow * 1.6)})`;
+          // tint toward white as the wave peaks
+          const k = 0.15 + glow * 0.3;
+          ctx.fillStyle = `rgba(${brand[0] + (255 - brand[0]) * k},${brand[1] + (255 - brand[1]) * k},${brand[2] + (255 - brand[2]) * k},${Math.min(1, depth * glow * 1.6)})`;
           ctx.fillRect(sx, sy, size, size);
         }
       }

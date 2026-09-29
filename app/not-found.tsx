@@ -4,7 +4,7 @@ import Button from "@/components/ui/Button";
 export default function NotFound() {
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden bg-black pt-32 pb-20">
-      <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_30%,rgba(26,105,253,.35),transparent_65%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_30%,rgb(var(--brand-rgb)/.35),transparent_65%)]" />
       <div className="wrap relative text-center">
         <p className="anim-hero font-condensed text-[34vw] leading-[.8] font-semibold text-white/10 sm:text-[22vw]">404</p>
         <h1 className="anim-hero h2 -mt-[8vw]" style={{ animationDelay: "120ms" }}>This page drifted off course.</h1>

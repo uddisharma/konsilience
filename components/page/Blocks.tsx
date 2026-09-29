@@ -134,8 +134,8 @@ export function CtaBand({
   return (
     <section className="sec bg-black">
       <Reveal variant="zoom" className="wrap">
-        <div className="relative overflow-hidden rounded-3xl bg-[linear-gradient(110deg,#031432_0%,#0b2f86_45%,#1163fb_100%)] p-8 sm:p-12 lg:p-16">
-          <div className="absolute inset-0 bg-[radial-gradient(60%_80%_at_85%_50%,rgba(94,150,254,.45),transparent_70%)]" />
+        <div className="relative overflow-hidden rounded-3xl bg-[linear-gradient(110deg,rgb(var(--brand-deep-rgb))_0%,rgb(var(--brand-mid-rgb))_45%,rgb(var(--brand-strong-rgb))_100%)] p-8 sm:p-12 lg:p-16">
+          <div className="absolute inset-0 bg-[radial-gradient(60%_80%_at_85%_50%,rgb(var(--brand-light-rgb)/.45),transparent_70%)]" />
           <div
             className="absolute inset-0 opacity-30"
             style={{

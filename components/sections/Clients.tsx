@@ -18,7 +18,7 @@ export default function Clients() {
   const half = Math.ceil(projects.length / 2);
   return (
     <section className="sec bg-black">
-      <div className="bg-[radial-gradient(50%_60%_at_50%_0%,rgba(26,105,253,.18),transparent_70%)]">
+      <div className="bg-[radial-gradient(50%_60%_at_50%_0%,rgb(var(--brand-rgb)/.18),transparent_70%)]">
         <LineReveal className="h2 wrap-sm text-center" lines={["Platforms We've", "Engineered"]} />
         <ul className="wrap mt-14 hidden grid-cols-5 gap-x-10 gap-y-2 md:grid">
           {projects.map((p, i) => (

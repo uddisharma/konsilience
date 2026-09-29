@@ -16,7 +16,7 @@ export function OfficeMap({ className = "" }: { className?: string }) {
         className="absolute inset-0 size-full border-0 [filter:grayscale(1)_invert(.92)_contrast(.9)]"
       />
       {/* brand pin overlay */}
-      <span className="pointer-events-none absolute top-1/2 left-1/2 grid size-12 -translate-1/2 place-items-center rounded-full bg-primary shadow-[0_0_0_10px_rgba(26,105,253,.25)]">
+      <span className="pointer-events-none absolute top-1/2 left-1/2 grid size-12 -translate-1/2 place-items-center rounded-full bg-primary shadow-[0_0_0_10px_rgb(var(--brand-rgb)/.25)]">
         <Icon name="pin" className="size-5 text-white" strokeWidth={2} />
       </span>
     </div>

@@ -1,11 +1,23 @@
 @import "tailwindcss";
 
+/* Brand colour, as "R G B" channels so opacity can be applied: rgb(var(--brand-rgb) / .5).
+   Change these (or use the colour picker) to re-theme the whole site. */
+:root {
+  --brand-rgb: 26 105 253; /* main accent */
+  --brand-strong-rgb: 17 99 251; /* gradients, outlines */
+  --brand-light-rgb: 94 150 254; /* button top edge, glows */
+  --brand-dark-rgb: 12 79 203; /* hover */
+  --brand-mid-rgb: 11 47 134; /* gradient middle */
+  --brand-deep-rgb: 3 20 50; /* gradient start (near black) */
+  --brand-ink-rgb: 2 6 21; /* tinted dark panels */
+}
+
 @theme inline {
   --font-sans: var(--font-jakarta);
   --font-condensed: var(--font-barlow);
-  --color-primary: #1a69fd;
-  --color-primary-2: #1163fb;
-  --color-primary-hover: #0c4fcb;
+  --color-primary: rgb(var(--brand-rgb));
+  --color-primary-2: rgb(var(--brand-strong-rgb));
+  --color-primary-hover: rgb(var(--brand-dark-rgb));
   --color-card: #191918;
   --color-line: #3e3e3d;
   --color-muted: #888886;
@@ -89,14 +101,14 @@ body {
   white-space: nowrap;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
-.swap-btn.primary { background: #1a69fd; color: #fff; border-top: 2px solid #5e96fe; border-bottom: 2px solid transparent; }
-.swap-btn.primary:hover { background: #0c4fcb; box-shadow: 0 10px 30px -10px rgba(26, 105, 253, 0.7); }
+.swap-btn.primary { background: rgb(var(--brand-rgb)); color: #fff; border-top: 2px solid rgb(var(--brand-light-rgb)); border-bottom: 2px solid transparent; }
+.swap-btn.primary:hover { background: rgb(var(--brand-dark-rgb)); box-shadow: 0 10px 30px -10px rgb(var(--brand-rgb) / 0.7); }
 .swap-btn.white { background: linear-gradient(180deg, #fff 0%, #eee 100%); color: #111; border-top: 2px solid #cecece; border-bottom: 2px solid transparent; }
 .swap-btn.outline { border: 1px solid #fff; color: #fff; }
 .swap-btn.outline:hover { background: rgba(255, 255, 255, 0.08); }
 .swap-btn.ghost { border: 1px solid #3e3e3d; color: #fff; }
 .swap-btn.ghost:hover { border-color: #888886; }
-.swap-btn.blue-outline { border: 2px solid #1163fb; color: #1163fb; }
+.swap-btn.blue-outline { border: 2px solid rgb(var(--brand-strong-rgb)); color: rgb(var(--brand-strong-rgb)); }
 
 .swap-txt { position: relative; display: inline-block; overflow: hidden; }
 .swap-txt > span { display: block; transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1); }
@@ -127,7 +139,7 @@ body {
 
 .check-dot {
   display: inline-grid; place-items: center; flex-shrink: 0;
-  width: 20px; height: 20px; border-radius: 999px; background: #1a69fd;
+  width: 20px; height: 20px; border-radius: 999px; background: rgb(var(--brand-rgb));
 }
 
 .float-a { animation: floaty 9s ease-in-out infinite; }

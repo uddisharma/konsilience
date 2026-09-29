@@ -45,7 +45,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
   return (
     <>
       <section className="relative overflow-hidden bg-black pt-40 lg:pt-48">
-        <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_0%,rgba(26,105,253,.28),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_0%,rgb(var(--brand-rgb)/.28),transparent_60%)]" />
         <div className="wrap-sm relative">
           <nav className="anim-hero flex flex-wrap items-center gap-2 text-sm text-muted">
             <Link href="/" className="hover:text-white">Home</Link>

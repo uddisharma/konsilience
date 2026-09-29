@@ -17,7 +17,7 @@ export default function ApplyForm({ role }: { role: string }) {
 
   if (done)
     return (
-      <div className="anim-fade-up flex min-h-[420px] flex-col items-center justify-center rounded-3xl border border-line bg-[linear-gradient(180deg,#031432_0%,#1163fb_100%)] p-9 text-center">
+      <div className="anim-fade-up flex min-h-[420px] flex-col items-center justify-center rounded-3xl border border-line bg-[linear-gradient(180deg,rgb(var(--brand-deep-rgb))_0%,rgb(var(--brand-strong-rgb))_100%)] p-9 text-center">
         <span className="grid size-20 place-items-center rounded-full bg-white text-primary">
           <Icon name="check" className="size-10" strokeWidth={2.5} />
         </span>
@@ -27,7 +27,7 @@ export default function ApplyForm({ role }: { role: string }) {
     );
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-4 rounded-3xl border border-line bg-[linear-gradient(180deg,#031432_0%,#1163fb_100%)] p-7 sm:p-9">
+    <form onSubmit={submit} className="flex flex-col gap-4 rounded-3xl border border-line bg-[linear-gradient(180deg,rgb(var(--brand-deep-rgb))_0%,rgb(var(--brand-strong-rgb))_100%)] p-7 sm:p-9">
       <p className="subtitle !font-extrabold">Apply for {role}</p>
       <input required name="name" placeholder="Full name *" className={input} />
       <input required name="email" type="email" placeholder="Email *" className={input} />

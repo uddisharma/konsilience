@@ -24,7 +24,7 @@ export default function PageHero({
 }) {
   return (
     <section className="relative overflow-hidden bg-black pt-40 lg:pt-48">
-      <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_80%_0%,rgba(26,105,253,.32),transparent_60%),radial-gradient(40%_40%_at_0%_20%,rgba(94,150,254,.14),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_80%_0%,rgb(var(--brand-rgb)/.32),transparent_60%),radial-gradient(40%_40%_at_0%_20%,rgb(var(--brand-light-rgb)/.14),transparent_70%)]" />
       <div
         className="absolute inset-0 opacity-40"
         style={{

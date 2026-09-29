@@ -6,7 +6,7 @@ export default function StrategyCta() {
   return (
     <section className="sec bg-black">
       <Reveal variant="zoom" className="wrap">
-        <div className="relative overflow-hidden rounded-3xl border border-line bg-[linear-gradient(120deg,#0d0d0d_30%,#0b2f86_75%,#1163fb)]">
+        <div className="relative overflow-hidden rounded-3xl border border-line bg-[linear-gradient(120deg,#0d0d0d_30%,rgb(var(--brand-mid-rgb))_75%,rgb(var(--brand-strong-rgb)))]">
           <div className="grid items-stretch lg:grid-cols-2">
             <div className="flex flex-col justify-between gap-12 p-8 sm:p-12 lg:p-16">
               <div className="flex flex-col gap-4">

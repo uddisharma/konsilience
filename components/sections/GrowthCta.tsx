@@ -7,8 +7,8 @@ export default function GrowthCta() {
   return (
     <section className="sec bg-black">
       <Reveal variant="zoom" className="wrap">
-        <div className="relative overflow-hidden rounded-3xl bg-[linear-gradient(110deg,#031432_0%,#0b2f86_45%,#1163fb_100%)]">
-          <div className="absolute inset-0 bg-[radial-gradient(60%_80%_at_85%_50%,rgba(94,150,254,.45),transparent_70%)]" />
+        <div className="relative overflow-hidden rounded-3xl bg-[linear-gradient(110deg,rgb(var(--brand-deep-rgb))_0%,rgb(var(--brand-mid-rgb))_45%,rgb(var(--brand-strong-rgb))_100%)]">
+          <div className="absolute inset-0 bg-[radial-gradient(60%_80%_at_85%_50%,rgb(var(--brand-light-rgb)/.45),transparent_70%)]" />
           <div
             className="absolute inset-0 opacity-30"
             style={{
@@ -36,7 +36,7 @@ export default function GrowthCta() {
               </div>
             </div>
             <div className="relative hidden h-full min-h-[420px] lg:block">
-              <PhoneArt accent="#5e96fe" dark className="float-a absolute right-12 bottom-0 w-[70%] translate-y-16" />
+              <PhoneArt accent="rgb(var(--brand-light-rgb))" dark className="float-a absolute right-12 bottom-0 w-[70%] translate-y-16" />
             </div>
           </div>
         </div>

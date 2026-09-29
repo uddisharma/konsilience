@@ -5,7 +5,9 @@ import BackToTop from "@/components/BackToTop";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import SmoothScroll from "@/components/SmoothScroll";
+import ThemePicker from "@/components/ThemePicker";
 import { brand } from "@/lib/content";
+import { themeBootScript } from "@/lib/theme";
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -29,13 +31,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${jakarta.variable} ${barlow.variable}`}>
+    <html lang="en" className={`${jakarta.variable} ${barlow.variable}`} suppressHydrationWarning>
       <body>
+        {/* Re-applies a saved brand colour before first paint */}
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
         <SmoothScroll />
         <Header />
         <main>{children}</main>
         <Footer />
         <BackToTop />
+        {/* Colour tester: remove once the brand colour is final */}
+        <ThemePicker />
       </body>
     </html>
   );

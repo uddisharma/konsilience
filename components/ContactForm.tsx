@@ -50,7 +50,7 @@ export default function ContactForm({
   };
 
   return (
-    <div className={`rounded-3xl border border-line bg-[linear-gradient(180deg,#031432_0%,#1163fb_100%)] p-7 sm:p-9 ${className}`}>
+    <div className={`rounded-3xl border border-line bg-[linear-gradient(180deg,rgb(var(--brand-deep-rgb))_0%,rgb(var(--brand-strong-rgb))_100%)] p-7 sm:p-9 ${className}`}>
       <form onSubmit={submit} className="flex flex-col gap-9">
         <div className="flex flex-col gap-3">
           <p className="subtitle !font-extrabold">{title}</p>

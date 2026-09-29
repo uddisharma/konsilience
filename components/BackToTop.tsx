@@ -26,7 +26,7 @@ export default function BackToTop() {
     >
       <svg className="absolute inset-0 -rotate-90" viewBox="0 0 56 56">
         <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(255,255,255,.15)" strokeWidth="3" />
-        <circle cx="28" cy="28" r="22" fill="none" stroke="#1a69fd" strokeWidth="3" strokeDasharray={c} strokeDashoffset={c * (1 - p)} strokeLinecap="round" />
+        <circle cx="28" cy="28" r="22" fill="none" style={{ stroke: "rgb(var(--brand-rgb))" }} strokeWidth="3" strokeDasharray={c} strokeDashoffset={c * (1 - p)} strokeLinecap="round" />
       </svg>
       <Icon name="up" className="size-5" />
     </button>

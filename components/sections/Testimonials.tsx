@@ -33,8 +33,8 @@ export default function Testimonials() {
         <div className="grid gap-6 lg:grid-cols-[1fr_1.35fr]">
           {/* Video reel poster */}
           <Reveal variant="left">
-            <div className="group relative aspect-[4/5] overflow-hidden rounded-3xl bg-[linear-gradient(160deg,#0b2f86,#020615_70%)] lg:aspect-auto lg:h-full lg:min-h-[560px]">
-              <div className="absolute inset-0 bg-[radial-gradient(50%_40%_at_50%_40%,rgba(94,150,254,.5),transparent_70%)] transition-transform duration-[1.5s] group-hover:scale-110" />
+            <div className="group relative aspect-[4/5] overflow-hidden rounded-3xl bg-[linear-gradient(160deg,rgb(var(--brand-mid-rgb)),rgb(var(--brand-ink-rgb))_70%)] lg:aspect-auto lg:h-full lg:min-h-[560px]">
+              <div className="absolute inset-0 bg-[radial-gradient(50%_40%_at_50%_40%,rgb(var(--brand-light-rgb)/.5),transparent_70%)] transition-transform duration-[1.5s] group-hover:scale-110" />
               {/* speaker portrait for the active testimonial */}
               {testimonials.map((t, i) => (
                 <div

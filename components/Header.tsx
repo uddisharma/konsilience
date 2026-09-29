@@ -11,7 +11,7 @@ export function Logo({ className = "" }: { className?: string }) {
   return (
     <Link href="/" className={`flex items-center gap-2 ${className}`} aria-label={brand.name}>
       <svg viewBox="0 0 32 32" className="size-8" aria-hidden>
-        <rect width="32" height="32" rx="8" fill="#1a69fd" />
+        <rect width="32" height="32" rx="8" style={{ fill: "rgb(var(--brand-rgb))" }} />
         <path d="M11 8v16M22 8l-9 8 9 8" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
       <span className="text-[1.35rem] font-bold tracking-tight text-white">{brand.name.toLowerCase()}</span>
@@ -124,7 +124,7 @@ export default function Header() {
                   </div>
                 ))}
               </div>
-              <div className="relative w-80 shrink-0 overflow-hidden rounded-3xl border border-line bg-gradient-to-b from-[#031432] to-primary-2 p-8">
+              <div className="relative w-80 shrink-0 overflow-hidden rounded-3xl border border-line bg-gradient-to-b from-[rgb(var(--brand-deep-rgb))] to-primary-2 p-8">
                 <p className="text-xs font-semibold tracking-[.2em] text-white/70 uppercase">Featured</p>
                 <p className="mt-4 text-2xl font-semibold">{active.featured?.title ?? `Explore ${active.label}`}</p>
                 <p className="mt-3 text-sm leading-relaxed text-white/75">

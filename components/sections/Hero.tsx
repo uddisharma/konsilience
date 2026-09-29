@@ -12,7 +12,7 @@ export default function Hero() {
       <div className="relative flex min-h-[min(100svh,820px)] flex-col justify-center pt-36 lg:pt-40">
         {/* animated background */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_70%_20%,rgba(26,105,253,.35),transparent_60%),radial-gradient(50%_40%_at_10%_10%,rgba(94,150,254,.18),transparent_70%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_70%_20%,rgb(var(--brand-rgb)/.35),transparent_60%),radial-gradient(50%_40%_at_10%_10%,rgb(var(--brand-light-rgb)/.18),transparent_70%)]" />
           <HeroCanvas />
           <div className="absolute inset-x-0 bottom-0 h-[55%] bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,.25)_20%,rgba(0,0,0,.65)_45%,rgba(0,0,0,.92)_70%,#000_85%)]" />
         </div>
