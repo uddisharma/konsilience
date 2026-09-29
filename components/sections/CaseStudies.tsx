@@ -130,7 +130,7 @@ export default function CaseStudies() {
                     </span>
                     <span>
                       <span className="subtitle block leading-tight">{c.client}</span>
-                      <span className={`text-xs font-semibold ${c.dark ? "text-white/70" : "text-black/55"}`}>{c.style}-style · {c.industry}</span>
+                      <span className={`text-xs font-semibold ${c.dark ? "text-white/70" : "text-black/55"}`}>{c.live ? "Our product" : `${c.style}-style`} · {c.industry}</span>
                     </span>
                   </div>
                   <p className={`fs-para font-medium ${c.dark ? "text-white/80" : "text-black/70"}`}>{c.text}</p>

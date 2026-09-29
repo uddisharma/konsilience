@@ -331,15 +331,16 @@ export const projects: Project[] = [
     bg: "#ffe4ef", dark: false, accent: "#db2777",
   }),
   proj({
-    client: "AI Observability Platform",
-    style: "Trasys",
+    client: "Trasys AI",
+    style: "Trasys AI",
     url: "https://www.trasys.dev",
+    live: true, // our own product
     category: "AI / LLM observability",
     industry: "Developer Tools",
     service: "DevOps",
     text: "One place to trace LLM calls, track token spend, catch runaway agents and route incidents.",
     about: "An observability platform for teams running AI in production, combining distributed tracing, cost monitoring, log clustering and alerting across services and model providers.",
-    challenge: "Teams shipping AI features could not see token costs, agent loops, latency regressions or noisy logs across services and model providers, so incidents and overspend went unnoticed.",
+    challenge: "We built Trasys AI because teams shipping AI features, including our own, could not see token costs, agent loops, latency regressions or noisy logs across services and model providers, so incidents and overspend went unnoticed.",
     solution: ["LLM call tracing and token cost tracking", "Loop detection and spend safety limits", "Distributed tracing across services, databases and models", "Natural-language anomaly search and a query language", "Log pattern clustering to reduce alert noise", "Slack alerting and on-call escalation"],
     metrics: [["Real-time", "token cost visibility"], ["1 view", "traces, logs and incidents"]],
     platforms: ["Web"],
@@ -400,7 +401,7 @@ export const posts = [
 
 export const jobs = [
   { slug: "senior-react-developer", title: "Senior React / Next.js Developer", team: "Engineering", location: "Remote / Hybrid", type: "Full-time", exp: "5+ years" },
-  { slug: "ai-ml-engineer", title: "AI / ML Engineer", team: "KonAI", location: "Hybrid", type: "Full-time", exp: "3+ years" },
+  { slug: "ai-ml-engineer", title: "AI / ML Engineer", team: "AI", location: "Hybrid", type: "Full-time", exp: "3+ years" },
   { slug: "flutter-developer", title: "Flutter Developer", team: "Mobile", location: "Remote", type: "Full-time", exp: "3+ years" },
   { slug: "product-designer", title: "Senior Product Designer", team: "Design", location: "Hybrid", type: "Full-time", exp: "4+ years" },
   { slug: "devops-engineer", title: "DevOps Engineer", team: "Cloud", location: "Remote", type: "Full-time", exp: "4+ years" },
@@ -498,7 +499,7 @@ export const resourceTypes = [
     intro: "Company news, partnerships and announcements.",
     cta: "Read More",
     items: [
-      { title: "Konsilience launches KonAI", text: "Our AI practice for agentic workflows, copilots and RAG systems.", meta: "Sep 2026" },
+      { title: "Konsilience launches Trasys AI", text: "Our AI observability platform for teams running LLMs and agents in production.", meta: "Sep 2026" },
       { title: "Konsilience expands its Chandigarh headquarters", text: "A bigger home for our growing engineering, design and AI teams.", meta: "Jun 2026" },
       { title: "15 platforms and counting", text: "A look back at the SaaS products our team has shipped so far.", meta: "Mar 2026" },
     ],
@@ -512,7 +513,7 @@ export const resourceTypes = [
     items: [
       { title: "Building Production RAG Systems", text: "Architecture, evaluation and cost control for retrieval-augmented generation.", meta: "On-demand · 45 min" },
       { title: "From Monolith to Microservices", text: "A real-world migration story, warts and all.", meta: "On-demand · 50 min" },
-      { title: "AI Copilots for Sales Teams", text: "Live demo and Q&A with our KonAI team.", meta: "Upcoming · Oct 2026" },
+      { title: "AI Copilots for Sales Teams", text: "Live demo and Q&A with our AI team.", meta: "Upcoming · Oct 2026" },
     ],
   },
 ];

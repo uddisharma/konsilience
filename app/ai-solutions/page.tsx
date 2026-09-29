@@ -11,27 +11,27 @@ import { aiProcess, aiSolutions, aiStack, projects, responsibleAi } from "@/lib/
 import { brand } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: `${brand.ai}: Enterprise AI`,
-  description: `${brand.ai} is the ${brand.name} AI practice for agentic, generative and multimodal AI.`,
+  title: "AI Solutions",
+  description: `Agentic, generative and multimodal AI solutions built by ${brand.name}.`,
 };
 
-export default function KonAiPage() {
+export default function AiSolutionsPage() {
   const aiWork = projects.filter((p) => ["Agentic AI", "Data Analytics"].includes(p.service) || p.text.includes("AI"));
 
   return (
     <>
       <PageHero
-        crumbs={[{ label: brand.ai }]}
+        crumbs={[{ label: "AI Solutions" }]}
         eyebrow="Our AI practice"
         title={["Enterprise AI,", "Engineered for", <span key="p" className="text-primary">Production</span>]}
-        text={`${brand.ai} designs, builds and operates agentic systems, copilots and multimodal models that deliver measurable ROI, safely.`}
+        text={`${brand.name} designs, builds and ships agentic systems, copilots and multimodal features that deliver measurable ROI, and we monitor them with our own ${brand.product.name}.`}
         actions={
           <>
             <Button>Book an AI Advisory Session</Button>
             <Button variant="outline" href="#solutions">Explore Solutions</Button>
           </>
         }
-        aside={<SceneArt hue={225} icon="spark" label={brand.ai} className="hidden aspect-[4/3] rounded-3xl lg:block" />}
+        aside={<SceneArt hue={225} icon="spark" label="AI Solutions" className="hidden aspect-[4/3] rounded-3xl lg:block" />}
         stats={[["AI-first", "Every project"], ["Model-agnostic", "OpenAI · Claude · Gemini"], ["4–6 wks", "Typical POC"], ["Evals", "Before launch"]]}
       />
 
@@ -41,7 +41,7 @@ export default function KonAiPage() {
         <div className="wrap">
           <SectionHead title={["AI Solutions"]} text="Proven patterns we take from prototype to production." />
           <div className="mt-14">
-            <CardGrid items={aiSolutions.map((a) => ({ icon: a.icon, title: a.name, text: a.short, href: `/konai/${a.slug}` }))} />
+            <CardGrid items={aiSolutions.map((a) => ({ icon: a.icon, title: a.name, text: a.short, href: `/ai-solutions/${a.slug}` }))} />
           </div>
         </div>
       </section>

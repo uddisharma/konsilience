@@ -6,7 +6,6 @@ import Faq from "@/components/sections/Faq";
 import { SceneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import { aiProcess, aiSolutions, aiStack, industryList, responsibleAi } from "@/lib/catalog";
-import { brand } from "@/lib/content";
 
 const find = (slug: string) => aiSolutions.find((a) => a.slug === slug);
 
@@ -14,12 +13,12 @@ export function generateStaticParams() {
   return aiSolutions.map((a) => ({ slug: a.slug }));
 }
 
-export async function generateMetadata({ params }: PageProps<"/konai/[slug]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/ai-solutions/[slug]">): Promise<Metadata> {
   const a = find((await params).slug);
   return a ? { title: `${a.name} Development`, description: a.short } : {};
 }
 
-export default async function AiSolutionPage({ params }: PageProps<"/konai/[slug]">) {
+export default async function AiSolutionPage({ params }: PageProps<"/ai-solutions/[slug]">) {
   const a = find((await params).slug);
   if (!a) notFound();
   const n = a.name;
@@ -27,14 +26,14 @@ export default async function AiSolutionPage({ params }: PageProps<"/konai/[slug
   return (
     <>
       <PageHero
-        crumbs={[{ label: brand.ai, href: "/konai" }, { label: a.name }]}
-        eyebrow={brand.ai}
+        crumbs={[{ label: "AI Solutions", href: "/ai-solutions" }, { label: a.name }]}
+        eyebrow="AI Solutions"
         title={[a.name, <span key="d" className="text-primary">Development</span>]}
         text={`${a.short} Built on your data, integrated with your systems and governed for enterprise use.`}
         actions={
           <>
             <Button>Book an AI Advisory Session</Button>
-            <Button variant="outline" href="/konai">All AI Solutions</Button>
+            <Button variant="outline" href="/ai-solutions">All AI Solutions</Button>
           </>
         }
         aside={<SceneArt hue={230} icon={a.icon} label={a.name} className="hidden aspect-[4/3] rounded-3xl lg:block" />}

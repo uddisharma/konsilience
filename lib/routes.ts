@@ -22,7 +22,7 @@ export const routeGroups: { title: string; links: Route[] }[] = [
     ],
   },
   { title: "Services", links: [{ label: "All Services", href: "/services" }, ...serviceList.map((s) => ({ label: s.name, href: `/services/${s.slug}` }))] },
-  { title: brand.ai, links: [{ label: `${brand.ai} Overview`, href: "/konai" }, ...aiSolutions.map((a) => ({ label: a.name, href: `/konai/${a.slug}` }))] },
+  { title: "AI", links: [{ label: brand.product.name, href: "/trasys-ai" }, { label: "AI Solutions", href: "/ai-solutions" }, ...aiSolutions.map((a) => ({ label: a.name, href: `/ai-solutions/${a.slug}` }))] },
   { title: "Industries", links: [{ label: "All Industries", href: "/industries" }, ...industryList.map((i) => ({ label: i.name, href: `/industries/${i.slug}` }))] },
   { title: "Portfolio", links: [{ label: "All Case Studies", href: "/portfolio" }, ...projects.map((p) => ({ label: p.client, href: `/portfolio/${p.slug}` }))] },
   {

@@ -3,7 +3,13 @@ import type { StatVisualName } from "@/components/ui/StatVisual";
 
 export const brand = {
   name: "Konsilience",
-  ai: "KonAI", // name of the AI practice
+  // Our own product
+  product: {
+    name: "Trasys AI",
+    url: "https://www.trasys.dev",
+    short: "AI observability platform",
+    tagline: "See every signal your AI stack produces: traces, token spend, loops and incidents in one place.",
+  },
   tagline: "An AI-first product studio. A small senior team building SaaS platforms, apps and AI systems.",
   teamSize: 12, // core team headcount, used in stats and copy
   founded: 2021,
@@ -31,21 +37,24 @@ export type NavItem = { label: string; href: string; groups: NavGroup[]; feature
 
 export const nav: NavItem[] = [
   {
-    label: brand.ai,
-    href: "/konai",
+    label: brand.product.name,
+    href: "/trasys-ai",
     groups: [
-      { title: "AI Solutions", links: aiSolutions.map((a) => ({ label: a.name, href: `/konai/${a.slug}` })) },
       {
-        title: "AI Knowledge Hub",
+        title: brand.product.name,
         links: [
-          { label: "RAG Architecture Patterns", href: "/blog/rag-architecture-patterns" },
-          { label: "Agentic AI Playbook", href: "/blog/agentic-ai-enterprise-playbook" },
-          { label: "AI Guides", href: "/resources/guides" },
-          { label: "AI Webinars", href: "/resources/webinars" },
+          { label: "Product Overview", href: "/trasys-ai" },
+          { label: "Features", href: "/trasys-ai#features" },
+          { label: "Integrations", href: "/trasys-ai#integrations" },
+          { label: `Try ${brand.product.name}`, href: brand.product.url },
         ],
       },
+      {
+        title: "AI Services",
+        links: [{ label: "All AI Solutions", href: "/ai-solutions" }, ...aiSolutions.map((a) => ({ label: a.name, href: `/ai-solutions/${a.slug}` }))],
+      },
     ],
-    featured: { title: `Explore ${brand.ai}`, text: "Production-grade AI systems built around your data and workflows.", href: "/konai" },
+    featured: { title: brand.product.name, text: "Our own AI observability platform: trace LLM calls, track token spend and catch incidents early.", href: "/trasys-ai" },
   },
   {
     label: "About",
@@ -129,7 +138,7 @@ export const heroTags = [
 export const services = [
   { icon: "compass", title: ["Strategic Technology", "Consulting"], text: "Define the right technology strategy to solve complex business challenges.", links: [["IT Consulting", "/services/it-consulting"], ["Software Consulting", "/services/software-consulting"], ["Mobile App Consulting", "/services/mobile-app-consulting"], ["FinTech Consulting", "/services/fintech-consulting"]] },
   { icon: "layers", title: ["Digital Product Development", "& Engineering"], text: "Design, build and scale digital products engineered for performance.", links: [["Mobile App Development", "/services/mobile-app-development"], ["Web Development", "/services/web-development"], ["Custom Software", "/services/custom-software-development"], ["UI/UX Design", "/services/ui-ux-design"]] },
-  { icon: "spark", title: ["AI, Data &", "Analytics"], text: "Turn data into intelligent systems that drive real business decisions.", links: [["Generative AI", "/konai/generative-ai"], ["Agentic AI", "/konai/agentic-ai"], ["Big Data", "/services/big-data"], ["Business Intelligence", "/services/business-intelligence"]] },
+  { icon: "spark", title: ["AI, Data &", "Analytics"], text: "Turn data into intelligent systems that drive real business decisions.", links: [["Generative AI", "/ai-solutions/generative-ai"], ["Agentic AI", "/ai-solutions/agentic-ai"], ["Big Data", "/services/big-data"], ["Business Intelligence", "/services/business-intelligence"]] },
   { icon: "shield", title: ["Cloud Operations", "& Cybersecurity"], text: "Run resilient, secure cloud infrastructure that scales with your growth.", links: [["Cloud Services", "/services/cloud-services"], ["DevOps", "/services/devops"], ["Managed IT", "/services/managed-it-services"], ["Cybersecurity", "/services/cybersecurity"]] },
 ];
 
@@ -144,10 +153,10 @@ export const stats: { value: number; suffix: string; label: string[]; text: stri
   { value: new Date().getFullYear() - brand.founded, suffix: "+", label: ["Years", "Building"], text: `shipping products since ${brand.founded}, from first MVP to multi-tenant SaaS`, visual: "timeline" },
 ];
 
+// Trasys AI feature pillars shown on the home page.
 export const aiPillars = [
-  { icon: "agent", title: "Agentic AI", items: ["Autonomous Workflows", "Multi-Agent Systems", "Enterprise Copilots"] },
-  { icon: "eye", title: "Multimodal AI", items: ["Vision & Voice Models", "Document Intelligence", "Cross-Modal Search"] },
-  // { icon: "db", title: "Data-to-AI Platforms", items: ["Data Pipelines & Integration", "Feature Engineering", "Model-Ready Infrastructure"] },
+  { icon: "eye", title: "LLM Observability", items: ["LLM call tracing", "Token cost tracking", "Runaway loop detection"] },
+  { icon: "chart", title: "Ops Intelligence", items: ["Distributed tracing", "Log pattern clustering", "Slack alerts & on-call routing"] },
 ];
 
 // Real client quotes only. The testimonial sections stay hidden while this list is empty.
@@ -178,7 +187,7 @@ export const faqs = [
 
 export const footer = {
   columns: [
-    { title: "Services", links: [{ label: "Mobile App Development", href: "/services/mobile-app-development" }, { label: "Web Development", href: "/services/web-development" }, { label: "Generative AI", href: "/konai/generative-ai" }, { label: "Cloud Services", href: "/services/cloud-services" }, { label: "UI/UX Design", href: "/services/ui-ux-design" }, { label: "QA & Testing", href: "/services/qa-and-testing" }] },
+    { title: "Services", links: [{ label: "Mobile App Development", href: "/services/mobile-app-development" }, { label: "Web Development", href: "/services/web-development" }, { label: "Trasys AI", href: "/trasys-ai" }, { label: "Cloud Services", href: "/services/cloud-services" }, { label: "UI/UX Design", href: "/services/ui-ux-design" }, { label: "QA & Testing", href: "/services/qa-and-testing" }] },
     { title: "Industries", links: [{ label: "Healthcare", href: "/industries/healthcare" }, { label: "Finance", href: "/industries/finance" }, { label: "Retail & Ecommerce", href: "/industries/retail-and-ecommerce" }, { label: "Logistics", href: "/industries/logistics" }, { label: "Education", href: "/industries/education" }, { label: "Real Estate", href: "/industries/real-estate" }] },
     { title: "Company", links: [{ label: "About Us", href: "/about" }, { label: "Careers", href: "/careers" }, { label: "Portfolio", href: "/portfolio" }, { label: "Our Team", href: "/about/team" }, { label: "How We Work", href: "/how-we-work" }, { label: "Contact", href: "/contact" }] },
     { title: "Resources", links: [{ label: "Blog", href: "/blog" }, { label: "Guides", href: "/resources/guides" }, { label: "Whitepapers", href: "/resources/whitepapers" }, { label: "Press Releases", href: "/resources/press-releases" }, { label: "FAQ", href: "/faq" }] },

@@ -44,7 +44,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
             <Button>Build a Platform Like This</Button>
             <Button variant="outline" href={p.url}>{linkLabel}</Button>
             <span className="flex items-center gap-2 self-center rounded-full border border-line bg-card px-4 py-2.5 text-sm text-white/80">
-              <Icon name="layers" className="size-4 text-primary" /> {p.style}-style platform
+              <Icon name="layers" className="size-4 text-primary" /> {p.live ? `Our own product` : `${p.style}-style platform`}
             </span>
           </>
         }

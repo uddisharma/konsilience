@@ -27,7 +27,7 @@ const values = [
 const timeline = [
   { year: String(brand.founded), title: "Founded in Chandigarh", text: `Started by ${brand.founders.map((f) => f.name.split(" ")[0]).join(", ").replace(/, ([^,]*)$/, " and $1")} with one goal: build products the right way.` },
   { year: "Step 2", title: "First platform shipped", text: "Delivered our first SaaS build end to end, from discovery to launch." },
-  { year: "Step 3", title: `${brand.ai} launched`, text: "Our AI practice for agentic workflows, copilots and RAG systems." },
+  { year: "Step 3", title: `${brand.product.name} launched`, text: "Our own AI observability platform for teams running LLMs in production." },
   { year: String(new Date().getFullYear()), title: `${facts.platforms} platforms built`, text: `Support, legal, HR, real estate, healthcare and more, across ${facts.industries} industries.` },
   { year: "Next", title: "What's next", text: "Growing the team carefully and partnering with ambitious founders." },
 ];
