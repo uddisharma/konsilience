@@ -1,6 +1,6 @@
 import { facts } from "@/lib/content";
 import Button from "../ui/Button";
-import { PhoneArt } from "../ui/Artwork";
+import AdVideo from "../ui/AdVideo";
 import Reveal from "../ui/Reveal";
 
 export default function GrowthCta() {
@@ -35,8 +35,13 @@ export default function GrowthCta() {
                 <Button variant="white">Plan Your Product With Us</Button>
               </div>
             </div>
-            <div className="relative hidden h-full min-h-[420px] lg:block">
-              <PhoneArt accent="rgb(var(--brand-light-rgb))" dark className="float-a absolute right-12 bottom-0 w-[70%] translate-y-16" />
+            <div className="relative flex justify-center px-8 pb-8 sm:px-12 sm:pb-12 lg:p-12 lg:pl-0">
+              <AdVideo
+                src="/konsilience-studio-ad-4x5-v1.mp4"
+                poster="/konsilience-studio-ad-poster.jpg"
+                label={`${facts.platforms} platforms engineered by Konsilience across web, mobile and AI`}
+                className="max-w-[420px] rounded-2xl border border-white/15 shadow-[0_40px_80px_-30px_rgba(0,0,0,.6)]"
+              />
             </div>
           </div>
         </div>
