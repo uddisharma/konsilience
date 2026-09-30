@@ -83,7 +83,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
         <Reveal variant="zoom" className="wrap">
           <div className="relative flex h-[420px] items-end justify-center overflow-hidden rounded-3xl sm:h-[560px]" style={{ backgroundColor: p.bg }}>
             <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_100%,rgba(255,255,255,.35),transparent_70%)]" />
-            <PhoneArt accent={p.accent} dark={p.dark} className="float-a relative w-[70%] max-w-md translate-y-16" />
+            <PhoneArt slug={p.slug} accent={p.accent} dark={p.dark} className="float-a relative w-[70%] max-w-md translate-y-16" />
           </div>
         </Reveal>
       </section>

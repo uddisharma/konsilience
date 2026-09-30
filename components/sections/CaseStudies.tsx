@@ -143,9 +143,9 @@ export default function CaseStudies() {
                     ))}
                   </div>
                 </div>
-                <div className="relative -mx-7 -mb-7 flex h-[46%] items-end justify-center overflow-hidden">
+                <div className="relative -mx-7 -mb-7 flex h-[46%] items-start justify-center overflow-hidden pt-5">
                   <div className="absolute inset-x-6 bottom-0 h-3/4 rounded-t-[2rem]" style={{ background: c.dark ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.05)" }} />
-                  <PhoneArt accent={c.accent} dark={c.dark} className="relative w-[72%] translate-y-10 transition-transform duration-700 group-hover:translate-y-4" />
+                  <PhoneArt slug={c.slug} accent={c.accent} dark={c.dark} className="relative w-[78%]" />
                 </div>
                 <span className={`absolute top-7 right-7 grid size-10 place-items-center rounded-full transition-all duration-500 group-hover:rotate-45 ${c.dark ? "bg-white text-black" : "bg-black text-white"}`}>
                   <Icon name="upRight" className="size-4" strokeWidth={2} />
