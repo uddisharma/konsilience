@@ -30,13 +30,13 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-10">
             <div className="text-center">
-              <p className="font-condensed text-4xl font-semibold">{facts.platforms}</p>
-              <p className="mt-1 text-xs text-muted">Platforms built</p>
+              <p className="font-condensed text-4xl font-semibold">70+</p>
+              <p className="mt-1 text-xs text-muted">Projects done</p>
             </div>
             <span className="h-14 w-px bg-line" />
             <div className="text-center">
-              <p className="font-condensed text-4xl font-semibold">{brand.teamSize}</p>
-              <p className="mt-1 text-xs text-muted">Core team</p>
+              <p className="font-condensed text-4xl font-semibold">{facts.industries}</p>
+              <p className="mt-1 text-xs text-muted">Industries served</p>
             </div>
             <span className="h-14 w-px bg-line" />
             <div className="text-center">

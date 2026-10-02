@@ -495,9 +495,9 @@ export const jobs: Job[] = [
 
 /* ---------------- Team ---------------- */
 
-// Core team by role (12 people). Add names and photos when you want to show individuals.
+// Core team by role. Add names and photos when you want to show individuals.
 export const team = [
-  { role: "Co-Founders", count: 3, icon: "target", text: "Strategy, architecture and delivery ownership on every project." },
+  { role: "Product Strategy & Architecture", count: 3, icon: "target", text: "Strategy, architecture and delivery ownership on every project." },
   { role: "AI / ML Engineers", count: 2, icon: "spark", text: "LLM apps, agents, RAG pipelines and model evaluation." },
   { role: "Full-Stack Engineers", count: 3, icon: "code", text: "Next.js, Node, Rails and cloud-native backends." },
   { role: "Mobile Engineers", count: 2, icon: "phone", text: "iOS, Android and Flutter apps from MVP to scale." },
@@ -586,7 +586,7 @@ export const resourceTypes = [
     items: [
       { title: "Konsilience launches Trasys AI", text: "Our AI observability platform for teams running LLMs and agents in production.", meta: "Sep 2026" },
       { title: "Konsilience moves into its new Mohali office", text: "A bigger home for our growing engineering, design and AI teams.", meta: "Jun 2026" },
-      { title: "15 platforms and counting", text: "A look back at the SaaS products our team has shipped so far.", meta: "Mar 2026" },
+      { title: "70+ projects done and counting", text: "A look back at the SaaS products, mobile apps and AI systems our team has shipped so far.", meta: "Mar 2026" },
     ],
   },
   {

@@ -11,23 +11,17 @@ export const brand = {
     tagline: "See every signal your AI stack produces: traces, token spend, loops and incidents in one place.",
   },
   tagline: "An AI-first product studio. A small senior team building SaaS platforms, apps and AI systems.",
-  teamSize: 12, // core team headcount, used in stats and copy
   founded: 2021,
-  founders: [
-    { name: "Deepak Sharma", role: "Co-Founder" },
-    { name: "Shagun Monga", role: "Co-Founder" },
-    { name: "Hardik Upadhayay", role: "Co-Founder" },
-  ],
-  phone: "+91 70157 13717", // display format
-  phoneHref: "+917015713717", // used in tel: links
+  phone: "+91 82838 81336", // display format
+  phoneHref: "+918283881336", // used in tel: links
   email: "sales@konsilience.tech",
 };
 
 import { aiSolutions, industryList, projects, serviceCategories, serviceList } from "./catalog";
 
-// Facts derived from the portfolio so the numbers stay honest as projects are added.
 export const facts = {
-  platforms: projects.length,
+  platforms: "70+",
+  projectsDone: "70+",
   industries: new Set(projects.map((p) => p.industry)).size,
   technologies: new Set(projects.flatMap((p) => p.tech)).size,
 };
@@ -111,7 +105,7 @@ export const nav: NavItem[] = [
       title: g.title,
       links: projects.filter((p) => g.industries.includes(p.industry)).map((p) => ({ label: p.client, href: `/portfolio/${p.slug}` })),
     })),
-    featured: { title: `${facts.platforms} platforms shipped`, text: "SaaS products, apps and AI tools our team has designed and engineered.", href: "/portfolio" },
+    featured: { title: "70+ projects done", text: "SaaS products, apps and AI tools our team has designed and engineered.", href: "/portfolio" },
   },
   {
     label: "Resources",
@@ -154,8 +148,7 @@ export const services = [
 export const caseStudies = projects;
 
 export const stats: { value: number; suffix: string; label: string[]; text: string; visual: StatVisualName }[] = [
-  { value: facts.platforms, suffix: "", label: ["Platforms", "Built"], text: "SaaS products across support, legal, HR, real estate, healthcare and more", visual: "devices" },
-  { value: brand.teamSize, suffix: "", label: ["Core Team", "Members"], text: "engineers, designers and AI specialists with no layers and no handoffs", visual: "people" },
+  { value: 70, suffix: "+", label: ["Projects", "Done"], text: "SaaS products, web applications, mobile apps and AI systems built for clients globally", visual: "devices" },
   { value: facts.industries, suffix: "", label: ["Industries", "Served"], text: "from customer support and legal to construction, travel and beauty", visual: "industries" },
   { value: facts.technologies, suffix: "+", label: ["Technologies", "In Production"], text: "modern web, mobile, cloud and AI tools used across our builds", visual: "network" },
   { value: new Date().getFullYear() - brand.founded, suffix: "+", label: ["Years", "Building"], text: `shipping products since ${brand.founded}, from first MVP to multi-tenant SaaS`, visual: "timeline" },

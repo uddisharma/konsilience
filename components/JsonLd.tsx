@@ -20,11 +20,6 @@ export default function JsonLd() {
         "email": brand.email,
         "telephone": brand.phone,
         "foundingDate": String(brand.founded),
-        "founders": brand.founders.map((f) => ({
-          "@type": "Person",
-          "name": f.name,
-          "jobTitle": f.role
-        })),
         "sameAs": [
           "https://www.linkedin.com/company/konsilience",
           "https://twitter.com/konsilience"
