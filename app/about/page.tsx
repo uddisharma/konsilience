@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { CardGrid, CtaBand, NumberedRows, SectionHead, Split } from "@/components/page/Blocks";
 import PageHero from "@/components/page/PageHero";
-import { FounderCard, RoleCard } from "@/components/page/People";
+import { RoleCard } from "@/components/page/People";
 import Clients from "@/components/sections/Clients";
 import Stats from "@/components/sections/Stats";
 import { SceneArt } from "@/components/ui/Artwork";
@@ -12,7 +12,7 @@ import { brand, facts } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: `${brand.name} is an AI-first product studio from Mohali: a small senior team building SaaS platforms, apps and AI systems.`,
+  description: `${brand.name} is an AI-first product studio from Mohali: a senior team building SaaS platforms, apps and AI systems.`,
 };
 
 const values = [
@@ -25,11 +25,11 @@ const values = [
 
 // Journey. Only the founding year is confirmed; the middle steps are ordered, not dated.
 const timeline = [
-  { year: String(brand.founded), title: `${brand.name} founded`, text: `Started by ${brand.founders.map((f) => f.name.split(" ")[0]).join(", ").replace(/, ([^,]*)$/, " and $1")} with one goal: build products the right way.` },
+  { year: String(brand.founded), title: `${brand.name} founded`, text: "Started with one goal: build products the right way." },
   { year: "Step 2", title: "First platform shipped", text: "Delivered our first SaaS build end to end, from discovery to launch." },
   { year: "Step 3", title: `${brand.product.name} launched`, text: "Our own AI observability platform for teams running LLMs in production." },
-  { year: String(new Date().getFullYear()), title: `${facts.platforms} platforms built`, text: `Support, legal, HR, real estate, healthcare and more, across ${facts.industries} industries.` },
-  { year: "Next", title: "What's next", text: "Growing the team carefully and partnering with ambitious founders." },
+  { year: String(new Date().getFullYear()), title: "70+ projects done", text: `Support, legal, HR, real estate, healthcare and more, across ${facts.industries} industries.` },
+  { year: "Next", title: "What's next", text: "Growing the team carefully and partnering with ambitious companies." },
 ];
 
 export default function AboutPage() {
@@ -39,14 +39,14 @@ export default function AboutPage() {
         crumbs={[{ label: "About Us" }]}
         eyebrow="About Konsilience"
         title={["A Young Studio", "With a Proven", <span key="p" className="text-primary">Portfolio</span>]}
-        text={`${brand.name} is an AI-first product studio in Mohali, Punjab. Our ${brand.teamSize}-person team brings strategy, design, engineering and AI together to build products that last.`}
+        text={`${brand.name} is an AI-first product studio in Mohali, Punjab. Our senior team brings strategy, design, engineering and AI together to build products that last.`}
         actions={
           <>
             <Button>Work With Us</Button>
             <Button variant="outline" href="/careers">Join Our Team</Button>
           </>
         }
-        stats={[[String(brand.founded), "Founded"], [String(facts.platforms), "Platforms built"], [String(brand.teamSize), "Core team members"], [String(facts.industries), "Industries served"]]}
+        stats={[[String(brand.founded), "Founded"], ["70+", "Projects done"], [String(facts.industries), "Industries served"], [String(facts.technologies) + "+", "Technologies"]]}
       />
 
       <section className="sec bg-black">
@@ -61,8 +61,7 @@ export default function AboutPage() {
             </Reveal>
             <Reveal delay={100}>
               <p className="fs-base font-medium text-muted">
-                Founded in {brand.founded} by {brand.founders.map((f) => f.name).join(", ").replace(/, ([^,]*)$/, " and $1")}, we have grown into a
-                {" "}{brand.teamSize}-person team of engineers, designers and AI specialists that has shipped {facts.platforms} platforms across{" "}
+                Founded in {brand.founded}, we have grown into a team of engineers, designers and AI specialists that has shipped 70+ projects across{" "}
                 {facts.industries} industries. We work with startups and growing businesses that want senior talent, AI-first delivery and
                 direct access to the people building their product.
               </p>
@@ -114,17 +113,12 @@ export default function AboutPage() {
       <section className="sec bg-black">
         <div className="wrap">
           <SectionHead
-            title={["Meet the Founders"]}
-            text={`Leading a ${brand.teamSize}-person team with every discipline you need to ship.`}
+            title={["Who Builds", "Your Product"]}
+            text="A dedicated senior team with every discipline you need to ship."
             action={<Button variant="ghost" href="/about/team">View Full Team</Button>}
           />
-          <div className="mt-14 grid gap-3 md:grid-cols-3">
-            {brand.founders.map((f, i) => (
-              <FounderCard key={f.name} {...f} i={i} />
-            ))}
-          </div>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {team.slice(1, 4).map((t, i) => (
+          <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {team.map((t, i) => (
               <RoleCard key={t.role} {...t} i={i} />
             ))}
           </div>

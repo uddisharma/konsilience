@@ -37,7 +37,7 @@ export default function ServicesPage() {
           </>
         }
         aside={<DashboardArt hue={220} className="hidden aspect-[4/3] rounded-3xl border border-line lg:block" />}
-        stats={[[`${serviceList.length}`, "Specialized services"], [String(facts.platforms), "Platforms built"], [String(brand.teamSize), "Senior specialists"], ["24h", "Response time"]]}
+        stats={[[`${serviceList.length}`, "Specialized services"], ["70+", "Projects done"], [String(facts.industries), "Industries served"], ["24h", "Response time"]]}
       />
 
       {serviceCategories.map((c, i) => (

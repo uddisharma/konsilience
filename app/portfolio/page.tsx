@@ -22,7 +22,7 @@ export default function PortfolioPage() {
         title={["Innovation,", <span key="e" className="text-primary">Engineered</span>]}
         text="SaaS platforms, apps and AI tools our team has designed and engineered, each modelled on a proven product category."
         actions={<Button>Start Your Project</Button>}
-        stats={[[String(facts.platforms), "Platforms built"], [String(facts.industries), "Industries"], [String(facts.technologies) + "+", "Technologies"], ["100%", "IP ownership"]]}
+        stats={[["70+", "Projects done"], [String(facts.industries), "Industries served"], [String(facts.technologies) + "+", "Technologies"], ["100%", "IP ownership"]]}
       />
       <section className="sec bg-black">
         <div className="wrap">

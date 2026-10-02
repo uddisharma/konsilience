@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { CtaBand, NumberedRows, SectionHead, Split } from "@/components/page/Blocks";
 import PageHero from "@/components/page/PageHero";
-import { FounderCard, RoleCard } from "@/components/page/People";
+import { RoleCard } from "@/components/page/People";
 import Button from "@/components/ui/Button";
 import { team } from "@/lib/catalog";
-import { brand } from "@/lib/content";
+import { brand, facts } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Our Team",
-  description: `Meet the ${brand.teamSize}-person team behind ${brand.name}.`,
+  description: `Meet the team behind ${brand.name}.`,
 };
 
 const why = [
@@ -25,20 +25,10 @@ export default function TeamPage() {
         crumbs={[{ label: "About", href: "/about" }, { label: "Our Team" }]}
         eyebrow="Our people"
         title={["Small Team.", <span key="b" className="text-primary">Big Output.</span>]}
-        text={`${brand.name} is a ${brand.teamSize}-person, AI-first team of engineers, designers and product people based in Mohali, Punjab.`}
+        text={`${brand.name} is an AI-first team of engineers, designers and product people based in Mohali, Punjab.`}
         actions={<Button href="/careers">Join the Team</Button>}
-        stats={[[String(brand.founded), "Founded"], [String(brand.teamSize), "Core team members"], [String(brand.founders.length), "Co-founders"], [String(team.length), "Disciplines"]]}
+        stats={[[String(brand.founded), "Founded"], ["70+", "Projects done"], [String(facts.industries), "Industries served"], [String(team.length), "Disciplines"]]}
       />
-      <section className="sec bg-black">
-        <div className="wrap">
-          <SectionHead title={["Founders"]} text={`Building ${brand.name} since ${brand.founded}.`} />
-          <div className="mt-14 grid gap-3 md:grid-cols-3">
-            {brand.founders.map((f, i) => (
-              <FounderCard key={f.name} {...f} i={i} />
-            ))}
-          </div>
-        </div>
-      </section>
       <section className="sec bg-black">
         <div className="wrap">
           <SectionHead title={["Who Builds", "Your Product"]} text="Every project gets a dedicated squad drawn from these roles." />

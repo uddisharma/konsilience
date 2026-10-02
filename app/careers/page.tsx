@@ -41,7 +41,7 @@ export default function CareersPage() {
         text="Join a small, senior, AI-first team building SaaS platforms, apps and AI systems from Mohali."
         actions={<Button href="#openings">View Open Roles</Button>}
         aside={<SceneArt hue={250} icon="users" label="Life at Konsilience" className="hidden aspect-[4/3] rounded-3xl lg:block" />}
-        stats={[[String(brand.teamSize), "Team members"], [String(facts.platforms), "Platforms shipped"], ["AI-first", "Tooling"], ["HQ", "Mohali, Punjab"]]}
+        stats={[["70+", "Projects done"], [String(facts.industries), "Industries served"], ["AI-first", "Tooling"], ["HQ", "Mohali, Punjab"]]}
       />
 
       <section className="sec bg-black">

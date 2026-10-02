@@ -27,7 +27,7 @@ export default function GrowthCta() {
                   we&apos;ve built it before.
                 </p>
                 <p className="fs-base max-w-xl font-medium text-white/85">
-                  <b className="font-extrabold text-white">{facts.platforms} SaaS platforms</b> across support, legal, HR, real estate, healthcare and construction, engineered to
+                  <b className="font-extrabold text-white">70+ projects done</b> across support, legal, HR, real estate, healthcare and construction, engineered to
                   scale from day one.
                 </p>
               </div>
@@ -39,7 +39,7 @@ export default function GrowthCta() {
               <AdVideo
                 src="/konsilience-studio-ad-4x5-v1.mp4"
                 poster="/konsilience-studio-ad-poster.jpg"
-                label={`${facts.platforms} platforms engineered by Konsilience across web, mobile and AI`}
+                label="70+ projects engineered by Konsilience across web, mobile and AI"
                 className="max-w-[420px] rounded-2xl border border-white/15 shadow-[0_40px_80px_-30px_rgba(0,0,0,.6)]"
               />
             </div>

@@ -25,7 +25,7 @@ export default function IndustriesPage() {
         title={["Solving Complex", "Challenges Across", <span key="s" className="text-primary">Every Major Sector</span>]}
         text="We've built platforms for support, legal, HR, real estate, healthcare, construction and more, and we bring those lessons to every new domain."
         actions={<Button>Discuss Your Industry</Button>}
-        stats={[[String(facts.industries), "Industries served"], [String(facts.platforms), "Platforms built"], [String(facts.technologies) + "+", "Technologies"], ["AI-first", "Delivery"]]}
+        stats={[[String(facts.industries), "Industries served"], ["70+", "Projects done"], [String(facts.technologies) + "+", "Technologies"], ["AI-first", "Delivery"]]}
       />
 
       <section className="sec bg-black">
