@@ -1092,6 +1092,55 @@ const bus: Pair = {
   toast: { icon: "pin", title: "Bus is 8 min away", sub: "Live GPS tracking" },
 };
 
+const hairAi: Pair = {
+  front: (t) => (
+    <>
+      <Body>
+        <Header t={t} title="HairAI™ Diagnostic" sub="HairID™ #MY-9402" right={<Avatar i={3} label="MY" size={2.1} />} />
+        <Card t={t} className="flex flex-col gap-[.5em]">
+          <div className="flex items-center justify-between">
+            <div>
+              <Txt s={0.56} w={700} c={t.a} className="tracking-wider">HEALTH SCORE</Txt>
+              <Txt s={1.4} w={800} c={t.tx}>94 / 100</Txt>
+            </div>
+            <Pill bg={t.soft} fg={t.a}>Type 4A Curly</Pill>
+          </div>
+          <div className="flex gap-[.4em]">
+            {[["Porosity", "Medium"], ["Elasticity", "Optimal"], ["Density", "High"]].map(([l, v]) => (
+              <div key={l} className="flex-1 rounded-[.6em] p-[.4em]" style={{ background: alpha(t.a, 0.08) }}>
+                <Txt s={0.48} c={t.mu}>{l}</Txt>
+                <Txt s={0.62} w={750} c={t.tx}>{v}</Txt>
+              </div>
+            ))}
+          </div>
+        </Card>
+        <div className="mt-[.6em]">
+          <Txt s={0.58} w={700} c={t.mu} className="mb-[.3em] uppercase tracking-wider">Strand Diagnostics</Txt>
+          {[["Moisture balance", "88%", GREEN], ["Cuticle integrity", "92%", t.a], ["Tensile strength", "Optimal", GREEN]].map(([n, st, c], i) => (
+            <Row key={n} t={t} lead={<Ico name="spark" size={1} c={c as string} />} title={n} right={<Pill bg={alpha(c as string, 0.15)} fg={c as string}>{st}</Pill>} last={i === 2} />
+          ))}
+        </div>
+      </Body>
+      <TabBar t={t} icons={["spark", "heart", "doc", "user"]} />
+    </>
+  ),
+  back: (t) => (
+    <Body>
+      <Header t={t} title="HairID™ Regimen" sub="Matched to your strand analysis" back />
+      <Card t={t} className="flex flex-col gap-[.4em]">
+        <Txt s={0.56} w={700} c={t.a} className="uppercase tracking-wider">Custom Product Routine</Txt>
+        {[["Botanical Moisture Cleanser", "$28", "#e11d48"], ["Leave-in Silk Conditioner", "$34", "#db2777"], ["Scalp Nourishing Elixir", "$24", "#9333ea"]].map(([n, p, c], i) => (
+          <Row key={n} t={t} lead={<Photo c={c} h={2.6} className="w-[2.6em]" icon="spark" />} title={n} sub="Sulfate & Paraben Free" right={<Txt s={0.66} w={750} c={t.tx}>{p}</Txt>} last={i === 2} />
+        ))}
+      </Card>
+      <div className="mt-[.8em]">
+        <Btn t={t}>Subscribe to Custom Regimen</Btn>
+      </div>
+    </Body>
+  ),
+  toast: { icon: "spark", title: "HairID™ generated", sub: "94% Match · 3 Custom Products" },
+};
+
 export const phoneScreens: Record<string, Pair> = {
   "omnichannel-helpdesk": helpdesk,
   "legal-practice-suite": legal,
@@ -1105,6 +1154,7 @@ export const phoneScreens: Record<string, Pair> = {
   "visual-inventory-tracker": inventory,
   "construction-field-reporting": construction,
   "salon-and-spa-booking": salon,
+  "ai-hair-intelligence-platform": hairAi,
   "trasys-ai": trasys,
   "zero-commission-storefronts": storefront,
   "bus-operator-platform": bus,

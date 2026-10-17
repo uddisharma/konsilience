@@ -331,6 +331,30 @@ export const projects: Project[] = [
     bg: "#ffe4ef", dark: false, accent: "#db2777",
   }),
   proj({
+    client: "AI Hair Intelligence Platform",
+    style: "MYAVANA",
+    url: "https://www.myavana.com",
+    category: "AI hair care & strand analysis platform",
+    industry: "Beauty & Wellness",
+    service: "Agentic AI",
+    text: "An AI-driven hair care platform delivering HairAI™ strand diagnostics, digital HairID™ profiles and salon CRM.",
+    about: "A pioneering beauty tech ecosystem combining HairAI™ computer vision strand diagnostics, microscopic laboratory testing (HairSI™) and personalized hair health scoring for consumers, salons and enterprise cosmetic brands.",
+    challenge: "Consumers suffer from trial-and-error product choices due to generic hair typing, while stylists and hair care brands lack data-driven diagnostics to prescribe precise hair health regimens.",
+    solution: [
+      "HairAI™ computer vision engine analyzing hair texture, curl pattern, density and strand health from photos",
+      "Personalized HairID™ digital profiles providing customized ingredient, product and care recommendations",
+      "Scientific lab integration (HairSI™) for microscopic porosity, elasticity and structural hair analysis",
+      "C.A.R.E. OS framework (Consult, Analyze, Recommend, Educate) guiding user hair care journeys",
+      "MYAVANA Pro+ app with digital HairScope hardware integration and salon CRM for professional stylists",
+      "Enterprise Hair Intelligence API suite for retail partners, beauty brands and R&D teams"
+    ],
+    metrics: [["HairAI™", "computer vision strand diagnostics"], ["HairID™", "personalized digital hair blueprint"]],
+    platforms: ["Web", "iOS", "Android"],
+    tech: ["PyTorch", "OpenCV", "Python", "Next.js", "React Native", "PostgreSQL", "AWS Bedrock", "Docker"],
+    tools: ["Shopify Plus", "Klaviyo", "Stripe", "Salesforce", "Segment"],
+    bg: "#fff1f2", dark: false, accent: "#e11d48",
+  }),
+  proj({
     client: "Trasys AI",
     style: "Trasys AI",
     url: "https://www.trasys.dev",
@@ -381,30 +405,6 @@ export const projects: Project[] = [
     tech: ["Next.js", "React", "Node.js", "Vercel", "Maps & GPS APIs"], // Next.js + Vercel observed on the site; rest ASSUMED
     tools: ["WhatsApp", "Payment gateway", "Email delivery"],
     bg: "#cbfffd", dark: false, accent: "#0d9488",
-  }),
-  proj({
-    client: "AI Hair Intelligence Platform",
-    style: "MYAVANA",
-    url: "https://www.myavana.com",
-    category: "AI hair care & strand analysis platform",
-    industry: "Beauty & Wellness",
-    service: "Agentic AI",
-    text: "An AI-driven hair care platform delivering HairAI™ strand diagnostics, digital HairID™ profiles and salon CRM.",
-    about: "A pioneering beauty tech ecosystem combining HairAI™ computer vision strand diagnostics, microscopic laboratory testing (HairSI™) and personalized hair health scoring for consumers, salons and enterprise cosmetic brands.",
-    challenge: "Consumers suffer from trial-and-error product choices due to generic hair typing, while stylists and hair care brands lack data-driven diagnostics to prescribe precise hair health regimens.",
-    solution: [
-      "HairAI™ computer vision engine analyzing hair texture, curl pattern, density and strand health from photos",
-      "Personalized HairID™ digital profiles providing customized ingredient, product and care recommendations",
-      "Scientific lab integration (HairSI™) for microscopic porosity, elasticity and structural hair analysis",
-      "C.A.R.E. OS framework (Consult, Analyze, Recommend, Educate) guiding user hair care journeys",
-      "MYAVANA Pro+ app with digital HairScope hardware integration and salon CRM for professional stylists",
-      "Enterprise Hair Intelligence API suite for retail partners, beauty brands and R&D teams"
-    ],
-    metrics: [["HairAI™", "computer vision strand diagnostics"], ["HairID™", "personalized digital hair blueprint"]],
-    platforms: ["Web", "iOS", "Android"],
-    tech: ["PyTorch", "OpenCV", "Python", "Next.js", "React Native", "PostgreSQL", "AWS Bedrock", "Docker"],
-    tools: ["Shopify Plus", "Klaviyo", "Stripe", "Salesforce", "Segment"],
-    bg: "#fff1f2", dark: false, accent: "#e11d48",
   }),
 ];
 
