@@ -10,6 +10,7 @@ import Reveal from "@/components/ui/Reveal";
 import { posts } from "@/lib/catalog";
 import { brand } from "@/lib/content";
 import { siteUrl } from "@/lib/routes";
+import { blogArticles, type ArticleSection } from "@/lib/blogArticles";
 
 const find = (slug: string) => posts.find((p) => p.slug === slug);
 
@@ -53,14 +54,10 @@ export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): P
   };
 }
 
-// PLACEHOLDER BODY: replace with real article content (e.g. MDX or a headless CMS).
-type Sec = { id: string; h: string; p?: string[]; list?: string[] };
-const sections = (topic: string): Sec[] => [
-  { id: "introduction", h: "Introduction", p: [`${topic} has moved from a nice-to-have to a board-level priority. Yet most teams still struggle to turn good intentions into shipped, measurable results.`, "In this article we share the approach our teams use with clients, what we've learned from dozens of engagements, and a practical checklist you can apply this quarter."] },
-  { id: "why-it-matters", h: "Why it matters now", p: ["Expectations from users, regulators and investors have risen sharply. The organisations pulling ahead are the ones that treat this as an engineering discipline, not a one-off project.", "Done well, it reduces cost, accelerates delivery and opens entirely new revenue streams."] },
-  { id: "framework", h: "A practical framework", list: ["Start with a measurable business outcome, not a technology.", "Map the current state honestly: systems, data, skills and constraints.", "Prototype the riskiest assumption first, in weeks rather than months.", "Build in security, compliance and observability from day one.", "Ship iteratively and measure against the outcome you defined."] },
-  { id: "pitfalls", h: "Common pitfalls to avoid", p: ["The most common failure mode is starting too big. The second is treating launch as the finish line. Budget for iteration, and assign clear ownership for the system after go-live.", "Finally, don't underestimate change management: the best system fails if people don't adopt it."] },
-  { id: "conclusion", h: "Conclusion", p: [`${topic} is a journey, not a switch. With a clear outcome, a small first step and a disciplined feedback loop, any team can make real progress in a single quarter.`] },
+const fallbackSections = (topic: string): ArticleSection[] => [
+  { id: "overview", h: "Strategic Overview", p: [`${topic} represents a crucial operational focus for digital engineering teams. Executing effectively requires combining strategic alignment with disciplined technical execution.`] },
+  { id: "key-considerations", h: "Key Considerations", list: ["Establish clear, measurable business metrics before deployment.", "Implement security and compliance controls from the foundational architecture.", "Iterate in short feedback loops and measure impact continuously."] },
+  { id: "next-steps", h: "Implementation Roadmap", p: ["Start with high-impact, low-risk proof-of-concept workflows before enterprise-wide rollout."] },
 ];
 
 export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">) {
@@ -69,7 +66,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
 
   const author = { name: `${brand.name} Team`, role: `${post.category} practice` };
   const art = categoryArt[post.category];
-  const body = sections(post.title.replace(/^(How to|The|\d+)\s/i, ""));
+  const body = blogArticles[post.slug] ?? fallbackSections(post.title);
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
   const url = encodeURIComponent(`${siteUrl}/blog/${post.slug}`);
 

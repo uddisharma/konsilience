@@ -4,10 +4,12 @@ import FaqList from "@/components/FaqList";
 import PageHero from "@/components/page/PageHero";
 import Reveal, { LineReveal } from "@/components/ui/Reveal";
 import { faqs } from "@/lib/content";
+import { siteUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "FAQ",
-  description: "Answers to common questions about working with Konsilience.",
+  title: "FAQ | Frequently Asked Questions",
+  description: "Answers to common questions about working with Konsilience, engineering processes, IP ownership, and pricing.",
+  alternates: { canonical: `${siteUrl}/faq` },
 };
 
 const groups = [

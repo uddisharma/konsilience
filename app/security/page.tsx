@@ -3,10 +3,12 @@ import { CardGrid, Chips, CtaBand, NumberedRows, SectionHead, Split } from "@/co
 import PageHero from "@/components/page/PageHero";
 import { SceneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
+import { siteUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "Security",
-  description: "Security practices that protect client data, code and infrastructure at Konsilience.",
+  title: "Security Engineering & Data Protection | Konsilience",
+  description: "Enterprise security practices that protect client data, code, secrets and cloud infrastructure at Konsilience.",
+  alternates: { canonical: `${siteUrl}/security` },
 };
 
 export default function SecurityPage() {

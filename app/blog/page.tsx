@@ -5,10 +5,12 @@ import Newsletter from "@/components/page/Newsletter";
 import PageHero from "@/components/page/PageHero";
 import Reveal from "@/components/ui/Reveal";
 import { blogCategories, posts } from "@/lib/catalog";
+import { siteUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "Blog & Insights",
+  title: "Blog & Insights | Konsilience Engineering & AI",
   description: "Engineering, AI, design and business insights from the Konsilience team.",
+  alternates: { canonical: `${siteUrl}/blog` },
 };
 
 export default function BlogPage() {

@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   publisher: brand.name,
   category: "Technology & Software Engineering",
   alternates: {
-    canonical: "./",
+    canonical: siteUrl,
   },
   robots: {
     index: true,

@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/page/LegalPage";
+import { siteUrl } from "@/lib/routes";
 
-export const metadata: Metadata = { title: "Cookie Policy" };
+export const metadata: Metadata = {
+  title: "Cookie Policy | Konsilience",
+  description: "Information about how cookies and tracking technologies are used on the Konsilience website.",
+  alternates: { canonical: `${siteUrl}/cookie-policy` },
+};
 
 export default function CookiePage() {
   return (

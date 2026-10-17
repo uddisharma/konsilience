@@ -8,10 +8,12 @@ import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
 import { jobs } from "@/lib/catalog";
 import { brand, facts } from "@/lib/content";
+import { siteUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
   title: "Careers",
   description: "Join Konsilience and build products that matter with people who care about craft.",
+  alternates: { canonical: `${siteUrl}/careers` },
 };
 
 const benefits = [
@@ -41,7 +43,7 @@ export default function CareersPage() {
         text="Join a small, senior, AI-first team building SaaS platforms, apps and AI systems from Mohali."
         actions={<Button href="#openings">View Open Roles</Button>}
         aside={<SceneArt hue={250} icon="users" label="Life at Konsilience" className="hidden aspect-[4/3] rounded-3xl lg:block" />}
-        stats={[["70+", "Projects done"], [String(facts.industries), "Industries served"], ["AI-first", "Tooling"], ["HQ", "Mohali, Punjab"]]}
+        stats={[["35+", "Projects done"], [String(facts.industries), "Industries served"], ["AI-first", "Tooling"], ["HQ", "Mohali, Punjab"]]}
       />
 
       <section className="sec bg-black">

@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/page/PageHero";
 import Reveal from "@/components/ui/Reveal";
-import { routeGroups } from "@/lib/routes";
+import { routeGroups, siteUrl } from "@/lib/routes";
 
-export const metadata: Metadata = { title: "Sitemap" };
+export const metadata: Metadata = {
+  title: "Sitemap",
+  description: "Complete overview of pages and resources across Konsilience.",
+  alternates: { canonical: `${siteUrl}/sitemap` },
+};
 
 export default function SitemapPage() {
   return (

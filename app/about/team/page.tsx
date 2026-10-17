@@ -5,10 +5,12 @@ import { RoleCard } from "@/components/page/People";
 import Button from "@/components/ui/Button";
 import { team } from "@/lib/catalog";
 import { brand, facts } from "@/lib/content";
+import { siteUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
   title: "Our Team",
   description: `Meet the team behind ${brand.name}.`,
+  alternates: { canonical: `${siteUrl}/about/team` },
 };
 
 const why = [
@@ -27,7 +29,7 @@ export default function TeamPage() {
         title={["Small Team.", <span key="b" className="text-primary">Big Output.</span>]}
         text={`${brand.name} is an AI-first team of engineers, designers and product people based in Mohali, Punjab.`}
         actions={<Button href="/careers">Join the Team</Button>}
-        stats={[[String(brand.founded), "Founded"], ["70+", "Projects done"], [String(facts.industries), "Industries served"], [String(team.length), "Disciplines"]]}
+        stats={[[String(brand.founded), "Founded"], ["35+", "Projects done"], [String(facts.industries), "Industries served"], [String(team.length), "Disciplines"]]}
       />
       <section className="sec bg-black">
         <div className="wrap">

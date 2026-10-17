@@ -10,6 +10,7 @@ import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import { deliveryProcess, engagementModels, projects, serviceList, whyUs } from "@/lib/catalog";
 import { siteUrl } from "@/lib/routes";
+import { serviceData } from "@/lib/serviceData";
 
 const find = (slug: string) => serviceList.find((s) => s.slug === slug);
 
@@ -52,14 +53,21 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
   const s = find((await params).slug);
   if (!s) notFound();
 
+  const details = serviceData[s.slug];
   const related = serviceList.filter((x) => x.category === s.category && x.slug !== s.slug).slice(0, 3);
   const work = [...projects.filter((p) => p.service === s.name), ...projects.filter((p) => p.service !== s.name)].slice(0, 3);
-  const faqs = [
-    { q: `How much does ${s.name} cost?`, a: "Cost depends on scope, complexity and team model. After a free discovery call we share a detailed, transparent estimate with milestones." },
-    { q: `How long does a typical ${s.name} project take?`, a: "Most engagements deliver a first release in 8–16 weeks, followed by iterative improvements. We agree a timeline during discovery." },
-    { q: "Will we own the source code and IP?", a: "Yes. All code, designs and intellectual property are transferred to you. We sign NDAs before any detailed discussion." },
-    { q: "Can you work with our in-house team?", a: "Absolutely. We regularly embed alongside internal teams, follow your processes and tools, and hand over knowledge continuously." },
-    { q: "Do you provide support after launch?", a: "Yes. We offer SLA-backed support, monitoring and continuous improvement plans tailored to your needs." },
+  const faqs = details?.faqs ?? [
+    { q: `What is included in your ${s.name} engagement?`, a: `Our senior team provides architecture, design, end-to-end implementation and SLA-backed support for ${s.name.toLowerCase()}.` },
+    { q: `How long does a typical ${s.name} initiative take?`, a: "Most teams deliver a working milestone in 6–12 weeks with continuous integration and weekly demos." },
+    { q: "Will we own the intellectual property and code?", a: "Yes. All source code, design systems, infrastructure blueprints, and IP belong entirely to you." },
+    { q: "Can you embed with our existing engineers?", a: "Yes. We work inside your Slack, Jira, and GitHub, following your engineering practices and mentoring your team." },
+  ];
+
+  const heroStats = details?.heroStats ?? [
+    ["Senior", "Engineers Only"],
+    ["100%", "IP Ownership"],
+    ["8–14 wks", "MVP Production"],
+    ["Enterprise", "Security SLA"],
   ];
 
   return (
@@ -68,7 +76,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         crumbs={[{ label: "Services", href: "/services" }, { label: s.name }]}
         eyebrow={s.category}
         title={[s.name, <span key="s" className="text-primary">Services</span>]}
-        text={`${s.short} Our senior-led teams combine strategy, design and engineering to deliver measurable results, fast.`}
+        text={`${s.short} Our senior-led engineering teams combine domain strategy, human-centered UX and modern cloud architecture to deliver measurable outcomes.`}
         actions={
           <>
             <Button>Get a Free Quote</Button>
@@ -76,17 +84,17 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           </>
         }
         aside={<SceneArt hue={220} icon={s.icon} label={s.category} className="hidden aspect-[4/3] rounded-3xl lg:block" />}
-        stats={[["AI-first", "Delivery"], ["Senior", "Hands-on team"], ["8–16 wks", "Typical first release"], ["100%", "IP ownership"]]}
+        stats={heroStats}
       />
 
       <section className="sec bg-black">
         <div className="wrap">
-          <SectionHead title={[`Our ${s.name}`, "Capabilities"]} text={`End-to-end ${s.name} services tailored to your goals.`} />
+          <SectionHead title={[`Our ${s.name}`, "Capabilities"]} text={`Comprehensive ${s.name.toLowerCase()} capabilities tailored to your organizational scale.`} />
           <div className="mt-14">
             <CardGrid
               items={s.offerings.map((o) => ({
                 title: o,
-                text: `Plan, build and scale ${o} with a team that has done it many times before, with quality, security and speed built in.`,
+                text: details?.offeringsDescriptions?.[o] ?? `Architect, build and optimize ${o.toLowerCase()} with senior Konsilience specialists, with automated CI/CD and observability built in.`,
               }))}
             />
           </div>

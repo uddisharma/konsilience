@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/page/LegalPage";
 import { brand } from "@/lib/content";
+import { siteUrl } from "@/lib/routes";
 
-export const metadata: Metadata = { title: "Privacy Policy" };
+export const metadata: Metadata = {
+  title: "Privacy Policy | Konsilience",
+  description: "Privacy policy describing how Konsilience protects your data and personal information.",
+  alternates: { canonical: `${siteUrl}/privacy-policy` },
+};
 
 export default function PrivacyPage() {
   return (

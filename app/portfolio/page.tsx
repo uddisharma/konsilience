@@ -7,10 +7,12 @@ import Testimonials from "@/components/sections/Testimonials";
 import Button from "@/components/ui/Button";
 import { projects } from "@/lib/catalog";
 import { facts } from "@/lib/content";
+import { siteUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
   title: "Portfolio",
   description: "Case studies of digital products, platforms and AI systems built by Konsilience.",
+  alternates: { canonical: `${siteUrl}/portfolio` },
 };
 
 export default function PortfolioPage() {
@@ -22,7 +24,7 @@ export default function PortfolioPage() {
         title={["Innovation,", <span key="e" className="text-primary">Engineered</span>]}
         text="SaaS platforms, apps and AI tools our team has designed and engineered, each modelled on a proven product category."
         actions={<Button>Start Your Project</Button>}
-        stats={[["70+", "Projects done"], [String(facts.industries), "Industries served"], [String(facts.technologies) + "+", "Technologies"], ["100%", "IP ownership"]]}
+        stats={[["35+", "Projects done"], [String(facts.industries), "Industries served"], [String(facts.technologies) + "+", "Technologies"], ["100%", "IP ownership"]]}
       />
       <section className="sec bg-black">
         <div className="wrap">

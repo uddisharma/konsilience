@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/page/LegalPage";
 import { brand } from "@/lib/content";
+import { siteUrl } from "@/lib/routes";
 
-export const metadata: Metadata = { title: "Terms & Conditions" };
+export const metadata: Metadata = {
+  title: "Terms & Conditions | Konsilience",
+  description: "Terms and conditions for using Konsilience website and services.",
+  alternates: { canonical: `${siteUrl}/terms` },
+};
 
 export default function TermsPage() {
   return (

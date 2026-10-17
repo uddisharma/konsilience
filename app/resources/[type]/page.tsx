@@ -8,6 +8,7 @@ import { SceneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import { resourceTypes } from "@/lib/catalog";
+import { siteUrl } from "@/lib/routes";
 
 const find = (slug: string) => resourceTypes.find((r) => r.slug === slug);
 
@@ -17,7 +18,17 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/resources/[type]">): Promise<Metadata> {
   const r = find((await params).type);
-  return r ? { title: r.name, description: r.intro } : {};
+  if (!r) return {};
+  const url = `${siteUrl}/resources/${r.slug}`;
+  return {
+    title: `${r.name} | Konsilience Resources`,
+    description: r.intro,
+    alternates: { canonical: url },
+    robots: {
+      index: false,
+      follow: true,
+    },
+  };
 }
 
 export default async function ResourcePage({ params }: PageProps<"/resources/[type]">) {

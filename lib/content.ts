@@ -20,8 +20,8 @@ export const brand = {
 import { aiSolutions, industryList, projects, serviceCategories, serviceList } from "./catalog";
 
 export const facts = {
-  platforms: "70+",
-  projectsDone: "70+",
+  platforms: "35+",
+  projectsDone: "35+",
   industries: new Set(projects.map((p) => p.industry)).size,
   technologies: new Set(projects.flatMap((p) => p.tech)).size,
 };
@@ -105,7 +105,7 @@ export const nav: NavItem[] = [
       title: g.title,
       links: projects.filter((p) => g.industries.includes(p.industry)).map((p) => ({ label: p.client, href: `/portfolio/${p.slug}` })),
     })),
-    featured: { title: "70+ projects done", text: "SaaS products, apps and AI tools our team has designed and engineered.", href: "/portfolio" },
+    featured: { title: "35+ projects done", text: "SaaS products, apps and AI tools our team has designed and engineered.", href: "/portfolio" },
   },
   {
     label: "Resources",
@@ -148,7 +148,7 @@ export const services = [
 export const caseStudies = projects;
 
 export const stats: { value: number; suffix: string; label: string[]; text: string; visual: StatVisualName }[] = [
-  { value: 70, suffix: "+", label: ["Projects", "Done"], text: "SaaS products, web applications, mobile apps and AI systems built for clients globally", visual: "devices" },
+  { value: 35, suffix: "+", label: ["Projects", "Done"], text: "SaaS products, web applications, mobile apps and AI systems built for clients globally", visual: "devices" },
   { value: facts.industries, suffix: "", label: ["Industries", "Served"], text: "from customer support and legal to construction, travel and beauty", visual: "industries" },
   { value: facts.technologies, suffix: "+", label: ["Technologies", "In Production"], text: "modern web, mobile, cloud and AI tools used across our builds", visual: "network" },
   { value: new Date().getFullYear() - brand.founded, suffix: "+", label: ["Years", "Building"], text: `shipping products since ${brand.founded}, from first MVP to multi-tenant SaaS`, visual: "timeline" },

@@ -610,7 +610,7 @@ export const resourceTypes = [
     items: [
       { title: "Konsilience launches Trasys AI", text: "Our AI observability platform for teams running LLMs and agents in production.", meta: "Sep 2026" },
       { title: "Konsilience moves into its new Mohali office", text: "A bigger home for our growing engineering, design and AI teams.", meta: "Jun 2026" },
-      { title: "70+ projects done and counting", text: "A look back at the SaaS products, mobile apps and AI systems our team has shipped so far.", meta: "Mar 2026" },
+      { title: "35+ projects done and counting", text: "A look back at the SaaS products, mobile apps and AI systems our team has shipped so far.", meta: "Mar 2026" },
     ],
   },
   {

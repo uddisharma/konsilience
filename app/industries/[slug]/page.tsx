@@ -11,6 +11,7 @@ import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import { industryList, projects, serviceList, techStack, whyUs } from "@/lib/catalog";
 import { siteUrl } from "@/lib/routes";
+import { industryData } from "@/lib/industryData";
 
 const find = (slug: string) => industryList.find((i) => i.slug === slug);
 
@@ -53,13 +54,21 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
   const ind = find((await params).slug);
   if (!ind) notFound();
   const n = ind.name;
+  const data = industryData[ind.slug];
 
   const work = [...projects.filter((p) => p.industry === ind.name), ...projects.filter((p) => p.industry !== ind.name)].slice(0, 3);
-  const challenges = [
+  const challenges = data?.challenges ?? [
     { title: "Legacy systems", text: `Ageing ${n} platforms that are expensive to run and slow to change.` },
-    { title: "Regulation & security", text: "Strict compliance, privacy and audit requirements across every workflow." },
-    { title: "Rising expectations", text: "Users expect consumer-grade digital experiences on every device." },
-    { title: "Siloed data", text: "Disconnected systems that make real-time decisions impossible." },
+    { title: "Regulation & security", text: `Strict ${n} compliance, privacy, and audit requirements across core workflows.` },
+    { title: "Consumer expectations", text: `Rising demand for real-time mobile self-service and modern digital experiences in ${n}.` },
+    { title: "Siloed data", text: `Disconnected databases and legacy APIs that impede real-time business intelligence.` },
+  ];
+
+  const faqs = data?.faqs ?? [
+    { q: `Do you have hands-on engineering experience in ${n}?`, a: work.some((p) => p.industry === ind.name) ? `Yes. We have built production ${n} platforms before; see our case studies above.` : `We have delivered complex digital platforms across multiple regulated industries and conduct deep discovery on every engagement.` },
+    { q: `How do you address regulatory compliance for ${n}?`, a: "We map statutory and data residency requirements during discovery, building automated encryption and audit trails into the architecture." },
+    { q: "Can your systems integrate with our current tech stack?", a: "Yes. We integrate with existing ERPs, legacy databases, payment gateways, and custom proprietary APIs." },
+    { q: "What is your onboarding timeline?", a: "A dedicated agile engineering pod can typically initiate discovery and development within 1 to 2 weeks of agreement." },
   ];
 
   return (
@@ -91,7 +100,7 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
             <CardGrid
               items={ind.solutions.map((s) => ({
                 title: s,
-                text: `Secure, scalable ${s} designed around ${n} workflows and compliance needs.`,
+                text: data?.solutionsDescription?.[s] ?? `Production-grade ${s.toLowerCase()} engineered specifically for ${n} operational workflows and compliance standards.`,
               }))}
             />
           </div>
@@ -141,12 +150,7 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
       <CtaBand title={`Transform your ${n} business.`} text="Book a free consultation with our domain experts." />
       <Faq
         title={`${ind.name} FAQs`}
-        items={[
-          { q: `Do you have experience in ${n}?`, a: work.some((p) => p.industry === ind.name) ? `Yes. We have built ${n} platforms before; see the case studies above.` : `We have shipped platforms across many industries and learn new domains fast, starting every project with a discovery phase.` },
-          { q: "How do you handle compliance?", a: "We map regulatory requirements during discovery and build controls, audit trails and documentation into the product." },
-          { q: "Can you integrate with our existing systems?", a: "Yes. We integrate with ERPs, CRMs, payment providers, industry platforms and custom APIs." },
-          { q: "How quickly can you start?", a: "A dedicated team can usually start within 1–2 weeks of signing." },
-        ]}
+        items={faqs}
       />
     </>
   );

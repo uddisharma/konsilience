@@ -9,10 +9,12 @@ import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import { team } from "@/lib/catalog";
 import { brand, facts } from "@/lib/content";
+import { siteUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
   title: "About Us",
   description: `${brand.name} is an AI-first product studio from Mohali: a senior team building SaaS platforms, apps and AI systems.`,
+  alternates: { canonical: `${siteUrl}/about` },
 };
 
 const values = [
@@ -28,7 +30,7 @@ const timeline = [
   { year: String(brand.founded), title: `${brand.name} founded`, text: "Started with one goal: build products the right way." },
   { year: "Step 2", title: "First platform shipped", text: "Delivered our first SaaS build end to end, from discovery to launch." },
   { year: "Step 3", title: `${brand.product.name} launched`, text: "Our own AI observability platform for teams running LLMs in production." },
-  { year: String(new Date().getFullYear()), title: "70+ projects done", text: `Support, legal, HR, real estate, healthcare and more, across ${facts.industries} industries.` },
+  { year: String(new Date().getFullYear()), title: "35+ projects done", text: `Support, legal, HR, real estate, healthcare and more, across ${facts.industries} industries.` },
   { year: "Next", title: "What's next", text: "Growing the team carefully and partnering with ambitious companies." },
 ];
 
@@ -46,7 +48,7 @@ export default function AboutPage() {
             <Button variant="outline" href="/careers">Join Our Team</Button>
           </>
         }
-        stats={[[String(brand.founded), "Founded"], ["70+", "Projects done"], [String(facts.industries), "Industries served"], [String(facts.technologies) + "+", "Technologies"]]}
+        stats={[[String(brand.founded), "Founded"], ["35+", "Projects done"], [String(facts.industries), "Industries served"], [String(facts.technologies) + "+", "Technologies"]]}
       />
 
       <section className="sec bg-black">
@@ -61,7 +63,7 @@ export default function AboutPage() {
             </Reveal>
             <Reveal delay={100}>
               <p className="fs-base font-medium text-muted">
-                Founded in {brand.founded}, we have grown into a team of engineers, designers and AI specialists that has shipped 70+ projects across{" "}
+                Founded in {brand.founded}, we have grown into a team of engineers, designers and AI specialists that has shipped 35+ projects across{" "}
                 {facts.industries} industries. We work with startups and growing businesses that want senior talent, AI-first delivery and
                 direct access to the people building their product.
               </p>

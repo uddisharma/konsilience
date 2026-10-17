@@ -6,6 +6,7 @@ import PageHero from "@/components/page/PageHero";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
 import { jobs } from "@/lib/catalog";
+import { siteUrl } from "@/lib/routes";
 
 const find = (slug: string) => jobs.find((j) => j.slug === slug);
 
@@ -15,7 +16,13 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/careers/[slug]">): Promise<Metadata> {
   const j = find((await params).slug);
-  return j ? { title: `${j.title} | Careers`, description: j.summary } : {};
+  if (!j) return {};
+  const url = `${siteUrl}/careers/${j.slug}`;
+  return {
+    title: `${j.title} | Careers`,
+    description: j.summary,
+    alternates: { canonical: url },
+  };
 }
 
 export default async function JobPage({ params }: PageProps<"/careers/[slug]">) {

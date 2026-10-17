@@ -30,7 +30,7 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-10">
             <div className="text-center">
-              <p className="font-condensed text-4xl font-semibold">70+</p>
+              <p className="font-condensed text-4xl font-semibold">35+</p>
               <p className="mt-1 text-xs text-muted">Projects done</p>
             </div>
             <span className="h-14 w-px bg-line" />
@@ -70,7 +70,7 @@ export default function Footer() {
             <a href={`tel:${brand.phoneHref}`} className="u-link mt-2 block text-white/80">{brand.phone}</a>
             <div className="mt-6 flex gap-2">
               {socials.map((s) => (
-                <a key={s.label} href="#" aria-label={s.label} className="grid size-10 place-items-center rounded-full border border-line text-sm font-bold transition-all hover:-translate-y-1 hover:border-primary hover:bg-primary">
+                <a key={s.label} target="_blank" href="https://www.linkedin.com/company/konsilience" aria-label={s.label} className="grid size-10 place-items-center rounded-full border border-line text-sm font-bold transition-all hover:-translate-y-1 hover:border-primary hover:bg-primary">
                   {s.short}
                 </a>
               ))}

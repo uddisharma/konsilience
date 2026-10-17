@@ -4,10 +4,12 @@ import PageHero from "@/components/page/PageHero";
 import Compliance from "@/components/sections/Compliance";
 import Button from "@/components/ui/Button";
 import { deliveryProcess, engagementModels, whyUs } from "@/lib/catalog";
+import { siteUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "How We Work",
-  description: "Our delivery process, engagement models, communication and quality standards.",
+  title: "How We Work | Delivery Process & Engineering Standards",
+  description: "Our delivery process, engagement models, communication cadence, and engineering quality standards at Konsilience.",
+  alternates: { canonical: `${siteUrl}/how-we-work` },
 };
 
 const rituals = [

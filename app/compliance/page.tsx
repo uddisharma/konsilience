@@ -3,10 +3,12 @@ import { CardGrid, CtaBand, NumberedRows, SectionHead, Split } from "@/component
 import PageHero from "@/components/page/PageHero";
 import Compliance from "@/components/sections/Compliance";
 import Button from "@/components/ui/Button";
+import { siteUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "Compliance",
-  description: "How Konsilience builds compliance into every layer of engineering.",
+  title: "Compliance & Regulatory Engineering | Konsilience",
+  description: "How Konsilience builds compliance (HIPAA, SOC 2, GDPR, ISO 27001) into every layer of software and AI engineering.",
+  alternates: { canonical: `${siteUrl}/compliance` },
 };
 
 export default function CompliancePage() {

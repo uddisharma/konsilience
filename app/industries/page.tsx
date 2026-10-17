@@ -10,10 +10,12 @@ import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
 import { industryList, projects } from "@/lib/catalog";
 import { facts } from "@/lib/content";
+import { siteUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "Industries",
+  title: "Industries We Serve | Domain-Specific Software Engineering",
   description: "Domain-specific digital solutions for healthcare, finance, retail, logistics, education and 13 more industries.",
+  alternates: { canonical: `${siteUrl}/industries` },
 };
 
 export default function IndustriesPage() {
@@ -25,7 +27,7 @@ export default function IndustriesPage() {
         title={["Solving Complex", "Challenges Across", <span key="s" className="text-primary">Every Major Sector</span>]}
         text="We've built platforms for support, legal, HR, real estate, healthcare, construction and more, and we bring those lessons to every new domain."
         actions={<Button>Discuss Your Industry</Button>}
-        stats={[[String(facts.industries), "Industries served"], ["70+", "Projects done"], [String(facts.technologies) + "+", "Technologies"], ["AI-first", "Delivery"]]}
+        stats={[[String(facts.industries), "Industries served"], ["35+", "Projects done"], [String(facts.technologies) + "+", "Technologies"], ["AI-first", "Delivery"]]}
       />
 
       <section className="sec bg-black">
