@@ -5,8 +5,10 @@ import PageHero from "@/components/page/PageHero";
 import Faq from "@/components/sections/Faq";
 import { SceneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
+import JsonLd from "@/components/JsonLd";
 import { aiProcess, aiSolutions, aiStack, industryList, responsibleAi } from "@/lib/catalog";
 import { siteUrl } from "@/lib/routes";
+import { buildAiSolutionPageSchema } from "@/lib/schema";
 
 const find = (slug: string) => aiSolutions.find((a) => a.slug === slug);
 
@@ -149,8 +151,11 @@ export default async function AiSolutionPage({ params }: PageProps<"/ai-solution
     { q: "How do you govern and control inference costs?", a: "Model routing, caching, prompt optimization and usage monitoring keep inference costs predictable." },
   ];
 
+  const schema = buildAiSolutionPageSchema(a, faqs);
+
   return (
     <>
+      <JsonLd data={schema} />
       <PageHero
         crumbs={[{ label: "AI Solutions", href: "/ai-solutions" }, { label: a.name }]}
         eyebrow="AI Solutions"

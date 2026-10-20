@@ -7,9 +7,10 @@ import PageHero from "@/components/page/PageHero";
 import Clients from "@/components/sections/Clients";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
+import JsonLd from "@/components/JsonLd";
 import { brand, faqs, office } from "@/lib/content";
-
 import { siteUrl } from "@/lib/routes";
+import { buildContactPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Contact Us | Get a Free Project Estimate & Consultation",
@@ -25,8 +26,11 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  const schema = buildContactPageSchema();
+
   return (
     <>
+      <JsonLd data={schema} />
       <PageHero
         crumbs={[{ label: "Contact" }]}
         eyebrow="Let's talk"

@@ -7,9 +7,11 @@ import Newsletter from "@/components/page/Newsletter";
 import { SceneArt } from "@/components/ui/Artwork";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
+import JsonLd from "@/components/JsonLd";
 import { posts } from "@/lib/catalog";
 import { brand } from "@/lib/content";
 import { siteUrl } from "@/lib/routes";
+import { buildBlogArticleSchema } from "@/lib/schema";
 import { blogArticles, type ArticleSection } from "@/lib/blogArticles";
 
 const find = (slug: string) => posts.find((p) => p.slug === slug);
@@ -70,8 +72,11 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
   const url = encodeURIComponent(`${siteUrl}/blog/${post.slug}`);
 
+  const schema = buildBlogArticleSchema(post);
+
   return (
     <>
+      <JsonLd data={schema} />
       <section className="relative overflow-hidden bg-black pt-40 lg:pt-48">
         <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_0%,rgb(var(--brand-rgb)/.28),transparent_60%)]" />
         <div className="wrap-sm relative">

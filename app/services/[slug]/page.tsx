@@ -8,8 +8,10 @@ import Testimonials from "@/components/sections/Testimonials";
 import { SceneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
+import JsonLd from "@/components/JsonLd";
 import { deliveryProcess, engagementModels, projects, serviceList, whyUs } from "@/lib/catalog";
 import { siteUrl } from "@/lib/routes";
+import { buildServicePageSchema } from "@/lib/schema";
 import { serviceData } from "@/lib/serviceData";
 
 const find = (slug: string) => serviceList.find((s) => s.slug === slug);
@@ -70,8 +72,11 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
     ["Enterprise", "Security SLA"],
   ];
 
+  const schema = buildServicePageSchema(s, faqs, details?.offeringsDescriptions);
+
   return (
     <>
+      <JsonLd data={schema} />
       <PageHero
         crumbs={[{ label: "Services", href: "/services" }, { label: s.name }]}
         eyebrow={s.category}

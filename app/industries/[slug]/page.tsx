@@ -9,8 +9,10 @@ import Testimonials from "@/components/sections/Testimonials";
 import { SceneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
+import JsonLd from "@/components/JsonLd";
 import { industryList, projects, serviceList, techStack, whyUs } from "@/lib/catalog";
 import { siteUrl } from "@/lib/routes";
+import { buildIndustryPageSchema } from "@/lib/schema";
 import { industryData } from "@/lib/industryData";
 
 const find = (slug: string) => industryList.find((i) => i.slug === slug);
@@ -71,8 +73,11 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
     { q: "What is your onboarding timeline?", a: "A dedicated agile engineering pod can typically initiate discovery and development within 1 to 2 weeks of agreement." },
   ];
 
+  const schema = buildIndustryPageSchema(ind, faqs, data?.solutionsDescription);
+
   return (
     <>
+      <JsonLd data={schema} />
       <PageHero
         crumbs={[{ label: "Industries", href: "/industries" }, { label: ind.name }]}
         eyebrow={`${ind.name} solutions`}

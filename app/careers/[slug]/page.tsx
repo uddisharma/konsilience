@@ -5,8 +5,10 @@ import { Chips } from "@/components/page/Blocks";
 import PageHero from "@/components/page/PageHero";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
+import JsonLd from "@/components/JsonLd";
 import { jobs } from "@/lib/catalog";
 import { siteUrl } from "@/lib/routes";
+import { buildJobPostingSchema } from "@/lib/schema";
 
 const find = (slug: string) => jobs.find((j) => j.slug === slug);
 
@@ -29,8 +31,11 @@ export default async function JobPage({ params }: PageProps<"/careers/[slug]">) 
   const j = find((await params).slug);
   if (!j) notFound();
 
+  const schema = buildJobPostingSchema(j);
+
   return (
     <>
+      <JsonLd data={schema} />
       <PageHero
         crumbs={[{ label: "Careers", href: "/careers" }, { label: j.title }]}
         eyebrow={j.team}

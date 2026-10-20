@@ -8,8 +8,10 @@ import { PhoneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
+import JsonLd from "@/components/JsonLd";
 import { projects, serviceList } from "@/lib/catalog";
 import { siteUrl } from "@/lib/routes";
+import { buildCaseStudySchema } from "@/lib/schema";
 
 const find = (slug: string) => projects.find((p) => p.slug === slug);
 
@@ -58,9 +60,11 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
   const service = serviceList.find((s) => s.name === p.service);
   const linkLabel = p.live ? "Visit Live Platform" : `Visit ${p.style}`;
   const host = new URL(p.url).hostname.replace(/^www./, "");
+  const schema = buildCaseStudySchema(p);
 
   return (
     <>
+      <JsonLd data={schema} />
       <PageHero
         crumbs={[{ label: "Portfolio", href: "/portfolio" }, { label: p.client }]}
         eyebrow={p.category}

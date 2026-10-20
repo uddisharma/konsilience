@@ -4,10 +4,11 @@ import PageHero from "@/components/page/PageHero";
 import Testimonials from "@/components/sections/Testimonials";
 import { DashboardArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
+import JsonLd from "@/components/JsonLd";
 import { deliveryProcess, engagementModels, serviceCategories, serviceList, techStack } from "@/lib/catalog";
 import { brand, facts } from "@/lib/content";
-
 import { siteUrl } from "@/lib/routes";
+import { buildServicesIndexSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Digital Engineering & Technology Services",
@@ -23,8 +24,11 @@ export const metadata: Metadata = {
 };
 
 export default function ServicesPage() {
+  const schema = buildServicesIndexSchema(serviceList);
+
   return (
     <>
+      <JsonLd data={schema} />
       <PageHero
         crumbs={[{ label: "Services" }]}
         eyebrow="What we do"

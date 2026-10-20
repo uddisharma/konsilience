@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
 import ContactForm from "@/components/ContactForm";
 import FaqList from "@/components/FaqList";
 import PageHero from "@/components/page/PageHero";
 import Reveal, { LineReveal } from "@/components/ui/Reveal";
 import { faqs } from "@/lib/content";
 import { siteUrl } from "@/lib/routes";
+import { buildFaqPageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "FAQ | Frequently Asked Questions",
@@ -26,8 +28,11 @@ const groups = [
 ];
 
 export default function FaqPage() {
+  const schema = buildFaqPageSchema(groups);
+
   return (
     <>
+      <JsonLd data={schema} />
       <PageHero
         crumbs={[{ label: "FAQ" }]}
         eyebrow="Help center"
