@@ -478,3 +478,52 @@ export function buildContactPageSchema() {
     ]),
   ];
 }
+
+/**
+ * Location Page Schema
+ */
+export function buildLocationPageSchema(
+  loc: { name: string; slug: string; country: string; h1: string; metaDescription: string },
+  faqs: FaqItem[]
+) {
+  const pageUrl = `${siteUrl}/locations/${loc.slug}`;
+
+  const breadcrumb = buildBreadcrumbSchema([
+    { name: "Home", item: siteUrl },
+    { name: "Locations", item: `${siteUrl}/locations` },
+    { name: loc.name, item: pageUrl },
+  ]);
+
+  const serviceSchema = {
+    "@type": "ProfessionalService",
+    "@id": `${pageUrl}#service`,
+    "name": `${loc.h1} | ${brand.name}`,
+    "url": pageUrl,
+    "description": loc.metaDescription,
+    "provider": {
+      "@type": "Organization",
+      "name": brand.name,
+      "url": siteUrl,
+      "logo": `${siteUrl}/logo-white.png`,
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": loc.country,
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": `Digital Engineering & Software Services in ${loc.name}`,
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Mobile App Development (iOS & Android)" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom Software Development" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Enterprise Web & SaaS Engineering" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Solutions & Copilots" } },
+      ],
+    },
+  };
+
+  const faqBlock = buildFaqSchema(faqs);
+  const graph: Record<string, unknown>[] = [serviceSchema, breadcrumb];
+  if (faqBlock) graph.push(faqBlock);
+  return graph;
+}

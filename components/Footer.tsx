@@ -51,7 +51,7 @@ export default function Footer() {
           <OfficeMap className="min-h-[260px]" />
         </div>
 
-        <div className="mt-16 grid gap-10 border-t border-line pt-14 sm:grid-cols-2 lg:grid-cols-[repeat(4,1fr)_1.3fr]">
+        <div className="mt-16 grid gap-10 border-t border-line pt-14 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[repeat(5,1fr)_1.2fr]">
           {footer.columns.map((c) => (
             <div key={c.title}>
               <p className="mb-5 text-xs font-semibold tracking-[.2em] text-muted uppercase">{c.title}</p>
@@ -81,7 +81,7 @@ export default function Footer() {
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-line pt-8 text-sm text-muted md:flex-row">
           <p>© {brand.founded}–{new Date().getFullYear()} {brand.name}. All rights reserved.</p>
           <div className="flex flex-wrap justify-center gap-6">
-            {[["Privacy Policy", "/privacy-policy"], ["Terms & Conditions", "/terms"], ["Cookie Policy", "/cookie-policy"], ["Sitemap", "/sitemap"]].map(([l, h]) => (
+            {[["Global Hubs", "/locations"], ["Privacy Policy", "/privacy-policy"], ["Terms & Conditions", "/terms"], ["Cookie Policy", "/cookie-policy"], ["Sitemap", "/sitemap"]].map(([l, h]) => (
               <Link key={h} href={h} className="hover:text-white">{l}</Link>
             ))}
           </div>

@@ -1,5 +1,6 @@
 import { aiSolutions, industryList, jobs, posts, projects, resourceTypes, serviceList } from "./catalog";
 import { brand } from "./content";
+import { locationsList } from "./locationData";
 
 export const siteUrl = "https://www.konsilience.tech";
 
@@ -24,6 +25,13 @@ export const routeGroups: { title: string; links: Route[] }[] = [
   { title: "Services", links: [{ label: "All Services", href: "/services" }, ...serviceList.map((s) => ({ label: s.name, href: `/services/${s.slug}` }))] },
   { title: "AI", links: [{ label: brand.product.name, href: "/trasys-ai" }, { label: "AI Solutions", href: "/ai-solutions" }, ...aiSolutions.map((a) => ({ label: a.name, href: `/ai-solutions/${a.slug}` }))] },
   { title: "Industries", links: [{ label: "All Industries", href: "/industries" }, ...industryList.map((i) => ({ label: i.name, href: `/industries/${i.slug}` }))] },
+  {
+    title: "Global Delivery",
+    links: [
+      { label: "All Locations", href: "/locations" },
+      ...locationsList.map((l) => ({ label: `${l.name}`, href: `/locations/${l.slug}` })),
+    ],
+  },
   { title: "Portfolio", links: [{ label: "All Case Studies", href: "/portfolio" }, ...projects.map((p) => ({ label: p.client, href: `/portfolio/${p.slug}` }))] },
   {
     title: "Resources",

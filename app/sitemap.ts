@@ -18,6 +18,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       } else if (isMainCategory) {
         priority = 0.9;
         changeFrequency = "weekly";
+      } else if (l.href.startsWith("/locations")) {
+        priority = 0.9;
+        changeFrequency = "weekly";
       } else if (l.href.startsWith("/services") || l.href.startsWith("/ai-solutions")) {
         priority = 0.85;
         changeFrequency = "weekly";
