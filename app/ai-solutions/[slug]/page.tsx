@@ -196,9 +196,18 @@ export default async function AiSolutionPage({ params }: PageProps<"/ai-solution
 
       <section className="sec bg-black">
         <div className="wrap">
-          <SectionHead title={["Industries We Serve"]} />
+          <SectionHead
+            title={["Industries We Serve"]}
+            text="Domain-specific AI applications engineered around operational workflows and regulatory standards."
+            action={<Button variant="ghost" href="/industries">All Industries</Button>}
+          />
           <div className="mt-12">
-            <Chips items={industryList.slice(0, 12).map((i) => i.name)} />
+            <Chips
+              items={industryList.map((i) => ({
+                label: i.name,
+                href: `/industries/${i.slug}`,
+              }))}
+            />
           </div>
         </div>
       </section>

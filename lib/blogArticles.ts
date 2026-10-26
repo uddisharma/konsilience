@@ -87,7 +87,7 @@ export const blogArticles: Record<string, ArticleSection[]> = {
       p: [
         "The temptation to scrap an aging, monolithic codebase and rewrite it from scratch in modern frameworks is one of the most common pitfalls in enterprise software engineering. Industry data shows that over 70% of big-bang rewrites either exceed their budgets by multiples, take years longer than projected, or are cancelled entirely.",
         "While the greenfield team writes code for the new system, business requirements continue to evolve. The legacy system continues receiving bug fixes, regulatory patches, and feature additions, creating a moving target that the new team can never catch up to.",
-        "The only proven, repeatable strategy for modernization in high-throughput enterprise environments is incremental, evolutionary replacement: migrating capabilities piece by piece while maintaining zero system downtime.",
+        "The only proven, repeatable strategy for modernization in high-throughput enterprise environments is incremental, evolutionary replacement: migrating capabilities piece by piece while maintaining zero system downtime. For example, in high-volume reservation architectures like our [Bus Operator Platform](/portfolio/bus-operator-platform) and [Travel software solutions](/industries/travel), decoupling booking logic from legacy backends prevents downtime while scaling up transaction capacity.",
       ],
     },
     {
@@ -194,7 +194,7 @@ export const blogArticles: Record<string, ArticleSection[]> = {
       id: "the-finops-imperative",
       h: "The Cloud Economics Reckoning: Moving from Growth to Efficiency",
       p: [
-        "For years, venture-backed startups and growing enterprises treated cloud infrastructure costs as an afterthought in pursuit of pure growth. In 2026, cloud spending is under strict executive scrutiny. Unmonitored autoscaling, forgotten staging environments, and unoptimized managed databases quietly erode gross margins.",
+        "For years, venture-backed startups and growing enterprises treated cloud infrastructure costs as an afterthought in pursuit of pure growth. In 2026, cloud spending is under strict executive scrutiny. In high-volume consumer domains like [Travel & Hospitality](/industries/travel) and eCommerce, unmonitored autoscaling and unoptimized managed databases quietly erode gross margins without dedicated [Cloud Services](/services/cloud-services) strategy.",
         "Effective cloud cost optimization does not mean cutting engineering velocity or compromising system resilience. By applying disciplined FinOps engineering practices, most organizations can reduce their monthly AWS, GCP, or Azure bills by 30% to 45% within 90 days.",
         "The journey begins by building real-time cost visibility and attributing cloud expenditures directly to specific products, features, and engineering teams.",
       ],

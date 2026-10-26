@@ -1,8 +1,32 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Icon from "./ui/Icon";
 import Reveal from "./ui/Reveal";
+
+function renderFaqText(text: string) {
+  const parts: (string | React.ReactNode)[] = [];
+  const regex = /\[(.*?)\]\((.*?)\)/g;
+  let lastIndex = 0;
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.substring(lastIndex, match.index));
+    }
+    const [, label, href] = match;
+    parts.push(
+      <Link key={match.index} href={href} className="text-primary underline decoration-primary/40 underline-offset-4 hover:text-white transition-colors">
+        {label}
+      </Link>
+    );
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex));
+  }
+  return parts.length > 0 ? parts : text;
+}
 
 // Accordion of question/answer pairs; one item open at a time.
 export default function FaqList({ items, className = "" }: { items: { q: string; a: string }[]; className?: string }) {
@@ -22,7 +46,7 @@ export default function FaqList({ items, className = "" }: { items: { q: string;
               </button>
               <div className={`grid transition-all duration-500 ${on ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
                 <div className="overflow-hidden">
-                  <p className="fs-base pr-14 pb-6 font-medium text-muted">{f.a}</p>
+                  <p className="fs-base pr-14 pb-6 font-medium text-muted">{renderFaqText(f.a)}</p>
                 </div>
               </div>
             </div>

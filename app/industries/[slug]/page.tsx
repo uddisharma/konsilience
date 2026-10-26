@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CardGrid, Chips, CtaBand, NumberedRows, SectionHead, Split } from "@/components/page/Blocks";
 import PageHero from "@/components/page/PageHero";
@@ -8,9 +9,10 @@ import Faq from "@/components/sections/Faq";
 import Testimonials from "@/components/sections/Testimonials";
 import { SceneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
+import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
 import JsonLd from "@/components/JsonLd";
-import { industryList, projects, serviceList, techStack, whyUs } from "@/lib/catalog";
+import { aiSolutions, industryList, projects, serviceList, techStack, whyUs } from "@/lib/catalog";
 import { siteUrl } from "@/lib/routes";
 import { buildIndustryPageSchema } from "@/lib/schema";
 import { industryData } from "@/lib/industryData";
@@ -66,6 +68,18 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
     { title: "Siloed data", text: `Disconnected databases and legacy APIs that impede real-time business intelligence.` },
   ];
 
+  const servicesToShow = data?.featuredServices
+    ? data.featuredServices.map((slug) => serviceList.find((s) => s.slug === slug)).filter((s): s is (typeof serviceList)[0] => !!s)
+    : serviceList.slice(1, 9);
+
+  const aiToShow = (data?.featuredAiSolutions
+    ? data.featuredAiSolutions.map((slug) => aiSolutions.find((a) => a.slug === slug)).filter((a): a is (typeof aiSolutions)[0] => !!a)
+    : aiSolutions.slice(0, 3));
+
+  const relatedIndustries = (data?.relatedIndustries
+    ? data.relatedIndustries.map((slug) => industryList.find((i) => i.slug === slug)).filter((i): i is (typeof industryList)[0] => !!i)
+    : industryList.filter((i) => i.slug !== ind.slug).slice(0, 3));
+
   const faqs = data?.faqs ?? [
     { q: `Do you have hands-on engineering experience in ${n}?`, a: work.some((p) => p.industry === ind.name) ? `Yes. We have built production ${n} platforms before; see our case studies above.` : `We have delivered complex digital platforms across multiple regulated industries and conduct deep discovery on every engagement.` },
     { q: `How do you address regulatory compliance for ${n}?`, a: "We map statutory and data residency requirements during discovery, building automated encryption and audit trails into the architecture." },
@@ -85,7 +99,7 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
         text={`${ind.short} We help ${n} leaders modernize operations, delight customers and put AI to work.`}
         actions={
           <>
-            <Button>Talk to a {ind.name} Expert</Button>
+            <Button href="/contact">Talk to a {ind.name} Expert</Button>
             <Button variant="outline" href="/portfolio">View Work</Button>
           </>
         }
@@ -118,7 +132,28 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
           <div className="mt-14">
             <CardGrid
               cols={4}
-              items={serviceList.slice(1, 9).map((s) => ({ icon: s.icon, title: s.name, href: `/services/${s.slug}` }))}
+              items={servicesToShow.map((s) => ({ icon: s.icon, title: s.name, href: `/services/${s.slug}` }))}
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="sec bg-black">
+        <div className="wrap">
+          <SectionHead
+            title={["AI Capabilities for", ind.name]}
+            text={`Production-ready artificial intelligence to automate ${ind.name.toLowerCase()} workflows, personalize customer interactions, and optimize costs.`}
+            action={<Button variant="ghost" href="/ai-solutions">All AI Solutions</Button>}
+          />
+          <div className="mt-14">
+            <CardGrid
+              cols={3}
+              items={aiToShow.map((a) => ({
+                icon: a.icon,
+                title: a.name,
+                text: a.short,
+                href: `/ai-solutions/${a.slug}`,
+              }))}
             />
           </div>
         </div>
@@ -131,6 +166,34 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
             {work.map((p, i) => (
               <Reveal key={p.slug} delay={i * 100}>
                 <ProjectCard p={p} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="sec bg-black">
+        <div className="wrap">
+          <SectionHead
+            title={["Connected Sectors &", "Adjacent Industries"]}
+            text="Explore cross-domain software architectures and operational engineering."
+            action={<Button variant="ghost" href="/industries">All Industries</Button>}
+          />
+          <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {relatedIndustries.map((r, i) => (
+              <Reveal key={r.slug} delay={i * 90}>
+                <Link href={`/industries/${r.slug}`} className="group block overflow-hidden rounded-3xl border border-line bg-card p-7 transition-all duration-300 hover:border-primary">
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="grid size-12 place-items-center rounded-2xl bg-black text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                      <Icon name={r.icon} className="size-6" strokeWidth={1.5} />
+                    </span>
+                    <span className="grid size-9 place-items-center rounded-full border border-line transition-all group-hover:rotate-45 group-hover:border-white group-hover:bg-white group-hover:text-black">
+                      <Icon name="upRight" className="size-3.5" strokeWidth={2} />
+                    </span>
+                  </div>
+                  <h3 className="subtitle mt-5">{r.name}</h3>
+                  <p className="fs-para mt-2 font-medium text-muted">{r.short}</p>
+                </Link>
               </Reveal>
             ))}
           </div>

@@ -12,6 +12,9 @@ export type IndustryDetailData = {
   challenges: ChallengeItem[];
   faqs: IndustryFaq[];
   solutionsDescription?: Record<string, string>;
+  featuredServices?: string[];
+  featuredAiSolutions?: string[];
+  relatedIndustries?: string[];
 };
 
 export const industryData: Record<string, IndustryDetailData> = {
@@ -94,6 +97,24 @@ export const industryData: Record<string, IndustryDetailData> = {
     ],
   },
   logistics: {
+    featuredServices: [
+      "mobile-app-development",
+      "iot-development",
+      "web-development",
+      "cloud-services",
+      "custom-software-development",
+      "data-analytics",
+    ],
+    featuredAiSolutions: [
+      "agentic-ai",
+      "computer-vision",
+      "ai-copilots",
+    ],
+    relatedIndustries: [
+      "travel",
+      "aviation",
+      "on-demand",
+    ],
     challenges: [
       { title: "Unoptimized Fleet Routing", text: "Excessive fuel waste and driver overtime caused by static routes that ignore real-time traffic and delivery windows." },
       { title: "Blind Spots in Freight Visibility", text: "Shippers and end customers left without real-time GPS tracking or proactive delay notifications." },
@@ -380,6 +401,26 @@ export const industryData: Record<string, IndustryDetailData> = {
     ],
   },
   travel: {
+    featuredServices: [
+      "web-development",
+      "mobile-app-development",
+      "cloud-services",
+      "custom-software-development",
+      "iot-development",
+      "devops",
+      "qa-and-testing",
+      "ui-ux-design",
+    ],
+    featuredAiSolutions: [
+      "conversational-ai",
+      "agentic-ai",
+      "ai-copilots",
+    ],
+    relatedIndustries: [
+      "aviation",
+      "logistics",
+      "on-demand",
+    ],
     challenges: [
       { title: "Global GDS Search Latency", text: "Calling Global Distribution Systems (Amadeus, Sabre) taking 8–15 seconds to return flight availability." },
       { title: "Volatile Dynamic Pricing Changes", text: "Flight and hotel rates changing mid-checkout, creating customer checkout drop-offs." },
@@ -389,11 +430,15 @@ export const industryData: Record<string, IndustryDetailData> = {
     faqs: [
       {
         q: "How do you speed up flight and hotel search queries?",
-        a: "We implement intelligent caching layers using Redis and asynchronous streaming responses, displaying preliminary options in under 1 second while deeper vendor queries complete.",
+        a: "We implement intelligent caching layers using Redis and asynchronous streaming responses on modern [cloud infrastructure](/services/cloud-services), displaying preliminary options in under 1 second while deeper vendor queries complete.",
       },
       {
         q: "Which travel APIs and Global Distribution Systems (GDS) do you work with?",
-        a: "We connect with Amadeus, Sabre, Travelport, Duffel, Expedia Partner Solutions, and Hotelbeds via modern NDC and REST/JSON interfaces.",
+        a: "We connect with Amadeus, Sabre, Travelport, Duffel, Expedia Partner Solutions, and Hotelbeds via modern NDC and REST/JSON interfaces through our [custom software engineering](/services/custom-software-development).",
+      },
+      {
+        q: "Have you built production transportation or booking platforms before?",
+        a: "Yes. For example, explore our [Bus Operator Platform case study (SafarWay)](/portfolio/bus-operator-platform), featuring live GPS fleet tracking, automated trip scheduling, driver workflows, and QR-code scan-to-board mobile ticketing.",
       },
       {
         q: "How do you manage currency exchange and international payments?",
@@ -401,11 +446,29 @@ export const industryData: Record<string, IndustryDetailData> = {
       },
       {
         q: "Can you build offline mobile itinerary apps for travelers?",
-        a: "Yes. We develop mobile companion apps that save boarding passes, hotel vouchers, and offline maps, sending push notifications for gate changes or flight delays.",
+        a: "Yes. We develop [mobile companion apps](/services/mobile-app-development) that save boarding passes, hotel vouchers, and offline maps, sending push notifications for gate changes or flight delays.",
       },
     ],
   },
   aviation: {
+    featuredServices: [
+      "mobile-app-development",
+      "custom-software-development",
+      "cloud-services",
+      "legacy-modernization",
+      "cybersecurity",
+      "qa-and-testing",
+    ],
+    featuredAiSolutions: [
+      "conversational-ai",
+      "agentic-ai",
+      "computer-vision",
+    ],
+    relatedIndustries: [
+      "travel",
+      "logistics",
+      "on-demand",
+    ],
     challenges: [
       { title: "Strict FAA & EASA Regulatory Standards", text: "Aviation software requiring uncompromising audit trails, data integrity, and safety compliance." },
       { title: "Crew Scheduling & Rest Rule Complexity", text: "FAA Part 117 flight time limitations and union collective bargaining agreements complicating crew rosters." },

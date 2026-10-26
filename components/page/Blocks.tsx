@@ -105,17 +105,31 @@ export function ProcessSteps({ steps }: { steps: { title: string; text: string }
   );
 }
 
-export function Chips({ items }: { items: string[] }) {
+export function Chips({ items }: { items: (string | { label: string; href?: string })[] }) {
   return (
     <div className="flex flex-wrap gap-3">
-      {items.map((t, i) => (
-        <Reveal key={t} delay={i * 40} variant="zoom">
-          <span className="flex items-center gap-2.5 rounded-full border border-line bg-card px-5 py-3 text-sm font-semibold transition-colors hover:border-primary">
+      {items.map((it, i) => {
+        const label = typeof it === "string" ? it : it.label;
+        const href = typeof it === "string" ? undefined : it.href;
+        const content = (
+          <span className="flex items-center gap-2.5 rounded-full border border-line bg-card px-5 py-3 text-sm font-semibold transition-all duration-300 hover:border-primary hover:text-white">
             <span className="size-2 rounded-full bg-primary" />
-            {t}
+            {label}
+            {href && <Icon name="upRight" className="size-3 text-muted group-hover:text-white" strokeWidth={2} />}
           </span>
-        </Reveal>
-      ))}
+        );
+        return (
+          <Reveal key={label} delay={i * 30} variant="zoom">
+            {href ? (
+              <Link href={href} className="group inline-block">
+                {content}
+              </Link>
+            ) : (
+              content
+            )}
+          </Reveal>
+        );
+      })}
     </div>
   );
 }

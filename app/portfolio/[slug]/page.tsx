@@ -9,7 +9,7 @@ import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
 import JsonLd from "@/components/JsonLd";
-import { projects, serviceList } from "@/lib/catalog";
+import { industryList, projects, serviceList } from "@/lib/catalog";
 import { siteUrl } from "@/lib/routes";
 import { buildCaseStudySchema } from "@/lib/schema";
 
@@ -58,6 +58,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
   const next = projects[(idx + 1) % projects.length];
   const more = [...projects.filter((x) => x.slug !== p.slug && x.industry === p.industry), ...projects.filter((x) => x.slug !== p.slug && x.industry !== p.industry)].slice(0, 3);
   const service = serviceList.find((s) => s.name === p.service);
+  const industry = industryList.find((i) => i.name.toLowerCase() === p.industry.toLowerCase());
   const linkLabel = p.live ? "Visit Live Platform" : `Visit ${p.style}`;
   const host = new URL(p.url).hostname.replace(/^www./, "");
   const schema = buildCaseStudySchema(p);
@@ -66,13 +67,17 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
     <>
       <JsonLd data={schema} />
       <PageHero
-        crumbs={[{ label: "Portfolio", href: "/portfolio" }, { label: p.client }]}
+        crumbs={[
+          { label: "Portfolio", href: "/portfolio" },
+          ...(industry ? [{ label: industry.name, href: `/industries/${industry.slug}` }] : []),
+          { label: p.client },
+        ]}
         eyebrow={p.category}
         title={[p.client]}
         text={p.text}
         actions={
           <>
-            <Button>Build a Platform Like This</Button>
+            <Button href="/contact">Build a Platform Like This</Button>
             <Button variant="outline" href={p.url}>{linkLabel}</Button>
             <span className="flex items-center gap-2 self-center rounded-full border border-line bg-card px-4 py-2.5 text-sm text-white/80">
               <Icon name="layers" className="size-4 text-primary" /> {p.live ? `Our own product` : `${p.style}-style platform`}
@@ -107,7 +112,15 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
                 ].map(([k, v]) => (
                   <div key={k} className="bg-card p-6">
                     <dt className="text-xs font-semibold tracking-[.2em] text-muted uppercase">{k}</dt>
-                    <dd className="subtitle mt-2">{v}</dd>
+                    <dd className="subtitle mt-2">
+                      {k === "Industry" && industry ? (
+                        <Link href={`/industries/${industry.slug}`} className="u-link inline-flex items-center gap-1.5 text-primary hover:underline">
+                          {v} <Icon name="upRight" className="size-3.5" strokeWidth={2} />
+                        </Link>
+                      ) : (
+                        v
+                      )}
+                    </dd>
                   </div>
                 ))}
                 <div className="bg-card p-6">
@@ -172,13 +185,18 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
             </div>
           ))}
         </div>
-        {service && (
-          <div className="wrap mt-12">
+        <div className="wrap mt-12 flex flex-wrap gap-8 border-t border-line pt-8">
+          {service && (
             <Link href={`/services/${service.slug}`} className="u-link inline-flex items-center gap-2 font-semibold text-primary">
               Explore our {service.name} services <Icon name="arrow" className="size-4" />
             </Link>
-          </div>
-        )}
+          )}
+          {industry && (
+            <Link href={`/industries/${industry.slug}`} className="u-link inline-flex items-center gap-2 font-semibold text-white/80 hover:text-primary">
+              Explore {industry.name} Software & AI Solutions <Icon name="arrow" className="size-4" />
+            </Link>
+          )}
+        </div>
       </section>
 
       {/* Next project */}
@@ -207,7 +225,12 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
         </div>
       </section>
 
-      <CtaBand title={`Planning a product like ${p.client}?`} text="We've built this before. Let's talk about yours." />
+      <CtaBand
+        title={`Planning a product like ${p.client}?`}
+        text={`We've built production ${industry ? industry.name : "digital"} platforms before. Let's talk about yours.`}
+        label={industry ? `Talk to a ${industry.name} Expert` : "Talk to Our Experts"}
+        href="/contact"
+      />
     </>
   );
 }

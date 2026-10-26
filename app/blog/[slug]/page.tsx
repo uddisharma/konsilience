@@ -62,6 +62,29 @@ const fallbackSections = (topic: string): ArticleSection[] => [
   { id: "next-steps", h: "Implementation Roadmap", p: ["Start with high-impact, low-risk proof-of-concept workflows before enterprise-wide rollout."] },
 ];
 
+function renderTextWithLinks(text: string) {
+  const parts: (string | React.ReactNode)[] = [];
+  const regex = /\[(.*?)\]\((.*?)\)/g;
+  let lastIndex = 0;
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.substring(lastIndex, match.index));
+    }
+    const [, label, href] = match;
+    parts.push(
+      <Link key={match.index} href={href} className="text-primary underline decoration-primary/40 underline-offset-4 hover:text-white hover:decoration-white transition-colors">
+        {label}
+      </Link>
+    );
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex));
+  }
+  return parts.length > 0 ? parts : text;
+}
+
 export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">) {
   const post = find((await params).slug);
   if (!post) notFound();
@@ -108,7 +131,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
       </section>
 
       <section className="sec bg-black">
-        <div className="wrap grid gap-14 lg:grid-cols-[240px_1fr_200px]">
+        <div className="wrap grid gap-14 lg:grid-cols-[240px_1fr_220px]">
           <aside className="hidden lg:block">
             <div className="sticky top-32">
               <p className="mb-4 text-xs font-semibold tracking-[.2em] text-muted uppercase">On this page</p>
@@ -131,14 +154,14 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
                 <section id={s.id} className="scroll-mt-32">
                   <h2 className="h3 font-semibold">{s.h}</h2>
                   {s.p?.map((t) => (
-                    <p key={t} className="fs-base mt-5 leading-relaxed font-medium text-white/75">{t}</p>
+                    <p key={t} className="fs-base mt-5 leading-relaxed font-medium text-white/75">{renderTextWithLinks(t)}</p>
                   ))}
                   {s.list && (
                     <ol className="mt-6 flex flex-col gap-4">
                       {s.list.map((t, i) => (
                         <li key={t} className="fs-base flex gap-4 rounded-2xl border border-line bg-card p-5 font-medium text-white/85">
                           <span className="font-condensed text-2xl text-primary">{String(i + 1).padStart(2, "0")}</span>
-                          {t}
+                          <span className="flex-1">{renderTextWithLinks(t)}</span>
                         </li>
                       ))}
                     </ol>
@@ -151,15 +174,33 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
           <aside>
             <div className="flex gap-3 lg:sticky lg:top-32 lg:flex-col">
               <p className="text-xs font-semibold tracking-[.2em] text-muted uppercase lg:mb-1">Share</p>
-              {[
-                ["in", `https://www.linkedin.com/sharing/share-offsite/?url=${url}`],
-                ["X", `https://twitter.com/intent/tweet?url=${url}`],
-                ["f", `https://www.facebook.com/sharer/sharer.php?u=${url}`],
-              ].map(([l, href]) => (
-                <a key={l} href={href} target="_blank" rel="noopener noreferrer" className="grid size-11 place-items-center rounded-full border border-line text-sm font-bold transition-colors hover:border-primary hover:bg-primary">
-                  {l}
-                </a>
-              ))}
+              <div className="flex gap-2">
+                {[
+                  ["in", `https://www.linkedin.com/sharing/share-offsite/?url=${url}`],
+                  ["X", `https://twitter.com/intent/tweet?url=${url}`],
+                  ["f", `https://www.facebook.com/sharer/sharer.php?u=${url}`],
+                ].map(([l, href]) => (
+                  <a key={l} href={href} target="_blank" rel="noopener noreferrer" className="grid size-10 place-items-center rounded-full border border-line text-sm font-bold transition-colors hover:border-primary hover:bg-primary">
+                    {l}
+                  </a>
+                ))}
+              </div>
+
+              <div className="mt-8 flex flex-col gap-3 border-t border-line pt-6">
+                <p className="text-xs font-semibold tracking-[.2em] text-muted uppercase">Relevant Verticals</p>
+                <Link href="/industries/travel" className="u-link text-xs font-semibold text-white/80 hover:text-primary">
+                  Travel & Hospitality →
+                </Link>
+                <Link href="/portfolio/bus-operator-platform" className="u-link text-xs font-semibold text-white/80 hover:text-primary">
+                  Bus Operator Platform →
+                </Link>
+                <Link href="/services/web-development" className="u-link text-xs font-semibold text-white/80 hover:text-primary">
+                  Web & Booking Engines →
+                </Link>
+                <Link href="/ai-solutions/conversational-ai" className="u-link text-xs font-semibold text-white/80 hover:text-primary">
+                  Conversational AI →
+                </Link>
+              </div>
             </div>
           </aside>
         </div>
