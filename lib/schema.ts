@@ -1,6 +1,7 @@
 import { brand, office } from "@/lib/content";
 import { siteUrl } from "@/lib/routes";
 import type { Industry, Job, Post, Project, Service } from "@/lib/catalog";
+import type { RegionalService, CountryHub } from "@/lib/regionalServiceData";
 
 export interface BreadcrumbItem {
   name: string;
@@ -527,3 +528,97 @@ export function buildLocationPageSchema(
   if (faqBlock) graph.push(faqBlock);
   return graph;
 }
+
+/**
+ * Regional Country-Service Landing Page Schema
+ */
+export function buildRegionalServiceSchema(service: RegionalService) {
+  const pageUrl = `${siteUrl}/${service.countryCode}/${service.serviceSlug}`;
+  const countryUrl = `${siteUrl}/${service.countryCode}`;
+
+  const breadcrumb = buildBreadcrumbSchema([
+    { name: "Home", item: siteUrl },
+    { name: service.countryName, item: countryUrl },
+    { name: service.h1, item: pageUrl },
+  ]);
+
+  const serviceSchema = {
+    "@type": "ProfessionalService",
+    "@id": `${pageUrl}#service`,
+    "name": `${service.h1} | ${brand.name}`,
+    "url": pageUrl,
+    "description": service.metaDescription,
+    "provider": {
+      "@type": "Organization",
+      "name": brand.name,
+      "url": siteUrl,
+      "logo": `${siteUrl}/logo-white.png`,
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": service.countryName,
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": `${service.deliverablesTitle} in ${service.countryName}`,
+      "itemListElement": service.deliverables.map((item) => ({
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": item.title,
+          "description": item.desc,
+        },
+      })),
+    },
+  };
+
+  const faqBlock = buildFaqSchema(service.faqs);
+  const graph: Record<string, unknown>[] = [serviceSchema, breadcrumb];
+  if (faqBlock) graph.push(faqBlock);
+  return graph;
+}
+
+/**
+ * Country Hub Overview Schema
+ */
+export function buildCountryHubSchema(hub: CountryHub) {
+  const pageUrl = `${siteUrl}/${hub.code}`;
+
+  const breadcrumb = buildBreadcrumbSchema([
+    { name: "Home", item: siteUrl },
+    { name: `${hub.name} Digital Engineering`, item: pageUrl },
+  ]);
+
+  const hubSchema = {
+    "@type": "ProfessionalService",
+    "@id": `${pageUrl}#service`,
+    "name": `${hub.heroHeadline} | ${brand.name}`,
+    "url": pageUrl,
+    "description": hub.metaDescription,
+    "provider": {
+      "@type": "Organization",
+      "name": brand.name,
+      "url": siteUrl,
+      "logo": `${siteUrl}/logo-white.png`,
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": hub.name,
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": `Enterprise Software Engineering & Mobile App Solutions for ${hub.name}`,
+      "itemListElement": hub.services.map((s) => ({
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": s.title,
+          "description": s.desc,
+        },
+      })),
+    },
+  };
+
+  return [hubSchema, breadcrumb];
+}
+

@@ -1,6 +1,7 @@
 import { aiSolutions, industryList, jobs, posts, projects, resourceTypes, serviceList } from "./catalog";
 import { brand } from "./content";
 import { locationsList } from "./locationData";
+import { countryHubs, regionalServicesList } from "./regionalServiceData";
 
 export const siteUrl = "https://www.konsilience.tech";
 
@@ -30,6 +31,19 @@ export const routeGroups: { title: string; links: Route[] }[] = [
     links: [
       { label: "All Locations", href: "/locations" },
       ...locationsList.map((l) => ({ label: `${l.name}`, href: `/locations/${l.slug}` })),
+    ],
+  },
+  {
+    title: "Regional Hubs & Services",
+    links: [
+      ...Object.values(countryHubs).map((c) => ({
+        label: `${c.name} Digital Engineering Hub`,
+        href: `/${c.code}`,
+      })),
+      ...regionalServicesList.map((r) => ({
+        label: `${r.h1}`,
+        href: `/${r.countryCode}/${r.serviceSlug}`,
+      })),
     ],
   },
   { title: "Portfolio", links: [{ label: "All Case Studies", href: "/portfolio" }, ...projects.map((p) => ({ label: p.client, href: `/portfolio/${p.slug}` }))] },

@@ -11,6 +11,7 @@ import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
 import { deliveryProcess, engagementModels, projects, whyUs } from "@/lib/catalog";
 import { locationsList } from "@/lib/locationData";
+import { countryHubs } from "@/lib/regionalServiceData";
 import { siteUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
@@ -71,6 +72,22 @@ export default function LocationsIndexPage() {
             title={["International Delivery Hubs", "& Regional Focus"]}
             text="Explore region-specific compliance frameworks, local payment integrations, and dedicated engineering pods."
           />
+
+          {/* Direct Regional Portals Bar */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
+            <span className="text-xs font-mono uppercase tracking-wider text-muted mr-2">Dedicated Country Hubs:</span>
+            {Object.values(countryHubs).map((c) => (
+              <Link
+                key={c.code}
+                href={`/${c.code}`}
+                className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface/60 px-3.5 py-1.5 text-xs font-medium text-white/80 hover:border-primary hover:bg-primary/10 hover:text-white transition-colors"
+              >
+                <span>{c.flag}</span>
+                <span>{c.name}</span>
+              </Link>
+            ))}
+          </div>
+
           <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {locationsList.map((loc, i) => (
               <Reveal key={loc.slug} delay={i * 80}>
