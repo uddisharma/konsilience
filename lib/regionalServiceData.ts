@@ -3,7 +3,7 @@ export type RegionalService = {
   countryName: string;
   cityName?: string;
   region: string;
-  serviceType: "mobile-app" | "software" | "web" | "ai" | "dedicated-developers";
+  serviceType: "mobile-app" | "software" | "web" | "ai" | "dedicated-developers" | "digital-marketing" | "seo" | "ppc";
   serviceSlug: string;
   h1: string;
   metaTitle: string;
@@ -106,6 +106,18 @@ export const countryHubs: Record<string, CountryHub> = {
         desc: "Pre-vetted senior software engineers working on your timezone with transparent monthly billing.",
         searchQuery: "Hire Dedicated Developers Dubai UAE",
       },
+      {
+        slug: "digital-marketing-agency-dubai",
+        title: "Digital Marketing & Performance Agency Dubai",
+        desc: "Full-funnel digital marketing, Arabic & English PPC, programmatic SEO, and high-ROAS social ads for UAE brands.",
+        searchQuery: "Digital Marketing Agency Dubai UAE",
+      },
+      {
+        slug: "seo-agency-dubai",
+        title: "Enterprise SEO & Search Growth Dubai",
+        desc: "Arabic and English technical SEO, Google.ae first-page domination, and generative engine optimization.",
+        searchQuery: "Best SEO Company in Dubai UAE",
+      },
     ],
     regionalHighlights: [
       {
@@ -170,6 +182,12 @@ export const countryHubs: Record<string, CountryHub> = {
         title: "Hire Dedicated Developers for Canada",
         desc: "Senior full-stack and cloud engineers augmenting your Canadian product teams with zero overhead.",
         searchQuery: "Outsource Software Development Canada to India",
+      },
+      {
+        slug: "digital-marketing-agency-canada",
+        title: "Digital Marketing & Growth Agency Canada",
+        desc: "Bilingual English & French digital marketing, Google Ads management, and high-ROI conversion funnels.",
+        searchQuery: "Digital Marketing Agency Toronto Canada",
       },
     ],
     regionalHighlights: [
@@ -236,6 +254,12 @@ export const countryHubs: Record<string, CountryHub> = {
         desc: "Vetted top 3% Indian software engineers operating as seamless extensions of your US engineering team.",
         searchQuery: "Outsource Software Development to India USA",
       },
+      {
+        slug: "digital-marketing-agency-usa",
+        title: "Digital Marketing & Growth Agency USA",
+        desc: "High-velocity B2B demand gen, LinkedIn ABM campaigns, Google Ads, and full-funnel CRO for US scaleups.",
+        searchQuery: "Digital Marketing Agency USA",
+      },
     ],
     regionalHighlights: [
       {
@@ -300,6 +324,12 @@ export const countryHubs: Record<string, CountryHub> = {
         title: "Hire Dedicated Developers for UK",
         desc: "Senior engineering talent seamlessly integrated into your UK agile workflows with zero employer overhead.",
         searchQuery: "Outsource Software Development to India UK",
+      },
+      {
+        slug: "digital-marketing-agency-london",
+        title: "Digital Marketing & Performance Agency London",
+        desc: "Data-driven SEO, multi-channel PPC, and conversion rate optimization engineered for UK & European growth.",
+        searchQuery: "Digital Marketing Agency London UK",
       },
     ],
     regionalHighlights: [
@@ -366,6 +396,12 @@ export const countryHubs: Record<string, CountryHub> = {
         desc: "Senior full-stack and mobile engineers dedicated to your Australian backlog with daily agile syncs.",
         searchQuery: "Outsource Software Development to India Australia",
       },
+      {
+        slug: "digital-marketing-agency-australia",
+        title: "Digital Marketing & SEO Agency Australia",
+        desc: "Performance marketing, technical SEO, and conversion optimization built for Sydney and Melbourne brands.",
+        searchQuery: "Digital Marketing Agency Sydney Australia",
+      },
     ],
     regionalHighlights: [
       {
@@ -425,6 +461,12 @@ export const countryHubs: Record<string, CountryHub> = {
         desc: "Senior full-stack developers and software architects dedicated to your Saudi tech teams.",
         searchQuery: "Outsource Software Development to India Saudi Arabia",
       },
+      {
+        slug: "digital-marketing-agency-saudi-arabia",
+        title: "Digital Marketing Agency Saudi Arabia",
+        desc: "Arabic-first performance marketing, Snapchat & TikTok campaigns, and high-converting SEO for Vision 2030 brands.",
+        searchQuery: "Digital Marketing Agency Riyadh Saudi Arabia",
+      },
     ],
     regionalHighlights: [
       {
@@ -477,6 +519,12 @@ export const countryHubs: Record<string, CountryHub> = {
         title: "Hire Dedicated Developers for German Companies",
         desc: "Senior engineering talent with strong English proficiency, disciplined agile workflows, and zero overhead.",
         searchQuery: "Software Outsourcing to India German Companies",
+      },
+      {
+        slug: "digital-marketing-agency-germany",
+        title: "Digital Marketing & SEO Agency Germany",
+        desc: "GDPR-compliant B2B lead generation, search marketing, and conversion optimization for German enterprises.",
+        searchQuery: "Digital Marketing Agency Germany",
       },
     ],
     regionalHighlights: [
@@ -2345,6 +2393,687 @@ export const regionalServicesList: RegionalService[] = [
       {
         q: "What is the English proficiency level of the developers?",
         a: "All our senior engineers possess fluent professional English proficiency and have extensive experience working directly with international technical leaders.",
+      },
+    ],
+  },
+  // --- AE: DIGITAL MARKETING & SEO DUBAI ---
+  {
+    countryCode: "ae",
+    countryName: "United Arab Emirates",
+    cityName: "Dubai",
+    region: "Middle East / GCC",
+    serviceType: "digital-marketing",
+    serviceSlug: "digital-marketing-agency-dubai",
+    h1: "Digital Marketing & Performance Agency in Dubai, UAE",
+    metaTitle: "Best Digital Marketing Agency Dubai, UAE | Konsilience AE",
+    metaDescription: "Leading digital marketing & performance agency for Dubai & UAE enterprises. AI-driven PPC, bilingual Arabic/English SEO, social growth, and full-funnel CRO delivering 4.8x ROAS.",
+    eyebrow: "Dubai • UAE Growth & Performance Studio",
+    tagline: "Data-driven performance marketing, multi-channel customer acquisition, and conversion engineering for Dubai's ambitious brands.",
+    currency: "AED",
+    currencySymbol: "AED ",
+    heroStats: [
+      ["4.8x", "Avg Client ROAS in UAE"],
+      ["90 Min", "Timezone Sync (GST vs IST)"],
+      ["60%", "Cost Advantage vs Dubai Studios"],
+      ["Bilingual", "Arabic RTL & English Fluent"],
+    ],
+    rateComparison: {
+      localAgencyRate: "250 - 450 AED/hr",
+      konsilienceRate: "90 - 150 AED/hr",
+      savingsPct: "60%",
+      turnaround: "Weekly Growth Sprints",
+    },
+    whyChooseUsTitle: "Why Dubai Brands Choose Konsilience for Digital Marketing & Growth",
+    whyChooseUsPoints: [
+      {
+        title: "Bilingual GCC Audience Fluency (Arabic & English)",
+        text: "We create culturally nuanced Arabic copy and localized ad creative that resonates with Emirati nationals, GCC citizens, and multinational UAE expats alike.",
+      },
+      {
+        title: "Engineers Who Speak Marketing, Not Generic Agencies",
+        text: "Unlike traditional agencies that only tweak keywords, our team integrates custom server-side CAPI tracking, Next.js page speed optimization, and automated conversion funnels.",
+      },
+      {
+        title: "Full Transparency & Client Ad Account Ownership",
+        text: "You retain 100% administrative ownership of your Google Ads, Meta Business Manager, TikTok Ads, and Google Analytics 4 properties with zero hidden markups.",
+      },
+      {
+        title: "Near-Zero Timezone Friction (GST vs IST)",
+        text: "With only 90 minutes of difference between Dubai and India, our growth strategists and ad managers sync live throughout your workday on Slack and Google Meet.",
+      },
+    ],
+    deliverablesTitle: "Comprehensive Digital Marketing Deliverables for UAE",
+    deliverables: [
+      { title: "Bilingual Paid Ads Management", desc: "Google Search, Performance Max, Meta Ads, and TikTok/Snapchat campaigns targeted across the GCC.", icon: "target" },
+      { title: "Arabic & English Technical SEO", desc: "Enterprise on-page and programmatic SEO driving first-page rankings on Google.ae.", icon: "search" },
+      { title: "Conversion Rate Optimization (CRO)", desc: "A/B testing, Arabic RTL friction audits, and checkout funnel optimization that turns traffic into revenue.", icon: "chart" },
+      { title: "Executive Social & LinkedIn ABM", desc: "High-authority B2B lead generation and executive thought leadership targeting UAE decision-makers.", icon: "share" },
+      { title: "Server-Side GA4 & Attribution", desc: "First-party data tracking pipelines overcoming iOS privacy constraints with 98%+ attribution accuracy.", icon: "code" },
+      { title: "Lifecycle Email & SMS Flows", desc: "Automated retention, cart recovery, and VIP nurture cadences in Arabic and English via Klaviyo and HubSpot.", icon: "mail" },
+    ],
+    complianceBadge: "UAE PDPL & GCC Ad Standards Compliant",
+    complianceList: [
+      { title: "UAE Personal Data Protection Law (PDPL)", desc: "Strict adherence to Federal Decree-Law No. 45 regarding consumer consent, cookie opt-ins, and data localization." },
+      { title: "National Media Council (NMC) Advertising Guidelines", desc: "Ad copy and influencer creatives aligned with UAE digital media advertising regulations." },
+      { title: "PCI-DSS Compliant Conversion Tracking", desc: "Zero sensitive customer financial data captured in conversion tracking or analytics pixels." },
+    ],
+    localIntegrations: [
+      { title: "Snapchat & TikTok GCC Ad Managers", text: "High-penetration youth and mobile advertising channels dominating the Arabian Gulf." },
+      { title: "Telr, PayTabs & Network International", text: "Accurate conversion event telemetry mapped to UAE payment gateways." },
+    ],
+    techStack: ["Google Ads", "Meta Ads", "TikTok Ads", "Semrush", "GA4", "Klaviyo", "HubSpot", "Microsoft Clarity"],
+    caseStudies: [
+      {
+        slug: "shared-inbox-help-desk",
+        title: "D2C Luxury Brand UAE Growth Scale",
+        client: "GCC Retail Group",
+        outcome: "Scaled monthly revenue from 120,000 AED to 650,000 AED at a 5.2x blended ROAS across Dubai and Abu Dhabi.",
+        tags: ["Performance Marketing", "Meta Ads", "Arabic Copy", "CRO"],
+      },
+    ],
+    faqs: [
+      {
+        q: "Do you run campaigns in both Arabic and English?",
+        a: "Yes. Every campaign structure, ad variant, and landing page is localized for dual-language consumption with native Arabic phrasing and English targeting.",
+      },
+      {
+        q: "What ad channels perform best for consumer brands in Dubai?",
+        a: "In the UAE, a multi-channel mix of Instagram/Meta, TikTok, and Snapchat paired with high-intent Google Search captures both spontaneous social discovery and active intent.",
+      },
+    ],
+  },
+  {
+    countryCode: "ae",
+    countryName: "United Arab Emirates",
+    cityName: "Dubai",
+    region: "Middle East / GCC",
+    serviceType: "seo",
+    serviceSlug: "seo-agency-dubai",
+    h1: "Enterprise SEO Company in Dubai, UAE",
+    metaTitle: "Best SEO Company in Dubai, UAE | Konsilience AE",
+    metaDescription: "Premier SEO agency in Dubai. Dominate Google.ae with technical SEO, Arabic & English keyword architecture, programmatic pages, and high-authority digital PR.",
+    eyebrow: "Dubai • UAE Organic Search Studio",
+    tagline: "Engineering sustainable first-page organic rankings and AI search visibility for high-growth UAE enterprises.",
+    currency: "AED",
+    currencySymbol: "AED ",
+    heroStats: [
+      ["Top 3", "Target Keyword Positions on Google.ae"],
+      ["260%+", "Average Organic Traffic Growth"],
+      ["Arabic & EN", "Dual-Language Search Authority"],
+      ["GEO Ready", "Optimized for Perplexity & ChatGPT"],
+    ],
+    rateComparison: {
+      localAgencyRate: "200 - 350 AED/hr",
+      konsilienceRate: "80 - 130 AED/hr",
+      savingsPct: "60%",
+      turnaround: "Monthly Milestone Deliverables",
+    },
+    whyChooseUsTitle: "Why UAE Enterprises Trust Konsilience for Enterprise SEO",
+    whyChooseUsPoints: [
+      {
+        title: "Technical Excellence Over Superficial Tactics",
+        text: "We fix core site architecture, crawl bloat, JavaScript hydration, and Core Web Vitals to earn algorithmic trust that survives Google core updates.",
+      },
+      {
+        title: "Arabic Keyword & Search Intent Mastery",
+        text: "Direct targeting of local regional dialects, Arabic transliterations, and GCC consumer commercial search queries.",
+      },
+      {
+        title: "Generative Engine Optimization (GEO)",
+        text: "We structure your web entities and schema markup so AI search tools like ChatGPT, Perplexity, and Google AI Overviews cite your brand as the definitive authority.",
+      },
+      {
+        title: "White-Hat High-Authority Backlink Acquisition",
+        text: "Strict editorial placements and regional digital PR across reputable Middle Eastern and global technology publications.",
+      },
+    ],
+    deliverablesTitle: "Enterprise SEO Deliverables for Dubai Enterprises",
+    deliverables: [
+      { title: "Technical SEO & Core Web Vitals Audit", desc: "Comprehensive diagnosis of indexability, mobile usability, and speed bottlenecks.", icon: "code" },
+      { title: "Arabic & English Keyword Mapping", desc: "Intent-clustered keyword architecture driving commercial conversions on Google.ae.", icon: "search" },
+      { title: "Programmatic SEO Architecture", desc: "Scalable landing page generation capturing high-intent long-tail searches across UAE cities.", icon: "layers" },
+      { title: "High-Authority Digital PR & Backlinks", desc: "White-hat contextual links from trusted regional and international publications.", icon: "award" },
+      { title: "Generative AI Search Optimization (GEO)", desc: "Structured knowledge graphs ensuring presence in Perplexity and ChatGPT search answers.", icon: "spark" },
+      { title: "Google Business Profile & Local 3-Pack", desc: "Optimization for Dubai, Abu Dhabi, and Sharjah localized map pack dominance.", icon: "pin" },
+    ],
+    complianceBadge: "100% White-Hat Search Quality Guidelines",
+    complianceList: [
+      { title: "Google Webmaster Guidelines", desc: "Zero spam, PBNs, or cloaking; strictly algorithmic best practices." },
+      { title: "WCAG 2.2 Accessibility", desc: "Accessible heading structures and contrast supporting inclusive digital experiences." },
+    ],
+    localIntegrations: [
+      { title: "Google Search Console (MENA)", text: "Precision geocoding for Google.ae and United Arab Emirates regional indices." },
+      { title: "Semrush & Ahrefs Middle East Data", text: "Localized search volume tracking across Dubai and the Gulf." },
+    ],
+    techStack: ["Next.js", "Schema.org", "Semrush", "Ahrefs", "Screaming Frog", "Google Search Console"],
+    caseStudies: [
+      {
+        slug: "shared-inbox-help-desk",
+        title: "FinTech SEO Domination in Dubai",
+        client: "UAE FinTech Startup",
+        outcome: "Ranked #1 on Google.ae for 18 primary commercial keywords within 5 months, driving 420% more qualified inbound demos.",
+        tags: ["SEO", "Technical SEO", "Arabic SEO", "FinTech"],
+      },
+    ],
+    faqs: [
+      {
+        q: "How long does it take to rank on Google.ae in Dubai?",
+        a: "Technical fixes and initial rank improvements appear within 4 to 8 weeks. Competitive commercial terms and sustainable first-page rankings typically mature between months 3 and 6.",
+      },
+      {
+        q: "Do you optimize for Arabic search keywords?",
+        a: "Yes. We conduct extensive native Arabic search research to account for regional dialect nuances, Arabic search intent, and dual-language URL structures.",
+      },
+    ],
+  },
+  // --- US: DIGITAL MARKETING USA ---
+  {
+    countryCode: "us",
+    countryName: "United States",
+    cityName: "New York & San Francisco",
+    region: "North America",
+    serviceType: "digital-marketing",
+    serviceSlug: "digital-marketing-agency-usa",
+    h1: "B2B SaaS & Enterprise Digital Marketing Agency in the USA",
+    metaTitle: "Best Digital Marketing Agency USA | Konsilience US",
+    metaDescription: "Data-driven digital marketing agency for US B2B SaaS and enterprise brands. Full-funnel demand gen, Google Ads, LinkedIn ABM, technical SEO, and conversion optimization.",
+    eyebrow: "USA • B2B Demand Generation Studio",
+    tagline: "High-velocity pipeline generation, performance marketing, and conversion engineering for American technology innovators.",
+    currency: "USD",
+    currencySymbol: "$",
+    heroStats: [
+      ["4.6x", "Average Client ROAS"],
+      ["-38%", "Lower Customer Acquisition Cost"],
+      ["65%", "Cost Advantage vs US Consultancies"],
+      ["100%", "Transparent Ad Account Ownership"],
+    ],
+    rateComparison: {
+      localAgencyRate: "$175 - $325/hr",
+      konsilienceRate: "$50 - $90/hr",
+      savingsPct: "65%",
+      turnaround: "Bi-Weekly Agile Sprints",
+    },
+    whyChooseUsTitle: "Why US Tech Leaders Partner with Konsilience for Growth",
+    whyChooseUsPoints: [
+      {
+        title: "Silicon Valley-Caliber Growth Strategy",
+        text: "Our marketing squads combine quantitative data analysis, full-funnel CRO, and rapid multivariate creative testing to scale customer acquisition efficiently.",
+      },
+      {
+        title: "Technical Marketers Who Understand Engineering",
+        text: "We deploy server-side CAPI pipelines, optimize Next.js Core Web Vitals, and build programmatic SEO engines that conventional marketing agencies cannot touch.",
+      },
+      {
+        title: "Follow-the-Sun Operational Velocity",
+        text: "Our US client leads and India-based senior performance analysts work in synchronized agile sprints, providing around-the-clock testing and campaign optimization.",
+      },
+      {
+        title: "Uncompromising Compliance & Privacy Standards",
+        text: "Full compliance with CCPA, FTC advertising rules, CAN-SPAM, and HIPAA privacy rules for healthtech clients.",
+      },
+    ],
+    deliverablesTitle: "Full-Funnel Growth Deliverables for US Enterprises",
+    deliverables: [
+      { title: "B2B Account-Based Marketing (ABM)", desc: "Hyper-targeted LinkedIn and programmatic campaigns targeting Fortune 500 buying committees.", icon: "target" },
+      { title: "Google Search & Performance Max", desc: "High-intent search capture with disciplined negative keyword matrices and automated bidding.", icon: "search" },
+      { title: "Full-Funnel Conversion Rate Optimization", desc: "A/B testing, friction point elimination, and pricing page redesigns lifting signup velocity.", icon: "chart" },
+      { title: "Enterprise & Programmatic SEO", desc: "Topical cluster architectures and automated landing pages dominating organic search.", icon: "layers" },
+      { title: "Lifecycle Email & Retention Engineering", desc: "Automated onboarding, behavioral activation, and churn reduction flows via HubSpot and Klaviyo.", icon: "mail" },
+      { title: "Server-Side GA4 & BigQuery Analytics", desc: "First-party event streaming and multi-touch attribution reporting dashboards.", icon: "code" },
+    ],
+    complianceBadge: "CCPA, CAN-SPAM & FTC Compliant",
+    complianceList: [
+      { title: "California Consumer Privacy Act (CCPA)", desc: "Opt-out telemetry controls and compliant data processing workflows." },
+      { title: "CAN-SPAM Act", desc: "Strict transactional and commercial email compliance with one-click unsubscribe automation." },
+      { title: "FTC Advertising Guidelines", desc: "Verifiable claims, disclosure transparency, and transparent sponsorship tagging." },
+    ],
+    localIntegrations: [
+      { title: "Stripe & HubSpot Integration", text: "Connecting closed-won revenue back to initial ad click sources for true CAC calculation." },
+      { title: "LinkedIn Campaign Manager & Sales Nav", text: "Direct sync between CRM target accounts and matched audience ad cohorts." },
+    ],
+    techStack: ["Google Ads", "LinkedIn Ads", "Meta Ads", "HubSpot", "GA4", "BigQuery", "Semrush", "VWO"],
+    caseStudies: [
+      {
+        slug: "shared-inbox-help-desk",
+        title: "B2B SaaS Pipeline Acceleration",
+        client: "US Cloud Software Provider",
+        outcome: "Generated $3.4M in pipeline in 6 months while cutting cost per qualified sales demo by 41%.",
+        tags: ["B2B Marketing", "LinkedIn ABM", "Google Ads", "CRO"],
+      },
+    ],
+    faqs: [
+      {
+        q: "How do you coordinate with our US team across time zones?",
+        a: "We provide dedicated US-timezone account management during your standard working hours, paired with evening engineering and creative production cycles.",
+      },
+      {
+        q: "What ad budget size is ideal to work with Konsilience?",
+        a: "We work with growth-stage startups and enterprises investing anywhere from $10,000 to $250,000+ per month in paid acquisition.",
+      },
+    ],
+  },
+  // --- UK: DIGITAL MARKETING LONDON ---
+  {
+    countryCode: "uk",
+    countryName: "United Kingdom",
+    cityName: "London",
+    region: "Europe",
+    serviceType: "digital-marketing",
+    serviceSlug: "digital-marketing-agency-london",
+    h1: "Digital Marketing & Performance Agency in London, UK",
+    metaTitle: "Best Digital Marketing Agency London, UK | Konsilience UK",
+    metaDescription: "Top digital marketing and performance agency for London and UK businesses. Data-led SEO, multi-channel PPC, conversion rate optimization, and UK GDPR-compliant marketing.",
+    eyebrow: "London • UK Growth & Performance Agency",
+    tagline: "Connecting UK commercial ambition with high-impact, data-driven digital marketing and revenue engineering.",
+    currency: "GBP",
+    currencySymbol: "£",
+    heroStats: [
+      ["4.9x", "Average Client ROAS"],
+      ["4.5 Hours", "Overlapping Daily Sync with London"],
+      ["60%", "Cost Savings vs Central London Studios"],
+      ["100%", "UK GDPR & PECR Compliant"],
+    ],
+    rateComparison: {
+      localAgencyRate: "£130 - £240/hr",
+      konsilienceRate: "£40 - £75/hr",
+      savingsPct: "60%",
+      turnaround: "Weekly Sprint Cycles",
+    },
+    whyChooseUsTitle: "Why London & UK Enterprises Choose Konsilience",
+    whyChooseUsPoints: [
+      {
+        title: "London Quality at Offshore Cost Efficiency",
+        text: "Central London marketing agencies charge £150+ per hour for overhead; Konsilience provides senior digital marketing strategists at 60% lower cost.",
+      },
+      {
+        title: "Generative Engine Optimization (GEO)",
+        text: "Position your brand to be cited directly in AI search engines including Perplexity, ChatGPT, and Google AI Overviews across the UK market.",
+      },
+      {
+        title: "Strict UK GDPR & PECR Privacy Adherence",
+        text: "We implement cookie banner consent mode v2, server-side data anonymization, and compliant email marketing protocols.",
+      },
+      {
+        title: "Live Daily Collaboration During UK Afternoon Hours",
+        text: "With only 4.5 hours of difference between London (GMT/BST) and India (IST), our teams hold live sprint reviews and campaign updates every day.",
+      },
+    ],
+    deliverablesTitle: "End-to-End Digital Marketing Deliverables for UK Brands",
+    deliverables: [
+      { title: "Multi-Channel Paid Media (PPC)", desc: "Google Ads, Performance Max, and Meta campaigns calibrated for maximum UK commercial ROAS.", icon: "target" },
+      { title: "Technical & Enterprise SEO", desc: "Core Web Vitals tuning, semantic schema, and high-domain UK authority link building.", icon: "search" },
+      { title: "Conversion Rate Optimization (CRO)", desc: "Friction-free checkout and landing page experiments turning UK visitors into paying customers.", icon: "chart" },
+      { title: "B2B LinkedIn Lead Generation", desc: "Account-targeted outreach and executive thought leadership designed for UK enterprise buyers.", icon: "share" },
+      { title: "Lifecycle Marketing & Nurture", desc: "Automated customer retention sequences configured in Klaviyo, HubSpot, and ActiveCampaign.", icon: "mail" },
+      { title: "Server-Side Tracking & Analytics", desc: "Consent Mode v2 compliant GA4 measurement ensuring data integrity under UK GDPR.", icon: "code" },
+    ],
+    complianceBadge: "UK GDPR, PECR & ICO Standards Compliant",
+    complianceList: [
+      { title: "UK General Data Protection Regulation", desc: "Full adherence to the Data Protection Act 2018 and ICO guidance regarding marketing consent." },
+      { title: "PECR Privacy & Electronic Communications", desc: "Strict opt-in compliance for email marketing, tracking cookies, and retargeting tags." },
+    ],
+    localIntegrations: [
+      { title: "UK Open Banking & Stripe UK", text: "Accurate tracking of Faster Payments and British credit card transactions." },
+      { title: "Google Consent Mode v2", text: "Dynamic tag firing aligned with explicit user cookie consent choices." },
+    ],
+    techStack: ["Google Ads", "Meta Ads", "LinkedIn Ads", "GA4", "Semrush", "Klaviyo", "HubSpot", "VWO"],
+    caseStudies: [
+      {
+        slug: "shared-inbox-help-desk",
+        title: "London FinTech Scaleup Customer Acquisition",
+        client: "UK FinTech App",
+        outcome: "Cut customer acquisition cost by 44% and tripled active monthly signups across the UK and European Union.",
+        tags: ["FinTech", "PPC", "SEO", "CRO"],
+      },
+    ],
+    faqs: [
+      {
+        q: "How do you ensure UK GDPR compliance with advertising tags?",
+        a: "We configure Google Consent Mode v2 and server-side tracking so that tracking pixels only activate when explicit user consent is recorded.",
+      },
+      {
+        q: "Do you have experience marketing to UK enterprise decision-makers?",
+        a: "Yes. We run targeted LinkedIn ABM campaigns and executive thought-leadership initiatives tailored to the tone and expectations of British C-suite leaders.",
+      },
+    ],
+  },
+  // --- CA: DIGITAL MARKETING CANADA ---
+  {
+    countryCode: "ca",
+    countryName: "Canada",
+    cityName: "Toronto & Vancouver",
+    region: "North America",
+    serviceType: "digital-marketing",
+    serviceSlug: "digital-marketing-agency-canada",
+    h1: "Digital Marketing & Growth Agency in Canada",
+    metaTitle: "Best Digital Marketing Agency Canada | Konsilience CA",
+    metaDescription: "Leading digital marketing agency for Canadian businesses in Toronto, Vancouver, and Montreal. PIPEDA & CASL compliant SEO, Google Ads, and full-funnel CRO.",
+    eyebrow: "Canada • Growth & Demand Generation",
+    tagline: "Empowering Canadian businesses from Toronto to Vancouver with high-ROI digital marketing and conversion engineering.",
+    currency: "CAD",
+    currencySymbol: "C$",
+    heroStats: [
+      ["4.7x", "Average Client ROAS"],
+      ["Bilingual", "English & French Canadian Campaigns"],
+      ["60%", "Cost Advantage vs Local Canadian Agencies"],
+      ["100%", "PIPEDA & CASL Anti-Spam Compliant"],
+    ],
+    rateComparison: {
+      localAgencyRate: "C$160 - C$280/hr",
+      konsilienceRate: "C$50 - C$95/hr",
+      savingsPct: "60%",
+      turnaround: "Bi-Weekly Agile Sprints",
+    },
+    whyChooseUsTitle: "Why Canadian Enterprises Partner with Konsilience",
+    whyChooseUsPoints: [
+      {
+        title: "Bilingual Canadian Market Competence",
+        text: "Full capability to produce dual-language English and French Canadian marketing assets aligned with provincial requirements.",
+      },
+      {
+        title: "Full PIPEDA & CASL Anti-Spam Compliance",
+        text: "Strict adherence to Canada's Anti-Spam Legislation (CASL) and federal/provincial privacy laws (Law 25).",
+      },
+      {
+        title: "Engineering-Grade Digital Marketing",
+        text: "We combine code-level Core Web Vitals optimization, programmatic SEO, and server-side analytics with creative ad design.",
+      },
+      {
+        title: "Substantial Cost Advantage for Canadian Scaleups",
+        text: "Save $80,000+ annually compared to hiring boutique digital marketing agencies in downtown Toronto or Vancouver.",
+      },
+    ],
+    deliverablesTitle: "Canadian Enterprise Digital Marketing Services",
+    deliverables: [
+      { title: "Google Ads & Performance Max", desc: "High-intent paid search targeted across Canadian metropolitan and provincial regions.", icon: "target" },
+      { title: "Technical & Programmatic SEO", desc: "Top-ranking keyword optimization across Google.ca for English and French searches.", icon: "search" },
+      { title: "Conversion Rate Optimization (CRO)", desc: "UX friction testing, bilingual form optimization, and cart checkout lift.", icon: "chart" },
+      { title: "B2B LinkedIn Demand Generation", desc: "Account-targeted campaigns reaching Canadian tech, financial, and industrial leaders.", icon: "share" },
+      { title: "CASL-Compliant Lifecycle Email", desc: "Automated retention and onboarding email cadences with strict opt-in governance.", icon: "mail" },
+      { title: "Analytics & Server-Side GA4", desc: "Robust attribution pipelines measuring closed-loop Canadian commerce revenue.", icon: "code" },
+    ],
+    complianceBadge: "PIPEDA, Law 25 & CASL Compliant",
+    complianceList: [
+      { title: "Canada's Anti-Spam Legislation (CASL)", desc: "Explicit opt-in verification and automated subscriber management preventing regulatory fines." },
+      { title: "PIPEDA & Quebec Law 25", desc: "Rigorous personal information governance and consent mechanisms." },
+    ],
+    localIntegrations: [
+      { title: "Interac & Moneris Conversion Tracking", text: "Precision e-commerce conversion tracking for Canadian native payment systems." },
+      { title: "Google.ca Geotargeting", text: "Localized search engine indexation across Ontario, BC, Quebec, and Alberta." },
+    ],
+    techStack: ["Google Ads", "Meta Ads", "LinkedIn Ads", "GA4", "Semrush", "Klaviyo", "HubSpot", "VWO"],
+    caseStudies: [
+      {
+        slug: "shared-inbox-help-desk",
+        title: "Canadian SaaS Growth Engine",
+        client: "Toronto SaaS Platform",
+        outcome: "Grew organic inbound demo requests by 210% and achieved a 4.5x ROAS on Canadian Google Search campaigns.",
+        tags: ["SaaS Growth", "Google Ads", "SEO", "Canada"],
+      },
+    ],
+    faqs: [
+      {
+        q: "Do you ensure CASL compliance for Canadian email campaigns?",
+        a: "Yes. Every email workflow is configured to adhere strictly to CASL consent requirements, identification disclosures, and instant unsubscribe links.",
+      },
+      {
+        q: "Can you run campaigns targeted specifically to Quebec?",
+        a: "Yes. We create localized French Canadian copy and adhere to Bill 96 and Law 25 consumer language and privacy requirements.",
+      },
+    ],
+  },
+  // --- AU: DIGITAL MARKETING AUSTRALIA ---
+  {
+    countryCode: "au",
+    countryName: "Australia",
+    cityName: "Sydney & Melbourne",
+    region: "Asia-Pacific",
+    serviceType: "digital-marketing",
+    serviceSlug: "digital-marketing-agency-australia",
+    h1: "Digital Marketing & SEO Agency in Australia",
+    metaTitle: "Best Digital Marketing Agency Australia | Konsilience AU",
+    metaDescription: "Premier digital marketing and SEO agency for Australian businesses. Data-driven PPC, Google.com.au SEO, and conversion optimization for Sydney and Melbourne brands.",
+    eyebrow: "Australia • Digital Growth Studio",
+    tagline: "Accelerating revenue and customer acquisition for Australian enterprises through high-performance digital marketing.",
+    currency: "AUD",
+    currencySymbol: "A$",
+    heroStats: [
+      ["4.8x", "Average Client ROAS"],
+      ["Top 3", "Rankings on Google.com.au"],
+      ["60%", "Cost Advantage vs Sydney Agencies"],
+      ["100%", "Australian Privacy Principles Compliant"],
+    ],
+    rateComparison: {
+      localAgencyRate: "A$160 - A$260/hr",
+      konsilienceRate: "A$50 - A$90/hr",
+      savingsPct: "60%",
+      turnaround: "Weekly Growth Sprints",
+    },
+    whyChooseUsTitle: "Why Australian Brands Partner with Konsilience",
+    whyChooseUsPoints: [
+      {
+        title: "Morning Timezone Alignment with India",
+        text: "India's working day starts during Australian business hours, allowing live morning syncs, rapid ad optimizations, and immediate daily communication.",
+      },
+      {
+        title: "Save 60% Over Sydney & Melbourne Agencies",
+        text: "Access world-class growth engineers, conversion designers, and performance marketers at a fraction of local agency retainers.",
+      },
+      {
+        title: "Rigorous Australian Privacy Principles (APPs)",
+        text: "Full architectural alignment with the Privacy Act 1988, Spam Act 2003, and Consumer Data Right frameworks.",
+      },
+      {
+        title: "Transparent Reporting & Direct Channel Access",
+        text: "No hidden agency margins on media spend; you retain complete ownership of all ad accounts and conversion pixels.",
+      },
+    ],
+    deliverablesTitle: "Australian Enterprise Digital Marketing Services",
+    deliverables: [
+      { title: "Google Search & Shopping Ads", desc: "High-intent paid search capturing buyers across Sydney, Melbourne, Brisbane, and Perth.", icon: "target" },
+      { title: "Technical & Programmatic SEO", desc: "Dominating competitive search results across Google.com.au with white-hat engineering.", icon: "search" },
+      { title: "Conversion Rate Optimization (CRO)", desc: "A/B testing, user journey friction audits, and cart checkout optimization.", icon: "chart" },
+      { title: "B2B LinkedIn Demand Generation", desc: "High-precision ABM campaigns connecting with Australian C-suite decision-makers.", icon: "share" },
+      { title: "Spam Act-Compliant Email Nurture", desc: "Automated customer retention, cart recovery, and loyalty flows in Klaviyo and HubSpot.", icon: "mail" },
+      { title: "GA4 Analytics & Edge Attribution", desc: "Server-side tracking pipelines measuring accurate customer acquisition cost and LTV.", icon: "code" },
+    ],
+    complianceBadge: "Privacy Act 1988 & Spam Act 2003 Compliant",
+    complianceList: [
+      { title: "Australian Privacy Principles (APPs)", desc: "Adherence to Schedule 1 of the Privacy Act 1988 regarding collection, use, and security of personal information." },
+      { title: "Spam Act 2003", desc: "Strict commercial electronic messaging compliance with express consent protocols." },
+    ],
+    localIntegrations: [
+      { title: "PayID & CommBank Gateways", text: "Seamless conversion event telemetry mapped to Australian domestic payment methods." },
+      { title: "Google.com.au Geocoding", text: "Targeted regional crawling and indexing for Australian capital cities." },
+    ],
+    techStack: ["Google Ads", "Meta Ads", "LinkedIn Ads", "GA4", "Semrush", "Klaviyo", "HubSpot", "VWO"],
+    caseStudies: [
+      {
+        slug: "shared-inbox-help-desk",
+        title: "Australian E-Commerce Revenue Lift",
+        client: "Melbourne Retailer",
+        outcome: "Increased monthly online sales by 185% while scaling Google Shopping ROAS from 2.8x to 5.4x.",
+        tags: ["E-Commerce", "Google Shopping", "SEO", "Australia"],
+      },
+    ],
+    faqs: [
+      {
+        q: "How does the timezone difference work between Australia and India?",
+        a: "Australian business hours align smoothly with India's morning and afternoon, providing 4 to 5 hours of overlapping working time every business day.",
+      },
+      {
+        q: "Do you specialize in B2B marketing for Australian technology companies?",
+        a: "Yes. We run LinkedIn ABM, high-intent Google Search, and conversion-focused content marketing for Australian SaaS and tech innovators.",
+      },
+    ],
+  },
+  // --- SA: DIGITAL MARKETING SAUDI ARABIA ---
+  {
+    countryCode: "sa",
+    countryName: "Saudi Arabia",
+    cityName: "Riyadh & Jeddah",
+    region: "Middle East / GCC",
+    serviceType: "digital-marketing",
+    serviceSlug: "digital-marketing-agency-saudi-arabia",
+    h1: "Digital Marketing Agency in Saudi Arabia (Riyadh)",
+    metaTitle: "Best Digital Marketing Agency Saudi Arabia | Konsilience KSA",
+    metaDescription: "Leading digital marketing agency for Saudi enterprises. Arabic-first SEO, Snapchat & TikTok ads, Google Search, and Vision 2030 digital growth strategies.",
+    eyebrow: "Riyadh • KSA Performance Marketing Studio",
+    tagline: "Empowering Saudi brands, enterprises, and Vision 2030 initiatives with Arabic-first digital marketing and customer acquisition.",
+    currency: "SAR",
+    currencySymbol: "SAR ",
+    heroStats: [
+      ["5.1x", "Average Client ROAS in KSA"],
+      ["Arabic First", "Culturally Native Copy & Visuals"],
+      ["55%", "Cost Advantage vs Riyadh Studios"],
+      ["100%", "KSA PDPL & CITC Compliant"],
+    ],
+    rateComparison: {
+      localAgencyRate: "280 - 450 SAR/hr",
+      konsilienceRate: "95 - 160 SAR/hr",
+      savingsPct: "55%",
+      turnaround: "Weekly Sprint Cycles",
+    },
+    whyChooseUsTitle: "Why Saudi Enterprises Choose Konsilience for Digital Marketing",
+    whyChooseUsPoints: [
+      {
+        title: "Native Saudi Dialect & Cultural Resonance",
+        text: "We craft Arabic ad copy and creative narratives that authentically align with Saudi cultural norms, national holidays, and regional consumer psychology.",
+      },
+      {
+        title: "Snapchat & TikTok GCC Advertising Mastery",
+        text: "Deep expertise in the ad formats with the highest reach in Saudi Arabia: Snapchat Lens/Story ads, TikTok commercial campaigns, and Instagram Reels.",
+      },
+      {
+        title: "Arabic Technical SEO for Google.com.sa",
+        text: "Optimizing Arabic search phrasing, transliterations, and local business citations across Riyadh, Jeddah, and Dammam.",
+      },
+      {
+        title: "Full Alignment with Vision 2030 Digital Directives",
+        text: "Helping Saudi businesses modernize customer acquisition, scale e-commerce, and build domestic brand authority.",
+      },
+    ],
+    deliverablesTitle: "Saudi Arabia Enterprise Digital Marketing Services",
+    deliverables: [
+      { title: "Snapchat & TikTok Paid Media", desc: "High-penetration short-form video and sponsored lenses driving viral consumer demand.", icon: "target" },
+      { title: "Arabic & English Google Ads", desc: "Search and Performance Max campaigns capturing active high-intent queries across KSA.", icon: "search" },
+      { title: "Arabic Technical SEO", desc: "Top organic rankings on Google.com.sa for high-value commercial keywords.", icon: "layers" },
+      { title: "Conversion Rate Optimization (CRO)", desc: "Arabic RTL checkout optimization, Mada payment flow tuning, and mobile UX refinement.", icon: "chart" },
+      { title: "Executive Social & B2B Lead Gen", desc: "Targeted LinkedIn presence and thought leadership reaching Saudi government and corporate executives.", icon: "share" },
+      { title: "Lifecycle SMS & Email Automation", desc: "Bilingual SMS and email journeys engineered for high engagement and repeat transactions.", icon: "mail" },
+    ],
+    complianceBadge: "KSA PDPL & Media Regulatory Compliant",
+    complianceList: [
+      { title: "Saudi Personal Data Protection Law (PDPL)", desc: "Adherence to Royal Decree No. M/19 regarding consent management, data localization, and consumer rights." },
+      { title: "General Authority for Media Regulation (GAMR)", desc: "Advertising copy and media assets conforming strictly to Saudi advertising licensing rules." },
+    ],
+    localIntegrations: [
+      { title: "Mada & STC Pay Telemetry", text: "Accurate tracking of domestic Saudi debit card transactions and mobile wallet purchases." },
+      { title: "Google.com.sa Geotargeting", text: "Dedicated search engine visibility tuned for the Kingdom of Saudi Arabia." },
+    ],
+    techStack: ["Snapchat Ads", "TikTok Ads", "Google Ads", "Meta Ads", "GA4", "Semrush", "Klaviyo", "Hotjar"],
+    caseStudies: [
+      {
+        slug: "shared-inbox-help-desk",
+        title: "Saudi E-Commerce Revenue Surge",
+        client: "Riyadh Retail Group",
+        outcome: "Achieved a 5.8x ROAS across Snapchat and TikTok campaigns while increasing online orders by 240% during Saudi National Day.",
+        tags: ["KSA Growth", "Snapchat Ads", "TikTok", "Arabic SEO"],
+      },
+    ],
+    faqs: [
+      {
+        q: "Which social media platforms deliver the best return in Saudi Arabia?",
+        a: "Snapchat and TikTok have massive engagement in Saudi Arabia for consumer products, while LinkedIn and Google Search dominate B2B and enterprise software lead generation.",
+      },
+      {
+        q: "Do you write native Saudi Arabic copy?",
+        a: "Yes. Our linguists and copywriters produce culturally resonant Saudi Arabic that reflects local idioms and consumer preferences.",
+      },
+    ],
+  },
+  // --- DE: DIGITAL MARKETING GERMANY ---
+  {
+    countryCode: "de",
+    countryName: "Germany & DACH",
+    cityName: "Berlin & Munich",
+    region: "Europe",
+    serviceType: "digital-marketing",
+    serviceSlug: "digital-marketing-agency-germany",
+    h1: "Digital Marketing & B2B SEO Agency in Germany",
+    metaTitle: "Best Digital Marketing Agency Germany | Konsilience DE",
+    metaDescription: "GDPR-compliant digital marketing agency for German enterprises and Mittelstand leaders. Technical SEO, Google Ads, LinkedIn B2B lead generation, and conversion engineering.",
+    eyebrow: "Germany • B2B Demand Generation Studio",
+    tagline: "German data privacy rigor paired with agile, high-impact digital marketing and conversion optimization.",
+    currency: "EUR",
+    currencySymbol: "€",
+    heroStats: [
+      ["4.7x", "Average Client ROAS"],
+      ["100%", "EU GDPR & TTDSG Compliant"],
+      ["55%", "Cost Savings vs German Agencies"],
+      ["B2B Focus", "Enterprise & Mittelstand Lead Gen"],
+    ],
+    rateComparison: {
+      localAgencyRate: "140 - 240 €/hr",
+      konsilienceRate: "50 - 90 €/hr",
+      savingsPct: "55%",
+      turnaround: "Bi-Weekly Agile Sprints",
+    },
+    whyChooseUsTitle: "Why German Enterprises Partner with Konsilience",
+    whyChooseUsPoints: [
+      {
+        title: "Strict German Data Privacy Discipline (GDPR & TTDSG)",
+        text: "We implement rigorous Consent Mode v2, server-side data anonymization, and cookie-less tracking architectures that satisfy German data protection officers.",
+      },
+      {
+        title: "Technical Engineering Marketers",
+        text: "We fix Core Web Vitals, build programmatic SEO architectures, and resolve JavaScript hydration issues that conventional marketing agencies fail to diagnose.",
+      },
+      {
+        title: "Over 5 Hours of Overlapping Working Time Daily",
+        text: "With only 3.5 hours difference between Germany (CET/CEST) and India (IST), our growth strategists collaborate live with your team every afternoon.",
+      },
+      {
+        title: "Save 55% Compared to Munich & Frankfurt Agencies",
+        text: "Reallocate excessive agency retainer fees directly into high-ROI media spend and conversion engineering experiments.",
+      },
+    ],
+    deliverablesTitle: "German Enterprise Digital Marketing Services",
+    deliverables: [
+      { title: "B2B LinkedIn ABM Campaigns", desc: "Targeted campaigns reaching German C-suite and Mittelstand engineering directors.", icon: "share" },
+      { title: "Google Search & Shopping Ads", desc: "High-intent paid search management across Germany, Austria, and Switzerland.", icon: "target" },
+      { title: "Technical & Programmatic SEO", desc: "Top Google.de search rankings built on clean architecture, semantic schema, and speed.", icon: "search" },
+      { title: "Conversion Rate Optimization (CRO)", desc: "User journey testing and form optimization that overcomes European buyer skepticism.", icon: "chart" },
+      { title: "GDPR-Compliant Lifecycle Marketing", desc: "Double opt-in email flows configured in HubSpot and ActiveCampaign with full privacy safeguards.", icon: "mail" },
+      { title: "Server-Side Tracking & Analytics", desc: "Zero unauthorized third-party telemetry, ensuring full compliance with German TTDSG standards.", icon: "code" },
+    ],
+    complianceBadge: "EU GDPR & German TTDSG Certified",
+    complianceList: [
+      { title: "EU General Data Protection Regulation (GDPR)", desc: "Strict adherence to privacy by design, data minimization, and standardized EU DPA agreements." },
+      { title: "Telecommunications Telemedia Data Protection Act (TTDSG)", desc: "Zero tracking cookies activated without explicit, granular user consent." },
+    ],
+    localIntegrations: [
+      { title: "SEPA & Klarna Conversion Telemetry", text: "Accurate tracking for German domestic bank debit and buy-now-pay-later checkouts." },
+      { title: "Google.de Geocoding & Indexing", text: "Precision regional search performance across Berlin, Munich, Frankfurt, and Hamburg." },
+    ],
+    techStack: ["Google Ads", "LinkedIn Ads", "GA4", "Semrush", "HubSpot", "Matomo", "VWO"],
+    caseStudies: [
+      {
+        slug: "shared-inbox-help-desk",
+        title: "German B2B Industrial Scaleup Growth",
+        client: "German Industrial IoT Provider",
+        outcome: "Generated 340% more qualified B2B sales leads across the DACH region while cutting cost per acquisition by 38%.",
+        tags: ["B2B Marketing", "LinkedIn Ads", "SEO", "Germany"],
+      },
+    ],
+    faqs: [
+      {
+        q: "How do you ensure GDPR and TTDSG compliance for digital campaigns in Germany?",
+        a: "We configure server-side tracking, anonymize IP addresses, integrate with certified CMPs like Usercentrics, and strictly honor user cookie rejections.",
+      },
+      {
+        q: "Do you offer marketing services in German and English?",
+        a: "Yes. We manage bilingual German and English campaigns to address both domestic German buyers and international European markets.",
       },
     ],
   },

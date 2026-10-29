@@ -93,7 +93,11 @@ export const nav: NavItem[] = [
       title: c.name,
       links: serviceList.filter((s) => s.category === c.name).map((s) => ({ label: s.name, href: `/services/${s.slug}` })),
     })),
-    featured: { title: "All Services", text: "End-to-end capabilities from strategy to scale.", href: "/services" },
+    featured: {
+      title: "Digital Marketing & Growth",
+      text: "Full-funnel PPC, technical SEO, and conversion rate optimization engineered for ROI.",
+      href: "/digital-marketing",
+    },
   },
   {
     label: "Industries",

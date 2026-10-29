@@ -622,3 +622,94 @@ export function buildCountryHubSchema(hub: CountryHub) {
   return [hubSchema, breadcrumb];
 }
 
+/**
+ * Digital Marketing Hub Overview Schema
+ */
+export function buildDigitalMarketingSchema(faqs: { q: string; a: string }[]) {
+  const pageUrl = `${siteUrl}/digital-marketing`;
+
+  const breadcrumb = buildBreadcrumbSchema([
+    { name: "Home", item: siteUrl },
+    { name: "Digital Marketing & Growth", item: pageUrl },
+  ]);
+
+  const serviceSchema = {
+    "@type": "ProfessionalService",
+    "@id": `${pageUrl}#service`,
+    "name": `Digital Marketing & Performance Growth Services | ${brand.name}`,
+    "url": pageUrl,
+    "description": "Full-funnel digital marketing, AI-driven PPC, enterprise SEO, conversion rate optimization, and growth engineering for ambitious global brands.",
+    "provider": {
+      "@type": "Organization",
+      "name": brand.name,
+      "url": siteUrl,
+      "logo": `${siteUrl}/logo-white.png`,
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Digital Marketing & Growth Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Search Engine Optimization (SEO)",
+            "description": "Technical SEO, programmatic architectures, and generative engine optimization.",
+            "url": `${siteUrl}/services/search-engine-optimization`,
+          },
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Performance Marketing & PPC",
+            "description": "Multi-channel paid campaigns engineered for maximum ROAS across Google, Meta, and LinkedIn.",
+            "url": `${siteUrl}/services/performance-marketing-and-ppc`,
+          },
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Social Media Marketing",
+            "description": "Organic social growth, executive personal branding, and viral community management.",
+            "url": `${siteUrl}/services/social-media-marketing`,
+          },
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Content Marketing & Copywriting",
+            "description": "High-converting copy, technical whitepapers, and thought leadership that drives pipeline.",
+            "url": `${siteUrl}/services/content-marketing-and-copywriting`,
+          },
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Conversion Rate Optimization (CRO)",
+            "description": "Data-backed UX audits, A/B testing, and checkout funnel optimization that turns traffic into revenue.",
+            "url": `${siteUrl}/services/conversion-rate-optimization`,
+          },
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Email Marketing & Automation",
+            "description": "Automated lifecycle journeys, behavioral flows, and retention engines that maximize LTV.",
+            "url": `${siteUrl}/services/email-marketing-and-automation`,
+          },
+        },
+      ],
+    },
+  };
+
+  const faqBlock = buildFaqSchema(faqs);
+  const graph: Record<string, unknown>[] = [serviceSchema, breadcrumb];
+  if (faqBlock) graph.push(faqBlock);
+  return graph;
+}
+

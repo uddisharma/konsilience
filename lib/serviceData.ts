@@ -580,4 +580,197 @@ export const serviceData: Record<string, ServiceDetailData> = {
       },
     ],
   },
+  "search-engine-optimization": {
+    heroStats: [
+      ["Top 3", "Target Keyword SERPs"],
+      ["240%+", "Avg Organic Traffic Lift"],
+      ["100%", "White-Hat Schema Architecture"],
+      ["GEO Ready", "AI & Perplexity Ingestion"],
+    ],
+    deliverables: [
+      { title: "Technical & Core Web Vitals Audits", text: "Deep crawl diagnosis covering indexation, crawl budget, JS hydration, and speed metrics." },
+      { title: "Programmatic SEO Architecture", text: "Database-driven landing pages capturing thousands of long-tail high-intent queries." },
+      { title: "Generative Engine Optimization (GEO)", text: "Optimizing content hierarchy and citations for ChatGPT, Perplexity, and Google AI Overviews." },
+      { title: "Editorial Backlink Building", text: "Authoritative, white-hat digital PR and high-domain citation acquisition." },
+    ],
+    faqs: [
+      {
+        q: "How soon can we expect organic search ranking improvements?",
+        a: "Technical fixes and on-page optimizations typically show indexation and crawl uplifts in 4 to 8 weeks. Competitive keyword movements and substantial organic revenue growth compound predictably between months 3 and 6.",
+      },
+      {
+        q: "How do you optimize websites for AI search engines like ChatGPT and Perplexity?",
+        a: "We implement Generative Engine Optimization (GEO): structuring content with direct factual answer syntax, JSON-LD knowledge graphs, entity relationships, and authoritative citations that LLMs ingest reliably.",
+      },
+      {
+        q: "Do you specialize in programmatic SEO for SaaS and marketplaces?",
+        a: "Yes. We engineer dynamic page generation engines that produce thousands of indexed, fast-loading, unique comparison and localized landing pages without duplicate content penalties.",
+      },
+      {
+        q: "What is your approach to backlink acquisition?",
+        a: "We strictly adhere to white-hat editorial outreach, digital PR, proprietary research asset publication, and industry contributor placements. We never engage in PBNs or link farms.",
+      },
+    ],
+  },
+  "performance-marketing-and-ppc": {
+    heroStats: [
+      ["4.8x", "Average Client ROAS"],
+      ["$25M+", "Ad Spend Engineered"],
+      ["-38%", "CPA Reduction"],
+      ["Omnichannel", "Google, Meta & LinkedIn"],
+    ],
+    deliverables: [
+      { title: "Cross-Platform Campaign Architecture", text: "Segmented funnels across Google Search, Performance Max, YouTube, Meta, and LinkedIn." },
+      { title: "High-Converting Creative Sprints", text: "Ad copy, motion graphics, and video variations continuously tested against benchmarks." },
+      { title: "Server-Side Conversion Tracking", text: "First-party CAPI and server-side GA4 pipelines that bypass cookie loss and ad blockers." },
+      { title: "Bid Automation & Budget Allocation", text: "Algorithmic bidding rules tuned for customer acquisition cost (CAC) and customer lifetime value (LTV)." },
+    ],
+    faqs: [
+      {
+        q: "Which ad networks do you specialize in managing?",
+        a: "We manage Google Ads (Search, Performance Max, Display, YouTube), Meta Ads (Facebook & Instagram), LinkedIn B2B ABM campaigns, and specialized networks like TikTok and Reddit Ads.",
+      },
+      {
+        q: "How do you solve conversion tracking degradation caused by iOS privacy updates?",
+        a: "We implement server-side conversion tracking using Meta Conversions API (CAPI), Google Enhanced Conversions, and first-party data pipelines to ensure 98%+ attribution accuracy.",
+      },
+      {
+        q: "What is your methodology for testing new creative assets?",
+        a: "We deploy weekly creative sprints testing hook variations, visual styles, and copy angles using rapid multivariate cohorts to eliminate ad fatigue.",
+      },
+      {
+        q: "Do we maintain direct ownership of our ad accounts and billing?",
+        a: "Yes. You maintain 100% administrative ownership of all ad platforms, billing accounts, pixels, and historic conversion data at all times.",
+      },
+    ],
+  },
+  "social-media-marketing": {
+    heroStats: [
+      ["5x+", "Engagement Rate vs Industry"],
+      ["Viral Hook", "Short-Form Video Engine"],
+      ["B2B ABM", "Executive Thought Leadership"],
+      ["360°", "Community & Crisis Management"],
+    ],
+    deliverables: [
+      { title: "Executive Thought Leadership", text: "Ghostwritten LinkedIn posts, carousels, and industry perspectives for founders and C-suite leaders." },
+      { title: "Short-Form Video Production", text: "Vertical Reels, Shorts, and TikToks edited with retention hooks, subtitles, and motion graphics." },
+      { title: "Brand Identity & Content Calendar", text: "Curated monthly calendar aligning product launches, customer proof, and viral trends." },
+      { title: "Active Community Nurture", text: "Daily engagement with prospects, industry peers, and customer discussions." },
+    ],
+    faqs: [
+      {
+        q: "Can social media actually generate enterprise B2B sales pipeline?",
+        a: "Yes. Strategic founder and executive personal branding on LinkedIn consistently generates high-trust inbound deal flow and enterprise partnerships with zero direct ad spend.",
+      },
+      {
+        q: "What formats work best on modern social platforms?",
+        a: "Short-form vertical video (under 60 seconds with quick visual pacing) and rich carousel infographics deliver the highest algorithm reach and bookmark rates across LinkedIn and Instagram.",
+      },
+      {
+        q: "Do your strategists handle video editing and graphics?",
+        a: "Yes. Our creative team handles scriptwriting, video editing, custom typography, thumbnail design, and captioning optimized for silent viewing.",
+      },
+      {
+        q: "How do you measure social media marketing ROI?",
+        a: "We track brand search volume lift, inbound demo attribution, profile link clicks, referral traffic quality, and qualitative customer feedback loops.",
+      },
+    ],
+  },
+  "content-marketing-and-copywriting": {
+    heroStats: [
+      ["100%", "Subject Matter Expert Authored"],
+      ["Zero Fluff", "Actionable Frameworks"],
+      ["Top Rank", "Search Intent Alignment"],
+      ["Multi-Format", "Whitepapers, Blogs & Demos"],
+    ],
+    deliverables: [
+      { title: "In-Depth Technical Whitepapers", text: "Comprehensive research reports, architectural guides, and industry state-of-the-market assets." },
+      { title: "Conversion Landing Page Copy", text: "Psychology-backed copywriting engineered to overcome buyer objections and lift conversion rates." },
+      { title: "Case Studies & Customer Stories", text: "Compelling challenge-solution-results narratives formatted for sales enablement." },
+      { title: "Topic Clusters & Pillar Strategy", text: "Holistic content architecture establishing domain topical authority with search engines." },
+    ],
+    faqs: [
+      {
+        q: "How do you produce technical content for complex software and enterprise niches?",
+        a: "Our writers collaborate with senior developers, solutions architects, and technical founders to translate intricate architectural concepts into clear, engaging business value.",
+      },
+      {
+        q: "Do you use AI tools to generate content?",
+        a: "We leverage AI solely for research synthesis and structural outlining. Every published sentence, argument, and technical insight is crafted, fact-checked, and polished by human domain experts.",
+      },
+      {
+        q: "How do you ensure written content actually converts readers into leads?",
+        a: "Every piece incorporates contextual calls-to-action, downloadable checklists, interactive calculators, and friction-free consultation prompts aligned with the reader's stage in the buying cycle.",
+      },
+      {
+        q: "Can you refresh and update outdated content on our existing blog?",
+        a: "Yes. Content refreshing is one of the highest ROI strategies: we update statistics, expand keyword coverage, enhance internal links, and recover lost rankings quickly.",
+      },
+    ],
+  },
+  "conversion-rate-optimization": {
+    heroStats: [
+      ["+42%", "Average Conversion Lift"],
+      ["95%", "Statistical Significance"],
+      ["Full-Funnel", "Landing Page to Checkout"],
+      ["UX First", "Data-Driven Redesigns"],
+    ],
+    deliverables: [
+      { title: "Comprehensive UX Friction Audit", text: "Heuristic evaluation, scroll-depth tracking, and form abandonment drop-off diagnostics." },
+      { title: "Hypothesis-Driven A/B Testing", text: "Rapid test cycles deploying variations of headlines, layouts, offers, and CTA buttons." },
+      { title: "Friction-Free Checkout & Forms", text: "One-click autofill, single-column field layouts, and trust badges that eradicate cart abandonment." },
+      { title: "Personalization & Dynamic Content", text: "Tailoring landing page headlines and social proof based on user referrer source and geography." },
+    ],
+    faqs: [
+      {
+        q: "How much web traffic do we need for meaningful A/B testing?",
+        a: "For statistically significant split testing, we recommend at least 15,000 monthly unique visitors or 300+ monthly conversions. For lower volume sites, we focus on qualitative user testing and rapid heuristic redesigns.",
+      },
+      {
+        q: "What tools do you use for tracking user behavior?",
+        a: "We work with Microsoft Clarity, Hotjar, VWO, Optimizely, PostHog, and Google Tag Manager to record sessions, render heatmaps, and measure micro-conversions.",
+      },
+      {
+        q: "How do you prioritize which page elements to test first?",
+        a: "We use the PIE (Potential, Importance, Ease) framework: focusing first on high-traffic, high-friction bottleneck pages such as pricing tiers, signup forms, and core landing pages.",
+      },
+      {
+        q: "Will testing experiments slow down our website's load speed?",
+        a: "No. We implement asynchronous test scripts with anti-flicker protection and server-side edge rendering to ensure zero negative impact on Core Web Vitals.",
+      },
+    ],
+  },
+  "email-marketing-and-automation": {
+    heroStats: [
+      ["38:1", "Average Email ROI"],
+      ["52%", "Open Rate Benchmark"],
+      ["Automated", "Behavioral Trigger Flows"],
+      ["Zero Spam", "DMARC, DKIM & SPF Shield"],
+    ],
+    deliverables: [
+      { title: "Automated Lifecycle Flows", text: "Welcome onboarding journeys, abandoned cart recovery, browse abandonment, and win-back drips." },
+      { title: "Dynamic Segmentation & Tagging", text: "Predictive cohorts segmented by purchase frequency, engagement score, and churn risk." },
+      { title: "Custom Responsive HTML Templates", text: "Pixel-perfect, dark-mode compatible email designs tested across 40+ client environments." },
+      { title: "Domain Health & Inbox Deliverability", text: "Dedicated IP warmup, Google/Yahoo sender requirement compliance, and bounce cleaning." },
+    ],
+    faqs: [
+      {
+        q: "Which email and CRM platforms do you support?",
+        a: "We specialize in Klaviyo, HubSpot, ActiveCampaign, Customer.io, Mailchimp, and Apollo.io, as well as transactional platforms like SendGrid and Postmark.",
+      },
+      {
+        q: "How do you prevent our marketing emails from landing in Spam or Promotions?",
+        a: "We configure DNS authentication (DKIM, SPF, DMARC, BIMI), monitor Google Postmaster reputation, implement list hygiene cleaning routines, and write conversational copy with balanced text-to-image ratios.",
+      },
+      {
+        q: "What automated email flows generate the highest revenue?",
+        a: "Abandoned checkout recovery, post-purchase onboarding sequences, and churn re-engagement series generate up to 70% of total email revenue with minimal ongoing maintenance.",
+      },
+      {
+        q: "Do you also create outbound B2B cold email systems?",
+        a: "Yes. We engineer compliant B2B cold email engines with secondary domains, mailbox warmup pools, verified lead data, and personalized AI-enriched opening lines.",
+      },
+    ],
+  },
 };
+
