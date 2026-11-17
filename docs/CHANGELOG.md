@@ -125,3 +125,7 @@ Inline Calendly embeds on /contact, /trasys-ai and the free-audit thank-you page
 - The scrollbar on the right of the booking popup is hidden. Calendly's iframe is cross-origin, so it is widened by 20 px and its frame clips the overflow. Scrolling still works. Verified in headless Edge: popup and page scrollbar widths are 0.
 - While the popup is open the page behind it does not scroll (`html.calendly-open`). Removed when the popup closes.
 - The cookie banner is hidden while the booking popup is open, so it never covers the calendar. It returns when the popup closes, if the visitor has not chosen yet.
+
+## Trasys sign-up link set (2026-11-17)
+
+- `site.config.ts` → `trasys.signupUrl` = `https://www.trasys.dev/sign-up` (verified 200). Used by the Trasys "Try free" buttons, the free-plan FAQ answer and the header menu item. Previously these linked to the Trasys home page.

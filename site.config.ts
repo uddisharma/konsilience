@@ -1,47 +1,22 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// site.config.ts: the ONE place for every link, ID and contact detail.
-//
-// Founders: fill each value once here. Components read from this file only.
-//
-// Rules
-// • A value written as "{{NAME}}" is a placeholder that has not been supplied yet.
-//   Anything still a placeholder is hidden or disabled on the site (see isSet()),
-//   so the site never shows "{{...}}" to a visitor. Open items are tracked in
-//   docs/OPEN_QUESTIONS.md.
-// • Placeholder names match docs/brief/konsilience_links_reference.md, which also
-//   says where to get each value and where it appears on the site.
-// • Values marked "live" are what www.konsilience.tech shows today. They stay in
-//   use but still need founder confirmation (see docs/OPEN_QUESTIONS.md).
-// ─────────────────────────────────────────────────────────────────────────────
-
 export type Placeholder = `{{${string}}}`;
 
-// Matches a whole-value placeholder: "{{US_PHONE}}" matches; "+1 555 0100" and "{{lower}}" do not.
-// Tester: https://regex101.com/?regex=%5E%5C%7B%5C%7B%5BA-Z0-9_%5D%2B%5C%7D%5C%7D%24&testString=%7B%7BUS_PHONE%7D%7D
 const PLACEHOLDER_RE = /^\{\{[A-Z0-9_]+\}\}$/;
 
-/** True when a config value has been filled in (not empty, not a {{PLACEHOLDER}}). */
 export function isSet(value: string | undefined | null): value is string {
   return !!value && !PLACEHOLDER_RE.test(value.trim());
 }
 
-// Matches every character that is not a digit or "+": in "+91 82838-81336" it removes " " and "-",
-// keeping "+918283881336"; digits and "+" are never matched.
-// Tester: https://regex101.com/?regex=%5B%5E%5Cd%2B%5D&testString=%2B91%2082838-81336
 const NON_DIAL_CHARS_RE = /[^\d+]/g;
 
-/** Strip spaces, brackets and dashes so a display number can go in a tel: link. */
 export const telHref = (display: string): string => `tel:${display.replace(NON_DIAL_CHARS_RE, "")}`;
 
-// Year the team formed and shipped its first project (confirmed 2026-11-17).
-// It is NOT the company incorporation year: never present it as "founded".
 const TEAM_SINCE_YEAR = 2021;
 
 export const siteConfig = {
-  siteUrl: "https://www.konsilience.tech", // live
+  siteUrl: "https://www.konsilience.tech",
 
   company: {
-    name: "Konsilience", // live
+    name: "Konsilience",
     legalName: "Konsilience Private Limited", // supplied 2026-11-17
     // Team formed and first project shipped. Use as "our team since 2021", never "founded 2021".
     teamSince: TEAM_SINCE_YEAR,
@@ -116,7 +91,7 @@ export const siteConfig = {
   trasys: {
     name: "Trasys AI", // live
     siteUrl: "https://www.trasys.dev", // {{TRASYS_SITE_URL}} (live)
-    signupUrl: "{{TRASYS_SIGNUP_URL}}",
+    signupUrl: "https://www.trasys.dev/sign-up", // {{TRASYS_SIGNUP_URL}} (verified 200, 2026-11-17)
     docsUrl: "{{TRASYS_DOCS_URL}}",
     githubUrl: "{{TRASYS_GITHUB_URL}}",
     npmUrl: "{{TRASYS_NPM_URL}}",

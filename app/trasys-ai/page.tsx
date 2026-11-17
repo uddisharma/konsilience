@@ -55,7 +55,7 @@ export default function TrasysAiPage() {
         text={p.tagline}
         actions={
           <>
-            <Button href={p.url}>Try {p.name} Free</Button>
+            <Button href={siteConfig.trasys.signupUrl}>Try {p.name} Free</Button>
             <BookCallButton variant="outline" placement="trasys_hero" url={siteConfig.booking.calendlyTrasysUrl}>
               Book a 30-min demo
             </BookCallButton>
@@ -129,13 +129,13 @@ export default function TrasysAiPage() {
         </div>
       </section>
 
-      <CtaBand title={`Start monitoring your AI with ${p.name}.`} text="Free tier available. Set up in minutes." label={`Try ${p.name} Free`} href={p.url} />
+      <CtaBand title={`Start monitoring your AI with ${p.name}.`} text="Free tier available. Set up in minutes." label={`Try ${p.name} Free`} href={siteConfig.trasys.signupUrl} />
       <Faq
         title={`${p.name} FAQs`}
         items={[
           { q: `What is ${p.name}?`, a: `${p.name} is an observability platform for AI applications, built by ${brand.name}. It traces LLM calls, tracks token spend, detects loops and routes incidents.` },
           { q: "Which languages and stacks are supported?", a: "SDKs for JavaScript, TypeScript, Python, Go and Node.js, with support for common databases, clouds and Kubernetes." },
-          { q: "Is there a free plan?", a: `Yes. You can start on the free tier at ${p.url.replace("https://", "")}.` },
+          { q: "Is there a free plan?", a: `Yes. You can start on the free tier at ${siteConfig.trasys.signupUrl.replace("https://", "")}.` },
           { q: "Can Konsilience help us instrument our AI app?", a: "Yes. Our team can set up tracing, dashboards and alerting as part of an AI engagement." },
         ]}
       />

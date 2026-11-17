@@ -49,7 +49,7 @@ export const nav: NavItem[] = [
           { label: "Product Overview", href: "/trasys-ai" },
           { label: "Features", href: "/trasys-ai#features" },
           { label: "Integrations", href: "/trasys-ai#integrations" },
-          { label: `Try ${brand.product.name}`, href: brand.product.url },
+          { label: `Try ${brand.product.name}`, href: siteConfig.trasys.signupUrl },
         ],
       },
       {
