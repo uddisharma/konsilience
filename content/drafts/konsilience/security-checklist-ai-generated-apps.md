@@ -5,10 +5,10 @@ cluster: "Cluster 2: AI-built app rescue"
 order: 7
 title: "Security checklist for AI-generated apps"
 intent: "Checklist"
-cta: "Book a 15-min call"
+cta: "Get a free app review"
 cta_link: "/contact#book"
 target_page: "/services/cybersecurity"
-blocked_by: "Decide the CTA (see the rescue pillar)"
+blocked_by: "Confirmed 2026-11-17: free app review is offered"
 ---
 # Security checklist for AI-generated apps
 

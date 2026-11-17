@@ -8,7 +8,7 @@ intent: "Story"
 cta: "Start free"
 cta_link: "https://www.trasys.dev/sign-up"
 target_page: "/trasys-ai"
-blocked_by: "Founders' own words on why it is free, and what 'for now' means (NEEDS_CONFIRMATION)"
+blocked_by: "Founders own words on why it is free (NEEDS_CONFIRMATION). Free as of 2026-11-17."
 ---
 # Why we built Trasys, and why it is free for now
 

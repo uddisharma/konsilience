@@ -78,3 +78,15 @@ Label each post with its type: client delivery, own product or demo build.
 - Direct answer in the first 100 words. One clear CTA. Internal link to the matching service page.
 - No claim about cost, time or results unless it is ours and dated.
 - Founder sign-off.
+
+## 7. Decisions received (2026-11-17)
+
+- **Trasys blog location:** the Trasys blog is at `https://www.trasys.dev/resources/blog` (not `/blog`). The Trasys drafts in `content/drafts/trasys/` are handed over for that site. If a post is also published on dev.to or Hashnode, it needs a canonical link back to the trasys.dev original.
+- **"Free app review":** confirmed as offered. The three rescue posts use it as their CTA. The site has no dedicated page for it yet, so the CTA links to `/contact#book`.
+- **Konsilience price ranges:** **not answered yet.** The answer received, "trasys is free as of now", covers Trasys only. The two cost posts (`custom-software-cost-2026`, `field-service-software-cost-2026`) still need our own dated price ranges.
+- **Self-hosting:** confirmed as supported. Still needed for the post: the supported install method and version (marked [VERIFY] in the outline).
+- **Trasys free pricing:** "free as of now". The founders' own words on why it is free are still needed for `why-we-built-trasys-free-for-now`.
+
+## 8. First draft
+
+- `content/drafts/konsilience/ai-built-app-breaks-with-real-users.md`: status `draft`, about 1,000 words, written to the blog writing rules. Not published. It lists its sources to add, its [VERIFY] and [CHECK CURRENT] items, a meta description, a slug, three alternative titles, and internal link spots.
