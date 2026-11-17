@@ -220,7 +220,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
       </section>
 
       <Newsletter />
-      <CtaBand title="Want to put these ideas to work?" text="Our team can help you plan and build it." />
+      <CtaBand title="Want to put these ideas to work?" text="Book a 15-minute call and we will talk through your project." label="Book a 15-min call" href="/contact#book" />
     </>
   );
 }
