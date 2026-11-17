@@ -39,3 +39,11 @@ Every page, section, claim or URL that is removed or changed is logged here with
 | --- | --- |
 | `public/file.svg`, `globe.svg`, `next.svg`, `vercel.svg`, `window.svg` | create-next-app leftovers, referenced nowhere |
 | `links.md` (untracked) | Every value in it (tawk.to IDs, three Calendly links) is now in `site.config.ts` |
+
+## Founder inputs (2026-11-17)
+
+- `site.config.ts`: GA4 ID, WhatsApp number, Turnstile site key and legal name "Konsilience Private Limited" added. Registered-office spelling confirmed.
+- Turnstile **secret** stored only in git-ignored `.env.local`; `TURNSTILE_SECRET_KEY=` added to `.env.example`.
+- Footer and legal pages now read "Konsilience Private Limited · Registered office: …". Organization schema gains `legalName`.
+- GA4, WhatsApp and Turnstile are stored but **not yet active on the site**: they ship with Phase 6 (forms, WhatsApp) and Phase 9 (GA4 behind cookie consent).
+- Portfolio and project work deferred by the founders.

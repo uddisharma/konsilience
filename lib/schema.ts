@@ -72,6 +72,7 @@ export function getGlobalSchema() {
         "@type": "Organization",
         "@id": `${siteUrl}/#organization`,
         "name": brand.name,
+        "legalName": siteConfig.company.legalName,
         "url": siteUrl,
         "logo": {
           "@type": "ImageObject",

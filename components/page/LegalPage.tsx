@@ -1,6 +1,6 @@
 import { slugify } from "@/lib/catalog";
 import { brand } from "@/lib/content";
-import { registeredOfficeLine } from "@/site.config";
+import { registeredOfficeLine, siteConfig } from "@/site.config";
 import Icon from "../ui/Icon";
 import PageHero from "./PageHero";
 
@@ -42,7 +42,7 @@ export default function LegalPage({ title, updated, sections }: { title: string;
             <p className="fs-base font-medium text-white/75">
               Questions? Contact us at <a href={`mailto:${brand.email}`} className="text-primary underline underline-offset-4">{brand.email}</a>.
             </p>
-            <p className="fs-base font-medium text-white/75">Registered office: {registeredOfficeLine}</p>
+            <p className="fs-base font-medium text-white/75">{siteConfig.company.legalName}. Registered office: {registeredOfficeLine}</p>
           </article>
         </div>
       </section>

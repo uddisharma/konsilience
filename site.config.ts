@@ -41,6 +41,7 @@ export const siteConfig = {
 
   company: {
     name: "Konsilience", // live
+    legalName: "Konsilience Private Limited", // supplied 2026-11-17
     // Year the company started. Shown as "since 2021" / years counter today.
     founded: FOUNDED_YEAR, // live
   },
@@ -50,7 +51,7 @@ export const siteConfig = {
     supportEmail: "{{SUPPORT_EMAIL}}",
     inPhone: "+91 82838 81336", // {{IN_PHONE}} (live)
     usPhone: "{{US_PHONE}}", // E.164, e.g. +1XXXXXXXXXX
-    whatsapp: "{{WHATSAPP}}", // digits only, no "+", for https://wa.me/<number>
+    whatsapp: "918283881336", // {{WHATSAPP}} digits only, no "+", for https://wa.me/<number> (same as IN_PHONE)
     mapEmbedUrl: "{{MAP_EMBED_URL}}", // optional: Google Maps "Embed a map" link for /contact
   },
 
@@ -66,8 +67,7 @@ export const siteConfig = {
     hours: "Mon – Fri, 9:30 AM – 6:30 PM IST", // live
   },
 
-  // Registered (legal) office, supplied by the founders 2026-11-17. Organization schema, footer small print.
-  // NEEDS_CONFIRMATION: spelling "Bhatnagar Colony" (written as "Bhtnagar colony" in the message).
+  // Registered (legal) office of Konsilience Private Limited, confirmed 2026-11-17. Organization schema, footer small print.
   registeredOffice: {
     street: "1034/25, Ground Floor, Bhatnagar Colony",
     city: "Jind",
@@ -97,11 +97,11 @@ export const siteConfig = {
     // if the founders choose a CRM endpoint (Phase 6).
     endpoint: "/api/contact", // {{FORM_ENDPOINT}} (live)
     notifyEmail: "sales@konsilience.tech", // {{NOTIFY_EMAIL}}, same as SALES_EMAIL unless told otherwise
-    turnstileSiteKey: "{{TURNSTILE_SITE_KEY}}", // public key only; the secret stays in .env
+    turnstileSiteKey: "0x4AAAAAAGEum3df7IP5pE2F", // {{TURNSTILE_SITE_KEY}} public key only; secret is TURNSTILE_SECRET_KEY in .env / Vercel
   },
 
   analytics: {
-    ga4Id: "{{GA4_ID}}", // G-XXXXXXXXXX
+    ga4Id: "G-0FV9HNCG9Q", // {{GA4_ID}}
     gscVerification: "{{GSC_VERIFICATION}}", // only the content="..." value
     gtmId: "{{GTM_ID}}", // optional
     clarityId: "{{CLARITY_ID}}", // optional
