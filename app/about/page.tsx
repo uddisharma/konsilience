@@ -26,6 +26,9 @@ const values = [
 ];
 
 // Journey. Only the first year (team formed, first project) is confirmed; the middle steps are ordered, not dated.
+// Delay between timeline cards as they animate in.
+const TIMELINE_STAGGER_MS = 90;
+
 const timeline = [
   { year: String(brand.teamSince), title: "Team formed, first project shipped", text: "Started with one goal: build products the right way." },
   { year: "Step 2", title: "First platform shipped", text: "Delivered our first SaaS build end to end, from discovery to launch." },
@@ -99,7 +102,7 @@ export default function AboutPage() {
         </div>
         <div className="wrap mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {timeline.map((t, i) => (
-            <Reveal key={t.year} delay={i * 90}>
+            <Reveal key={t.year} delay={i * TIMELINE_STAGGER_MS}>
               <div className="group relative h-full rounded-3xl border border-line bg-card p-6 transition-colors hover:border-primary">
                 <p className="font-condensed text-5xl font-medium text-primary">{t.year}</p>
                 <p className="subtitle mt-6">{t.title}</p>
