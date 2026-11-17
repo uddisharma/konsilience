@@ -1,4 +1,7 @@
 import nodemailer from "nodemailer";
+import { siteConfig } from "@/site.config";
+
+const SALES_EMAIL = siteConfig.contact.salesEmail;
 
 // Receives every website form (contact, job application, newsletter) and emails it to the sales inbox.
 // SMTP settings come from environment variables; see .env.example.
@@ -111,7 +114,7 @@ export async function POST(request: Request) {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE, MAIL_FROM, MAIL_TO } = process.env;
   if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
     console.error("[contact] SMTP is not configured: set SMTP_HOST, SMTP_USER and SMTP_PASS");
-    return bad("Our form is temporarily unavailable. Please email sales@konsilience.tech.", 500);
+    return bad(`Our form is temporarily unavailable. Please email ${SALES_EMAIL}.`, 500);
   }
 
   const port = Number(SMTP_PORT || 587);
@@ -125,7 +128,7 @@ export async function POST(request: Request) {
   try {
     await transporter.sendMail({
       from: MAIL_FROM || `Konsilience Website <${SMTP_USER}>`,
-      to: MAIL_TO || "sales@konsilience.tech",
+      to: MAIL_TO || SALES_EMAIL,
       replyTo: name ? `${name} <${email}>` : email,
       subject,
       text: rows.filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join("\n"),
@@ -134,7 +137,7 @@ export async function POST(request: Request) {
     });
   } catch (err) {
     console.error("[contact] sendMail failed", err);
-    return bad("We couldn't send your message right now. Please email sales@konsilience.tech.", 502);
+    return bad(`We couldn't send your message right now. Please email ${SALES_EMAIL}.`, 502);
   }
 
   return Response.json({ ok: true });

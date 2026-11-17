@@ -1,7 +1,17 @@
-import { brand, office } from "@/lib/content";
+import { brand } from "@/lib/content";
 import { siteUrl } from "@/lib/routes";
 import type { Industry, Job, Post, Project, Service } from "@/lib/catalog";
 import type { RegionalService, CountryHub } from "@/lib/regionalServiceData";
+import { sameAs, siteConfig } from "@/site.config";
+
+const postalAddress = {
+  "@type": "PostalAddress",
+  "streetAddress": siteConfig.office.street,
+  "addressLocality": siteConfig.office.city,
+  "addressRegion": siteConfig.office.region,
+  "postalCode": siteConfig.office.postalCode,
+  "addressCountry": siteConfig.office.countryCode,
+};
 
 export interface BreadcrumbItem {
   name: string;
@@ -68,18 +78,8 @@ export function getGlobalSchema() {
         "email": brand.email,
         "telephone": brand.phone,
         "foundingDate": String(brand.founded),
-        "sameAs": [
-          "https://www.linkedin.com/company/konsilience",
-          "https://twitter.com/konsilience",
-        ],
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Industrial Area, Sector 75, Sahibzada Ajit Singh Nagar",
-          "addressLocality": office.city,
-          "addressRegion": "Punjab",
-          "postalCode": "160071",
-          "addressCountry": office.code,
-        },
+        "sameAs": sameAs,
+        "address": postalAddress,
         "contactPoint": [
           {
             "@type": "ContactPoint",
@@ -111,14 +111,7 @@ export function getGlobalSchema() {
         "email": brand.email,
         "image": `${siteUrl}/logo-white.png`,
         "areaServed": "Global",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Industrial Area, Sector 75, Sahibzada Ajit Singh Nagar",
-          "addressLocality": office.city,
-          "addressRegion": "Punjab",
-          "postalCode": "160071",
-          "addressCountry": office.code,
-        },
+        "address": postalAddress,
       },
     ],
   };
@@ -374,14 +367,7 @@ ${job.niceToHave.map((n) => `• ${n}`).join("\n")}`,
       },
       "jobLocation": {
         "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Industrial Area, Sector 75, Sahibzada Ajit Singh Nagar",
-          "addressLocality": "Mohali",
-          "addressRegion": "Punjab",
-          "postalCode": "160071",
-          "addressCountry": "IN",
-        },
+        "address": postalAddress,
       },
       "occupationalCategory": job.team,
       "experienceRequirements": job.exp,
@@ -462,14 +448,7 @@ export function buildContactPageSchema() {
         "url": siteUrl,
         "email": brand.email,
         "telephone": brand.phone,
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Industrial Area, Sector 75, Sahibzada Ajit Singh Nagar",
-          "addressLocality": office.city,
-          "addressRegion": "Punjab",
-          "postalCode": "160071",
-          "addressCountry": office.code,
-        },
+        "address": postalAddress,
         "openingHours": "Mo-Fr 09:30-18:30",
       },
     },

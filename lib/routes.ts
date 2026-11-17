@@ -3,7 +3,9 @@ import { brand } from "./content";
 import { locationsList } from "./locationData";
 import { countryHubs, regionalServicesList } from "./regionalServiceData";
 
-export const siteUrl = "https://www.konsilience.tech";
+import { siteConfig } from "@/site.config";
+
+export const siteUrl = siteConfig.siteUrl;
 
 type Route = { label: string; href: string };
 

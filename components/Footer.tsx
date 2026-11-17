@@ -4,13 +4,7 @@ import { Logo } from "./Header";
 import { OfficeDetails, OfficeMap } from "./Office";
 import Icon from "./ui/Icon";
 
-const socials = [
-  { label: "LinkedIn", short: "in" },
-  { label: "X", short: "X" },
-  { label: "Facebook", short: "f" },
-  { label: "Instagram", short: "ig" },
-  { label: "YouTube", short: "▶" },
-];
+import { socialProfiles } from "@/site.config";
 
 export default function Footer() {
   return (
@@ -69,8 +63,8 @@ export default function Footer() {
             <a href={`mailto:${brand.email}`} className="u-link block text-lg font-semibold">{brand.email}</a>
             <a href={`tel:${brand.phoneHref}`} className="u-link mt-2 block text-white/80">{brand.phone}</a>
             <div className="mt-6 flex gap-2">
-              {socials.map((s) => (
-                <a key={s.label} target="_blank" href="https://www.linkedin.com/company/konsilience" aria-label={s.label} className="grid size-10 place-items-center rounded-full border border-line text-sm font-bold transition-all hover:-translate-y-1 hover:border-primary hover:bg-primary">
+              {socialProfiles.map((s) => (
+                <a key={s.label} target="_blank" rel="noopener noreferrer" href={s.url} aria-label={`${brand.name} on ${s.label}`} className="grid size-10 place-items-center rounded-full border border-line text-sm font-bold transition-all hover:-translate-y-1 hover:border-primary hover:bg-primary">
                   {s.short}
                 </a>
               ))}

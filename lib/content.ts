@@ -1,27 +1,35 @@
 // All site copy lives here so the brand and content can be swapped in one place.
 import type { StatVisualName } from "@/components/ui/StatVisual";
+import { officeAddressLines, siteConfig, telHref } from "@/site.config";
 
+// Contact details, links and IDs come from site.config.ts; only copy lives here.
 export const brand = {
-  name: "Konsilience",
+  name: siteConfig.company.name,
   // Our own product
   product: {
-    name: "Trasys AI",
-    url: "https://www.trasys.dev",
+    name: siteConfig.trasys.name,
+    url: siteConfig.trasys.siteUrl,
     short: "AI observability platform",
     tagline: "See every signal your AI stack produces: traces, token spend, loops and incidents in one place.",
   },
   tagline: "An AI-first product studio. A small senior team building SaaS platforms, apps and AI systems.",
-  founded: 2021,
-  phone: "+91 82838 81336", // display format
-  phoneHref: "+918283881336", // used in tel: links
-  email: "sales@konsilience.tech",
+  founded: siteConfig.company.founded,
+  phone: siteConfig.contact.inPhone, // display format
+  phoneHref: telHref(siteConfig.contact.inPhone).slice("tel:".length), // used in tel: links
+  email: siteConfig.contact.salesEmail,
 };
 
 import { aiSolutions, industryList, projects, serviceCategories, serviceList } from "./catalog";
 
+// NEEDS_CONFIRMATION (Phase 2/4): claimed count; the catalog currently holds 16 project records.
+const CLAIMED_PROJECT_COUNT = 35;
+// Mega-menu layout for Industries: column titles, and how many industries each column lists.
+const INDUSTRY_NAV_COLUMNS = ["Core", "Emerging", "Services"] as const;
+const INDUSTRIES_PER_NAV_COLUMN = 6;
+
 export const facts = {
-  platforms: "35+",
-  projectsDone: "35+",
+  platforms: `${CLAIMED_PROJECT_COUNT}+`,
+  projectsDone: `${CLAIMED_PROJECT_COUNT}+`,
   industries: new Set(projects.map((p) => p.industry)).size,
   technologies: new Set(projects.flatMap((p) => p.tech)).size,
 };
@@ -102,9 +110,11 @@ export const nav: NavItem[] = [
   {
     label: "Industries",
     href: "/industries",
-    groups: [0, 1, 2].map((g) => ({
-      title: ["Core", "Emerging", "Services"][g],
-      links: industryList.slice(g * 6, g * 6 + 6).map((i) => ({ label: i.name, href: `/industries/${i.slug}` })),
+    groups: INDUSTRY_NAV_COLUMNS.map((title, g) => ({
+      title,
+      links: industryList
+        .slice(g * INDUSTRIES_PER_NAV_COLUMN, (g + 1) * INDUSTRIES_PER_NAV_COLUMN)
+        .map((i) => ({ label: i.name, href: `/industries/${i.slug}` })),
     })),
     featured: { title: `${facts.industries} industries and counting`, text: "Platforms built for support, legal, HR, real estate, healthcare, construction and more.", href: "/industries" },
   },
@@ -162,7 +172,7 @@ export const services = [
 export const caseStudies = projects;
 
 export const stats: { value: number; suffix: string; label: string[]; text: string; visual: StatVisualName }[] = [
-  { value: 35, suffix: "+", label: ["Projects", "Done"], text: "SaaS products, web applications, mobile apps and AI systems built for clients globally", visual: "devices" },
+  { value: CLAIMED_PROJECT_COUNT, suffix: "+", label: ["Projects", "Done"], text: "SaaS products, web applications, mobile apps and AI systems built for clients globally", visual: "devices" },
   { value: facts.industries, suffix: "", label: ["Industries", "Served"], text: "from customer support and legal to construction, travel and beauty", visual: "industries" },
   { value: facts.technologies, suffix: "+", label: ["Technologies", "In Production"], text: "modern web, mobile, cloud and AI tools used across our builds", visual: "network" },
   { value: new Date().getFullYear() - brand.founded, suffix: "+", label: ["Years", "Building"], text: `shipping products since ${brand.founded}, from first MVP to multi-tenant SaaS`, visual: "timeline" },
@@ -211,12 +221,13 @@ export const footer = {
 };
 
 // Single office.
+const o = siteConfig.office;
 export const office = {
-  label: "Headquarters",
-  city: "Mohali",
-  country: "India",
-  code: "IN",
-  address: "Industrial Area, Sector 75,\nSahibzada Ajit Singh Nagar,\nMohali, Punjab 160071",
-  hours: "Mon – Fri, 9:30 AM – 6:30 PM IST",
-  mapQuery: "Industrial Area, Sector 75, Sahibzada Ajit Singh Nagar, Mohali, Punjab 160071",
+  label: o.label,
+  city: o.city,
+  country: o.country,
+  code: o.countryCode,
+  address: officeAddressLines.join("\n"),
+  hours: o.hours,
+  mapQuery: `${o.street}, ${o.city}, ${o.region} ${o.postalCode}`,
 };

@@ -10,6 +10,11 @@ import ThemePicker from "@/components/ThemePicker";
 import { brand } from "@/lib/content";
 import { siteUrl } from "@/lib/routes";
 import { themeBootScript } from "@/lib/theme";
+import { isSet, siteConfig } from "@/site.config";
+
+// Size of public/og-image.png (the standard 1.91:1 Open Graph card).
+const OG_IMAGE_WIDTH = 1200;
+const OG_IMAGE_HEIGHT = 630;
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -80,8 +85,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: `${siteUrl}/og-image.png`,
-        width: 1200,
-        height: 630,
+        width: OG_IMAGE_WIDTH,
+        height: OG_IMAGE_HEIGHT,
         alt: `${brand.name} - AI-First Digital Engineering & Product Studio`,
       },
     ],
@@ -92,7 +97,7 @@ export const metadata: Metadata = {
     description:
       "Senior software and AI engineering studio building SaaS platforms, custom AI agents, and mobile applications.",
     images: [`${siteUrl}/og-image.png`],
-    creator: "@konsilience",
+    ...(isSet(siteConfig.social.xHandle) ? { creator: siteConfig.social.xHandle } : {}),
   },
   manifest: "/manifest.webmanifest",
   icons: {

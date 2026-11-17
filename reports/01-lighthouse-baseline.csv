@@ -1,0 +1,9 @@
+page,url,performance,accessibility,best_practices,seo,fcp_s,lcp_s,tbt_ms,cls,speed_index_s,page_weight_kib,dom_elements
+home,https://www.konsilience.tech/,63,98,100,100,1.4,3.5,1694,0.000,2.9,573,5845
+service,https://www.konsilience.tech/services/custom-software-development,79,99,100,100,1.2,2.6,721,0.000,2.0,426,1454
+industry,https://www.konsilience.tech/industries/real-estate,84,99,100,100,1.2,2.4,543,0.000,1.7,407,1759
+location,https://www.konsilience.tech/locations/usa,94,99,100,100,1.4,2.3,217,0.000,1.5,418,2007
+portfolio,https://www.konsilience.tech/portfolio,79,95,100,100,1.8,2.7,619,0.000,2.3,406,4077
+contact,https://www.konsilience.tech/contact,88,99,100,100,1.1,2.4,397,0.000,2.1,832,820
+digital-marketing,https://www.konsilience.tech/digital-marketing,90,95,100,100,1.4,2.4,352,0.000,2.1,359,905
+trasys,https://www.konsilience.tech/trasys-ai,95,98,100,100,1.3,2.7,126,0.000,2.3,413,836

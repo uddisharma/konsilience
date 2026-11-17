@@ -1,6 +1,16 @@
 import type { NextConfig } from "next";
 
+// HTTP 301: the brief asks for 301s (permanent: true would send 308).
+const MOVED_PERMANENTLY = 301;
+
 const nextConfig: NextConfig = {
+  // Every removed or renamed URL gets a 301 here (logged in CHANGELOG.md).
+  async redirects() {
+    return [
+      // Duplicate of /llms.txt under a non-standard name.
+      { source: "/llm.txt", destination: "/llms.txt", statusCode: MOVED_PERMANENTLY },
+    ];
+  },
 
   async headers() {
     return [
