@@ -56,6 +56,15 @@ export default function ConversionWidgets(): ReactNode {
   const desktop = useSyncExternalStore(subscribeDesktop, isDesktopNow, isDesktopOnServer);
   const [chat, setChat] = useState<ChatState>("idle");
   const [chatRequested, setChatRequested] = useState(false); // visitor clicked our chat button
+  // Mobile booking and WhatsApp bar: hidden while reading, shown once the footer is in view.
+  const [atFooter, setAtFooter] = useState(false);
+  useEffect(() => {
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+    const io = new IntersectionObserver(([entry]) => setAtFooter(entry?.isIntersecting ?? false));
+    io.observe(footer);
+    return () => io.disconnect();
+  }, []);
 
   // One-time setup: consent + attribution, Calendly booking events, contact-link click events.
   useEffect(() => {
@@ -136,7 +145,12 @@ export default function ConversionWidgets(): ReactNode {
       <CookieBanner />
 
       {!bannerOpen && (
-        <div data-placement="sticky_mobile" className="fixed bottom-4 left-4 z-40 flex items-center gap-2 lg:hidden print:hidden">
+        <div
+          data-placement="sticky_mobile"
+          inert={!atFooter}
+          aria-hidden={!atFooter}
+          className={`fixed bottom-4 left-4 z-40 flex items-center gap-2 transition-all duration-300 lg:hidden print:hidden ${atFooter ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"}`}
+        >
           <BookCallButton placement="sticky_mobile" className="!px-5 !py-3 text-sm shadow-2xl" />
           {whatsappUrl && (
             <a

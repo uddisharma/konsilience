@@ -10,7 +10,7 @@ import WhatsAppIcon from "./ui/WhatsAppIcon";
 export default function Footer() {
   return (
     <footer className="border-t border-line bg-black">
-      <div className="wrap pt-20 pb-10">
+      <div className="wrap pt-20 pb-28 lg:pb-10">
         <div className="flex flex-col justify-between gap-10 lg:flex-row lg:items-start">
           <div className="flex max-w-md flex-col gap-6">
             <Logo />

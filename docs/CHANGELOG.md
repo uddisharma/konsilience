@@ -143,3 +143,8 @@ Inline Calendly embeds on /contact, /trasys-ai and the free-audit thank-you page
 
 ### Added
 - IndexNow: key file `public/07fac34dfe38e2da4d5d8f682e1aa368.txt`, `scripts/indexnow.mjs` (submits every sitemap URL to Bing, Yandex and other engines; not Google), `npm run indexnow`, and `.github/workflows/indexnow.yml` (runs on each push to `main`, after a 3-minute wait for the Vercel deploy).
+
+## Mobile booking bar shown at the footer only (2026-11-17)
+
+- On phones, the "Book a 15-min call" and WhatsApp bar is hidden while reading and fades in once the footer is in view. The chat bubble stays visible throughout. Desktop is unchanged.
+- The footer has extra bottom padding on phones so the bar never covers the last links.
