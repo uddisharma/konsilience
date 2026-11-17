@@ -1,4 +1,4 @@
-import { aiSolutions, industryList, jobs, posts, projects, resourceTypes, serviceList } from "./catalog";
+import { aiSolutions, industryList, jobs, posts, projects, serviceList } from "./catalog";
 import { brand } from "./content";
 import { locationsList } from "./locationData";
 import { countryHubs, regionalServicesList } from "./regionalServiceData";
@@ -7,7 +7,7 @@ import { siteConfig } from "@/site.config";
 
 export const siteUrl = siteConfig.siteUrl;
 
-type Route = { label: string; href: string };
+type Route = { label: string; href: string; updated?: string };
 
 // Every public page, grouped. Feeds both /sitemap (HTML) and /sitemap.xml.
 export const routeGroups: { title: string; links: Route[] }[] = [
@@ -53,8 +53,7 @@ export const routeGroups: { title: string; links: Route[] }[] = [
     title: "Resources",
     links: [
       { label: "Blog", href: "/blog" },
-      ...posts.map((p) => ({ label: p.title, href: `/blog/${p.slug}` })),
-      ...resourceTypes.map((r) => ({ label: r.name, href: `/resources/${r.slug}` })),
+      ...posts.map((p) => ({ label: p.title, href: `/blog/${p.slug}`, updated: p.date })),
     ],
   },
   { title: "Open Roles", links: jobs.map((j) => ({ label: j.title, href: `/careers/${j.slug}` })) },

@@ -173,3 +173,7 @@ const WHATSAPP_GREETING = "Hi Konsilience, I'd like to talk about a project.";
 export const whatsappUrl: string | null = isSet(siteConfig.contact.whatsapp)
   ? `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(WHATSAPP_GREETING)}`
   : null;
+
+// Date of the last content change to the site (YYYY-MM-DD). The sitemap uses it as the
+// <lastmod> for pages without their own date. Bump it when you change page content.
+export const CONTENT_UPDATED = "2026-11-17";

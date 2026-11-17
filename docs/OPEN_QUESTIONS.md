@@ -75,3 +75,9 @@ Test evidence: `docs/reports/06-conversion-checklist.md`. These need production 
 - [x] **Trasys sign-up link:** `https://www.trasys.dev/sign-up` (verified 200, 2026-11-17). The "Try free" buttons, the FAQ answer and the header menu item use it.
 - [ ] **Mark key events in GA4** (Phase 9): `generate_lead`, `click_to_call`, `whatsapp_click`, `audit_form_submit`.
 - [ ] **Exit-intent pop-up:** confirm the copy and that desktop-only is what you want.
+
+## Automatic indexing (added 2026-11-17)
+
+- [ ] **Merge `website-fix` into `main`.** The IndexNow workflow runs on pushes to `main`. Check that the GitHub repository has Actions enabled. After the first run, look under the repository's Actions tab for "IndexNow after deploy" with a green tick.
+- [ ] **Bump `CONTENT_UPDATED` in `site.config.ts`** whenever page content changes, so the sitemap dates stay accurate.
+- [ ] Google does not use IndexNow. For Google, use Search Console's URL Inspection → Request indexing for the most important changed pages.

@@ -129,3 +129,17 @@ Inline Calendly embeds on /contact, /trasys-ai and the free-audit thank-you page
 ## Trasys sign-up link set (2026-11-17)
 
 - `site.config.ts` → `trasys.signupUrl` = `https://www.trasys.dev/sign-up` (verified 200). Used by the Trasys "Try free" buttons, the free-plan FAQ answer and the header menu item. Previously these linked to the Trasys home page.
+
+## Sitemap dates, noindex pages removed, IndexNow automation (2026-11-17)
+
+### Changed
+- `app/sitemap.ts`: `<lastmod>` is the real change date. Blog posts use their publish date; other pages use `CONTENT_UPDATED` in `site.config.ts` (bump it when page content changes). Before, every URL was stamped with the build time, which tells Google nothing.
+- Priority and change-frequency values are unchanged, but are now named constants.
+
+### Removed
+| What | Reason |
+| --- | --- |
+| `/resources/guides`, `/resources/whitepapers`, `/resources/press-releases`, `/resources/webinars` from the sitemap and the HTML sitemap | These pages are `noindex`, so listing them sent mixed signals. The pages still exist and still work. |
+
+### Added
+- IndexNow: key file `public/07fac34dfe38e2da4d5d8f682e1aa368.txt`, `scripts/indexnow.mjs` (submits every sitemap URL to Bing, Yandex and other engines; not Google), `npm run indexnow`, and `.github/workflows/indexnow.yml` (runs on each push to `main`, after a 3-minute wait for the Vercel deploy).

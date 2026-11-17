@@ -1,0 +1,21 @@
+# After each deploy to production, tell IndexNow (Bing and others) about every sitemap URL.
+name: IndexNow after deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Vercel takes a few minutes to publish the new build. Wait before reading the sitemap.
+      - name: Wait for the deploy
+        run: sleep 180
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Submit sitemap URLs to IndexNow
+        run: node scripts/indexnow.mjs
