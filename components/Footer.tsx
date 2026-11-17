@@ -73,7 +73,7 @@ export default function Footer() {
 
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-line pt-8 text-sm text-muted md:flex-row">
           <div className="text-center md:text-left">
-            <p>© {brand.founded}–{new Date().getFullYear()} {brand.name}. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} {brand.name}. All rights reserved.</p>
             <p className="mt-1 text-xs">{siteConfig.company.legalName} · Registered office: {registeredOfficeLine}</p>
           </div>
           <div className="flex flex-wrap justify-center gap-6">

@@ -25,9 +25,9 @@ const values = [
   { title: "Small team, senior talent", text: "You work directly with the people who build your product. No layers, no handoffs, no juniors learning on your budget." },
 ];
 
-// Journey. Only the founding year is confirmed; the middle steps are ordered, not dated.
+// Journey. Only the first year (team formed, first project) is confirmed; the middle steps are ordered, not dated.
 const timeline = [
-  { year: String(brand.founded), title: `${brand.name} founded`, text: "Started with one goal: build products the right way." },
+  { year: String(brand.teamSince), title: "Team formed, first project shipped", text: "Started with one goal: build products the right way." },
   { year: "Step 2", title: "First platform shipped", text: "Delivered our first SaaS build end to end, from discovery to launch." },
   { year: "Step 3", title: `${brand.product.name} launched`, text: "Our own AI observability platform for teams running LLMs in production." },
   { year: String(new Date().getFullYear()), title: "35+ projects done", text: `Support, legal, HR, real estate, healthcare and more, across ${facts.industries} industries.` },
@@ -48,7 +48,7 @@ export default function AboutPage() {
             <Button variant="outline" href="/careers">Join Our Team</Button>
           </>
         }
-        stats={[[String(brand.founded), "Founded"], ["35+", "Projects done"], [String(facts.industries), "Industries served"], [String(facts.technologies) + "+", "Technologies"]]}
+        stats={[[String(brand.teamSince), "Team since"], ["35+", "Projects done"], [String(facts.industries), "Industries served"], [String(facts.technologies) + "+", "Technologies"]]}
       />
 
       <section className="sec bg-black">
@@ -63,7 +63,7 @@ export default function AboutPage() {
             </Reveal>
             <Reveal delay={100}>
               <p className="fs-base font-medium text-muted">
-                Founded in {brand.founded}, we have grown into a team of engineers, designers and AI specialists that has shipped 35+ projects across{" "}
+                We started in {brand.teamSince} and have grown into a team of engineers, designers and AI specialists that has shipped 35+ projects across{" "}
                 {facts.industries} industries. We work with startups and growing businesses that want senior talent, AI-first delivery and
                 direct access to the people building their product.
               </p>

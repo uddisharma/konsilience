@@ -2,7 +2,7 @@ import { brand } from "@/lib/content";
 import { siteUrl } from "@/lib/routes";
 import type { Industry, Job, Post, Project, Service } from "@/lib/catalog";
 import type { RegionalService, CountryHub } from "@/lib/regionalServiceData";
-import { sameAs, siteConfig } from "@/site.config";
+import { isSet, sameAs, siteConfig } from "@/site.config";
 
 const toPostalAddress = (a: { street: string; city: string; region: string; postalCode: string; countryCode: string }) => ({
   "@type": "PostalAddress",
@@ -83,7 +83,7 @@ export function getGlobalSchema() {
         "description": brand.tagline,
         "email": brand.email,
         "telephone": brand.phone,
-        "foundingDate": String(brand.founded),
+        ...(isSet(siteConfig.company.incorporatedYear) ? { "foundingDate": siteConfig.company.incorporatedYear } : {}),
         "sameAs": sameAs,
         "address": registeredAddress,
         "contactPoint": [

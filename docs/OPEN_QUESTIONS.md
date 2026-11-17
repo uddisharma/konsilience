@@ -56,4 +56,5 @@ The portfolio and project work will be done later, including the real project li
 - [x] Legal name: Konsilience Private Limited (footer, legal pages, Organization schema).
 - [ ] Office hours "Mon – Fri, 9:30 AM – 6:30 PM IST": correct? Can visitors come to the Mohali office? (That decides whether LocalBusiness schema is appropriate.)
 - [ ] LinkedIn `linkedin.com/company/konsilience`: is this our company page?
-- [ ] "Founded 2021": the company, the team, or the first project?
+- [x] "Since 2021" = the team formed and shipped its first project (confirmed 2026-11-17). It is not the company incorporation year.
+- [ ] Year Konsilience Private Limited was incorporated (`{{INCORPORATION_YEAR}}`, optional). Until set, schema `foundingDate` is omitted.

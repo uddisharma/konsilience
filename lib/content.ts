@@ -13,7 +13,7 @@ export const brand = {
     tagline: "See every signal your AI stack produces: traces, token spend, loops and incidents in one place.",
   },
   tagline: "An AI-first product studio. A small senior team building SaaS platforms, apps and AI systems.",
-  founded: siteConfig.company.founded,
+  teamSince: siteConfig.company.teamSince, // team formed + first project; not the incorporation year
   phone: siteConfig.contact.inPhone, // display format
   phoneHref: telHref(siteConfig.contact.inPhone).slice("tel:".length), // used in tel: links
   email: siteConfig.contact.salesEmail,
@@ -175,7 +175,7 @@ export const stats: { value: number; suffix: string; label: string[]; text: stri
   { value: CLAIMED_PROJECT_COUNT, suffix: "+", label: ["Projects", "Done"], text: "SaaS products, web applications, mobile apps and AI systems built for clients globally", visual: "devices" },
   { value: facts.industries, suffix: "", label: ["Industries", "Served"], text: "from customer support and legal to construction, travel and beauty", visual: "industries" },
   { value: facts.technologies, suffix: "+", label: ["Technologies", "In Production"], text: "modern web, mobile, cloud and AI tools used across our builds", visual: "network" },
-  { value: new Date().getFullYear() - brand.founded, suffix: "+", label: ["Years", "Building"], text: `shipping products since ${brand.founded}, from first MVP to multi-tenant SaaS`, visual: "timeline" },
+  { value: new Date().getFullYear() - brand.teamSince, suffix: "+", label: ["Years", "Building"], text: `our team has shipped products since ${brand.teamSince}, from first MVP to multi-tenant SaaS`, visual: "timeline" },
 ];
 
 // Trasys AI feature pillars shown on the home page.

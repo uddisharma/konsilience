@@ -47,3 +47,19 @@ Every page, section, claim or URL that is removed or changed is logged here with
 - Footer and legal pages now read "Konsilience Private Limited · Registered office: …". Organization schema gains `legalName`.
 - GA4, WhatsApp and Turnstile are stored but **not yet active on the site**: they ship with Phase 6 (forms, WhatsApp) and Phase 9 (GA4 behind cookie consent).
 - Portfolio and project work deferred by the founders.
+
+## "Since 2021" clarified (2026-11-17)
+
+Founders confirmed 2021 is when the **team formed and shipped its first project**, not when the company was incorporated.
+
+| Where | Before | After |
+| --- | --- | --- |
+| Organization schema | `foundingDate: "2021"` | Removed. Returns when `{{INCORPORATION_YEAR}}` is set. |
+| Footer | © 2021–2026 Konsilience | © 2026 Konsilience (the legal-name line follows) |
+| /about timeline | "2021 · Konsilience founded" | "2021 · Team formed, first project shipped" |
+| /about intro | "Founded in 2021, we have grown into…" | "We started in 2021 and have grown into…" |
+| /about and /about/team stats | "2021 · Founded" | "2021 · Team since" |
+| Home stats card | "shipping products since 2021" | "our team has shipped products since 2021" |
+| `site.config.ts` | `company.founded` | `company.teamSince` plus `company.incorporatedYear` (placeholder) |
+
+The "35+ projects" wording on these pages is unchanged; it is handled with the portfolio (deferred).

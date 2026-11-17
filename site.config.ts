@@ -33,8 +33,9 @@ const NON_DIAL_CHARS_RE = /[^\d+]/g;
 /** Strip spaces, brackets and dashes so a display number can go in a tel: link. */
 export const telHref = (display: string): string => `tel:${display.replace(NON_DIAL_CHARS_RE, "")}`;
 
-// NEEDS_CONFIRMATION: does 2021 refer to the company, the team or the first project? (Phase 2)
-const FOUNDED_YEAR = 2021;
+// Year the team formed and shipped its first project (confirmed 2026-11-17).
+// It is NOT the company incorporation year: never present it as "founded".
+const TEAM_SINCE_YEAR = 2021;
 
 export const siteConfig = {
   siteUrl: "https://www.konsilience.tech", // live
@@ -42,8 +43,10 @@ export const siteConfig = {
   company: {
     name: "Konsilience", // live
     legalName: "Konsilience Private Limited", // supplied 2026-11-17
-    // Year the company started. Shown as "since 2021" / years counter today.
-    founded: FOUNDED_YEAR, // live
+    // Team formed and first project shipped. Use as "our team since 2021", never "founded 2021".
+    teamSince: TEAM_SINCE_YEAR,
+    // Year Konsilience Private Limited was incorporated. Enables schema foundingDate when set.
+    incorporatedYear: "{{INCORPORATION_YEAR}}",
   },
 
   contact: {
