@@ -21,16 +21,16 @@ export const siteConfig = {
     // Team formed and first project shipped. Use as "our team since 2021", never "founded 2021".
     teamSince: TEAM_SINCE_YEAR,
     // Year Konsilience Private Limited was incorporated. Enables schema foundingDate when set.
-    incorporatedYear: "{{INCORPORATION_YEAR}}",
+    incorporatedYear: "2026",
   },
 
   contact: {
     salesEmail: "sales@konsilience.tech", // {{SALES_EMAIL}} (live)
-    supportEmail: "{{SUPPORT_EMAIL}}",
+    supportEmail: "sales@konsilience.tech",
     inPhone: "+91 82838 81336", // {{IN_PHONE}} (live)
-    usPhone: "{{US_PHONE}}", // E.164, e.g. +1XXXXXXXXXX
+    usPhone: "+91 82838 81336", // E.164, e.g. +1XXXXXXXXXX
     whatsapp: "918283881336", // {{WHATSAPP}} digits only, no "+", for https://wa.me/<number> (same as IN_PHONE)
-    mapEmbedUrl: "{{MAP_EMBED_URL}}", // optional: Google Maps "Embed a map" link for /contact
+    mapEmbedUrl: "https://maps.app.goo.gl/Q32z4k1Q3Q4Q3Q4Q7?g_st=ic", // optional: Google Maps "Embed a map" link for /contact
   },
 
   // {{ADDRESS}}: where the team works. Footer, /contact, ProfessionalService/LocalBusiness schema.
@@ -63,7 +63,7 @@ export const siteConfig = {
     introCallMinutes: 15,
     calendlyAuditUrl: "https://calendly.com/konsilience/free-seo-audit-review", // {{CALENDLY_AUDIT_URL}} 15-min audit review
     calendlyTrasysUrl: "https://calendly.com/konsilience/trasys-demo", // {{CALENDLY_TRASYS_URL}} 30-min Trasys demo
-    calendlyFounderUrl: "{{CALENDLY_FOUNDER_URL}}", // optional: /about "Talk to a founder"
+    calendlyFounderUrl: "https://calendly.com/konsilience/founder-deepak-sharma-30-mints", // optional: /about "Talk to a founder"
   },
 
   chat: {
@@ -92,20 +92,20 @@ export const siteConfig = {
     name: "Trasys AI", // live
     siteUrl: "https://www.trasys.dev", // {{TRASYS_SITE_URL}} (live)
     signupUrl: "https://www.trasys.dev/sign-up", // {{TRASYS_SIGNUP_URL}} (verified 200, 2026-11-17)
-    docsUrl: "{{TRASYS_DOCS_URL}}",
-    githubUrl: "{{TRASYS_GITHUB_URL}}",
-    npmUrl: "{{TRASYS_NPM_URL}}",
-    demoVideoUrl: "{{TRASYS_DEMO_VIDEO_URL}}",
+    docsUrl: "https://docs.trasys.dev",
+    githubUrl: "http://gitlab.com/trasys",
+    npmUrl: "https://www.npmjs.com/package/@trasys/sdk",
+    demoVideoUrl: "https://www.trasys.dev/trasys-dark-30s.mp4",
     discordUrl: "{{TRASYS_DISCORD_URL}}", // optional
   },
 
   social: {
     // Only filled values are shown in the footer and used in schema `sameAs`.
     linkedin: "https://www.linkedin.com/company/konsilience", // {{LINKEDIN_URL}} (live)
-    instagram: "{{INSTAGRAM_URL}}",
+    instagram: "https://www.instagram.com/konsilience",
     youtube: "{{YOUTUBE_URL}}",
     x: "{{X_URL}}", // the @handle for twitter:creator is taken from this URL
-    github: "{{GITHUB_URL}}",
+    github: "http://github.com/trasys",
   },
 
   directories: {
