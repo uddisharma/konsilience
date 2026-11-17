@@ -17,10 +17,25 @@ declare global {
   }
 }
 
+const CALENDLY_OPEN_CLASS = "calendly-open";
+let scrollLockInstalled = false;
+
+// Calendly appends ".calendly-overlay" to <body> when the popup opens and removes it when it closes.
+// Watch <body> so the page behind the popup stays still while it is open.
+function installScrollLock(): void {
+  if (scrollLockInstalled) return;
+  scrollLockInstalled = true;
+  const sync = (): void => {
+    document.documentElement.classList.toggle(CALENDLY_OPEN_CLASS, document.querySelector(".calendly-overlay") !== null);
+  };
+  new MutationObserver(sync).observe(document.body, { childList: true });
+}
+
 let loading: Promise<void> | null = null;
 
 /** Inject Calendly's script and stylesheet once. Repeated calls share one promise. */
 export function loadCalendly(): Promise<void> {
+  installScrollLock();
   if (loading) return loading;
   loading = new Promise<void>((resolve, reject) => {
     const css = document.createElement("link");

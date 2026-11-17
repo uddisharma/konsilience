@@ -60,7 +60,7 @@ export default function CookieBanner(): ReactNode {
       role="dialog"
       aria-modal="false"
       aria-labelledby="cookie-banner-title"
-      className="anim-fade-up fixed inset-x-0 bottom-0 z-[60] rounded-t-3xl border border-line bg-card p-5 shadow-[0_-10px_40px_rgba(0,0,0,.5)] sm:p-6 lg:bottom-6 lg:left-1/2 lg:w-[min(640px,calc(100vw-3rem))] lg:-translate-x-1/2 lg:rounded-3xl print:hidden"
+      className="cookie-banner anim-fade-up fixed inset-x-0 bottom-0 z-[60] rounded-t-3xl border border-line bg-card p-5 shadow-[0_-10px_40px_rgba(0,0,0,.5)] sm:p-6 lg:bottom-6 lg:left-1/2 lg:w-[min(640px,calc(100vw-3rem))] lg:-translate-x-1/2 lg:rounded-3xl print:hidden"
     >
       <div className="flex items-start justify-between gap-4">
         <p id="cookie-banner-title" className="text-base font-semibold text-white">

@@ -177,3 +177,24 @@ body {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .reveal, .lr-inner { opacity: 1; transform: none; }
 }
+
+/* Calendly popup: hide the scrollbar inside the booking iframe. Calendly's iframe is cross-origin,
+   so its scrollbar cannot be styled directly. The iframe is made 20px wider than its frame and the
+   frame clips the overflow, which pushes that scrollbar out of view. Scrolling still works. */
+.calendly-overlay .calendly-popup-content {
+  overflow: hidden;
+}
+.calendly-overlay .calendly-popup-content iframe {
+  width: calc(100% + 20px) !important;
+}
+
+/* While the Calendly popup is open, lock the page behind it (see lib/calendly.ts). */
+html.calendly-open {
+  overflow: hidden;
+}
+
+/* Hide the cookie banner while the Calendly popup is open, so it never covers the booking
+   calendar. It comes back when the popup closes, if the visitor has not chosen yet. */
+html.calendly-open .cookie-banner {
+  display: none;
+}

@@ -119,3 +119,9 @@ Inline Calendly embeds on /contact, /trasys-ai and the free-audit thank-you page
 | Header "Contact Us" button | Replaced by the booking button (brief: primary CTA is "Book a 15-min call"). |
 | "Careers" card on /contact | Replaced by WhatsApp to make a direct contact route available. `/careers` is still linked elsewhere. |
 | "30-minute" in the Digital Marketing closing band | The booking is not defined as 30 minutes. |
+
+## Calendly popup: no scrollbar, page locked, banner hidden (2026-11-17)
+
+- The scrollbar on the right of the booking popup is hidden. Calendly's iframe is cross-origin, so it is widened by 20 px and its frame clips the overflow. Scrolling still works. Verified in headless Edge: popup and page scrollbar widths are 0.
+- While the popup is open the page behind it does not scroll (`html.calendly-open`). Removed when the popup closes.
+- The cookie banner is hidden while the booking popup is open, so it never covers the calendar. It returns when the popup closes, if the visitor has not chosen yet.
