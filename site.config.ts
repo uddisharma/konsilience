@@ -83,7 +83,7 @@ export const siteConfig = {
 
   analytics: {
     ga4Id: "G-0FV9HNCG9Q", // {{GA4_ID}}
-    gscVerification: "{{GSC_VERIFICATION}}", // only the content="..." value
+    gscVerification: "", // not needed: Search Console domain property (sc-domain:konsilience.tech) verifies by DNS
     gtmId: "{{GTM_ID}}", // optional
     clarityId: "{{CLARITY_ID}}", // optional
   },

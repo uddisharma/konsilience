@@ -25,7 +25,7 @@ The portfolio and project work will be done later, including the real project li
 | `{{CALENDLY_FOUNDER_URL}}` | Founder call (optional) | missing |
 | `{{TAWK_PROPERTY_ID}}`, `{{TAWK_WIDGET_ID}}` | tawk.to chat | ✅ `6afbf0ccd391ea3cc3c8a899` / `1k7k297u3` |
 | `{{GA4_ID}}` | GA4 measurement ID | ✅ `G-0FV9HNCG9Q` (installed with consent in Phase 9) |
-| `{{GSC_VERIFICATION}}` | Search Console HTML-tag value | **missing** |
+| `{{GSC_VERIFICATION}}` | Not needed: the Search Console property is a domain property, verified by DNS | n/a |
 | `{{GTM_ID}}`, `{{CLARITY_ID}}` | Tag Manager / Clarity (optional) | missing |
 | `{{US_PHONE}}` | US virtual number, E.164 | missing |
 | `{{WHATSAPP}}` | WhatsApp number, digits only | ✅ `918283881336` (same number as `{{IN_PHONE}}`) |
@@ -42,7 +42,7 @@ The portfolio and project work will be done later, including the real project li
 ## Measurement setup (founder actions, about 30 minutes)
 
 - [x] **GA4:** analytics.google.com → Admin → Create property "Konsilience" → Web data stream for `https://www.konsilience.tech` → copy the Measurement ID (`G-…`).
-- [ ] **Search Console:** search.google.com/search-console → Add property → URL prefix `https://www.konsilience.tech` → "HTML tag" → copy only the `content="…"` value. (Or a Domain property via a DNS TXT record at your domain registrar.) Link it to GA4 afterwards.
+- [x] **Search Console:** domain property created (`sc-domain:konsilience.tech`). It is verified by DNS, so no HTML tag value is needed. Next: submit `https://www.konsilience.tech/sitemap.xml` under Sitemaps.
 - [x] **WhatsApp:** +91 82838 81336.
 - [x] **Cloudflare Turnstile** (free CAPTCHA): dash.cloudflare.com → Turnstile → Add site `konsilience.tech` → send the site key; put the secret key in Vercel env as `TURNSTILE_SECRET_KEY`.
 - [x] **SMTP on Vercel:** confirmed set in production (2026-11-17). Was: confirm `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, `MAIL_TO` are set in Vercel → Project → Settings → Environment Variables (Production). Without them every form fails.
