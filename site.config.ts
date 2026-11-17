@@ -7,12 +7,11 @@
 // • A value written as "{{NAME}}" is a placeholder that has not been supplied yet.
 //   Anything still a placeholder is hidden or disabled on the site (see isSet()),
 //   so the site never shows "{{...}}" to a visitor. Open items are tracked in
-//   OPEN_QUESTIONS.md.
-// • Placeholder names follow konsilience_website_fix_brief_v2.md. Names marked
-//   (provisional) were not in the brief and will be renamed to match
-//   konsilience_links_reference.md once that file is added to the repo.
+//   docs/OPEN_QUESTIONS.md.
+// • Placeholder names match docs/brief/konsilience_links_reference.md, which also
+//   says where to get each value and where it appears on the site.
 // • Values marked "live" are what www.konsilience.tech shows today. They stay in
-//   use but still need founder confirmation (see OPEN_QUESTIONS.md).
+//   use but still need founder confirmation (see docs/OPEN_QUESTIONS.md).
 // ─────────────────────────────────────────────────────────────────────────────
 
 export type Placeholder = `{{${string}}}`;
@@ -48,89 +47,141 @@ export const siteConfig = {
 
   contact: {
     salesEmail: "sales@konsilience.tech", // {{SALES_EMAIL}} (live)
+    supportEmail: "{{SUPPORT_EMAIL}}",
     inPhone: "+91 82838 81336", // {{IN_PHONE}} (live)
-    usPhone: "{{US_PHONE}}",
-    whatsapp: "{{WHATSAPP}}", // digits only, international format, for https://wa.me/<number>
+    usPhone: "{{US_PHONE}}", // E.164, e.g. +1XXXXXXXXXX
+    whatsapp: "{{WHATSAPP}}", // digits only, no "+", for https://wa.me/<number>
+    mapEmbedUrl: "{{MAP_EMBED_URL}}", // optional: Google Maps "Embed a map" link for /contact
   },
 
+  // {{ADDRESS}}: where the team works. Footer, /contact, ProfessionalService/LocalBusiness schema.
   office: {
     label: "Headquarters", // live
     city: "Mohali", // live
     region: "Punjab", // live
     country: "India", // live
     countryCode: "IN", // live
-    street: "Industrial Area, Sector 75, Sahibzada Ajit Singh Nagar", // live
-    postalCode: "160071", // live
+    street: "Industrial Area, Sector 75, Sahibzada Ajit Singh Nagar", // live, confirmed 2026-11-17
+    postalCode: "160071", // live, confirmed 2026-11-17
     hours: "Mon – Fri, 9:30 AM – 6:30 PM IST", // live
+  },
+
+  // Registered (legal) office, supplied by the founders 2026-11-17. Organization schema, footer small print.
+  // NEEDS_CONFIRMATION: spelling "Bhatnagar Colony" (written as "Bhtnagar colony" in the message).
+  registeredOffice: {
+    street: "1034/25, Ground Floor, Bhatnagar Colony",
+    city: "Jind",
+    region: "Haryana",
+    postalCode: "126102",
+    country: "India",
+    countryCode: "IN",
   },
 
   booking: {
     // Calendly event links (Phase 6)
-    calendlyIntroUrl: "https://calendly.com/konsilience/intro-call", // {{CALENDLY_INTRO_URL}} (from links.md) // header + sticky "Book a 20-min call", /contact inline
-    calendlyAuditUrl: "https://calendly.com/konsilience/free-seo-audit-review", // {{CALENDLY_AUDIT_URL}} (from links.md) // free-audit thank-you page
-    calendlyTrasysUrl: "https://calendly.com/konsilience/trasys-demo", // {{CALENDLY_TRASYS_URL}} (from links.md; 30-min demo) // /trasys
+    calendlyIntroUrl: "https://calendly.com/konsilience/intro-call", // {{CALENDLY_INTRO_URL}} 20-min intro call
+    calendlyAuditUrl: "https://calendly.com/konsilience/free-seo-audit-review", // {{CALENDLY_AUDIT_URL}} 15-min audit review
+    calendlyTrasysUrl: "https://calendly.com/konsilience/trasys-demo", // {{CALENDLY_TRASYS_URL}} 30-min Trasys demo
+    calendlyFounderUrl: "{{CALENDLY_FOUNDER_URL}}", // optional: /about "Talk to a founder"
   },
 
   chat: {
     // tawk.to (Phase 6)
-    tawkPropertyId: "6afbf0ccd391ea3cc3c8a899", // {{TAWK_PROPERTY_ID}} (from links.md)
-    tawkWidgetId: "1k7k297u3", // {{TAWK_WIDGET_ID}} (from links.md)
+    tawkPropertyId: "6afbf0ccd391ea3cc3c8a899", // {{TAWK_PROPERTY_ID}}
+    tawkWidgetId: "1k7k297u3", // {{TAWK_WIDGET_ID}}
   },
 
   forms: {
     // Every website form posts here. "/api/contact" is the live endpoint today
-    // (emails via SMTP, settings in .env). Replace with {{FORM_ENDPOINT}} if the
-    // founders choose a different form backend (Phase 6).
+    // (emails via SMTP, settings in .env). Replace with a Zoho/Zapier/Make URL
+    // if the founders choose a CRM endpoint (Phase 6).
     endpoint: "/api/contact", // {{FORM_ENDPOINT}} (live)
-    captchaSiteKey: "{{CAPTCHA_SITE_KEY}}", // (provisional) public key only; the secret stays in .env
+    notifyEmail: "sales@konsilience.tech", // {{NOTIFY_EMAIL}}, same as SALES_EMAIL unless told otherwise
+    turnstileSiteKey: "{{TURNSTILE_SITE_KEY}}", // public key only; the secret stays in .env
   },
 
   analytics: {
-    ga4Id: "{{GA4_ID}}",
-    gscVerification: "{{GSC_VERIFICATION}}",
+    ga4Id: "{{GA4_ID}}", // G-XXXXXXXXXX
+    gscVerification: "{{GSC_VERIFICATION}}", // only the content="..." value
+    gtmId: "{{GTM_ID}}", // optional
+    clarityId: "{{CLARITY_ID}}", // optional
   },
 
   trasys: {
     name: "Trasys AI", // live
-    siteUrl: "https://www.trasys.dev", // live
+    siteUrl: "https://www.trasys.dev", // {{TRASYS_SITE_URL}} (live)
     signupUrl: "{{TRASYS_SIGNUP_URL}}",
-    docsUrl: "{{TRASYS_DOCS_URL}}", // (provisional)
-    demoVideoUrl: "{{TRASYS_DEMO_VIDEO_URL}}", // (provisional)
+    docsUrl: "{{TRASYS_DOCS_URL}}",
+    githubUrl: "{{TRASYS_GITHUB_URL}}",
+    npmUrl: "{{TRASYS_NPM_URL}}",
+    demoVideoUrl: "{{TRASYS_DEMO_VIDEO_URL}}",
+    discordUrl: "{{TRASYS_DISCORD_URL}}", // optional
   },
 
   social: {
     // Only filled values are shown in the footer and used in schema `sameAs`.
-    linkedin: "https://www.linkedin.com/company/konsilience", // live
-    x: "{{X_URL}}", // (provisional)
-    xHandle: "{{X_HANDLE}}", // (provisional) e.g. "@konsilience", used for twitter:creator
-    facebook: "{{FACEBOOK_URL}}", // (provisional)
-    instagram: "{{INSTAGRAM_URL}}", // (provisional)
-    youtube: "{{YOUTUBE_URL}}", // (provisional)
-    clutch: "{{CLUTCH_URL}}", // (provisional) directory profile for sameAs
-    goodfirms: "{{GOODFIRMS_URL}}", // (provisional) directory profile for sameAs
+    linkedin: "https://www.linkedin.com/company/konsilience", // {{LINKEDIN_URL}} (live)
+    instagram: "{{INSTAGRAM_URL}}",
+    youtube: "{{YOUTUBE_URL}}",
+    x: "{{X_URL}}", // the @handle for twitter:creator is taken from this URL
+    github: "{{GITHUB_URL}}",
+  },
+
+  directories: {
+    clutch: "{{CLUTCH_URL}}",
+    goodfirms: "{{GOODFIRMS_URL}}",
+    techbehemoths: "{{TECHBEHEMOTHS_URL}}", // optional
+    googleBusiness: "{{GOOGLE_BUSINESS_URL}}",
+    googleReview: "{{GOOGLE_REVIEW_URL}}", // not shown on the site; for emails and thank-you page
+    crunchbase: "{{CRUNCHBASE_URL}}", // optional
+    upwork: "{{UPWORK_URL}}", // optional
+  },
+
+  // Personal LinkedIn for people shown on /about and as blog authors (only those who agree).
+  teamLinkedin: {
+    sagun: "{{LINKEDIN_SAGUN_URL}}",
+    deepak: "{{LINKEDIN_DEEPAK_URL}}",
+    hardik: "{{LINKEDIN_HARDIK_URL}}",
+    gursidak: "{{LINKEDIN_GURSIDAK_URL}}",
+    neharika: "{{LINKEDIN_NEHARIKA_URL}}",
+    chhaya: "{{LINKEDIN_CHHAYA_URL}}",
+    tanish: "{{LINKEDIN_TANISH_URL}}",
+    akilesh: "{{LINKEDIN_AKILESH_URL}}",
   },
 } as const;
 
-/** Profile URLs that are actually filled in, for footer icons and schema sameAs. */
+/** Profile URLs that are actually filled in, for footer icons. */
 export const socialProfiles = (
   [
     ["LinkedIn", "in", siteConfig.social.linkedin],
     ["X", "X", siteConfig.social.x],
-    ["Facebook", "f", siteConfig.social.facebook],
     ["Instagram", "ig", siteConfig.social.instagram],
     ["YouTube", "▶", siteConfig.social.youtube],
+    ["GitHub", "gh", siteConfig.social.github],
   ] as const
 )
   .filter(([, , url]) => isSet(url))
   .map(([label, short, url]) => ({ label, short, url: url as string }));
 
+/** Organization schema `sameAs`: every filled social and directory profile. */
 export const sameAs = [
   ...socialProfiles.map((s) => s.url),
-  siteConfig.social.clutch,
-  siteConfig.social.goodfirms,
+  siteConfig.directories.clutch,
+  siteConfig.directories.goodfirms,
+  siteConfig.directories.techbehemoths,
+  siteConfig.directories.googleBusiness,
+  siteConfig.directories.crunchbase,
 ].filter(isSet);
+
+/** "@handle" from the X profile URL (https://x.com/konsilience → "@konsilience"), or null when unset. */
+export const xHandle: string | null = isSet(siteConfig.social.x)
+  ? `@${new URL(siteConfig.social.x).pathname.split("/").filter(Boolean)[0]}`
+  : null;
 
 export const officeAddressLines = [
   `${siteConfig.office.street},`,
   `${siteConfig.office.city}, ${siteConfig.office.region} ${siteConfig.office.postalCode}`,
 ];
+
+const r = siteConfig.registeredOffice;
+export const registeredOfficeLine = `${r.street}, ${r.city}, ${r.region} ${r.postalCode}, ${r.country}`;

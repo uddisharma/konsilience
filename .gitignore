@@ -44,5 +44,5 @@ next-env.d.ts
 .vercel
 
 # Audit artifacts (regenerate with scripts/audit/crawl.mjs and Lighthouse)
-/reports/raw/
-/reports/*-crawl.json
+/docs/reports/raw/
+/docs/reports/*-crawl.json

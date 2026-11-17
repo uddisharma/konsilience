@@ -4,7 +4,7 @@ import type { NextConfig } from "next";
 const MOVED_PERMANENTLY = 301;
 
 const nextConfig: NextConfig = {
-  // Every removed or renamed URL gets a 301 here (logged in CHANGELOG.md).
+  // Every removed or renamed URL gets a 301 here (logged in docs/CHANGELOG.md).
   async redirects() {
     return [
       // Duplicate of /llms.txt under a non-standard name.

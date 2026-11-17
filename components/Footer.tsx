@@ -3,8 +3,7 @@ import { brand, facts, footer } from "@/lib/content";
 import { Logo } from "./Header";
 import { OfficeDetails, OfficeMap } from "./Office";
 import Icon from "./ui/Icon";
-
-import { socialProfiles } from "@/site.config";
+import { registeredOfficeLine, socialProfiles } from "@/site.config";
 
 export default function Footer() {
   return (
@@ -73,7 +72,10 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-line pt-8 text-sm text-muted md:flex-row">
-          <p>© {brand.founded}–{new Date().getFullYear()} {brand.name}. All rights reserved.</p>
+          <div className="text-center md:text-left">
+            <p>© {brand.founded}–{new Date().getFullYear()} {brand.name}. All rights reserved.</p>
+            <p className="mt-1 text-xs">Registered office: {registeredOfficeLine}</p>
+          </div>
           <div className="flex flex-wrap justify-center gap-6">
             {[["Global Hubs", "/locations"], ["Privacy Policy", "/privacy-policy"], ["Terms & Conditions", "/terms"], ["Cookie Policy", "/cookie-policy"], ["Sitemap", "/sitemap"]].map(([l, h]) => (
               <Link key={h} href={h} className="hover:text-white">{l}</Link>

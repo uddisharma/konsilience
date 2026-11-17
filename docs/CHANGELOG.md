@@ -22,3 +22,20 @@ Every page, section, claim or URL that is removed or changed is logged here with
 | `twitter:creator = @konsilience` | `<head>`, every page | Same reason. It returns when `social.xHandle` is set. |
 | `public/llms.txt` (static file) | n/a | Replaced by the generated route at the same URL. |
 | `public/llm.txt` | `/llm.txt` | Duplicate of `/llms.txt` under a non-standard name. **301 → `/llms.txt`**. |
+
+## Phase 1 follow-up: docs folder, links reference, registered office (2026-11-17)
+
+### Changed
+- All website-fix documents moved to `docs/`: brief and companion files → `docs/brief/`, reports → `docs/reports/`, `CHANGELOG.md` and `OPEN_QUESTIONS.md` → `docs/`. Index in `docs/README.md`.
+- `GOOGLE_SEARCH_CONSOLE_REINDEXING.md` → `docs/archive/`. Its URL list is out of date once pages are merged or removed in later phases.
+- `README.md`: create-next-app boilerplate replaced with a short project README.
+- `site.config.ts`: placeholder names now match `konsilience_links_reference.md`. Added the support email, map embed, founder Calendly, GTM, Clarity, Turnstile, notify email, Trasys GitHub/npm/Discord, GitHub, directory profiles and team LinkedIn placeholders. Dropped the Facebook and X-handle fields (not in the reference; the X handle is now derived from `{{X_URL}}`).
+- Organization schema `address` now uses the **registered office (Jind)**. ProfessionalService, LocalBusiness and JobPosting keep the Mohali team office.
+- Footer bottom line and legal pages now show "Registered office: …".
+- `/llms.txt`: "Headquarters" line split into "Team office" (Mohali) and "Registered office" (Jind).
+
+### Removed
+| What | Reason |
+| --- | --- |
+| `public/file.svg`, `globe.svg`, `next.svg`, `vercel.svg`, `window.svg` | create-next-app leftovers, referenced nowhere |
+| `links.md` (untracked) | Every value in it (tawk.to IDs, three Calendly links) is now in `site.config.ts` |

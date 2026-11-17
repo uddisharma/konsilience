@@ -10,7 +10,7 @@ import ThemePicker from "@/components/ThemePicker";
 import { brand } from "@/lib/content";
 import { siteUrl } from "@/lib/routes";
 import { themeBootScript } from "@/lib/theme";
-import { isSet, siteConfig } from "@/site.config";
+import { xHandle } from "@/site.config";
 
 // Size of public/og-image.png (the standard 1.91:1 Open Graph card).
 const OG_IMAGE_WIDTH = 1200;
@@ -97,7 +97,7 @@ export const metadata: Metadata = {
     description:
       "Senior software and AI engineering studio building SaaS platforms, custom AI agents, and mobile applications.",
     images: [`${siteUrl}/og-image.png`],
-    ...(isSet(siteConfig.social.xHandle) ? { creator: siteConfig.social.xHandle } : {}),
+    ...(xHandle ? { creator: xHandle } : {}),
   },
   manifest: "/manifest.webmanifest",
   icons: {

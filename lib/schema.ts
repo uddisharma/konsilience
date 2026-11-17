@@ -4,14 +4,19 @@ import type { Industry, Job, Post, Project, Service } from "@/lib/catalog";
 import type { RegionalService, CountryHub } from "@/lib/regionalServiceData";
 import { sameAs, siteConfig } from "@/site.config";
 
-const postalAddress = {
+const toPostalAddress = (a: { street: string; city: string; region: string; postalCode: string; countryCode: string }) => ({
   "@type": "PostalAddress",
-  "streetAddress": siteConfig.office.street,
-  "addressLocality": siteConfig.office.city,
-  "addressRegion": siteConfig.office.region,
-  "postalCode": siteConfig.office.postalCode,
-  "addressCountry": siteConfig.office.countryCode,
-};
+  "streetAddress": a.street,
+  "addressLocality": a.city,
+  "addressRegion": a.region,
+  "postalCode": a.postalCode,
+  "addressCountry": a.countryCode,
+});
+
+// Where the team works (Mohali): ProfessionalService, LocalBusiness, job location.
+const postalAddress = toPostalAddress(siteConfig.office);
+// Registered (legal) office (Jind): the Organization entity.
+const registeredAddress = toPostalAddress(siteConfig.registeredOffice);
 
 export interface BreadcrumbItem {
   name: string;
@@ -79,7 +84,7 @@ export function getGlobalSchema() {
         "telephone": brand.phone,
         "foundingDate": String(brand.founded),
         "sameAs": sameAs,
-        "address": postalAddress,
+        "address": registeredAddress,
         "contactPoint": [
           {
             "@type": "ContactPoint",

@@ -1,4 +1,4 @@
-import { isSet, siteConfig as c } from "@/site.config";
+import { isSet, registeredOfficeLine, siteConfig as c } from "@/site.config";
 
 // /llms.txt: plain-text site summary for AI crawlers and answer engines.
 // Contact details come from site.config.ts. Claims in this text are reviewed in Phase 2.
@@ -19,7 +19,8 @@ const body = `# Konsilience
 - Website: ${c.siteUrl}
 - Email: ${c.contact.salesEmail}
 ${phones}
-- Headquarters: ${o.street}, ${o.city}, ${o.region} ${o.postalCode}, ${o.country}
+- Team office: ${o.street}, ${o.city}, ${o.region} ${o.postalCode}, ${o.country}
+- Registered office: ${registeredOfficeLine}
 - Flagship Observability Product: ${c.trasys.name} (${c.trasys.siteUrl})
 
 ---

@@ -1,12 +1,12 @@
 // Site crawler for the website audit (Phase 1, re-run in Phase 11).
 // Usage: node scripts/audit/crawl.mjs <baseUrl> <outPrefix> [--external]
-//   e.g. node scripts/audit/crawl.mjs http://localhost:3100 reports/01 --external
+//   e.g. node scripts/audit/crawl.mjs http://localhost:3100 docs/reports/01 --external
 // Seeds from /sitemap.xml plus every internal link found, follows nothing off-site.
 // Writes <outPrefix>-inventory.csv and <outPrefix>-crawl.json. No dependencies.
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 
-const [base, outPrefix = "reports/01", ...flags] = process.argv.slice(2);
+const [base, outPrefix = "docs/reports/01", ...flags] = process.argv.slice(2);
 if (!base) throw new Error("usage: crawl.mjs <baseUrl> <outPrefix> [--external]");
 const checkExternal = flags.includes("--external");
 const origin = new URL(base).origin;
