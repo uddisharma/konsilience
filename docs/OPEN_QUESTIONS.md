@@ -4,7 +4,7 @@ Updated at the end of every phase. Placeholder names match [`brief/konsilience_l
 
 ## Portfolio (Phases 2-4): **deferred by the founders on 2026-11-17**
 
-The portfolio and project work will be done later. Until then, project pages stay as they are. Phase 2 still lists the portfolio claims, marked "deferred".
+The portfolio and project work will be done later, including the real project list, case studies and the local project folders. Until then, project pages stay as they are. Phase 2 still lists the portfolio claims, marked "deferred". Phase 4 (portfolio) waits for these four items.
 
 - [ ] **Real project list.** The site claims 35 projects, but only 16 records exist, and 13 of those describe well-known third-party products (Freshdesk, Clio, Jobber, AppFolio…) rather than our builds. We will show only projects the team actually built and has the right to show, and the headline number will equal that count. For each candidate project, please confirm:
   1. Our team built it (who, roughly when).
