@@ -4,9 +4,14 @@ import PageHero from "@/components/page/PageHero";
 import AiSection from "@/components/sections/AiSection";
 import Faq from "@/components/sections/Faq";
 import Button from "@/components/ui/Button";
+import BookCallButton from "@/components/BookCallButton";
+import CalendlyInline from "@/components/CalendlyInline";
+import DesignPartnerForm from "@/components/DesignPartnerForm";
+import { siteConfig } from "@/site.config";
 import { brand } from "@/lib/content";
 
 import { siteUrl } from "@/lib/routes";
+import { OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from "@/lib/og";
 
 const p = brand.product;
 
@@ -19,7 +24,7 @@ export const metadata: Metadata = {
     title: `${p.name} | AI Observability & LLM Tracing Platform`,
     description: p.tagline,
     url: `${siteUrl}/trasys-ai`,
-    images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630, alt: `${p.name} | AI Observability & LLM Tracing Platform` }],
+    images: [{ url: `${siteUrl}/og-image.png`, width: OG_IMAGE_WIDTH, height: OG_IMAGE_HEIGHT, alt: `${p.name} | AI Observability & LLM Tracing Platform` }],
   },
 };
 
@@ -51,7 +56,9 @@ export default function TrasysAiPage() {
         actions={
           <>
             <Button href={p.url}>Try {p.name} Free</Button>
-            <Button variant="outline" href="/contact">Book a Demo</Button>
+            <BookCallButton variant="outline" placement="trasys_hero" url={siteConfig.booking.calendlyTrasysUrl}>
+              Book a 30-min demo
+            </BookCallButton>
           </>
         }
         stats={[["1 view", "Traces, logs & incidents"], ["Real-time", "Token cost visibility"], ["SDKs", "JS/TS · Python · Go · Node"], ["Free", "Tier to get started"]]}
@@ -95,6 +102,29 @@ export default function TrasysAiPage() {
           <SectionHead title={["Works With Your Stack"]} text="SDKs, databases, clouds and alerting tools supported out of the box." />
           <div className="mt-12">
             <Chips items={["JavaScript", "TypeScript", "Python", "Go", "Node.js", "PostgreSQL", "MongoDB", "Redis", "Prisma", "AWS", "Google Cloud", "Azure", "Kubernetes", "Docker", "Slack", "REST API"]} />
+          </div>
+        </div>
+      </section>
+
+      <section id="demo" className="sec scroll-mt-24 bg-black">
+        <div className="wrap-sm">
+          <SectionHead center title={["See It on Your Stack"]} text={`Book a 30-minute ${p.name} demo with the team that builds it.`} />
+          <div className="mt-12">
+            <CalendlyInline url={siteConfig.booking.calendlyTrasysUrl} />
+          </div>
+        </div>
+      </section>
+
+      {/* NEEDS_CONFIRMATION (docs/OPEN_QUESTIONS.md): early-access wording and the reply-time promise. */}
+      <section id="design-partners" className="sec scroll-mt-24 bg-black">
+        <div className="wrap-sm">
+          <SectionHead
+            center
+            title={["Early-Access Design Partners"]}
+            text={`${p.name} is free for everyone while we are in early access. Tell us how you run AI and we will get back to you within one business day.`}
+          />
+          <div className="mt-12">
+            <DesignPartnerForm />
           </div>
         </div>
       </section>

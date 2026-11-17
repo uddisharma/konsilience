@@ -1,103 +1,177 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
-import { track } from "@/lib/analytics";
+import { useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
+import { startGa4, stopGa4, track } from "@/lib/analytics";
 import { isCalendlyBooking } from "@/lib/calendly";
+import { effectiveConsent, initConsent, isBannerVisible } from "@/lib/consent";
+import { runWhenIdle } from "@/lib/idle";
 import { suppressContactModal } from "@/lib/popups";
-import { isSet, siteConfig } from "@/site.config";
+import { hideTawk, loadTawk, TAWK_DIRECT_CHAT_URL } from "@/lib/tawk";
+import { useConsent } from "@/lib/useConsent";
+import { captureAttribution } from "@/lib/utm";
+import { isSet, siteConfig, whatsappUrl } from "@/site.config";
 import BookCallButton from "./BookCallButton";
+import CookieBanner from "./consent/CookieBanner";
+import Icon from "./ui/Icon";
+import WhatsAppIcon from "./ui/WhatsAppIcon";
 
-// Mounted once in the root layout:
-// • sticky "Book a call" button on mobile (bottom-left; the chat bubble owns bottom-right)
-// • tawk.to chat, loaded after the page is interactive so it does not affect page speed
-// • GA4 events for Calendly bookings and chats (recorded once GA4 is installed in Phase 9)
-//
-// TODO(Phase 9): gate tawk.to behind cookie consent for EU/UK visitors.
+// Mounted once in the root layout. Owns everything that sits on top of the page:
+// • cookie banner, plus GA4 started or stopped to match consent
+// • tawk.to chat: auto-loaded on desktop when consent allows and the banner is closed; otherwise
+//   (and always on mobile) our lightweight chat button loads tawk.to on tap and opens it directly,
+//   so mobile visitors never get tawk's greeting pop-up over the page
+// • sticky "Book a call" + WhatsApp bar on mobile
+// • GA4 events: Calendly bookings, and clicks on phone / WhatsApp / email links
 
-const { tawkPropertyId, tawkWidgetId } = siteConfig.chat;
+const DESKTOP_QUERY = "(min-width: 1024px)";
+// If the chat widget has not appeared by then (blocked, slow network), offer tawk's hosted chat page.
+const CHAT_LOAD_TIMEOUT_MS = 10_000;
 
-// Bubble offsets from the bottom-right corner, in px. They match Tailwind's 6 (24px) on desktop
-// and 4 (16px) on mobile, so the bubble lines up with the sticky booking button and back-to-top.
-const DESKTOP_EDGE_PX = 24;
-const MOBILE_EDGE_PX = 16;
+const { ga4Id } = siteConfig.analytics;
+const chatConfigured = isSet(siteConfig.chat.tawkPropertyId) && isSet(siteConfig.chat.tawkWidgetId);
 
-// Load chat at the first idle moment, but never later than this after hydration. Without the cap,
-// the animated home hero keeps desktop browsers busy and the chat never loads.
-const TAWK_MAX_WAIT_MS = 5000;
-// Any of these from the visitor loads chat straight away.
-const FIRST_INTERACTION_EVENTS = ["pointerdown", "keydown", "scroll", "touchstart"] as const;
-
-type TawkApi = {
-  customStyle?: unknown;
-  onChatStarted?: () => void;
-};
-declare global {
-  interface Window {
-    Tawk_API?: TawkApi;
-    Tawk_LoadStart?: Date;
-  }
+function subscribeDesktop(cb: () => void): () => void {
+  const mq = window.matchMedia(DESKTOP_QUERY);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
 }
+const isDesktopNow = (): boolean => window.matchMedia(DESKTOP_QUERY).matches;
+const isDesktopOnServer = (): boolean => false;
 
-function injectTawk(): void {
-  if (document.getElementById("tawk-to-embed")) return;
-  window.Tawk_API = window.Tawk_API ?? {};
-  window.Tawk_LoadStart = new Date();
-  window.Tawk_API.customStyle = {
-    visibility: {
-      desktop: { position: "br", xOffset: DESKTOP_EDGE_PX, yOffset: DESKTOP_EDGE_PX },
-      mobile: { position: "br", xOffset: MOBILE_EDGE_PX, yOffset: MOBILE_EDGE_PX },
-    },
-  };
-  window.Tawk_API.onChatStarted = () => {
-    suppressContactModal();
-    track("chat_started", { method: "tawk" });
-  };
-  const s = document.createElement("script");
-  s.id = "tawk-to-embed";
-  s.async = true;
-  s.src = `https://embed.tawk.to/${tawkPropertyId}/${tawkWidgetId}`;
-  s.setAttribute("crossorigin", "*"); // as in tawk.to's official snippet
-  document.head.appendChild(s);
-}
+type ChatState = "idle" | "loading" | "ready" | "failed";
 
-/** Run `start` once: at the first idle moment (capped at TAWK_MAX_WAIT_MS) or first interaction. */
-function scheduleOnce(start: () => void): () => void {
-  let done = false;
-  const run = (): void => {
-    if (done) return;
-    done = true;
-    cleanup();
-    start();
-  };
-  FIRST_INTERACTION_EVENTS.forEach((e) => window.addEventListener(e, run, { once: true, passive: true }));
-  const idleId = window.requestIdleCallback?.(run, { timeout: TAWK_MAX_WAIT_MS });
-  const timerId = idleId === undefined ? window.setTimeout(run, TAWK_MAX_WAIT_MS) : undefined;
-  function cleanup(): void {
-    FIRST_INTERACTION_EVENTS.forEach((e) => window.removeEventListener(e, run));
-    if (idleId !== undefined) window.cancelIdleCallback(idleId);
-    if (timerId !== undefined) window.clearTimeout(timerId);
-  }
-  return cleanup;
+/** GA4 event name for a clicked contact link, or null for other links. */
+function contactEvent(href: string): string | null {
+  if (href.startsWith("tel:")) return "click_to_call";
+  if (href.startsWith("https://wa.me/")) return "whatsapp_click";
+  if (href.startsWith("mailto:")) return "email_click";
+  return null;
 }
 
 export default function ConversionWidgets(): ReactNode {
-  // A booking made in the Calendly popup is our main lead event.
+  const consent = useConsent();
+  const allowed = effectiveConsent(consent);
+  const bannerOpen = isBannerVisible(consent);
+  const regionKnown = consent.region !== "unknown";
+  const desktop = useSyncExternalStore(subscribeDesktop, isDesktopNow, isDesktopOnServer);
+  const [chat, setChat] = useState<ChatState>("idle");
+  const [chatRequested, setChatRequested] = useState(false); // visitor clicked our chat button
+
+  // One-time setup: consent + attribution, Calendly booking events, contact-link click events.
   useEffect(() => {
+    void initConsent();
+    captureAttribution();
     const onMessage = (e: MessageEvent): void => {
-      if (isCalendlyBooking(e)) track("generate_lead", { method: "calendly" });
+      if (!isCalendlyBooking(e)) return;
+      suppressContactModal();
+      track("generate_lead", { method: "calendly" });
+    };
+    const onClick = (e: MouseEvent): void => {
+      const link = (e.target as Element | null)?.closest?.("a[href]");
+      const event = link ? contactEvent(link.getAttribute("href") ?? "") : null;
+      if (!link || !event) return;
+      const placement = link.closest("[data-placement]")?.getAttribute("data-placement") ?? window.location.pathname;
+      track(event, { placement });
     };
     window.addEventListener("message", onMessage);
-    return () => window.removeEventListener("message", onMessage);
+    document.addEventListener("click", onClick, { capture: true });
+    return () => {
+      window.removeEventListener("message", onMessage);
+      document.removeEventListener("click", onClick, { capture: true });
+    };
   }, []);
 
+  // GA4 follows analytics consent.
   useEffect(() => {
-    if (!isSet(tawkPropertyId) || !isSet(tawkWidgetId)) return;
-    return scheduleOnce(injectTawk);
-  }, []);
+    if (!regionKnown || !isSet(ga4Id)) return;
+    if (!allowed.analytics) {
+      stopGa4();
+      return;
+    }
+    return runWhenIdle(() => void startGa4(ga4Id));
+  }, [regionKnown, allowed.analytics]);
+
+  // Desktop: load chat automatically once consent allows it and the banner is out of the way.
+  useEffect(() => {
+    if (!chatConfigured || !desktop || !regionKnown || bannerOpen || !allowed.functional || chat !== "idle") return;
+    const start = async (): Promise<void> => {
+      setChat("loading");
+      try {
+        await loadTawk();
+        setChat("ready");
+      } catch {
+        setChat("failed"); // blocked (e.g. ad blocker): the button now opens tawk's hosted chat page
+      }
+    };
+    return runWhenIdle(() => void start());
+  }, [desktop, regionKnown, bannerOpen, allowed.functional, chat]);
+
+  // Consent withdrawn after chat auto-loaded: hide it (fully gone on the next page load).
+  useEffect(() => {
+    if (chat === "ready" && !allowed.functional && !chatRequested) hideTawk();
+  }, [chat, allowed.functional, chatRequested]);
+
+  const openChat = async (): Promise<void> => {
+    setChatRequested(true);
+    setChat("loading");
+    const timer = window.setTimeout(() => setChat((c) => (c === "loading" ? "failed" : c)), CHAT_LOAD_TIMEOUT_MS);
+    try {
+      await loadTawk({ open: true });
+      window.Tawk_API?.maximize?.();
+      setChat("ready");
+    } catch {
+      setChat("failed");
+    } finally {
+      window.clearTimeout(timer);
+    }
+  };
+
+  // Spinner only when the visitor clicked; a background auto-load keeps the plain icon.
+  const opening = chat === "loading" && chatRequested;
+  const chatButtonClass =
+    "fixed right-4 bottom-4 z-40 grid size-[60px] place-items-center rounded-full bg-primary text-white shadow-2xl transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:right-6 lg:bottom-6 print:hidden";
 
   return (
-    <div className="fixed bottom-4 left-4 z-40 lg:hidden print:hidden">
-      <BookCallButton placement="sticky_mobile" className="!px-5 !py-3 text-sm shadow-2xl" />
-    </div>
+    <>
+      <CookieBanner />
+
+      {!bannerOpen && (
+        <div data-placement="sticky_mobile" className="fixed bottom-4 left-4 z-40 flex items-center gap-2 lg:hidden print:hidden">
+          <BookCallButton placement="sticky_mobile" className="!px-5 !py-3 text-sm shadow-2xl" />
+          {whatsappUrl && (
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Message us on WhatsApp"
+              className="grid size-12 place-items-center rounded-full bg-[#25D366] text-white shadow-2xl"
+            >
+              <WhatsAppIcon className="size-6" />
+            </a>
+          )}
+        </div>
+      )}
+
+      {chatConfigured && !(bannerOpen && !desktop) && chat !== "ready" &&
+        (chat === "failed" ? (
+          <a href={TAWK_DIRECT_CHAT_URL} target="_blank" rel="noopener noreferrer" aria-label="Open live chat in a new tab" className={chatButtonClass}>
+            <Icon name="chat" className="size-7" strokeWidth={2} />
+          </a>
+        ) : (
+          <button
+            type="button"
+            onClick={() => void openChat()}
+            aria-label={opening ? "Opening chat" : "Chat with us"}
+            aria-busy={opening}
+            className={chatButtonClass}
+          >
+            {opening ? (
+              <span className="size-6 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+            ) : (
+              <Icon name="chat" className="size-7" strokeWidth={2} />
+            )}
+          </button>
+        ))}
+    </>
   );
 }

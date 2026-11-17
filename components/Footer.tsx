@@ -3,7 +3,9 @@ import { brand, facts, footer } from "@/lib/content";
 import { Logo } from "./Header";
 import { OfficeDetails, OfficeMap } from "./Office";
 import Icon from "./ui/Icon";
-import { registeredOfficeLine, siteConfig, socialProfiles } from "@/site.config";
+import { registeredOfficeLine, siteConfig, socialProfiles, whatsappUrl } from "@/site.config";
+import CookieSettingsLink from "./consent/CookieSettingsLink";
+import WhatsAppIcon from "./ui/WhatsAppIcon";
 
 export default function Footer() {
   return (
@@ -57,10 +59,15 @@ export default function Footer() {
               </ul>
             </div>
           ))}
-          <div>
+          <div data-placement="footer">
             <p className="mb-5 text-xs font-semibold tracking-[.2em] text-muted uppercase">Get in touch</p>
             <a href={`mailto:${brand.email}`} className="u-link block text-lg font-semibold">{brand.email}</a>
             <a href={`tel:${brand.phoneHref}`} className="u-link mt-2 block text-white/80">{brand.phone}</a>
+            {whatsappUrl && (
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="mt-2 flex items-center gap-2 text-white/80 hover:text-white">
+                <WhatsAppIcon className="size-4" /> <span className="u-link">WhatsApp</span>
+              </a>
+            )}
             <div className="mt-6 flex gap-2">
               {socialProfiles.map((s) => (
                 <a key={s.label} target="_blank" rel="noopener noreferrer" href={s.url} aria-label={`${brand.name} on ${s.label}`} className="grid size-10 place-items-center rounded-full border border-line text-sm font-bold transition-all hover:-translate-y-1 hover:border-primary hover:bg-primary">
@@ -80,6 +87,7 @@ export default function Footer() {
             {[["Global Hubs", "/locations"], ["Privacy Policy", "/privacy-policy"], ["Terms & Conditions", "/terms"], ["Cookie Policy", "/cookie-policy"], ["Sitemap", "/sitemap"]].map(([l, h]) => (
               <Link key={h} href={h} className="hover:text-white">{l}</Link>
             ))}
+            <CookieSettingsLink className="hover:text-white" />
           </div>
         </div>
 

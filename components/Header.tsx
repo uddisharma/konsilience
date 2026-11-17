@@ -8,6 +8,8 @@ import { brand, nav } from "@/lib/content";
 import BookCallButton, { BOOK_CALL_LABEL } from "./BookCallButton";
 import Button from "./ui/Button";
 import Icon from "./ui/Icon";
+import WhatsAppIcon from "./ui/WhatsAppIcon";
+import { whatsappUrl } from "@/site.config";
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
@@ -107,7 +109,12 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <a href={`tel:${brand.phoneHref}`} aria-label="Call us" className="hidden size-11 place-items-center rounded-full border border-line text-white transition-colors hover:border-white sm:grid">
+            {whatsappUrl && (
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Message us on WhatsApp" data-placement="header" className="hidden size-11 place-items-center rounded-full border border-line text-white transition-colors hover:border-[#25D366] hover:text-[#25D366] sm:grid">
+                <WhatsAppIcon className="size-[18px]" />
+              </a>
+            )}
+            <a href={`tel:${brand.phoneHref}`} aria-label="Call us" data-placement="header" className="hidden size-11 place-items-center rounded-full border border-line text-white transition-colors hover:border-white sm:grid">
               <Icon name="phone" className="size-4" />
             </a>
             <BookCallButton placement="header" className="!hidden !px-6 !py-3 sm:!inline-flex">

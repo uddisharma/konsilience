@@ -84,3 +84,38 @@ The "35+ projects" wording on these pages is unchanged; it is handled with the p
 
 ### Not yet done (rest of Phase 6)
 Inline Calendly embeds on /contact, /trasys-ai and the free-audit thank-you page; WhatsApp button; Turnstile on forms; UTM capture in forms; cookie consent for chat (Phase 9).
+
+## Phase 6 complete: booking, chat, forms, cookie consent (2026-11-17)
+
+### Added
+- **Cookie consent** (`components/consent/CookieBanner.tsx`, `lib/consent.ts`): accept, reject, or choose per category. EU/EEA, UK and Switzerland visitors opt in; everyone else has analytics and chat on until they reject. Region comes from Vercel's country header via `/api/geo`, with a time-zone fallback. "Cookie settings" link in the footer.
+- **GA4 with Consent Mode v2** (`lib/analytics.ts`): `gtag.js` loads only when analytics is allowed, after the page is idle. Advertising signals stay denied. Withdrawing consent stops measurement and deletes `_ga*` cookies. Measurement ID `G-0FV9HNCG9Q`.
+- **Free SEO audit**: `/free-seo-audit` form (name, work email, website, main goal) and `/free-seo-audit/thank-you` with the audit-review calendar. Both are `noindex` until the copy is confirmed.
+- **Trasys design-partner form** at `/trasys-ai#design-partners`: "free for everyone while we are in early access". Submissions go to the sales inbox as `design_partner`.
+- **Inline Calendly calendars** on /contact, /trasys-ai, /thank-you and the audit thank-you page. Each loads when scrolled near and after consent, or when the visitor clicks "Show the booking calendar".
+- **WhatsApp** (+91 82838 81336, pre-filled greeting): header, mobile bottom bar, /contact, footer.
+- **Spam protection** on every form: honeypot plus Cloudflare Turnstile (`components/FormGuard.tsx`). `/api/contact` verifies the token server-side with `TURNSTILE_SECRET_KEY`.
+- **Lead-source capture** (`lib/utm.ts`): UTM tags, gclid, landing page and referrer are kept for the visit (sessionStorage). They are sent with every form and booking, and listed in the lead email.
+- **Click events** for `click_to_call`, `whatsapp_click`, `email_click`, plus `booking_click`, `generate_lead` (form or Calendly booking), `chat_started`, `audit_form_submit`, `sign_up` (newsletter).
+- `docs/reports/06-conversion-checklist.md`: test result per Phase 6 item.
+
+### Changed
+- **tawk.to chat**: on desktop it loads after consent, once the banner is closed. On mobile it does not load until the visitor taps our chat button, so the "Hi! How can we help?" pop-up no longer covers the page. Taps open the chat straight away. If tawk.to is blocked, the button opens tawk's hosted chat page.
+- **Home "Have a project in mind?" pop-up**: desktop only, on exit intent (pointer leaves through the top), after 15 s, at most once per session. Never after a booking, a chat, or while the cookie banner is open. It no longer opens on a 10-second timer on phones.
+- **Privacy and cookie policies** rewritten to list the actual services, cookies (names confirmed in a browser test) and choices. Dated 17 Nov 2026. **Needs lawyer or CA review** (see OPEN_QUESTIONS).
+- **Digital Marketing** CTAs point to `/free-seo-audit`. "Schedule Growth Call" opens the booking popup. The closing band no longer says "30-minute".
+- **Forms**: contact, application and newsletter now use FormGuard. Newsletter keeps its layout; the spam check sits below the pill.
+- **Contact page**: the "Careers" card in the four-card row is replaced by a WhatsApp card. Careers is still in the header menu and footer, and `/careers` still works.
+- **Header and mobile menu**: "Contact Us" becomes "Book a 15-min call" (opens the Calendly popup). The mobile menu has an "Or send us a message" link to /contact.
+- **Footer**: WhatsApp link, "Cookie settings" link.
+- **Thank-you page**: the calendar is shown straight after a form submission.
+- **Office map**: loads only after consent or when the visitor clicks "Show the map". Otherwise a placeholder with a directions link.
+
+### Removed
+| What | Reason |
+| --- | --- |
+| Timed 10-second home contact pop-up | Intrusive on mobile (Google's intrusive-interstitial guidance). Replaced by desktop exit intent. |
+| `<Script lazyOnload>` for tawk.to | Never ran on desktop: the animated hero kept the browser busy. Replaced by the idle-or-interaction loader in `lib/idle.ts`. |
+| Header "Contact Us" button | Replaced by the booking button (brief: primary CTA is "Book a 15-min call"). |
+| "Careers" card on /contact | Replaced by WhatsApp to make a direct contact route available. `/careers` is still linked elsewhere. |
+| "30-minute" in the Digital Marketing closing band | The booking is not defined as 30 minutes. |

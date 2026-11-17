@@ -3,6 +3,8 @@ import Link from "next/link";
 import { CtaBand, ProcessSteps, SectionHead, Split } from "@/components/page/Blocks";
 import FaqList from "@/components/FaqList";
 import Button from "@/components/ui/Button";
+import BookCallButton from "@/components/BookCallButton";
+import { OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from "@/lib/og";
 import Icon from "@/components/ui/Icon";
 import Reveal, { LineReveal } from "@/components/ui/Reveal";
 import JsonLd from "@/components/JsonLd";
@@ -28,7 +30,7 @@ export const metadata: Metadata = {
     title: "Digital Marketing & Performance Growth Agency | Konsilience",
     description: "Scale customer acquisition with engineering-grade digital marketing, technical SEO, and conversion rate optimization.",
     url: `${siteUrl}/digital-marketing`,
-    images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630, alt: "Digital Marketing & Performance Growth Agency | Konsilience" }],
+    images: [{ url: `${siteUrl}/og-image.png`, width: OG_IMAGE_WIDTH, height: OG_IMAGE_HEIGHT, alt: "Digital Marketing & Performance Growth Agency | Konsilience" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -288,7 +290,7 @@ export default function DigitalMarketingPage() {
 
           {/* CTAs */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Button href="/contact">Claim Free Marketing Audit</Button>
+            <Button href="/free-seo-audit">Claim Free Marketing Audit</Button>
             <Button variant="outline" href="#capabilities">Explore Capabilities</Button>
           </div>
 
@@ -384,7 +386,7 @@ export default function DigitalMarketingPage() {
 
           <div className="mt-8 flex items-center justify-between pt-4">
             <span className="text-xs text-muted font-medium">Need a custom multi-channel strategy?</span>
-            <Button variant="outline" href="/contact">Schedule Growth Call</Button>
+            <BookCallButton variant="outline" placement="digital_marketing">Schedule Growth Call</BookCallButton>
           </div>
         </Split>
       </section>
@@ -501,9 +503,9 @@ export default function DigitalMarketingPage() {
          ========================================================================= */}
       <CtaBand
         title="Ready to Scale Your Customer Acquisition?"
-        text="Book a complimentary 30-minute growth audit with our senior marketing architects. We'll pinpoint your biggest conversion leaks, audit your Core Web Vitals, and outline a high-converting roadmap."
+        text="Book a complimentary growth audit with our senior marketing architects. We'll pinpoint your biggest conversion leaks, audit your Core Web Vitals, and outline a high-converting roadmap."
         label="Claim Free Marketing Audit"
-        href="/contact"
+        href="/free-seo-audit"
       />
     </>
   );

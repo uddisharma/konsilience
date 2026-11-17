@@ -1,24 +1,33 @@
 import { brand, office } from "@/lib/content";
+import ConsentEmbed from "./consent/ConsentEmbed";
 import Button from "./ui/Button";
 import Icon from "./ui/Icon";
 
 export const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.mapQuery)}`;
 
-// Google Maps embed, tinted dark to match the site.
+// Google Maps embed, tinted dark to match the site. Loads only when consent allows or the visitor
+// clicks "Show the map"; otherwise a placeholder with a directions link (no Google request).
 export function OfficeMap({ className = "" }: { className?: string }) {
   return (
     <div className={`relative overflow-hidden rounded-3xl border border-line bg-card ${className}`}>
-      <iframe
-        title={`${brand.name} office map`}
-        src={`https://maps.google.com/maps?q=${encodeURIComponent(office.mapQuery)}&z=13&output=embed`}
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        className="absolute inset-0 size-full border-0 [filter:grayscale(1)_invert(.92)_contrast(.9)]"
-      />
-      {/* brand pin overlay */}
-      <span className="pointer-events-none absolute top-1/2 left-1/2 grid size-12 -translate-1/2 place-items-center rounded-full bg-primary shadow-[0_0_0_10px_rgb(var(--brand-rgb)/.25)]">
-        <Icon name="pin" className="size-5 text-white" strokeWidth={2} />
-      </span>
+      <ConsentEmbed
+        label="map"
+        provider="Google Maps"
+        className="absolute inset-0 !rounded-none !border-0"
+        fallback={{ href: mapsLink, label: "Get directions" }}
+      >
+        <iframe
+          title={`${brand.name} office map`}
+          src={`https://maps.google.com/maps?q=${encodeURIComponent(office.mapQuery)}&z=13&output=embed`}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          className="absolute inset-0 size-full border-0 [filter:grayscale(1)_invert(.92)_contrast(.9)]"
+        />
+        {/* brand pin overlay */}
+        <span className="pointer-events-none absolute top-1/2 left-1/2 grid size-12 -translate-1/2 place-items-center rounded-full bg-primary shadow-[0_0_0_10px_rgb(var(--brand-rgb)/.25)]">
+          <Icon name="pin" className="size-5 text-white" strokeWidth={2} />
+        </span>
+      </ConsentEmbed>
     </div>
   );
 }

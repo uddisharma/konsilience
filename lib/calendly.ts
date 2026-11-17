@@ -2,14 +2,18 @@
 // booking button, so Calendly costs nothing on page load. If the widget fails to load, the
 // booking page opens in a new tab instead.
 
+import { getAttribution, UTM_KEYS } from "./utm";
+
 const CALENDLY_JS = "https://assets.calendly.com/assets/external/widget.js";
 const CALENDLY_CSS = "https://assets.calendly.com/assets/external/widget.css";
 const CALENDLY_ORIGIN = "https://calendly.com";
-const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"] as const;
 
 declare global {
   interface Window {
-    Calendly?: { initPopupWidget: (options: { readonly url: string }) => void };
+    Calendly?: {
+      initPopupWidget: (options: { readonly url: string }) => void;
+      initInlineWidget: (options: { readonly url: string; readonly parentElement: HTMLElement }) => void;
+    };
   }
 }
 
@@ -37,11 +41,11 @@ export function loadCalendly(): Promise<void> {
   return loading;
 }
 
-/** Carry the visitor's UTM tags into the booking so Calendly records the lead source. */
-function withUtm(url: string): string {
-  const here = new URLSearchParams(window.location.search);
+/** Carry the visit's UTM tags (from its first page) into the booking so Calendly records the lead source. */
+export function withUtm(url: string): string {
+  const visit = getAttribution();
   const target = new URL(url);
-  UTM_KEYS.filter((k) => here.has(k)).forEach((k) => target.searchParams.set(k, here.get(k) ?? ""));
+  UTM_KEYS.filter((k) => visit[k]).forEach((k) => target.searchParams.set(k, visit[k] ?? ""));
   return target.toString();
 }
 

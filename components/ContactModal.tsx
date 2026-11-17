@@ -4,26 +4,36 @@ import { useEffect, useState } from "react";
 import ContactForm from "./ContactForm";
 import Icon from "./ui/Icon";
 import { brand } from "@/lib/content";
+import { getConsentState, isBannerVisible } from "@/lib/consent";
 import { isContactModalSuppressed, suppressContactModal } from "@/lib/popups";
 
-// The home page opens this modal on its own after this delay (once per session).
-const CONTACT_MODAL_DELAY_MS = 10_000;
+// Home-page "Have a project in mind?" modal.
+// • Desktop only. On phones a full-screen pop-up is an intrusive interstitial (Google guidance)
+//   and phones already have the sticky "Book a call" bar.
+// • Exit intent only: it opens when the pointer leaves through the top of the window (towards the
+//   tabs or address bar), never on a timer, and at most once per session.
+// • Never after the visitor booked, chatted or dismissed it, and never over the cookie banner.
+const DESKTOP_QUERY = "(min-width: 1024px)";
+// Ignore exits in the first seconds: a quick bounce is not someone reconsidering.
+const MIN_TIME_ON_PAGE_MS = 15_000;
 
 export default function ContactModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Check if the modal was already dismissed in this browser session
-    // (or the visitor already opened the booking popup or started a chat)
-    if (isContactModalSuppressed()) return;
+    if (isContactModalSuppressed() || !window.matchMedia(DESKTOP_QUERY).matches) return;
+    const armedAt = Date.now() + MIN_TIME_ON_PAGE_MS;
 
-    // Show modal automatically after CONTACT_MODAL_DELAY_MS on the home page
-    const timer = setTimeout(() => {
-      // Re-check: the visitor may have opened the booking popup or a chat while we waited.
-      if (!isContactModalSuppressed()) setIsOpen(true);
-    }, CONTACT_MODAL_DELAY_MS);
-
-    return () => clearTimeout(timer);
+    const onMouseOut = (e: MouseEvent): void => {
+      const leftThroughTop = !e.relatedTarget && e.clientY <= 0;
+      if (!leftThroughTop || Date.now() < armedAt) return;
+      if (isContactModalSuppressed() || isBannerVisible(getConsentState())) return;
+      suppressContactModal(); // once per session, even if the visitor navigates away instead of closing it
+      setIsOpen(true);
+      document.removeEventListener("mouseout", onMouseOut);
+    };
+    document.addEventListener("mouseout", onMouseOut);
+    return () => document.removeEventListener("mouseout", onMouseOut);
   }, []);
 
   const closeModal = () => {

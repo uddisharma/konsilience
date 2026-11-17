@@ -46,8 +46,8 @@ The portfolio and project work will be done later, including the real project li
 - [x] **WhatsApp:** +91 82838 81336.
 - [x] **Cloudflare Turnstile** (free CAPTCHA): dash.cloudflare.com → Turnstile → Add site `konsilience.tech` → send the site key; put the secret key in Vercel env as `TURNSTILE_SECRET_KEY`.
 - [x] **SMTP on Vercel:** confirmed set in production (2026-11-17). Was: confirm `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, `MAIL_TO` are set in Vercel → Project → Settings → Environment Variables (Production). Without them every form fails.
-- [ ] **tawk.to dashboard:** business hours, pre-chat form (name and email), proactive message on services and pricing pages after 20-30 seconds, reply roster. Also: the greeting ("Hi! How can we help?" plus two quick replies) pops up on mobile and covers part of the page. Consider delaying it, or turning it off on mobile (Administration → Chat Widget → Attention grabber / greeting).
-- [ ] **Home-page contact pop-up:** "Have a project in mind?" opens by itself after 10 s and fills the whole screen on mobile. Google treats full-screen pop-ups on mobile as intrusive. Keep it, show it on desktop only, or remove it? (It no longer opens once a visitor has clicked to book or started a chat.)
+- [ ] **tawk.to dashboard (mobile greeting handled in code: chat loads on tap).** Still to set in the dashboard: business hours, pre-chat form (name and email), proactive message on services and pricing pages after 20-30 seconds, reply roster. Also: the greeting ("Hi! How can we help?" plus two quick replies) pops up on mobile and covers part of the page. Consider delaying it, or turning it off on mobile (Administration → Chat Widget → Attention grabber / greeting).
+- [x] **Home-page contact pop-up (decided: desktop exit intent only, removed on mobile).** Original question:  "Have a project in mind?" opens by itself after 10 s and fills the whole screen on mobile. Google treats full-screen pop-ups on mobile as intrusive. Keep it, show it on desktop only, or remove it? (It no longer opens once a visitor has clicked to book or started a chat.)
 
 ## Live values to confirm
 
@@ -59,3 +59,19 @@ The portfolio and project work will be done later, including the real project li
 - [ ] LinkedIn `linkedin.com/company/konsilience`: is this our company page?
 - [x] "Since 2021" = the team formed and shipped its first project (confirmed 2026-11-17). It is not the company incorporation year.
 - [ ] Year Konsilience Private Limited was incorporated (`{{INCORPORATION_YEAR}}`, optional). Until set, schema `foundingDate` is omitted.
+
+## Before launch (Phase 6 complete in code, 2026-11-17)
+
+Test evidence: `docs/reports/06-conversion-checklist.md`. These need production access or a decision:
+
+- [ ] **Vercel Production env: `TURNSTILE_SECRET_KEY`** (the production secret). Until it is set, the server skips the spam check and logs a warning. Consider making the server refuse submissions when the secret is missing (currently it fails open so a misconfiguration never blocks real leads).
+- [ ] **Turnstile hostnames:** confirm the widget allows `konsilience.tech` and `www.konsilience.tech`.
+- [ ] **Test submissions on production:** contact, audit, design partner and application. Check the sales inbox and the attribution rows.
+- [ ] **Test Calendly booking** on production. Confirm `generate_lead` in GA4 real-time.
+- [ ] **Desktop tawk.to greeting:** it still shows on desktop. Turn it off or delay it in the dashboard if you want the same experience on both.
+- [ ] **Legal review (NEEDS_CONFIRMATION):** privacy and cookie policies. Outside the EU/EEA/UK/Switzerland, analytics and chat run until the visitor rejects them. The company is in India, so check the DPDP Act requirements for Indian visitors. To require opt-in everywhere, change `allowByDefault` in `lib/consent.ts` to `false`.
+- [ ] **Free SEO audit copy** ("what we look at", "15-minute review call") and the page is `noindex` until confirmed. Confirm before removing `robots: noindex` in `app/free-seo-audit/page.tsx`.
+- [ ] **Trasys design-partner copy:** "free for everyone while we are in early access" (from the brief, needs confirmation for any future pricing), and "we will get back to you within one business day".
+- [ ] **Trasys sign-up link:** `{{TRASYS_SIGNUP_URL}}` is still missing. The "Try free" buttons go to trasys.dev.
+- [ ] **Mark key events in GA4** (Phase 9): `generate_lead`, `click_to_call`, `whatsapp_click`, `audit_form_submit`.
+- [ ] **Exit-intent pop-up:** confirm the copy and that desktop-only is what you want.

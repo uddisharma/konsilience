@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { honeypotProps, submitForm } from "@/lib/submitForm";
+import { submitForm } from "@/lib/submitForm";
+import FormGuard from "@/components/FormGuard";
 import Icon from "../ui/Icon";
 
 const input = "w-full rounded-xl border border-white/25 bg-white/5 px-4 py-3.5 text-white outline-none transition-colors placeholder:text-white/50 focus:border-white";
@@ -39,7 +40,7 @@ export default function ApplyForm({ role }: { role: string }) {
 
   return (
     <form onSubmit={submit} className="relative flex flex-col gap-4 rounded-3xl border border-line bg-[linear-gradient(180deg,rgb(var(--brand-deep-rgb))_0%,rgb(var(--brand-strong-rgb))_100%)] p-7 sm:p-9">
-      <input {...honeypotProps} />
+      <FormGuard action="application" />
       <p className="subtitle !font-extrabold">Apply for {role}</p>
       <input required name="name" placeholder="Full name *" className={input} />
       <input required name="email" type="email" placeholder="Email *" className={input} />

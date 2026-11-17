@@ -2,12 +2,14 @@
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { honeypotProps, submitForm } from "@/lib/submitForm";
+import { submitForm } from "@/lib/submitForm";
+import FormGuard from "./FormGuard";
 import Icon from "./ui/Icon";
 
 const budgets = ["Still Evaluating", "Less than $50K", "$50K - $100K", "$100K - $250K", "More than $250K"];
 
-function Field({ id, label, type = "text", required = true }: { id: string; label: string; type?: string; required?: boolean }) {
+// Floating-label input; the field name is the last "-" part of the id (e.g. "abc-email" → "email").
+export function Field({ id, label, type = "text", required = true }: { id: string; label: string; type?: string; required?: boolean }) {
   return (
     <div className="relative">
       <input
@@ -139,7 +141,7 @@ export default function ContactForm({
   return (
     <div className={`rounded-3xl border border-line bg-[linear-gradient(180deg,rgb(var(--brand-deep-rgb))_0%,rgb(var(--brand-strong-rgb))_100%)] p-7 sm:p-9 ${className}`}>
       <form onSubmit={submit} className="relative flex flex-col gap-9">
-        <input {...honeypotProps} />
+        <FormGuard action="contact" />
         <div className="flex flex-col gap-3">
           <p className="subtitle !font-extrabold">{title}</p>
           <p className="fs-para font-medium text-white/85">{text}</p>

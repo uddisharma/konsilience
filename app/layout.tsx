@@ -12,10 +12,8 @@ import { brand } from "@/lib/content";
 import { siteUrl } from "@/lib/routes";
 import { themeBootScript } from "@/lib/theme";
 import { xHandle } from "@/site.config";
+import { OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from "@/lib/og";
 
-// Size of public/og-image.png (the standard 1.91:1 Open Graph card).
-const OG_IMAGE_WIDTH = 1200;
-const OG_IMAGE_HEIGHT = 630;
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",

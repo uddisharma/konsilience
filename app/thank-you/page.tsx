@@ -5,8 +5,14 @@ import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
 import { posts } from "@/lib/catalog";
+import CalendlyInline from "@/components/CalendlyInline";
+import { siteConfig } from "@/site.config";
 
 export const metadata: Metadata = { title: "Thank You", robots: { index: false } };
+
+// Blog posts suggested under "While you wait", and the delay between their entrance animations.
+const READING_COUNT = 3;
+const CARD_STAGGER_MS = 100;
 
 export default function ThankYouPage() {
   return (
@@ -28,6 +34,15 @@ export default function ThankYouPage() {
         </div>
       </section>
       <section className="sec bg-black">
+        <div className="wrap-sm">
+          <p className="subtitle mb-3 text-center">Want to talk sooner?</p>
+          <p className="fs-para mb-10 text-center font-medium text-white/75">
+            Pick a time for a {siteConfig.booking.introCallMinutes}-minute intro call now.
+          </p>
+          <CalendlyInline url={siteConfig.booking.calendlyIntroUrl} />
+        </div>
+      </section>
+      <section className="sec bg-black pt-0">
         <div className="wrap">
           <ProcessSteps
             steps={[
@@ -42,8 +57,8 @@ export default function ThankYouPage() {
         <div className="wrap">
           <p className="subtitle mb-8">While you wait, some reading:</p>
           <div className="grid gap-4 md:grid-cols-3">
-            {posts.slice(0, 3).map((p, i) => (
-              <Reveal key={p.slug} delay={i * 100}>
+            {posts.slice(0, READING_COUNT).map((p, i) => (
+              <Reveal key={p.slug} delay={i * CARD_STAGGER_MS}>
                 <BlogCard post={p} />
               </Reveal>
             ))}

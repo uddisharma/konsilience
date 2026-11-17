@@ -309,13 +309,19 @@ async function run() {
         duplicates: { title: dupes("title"), description: dupes("description"), h1: dupes("h1s") },
         external: Object.fromEntries([...externalLinks].map(([u, s]) => [u, { status: extStatus[u] ?? "not checked", from: [...s] }])),
         thirdParty: Object.fromEntries([...thirdParty].map(([k, s]) => [k, [...s].length])),
-        pages: sorted.map(({ mainText, outInternal, outInternalBody, outExternal, ...r }) => ({
-          ...r,
-          outInternal: [...(outInternal ?? [])],
-          outExternal: [...(outExternal ?? [])],
-          inlinks: inlinks.get(r.path) ?? 0,
-          bodyInlinks: bodyInlinks.get(r.path) ?? 0,
-        })),
+        // Page text is written to `texts` below, and Sets do not serialise, so both are dropped here.
+        pages: sorted.map((p) => {
+          const r = {
+            ...p,
+            outInternal: [...(p.outInternal ?? [])],
+            outExternal: [...(p.outExternal ?? [])],
+            inlinks: inlinks.get(p.path) ?? 0,
+            bodyInlinks: bodyInlinks.get(p.path) ?? 0,
+          };
+          delete r.mainText;
+          delete r.outInternalBody;
+          return r;
+        }),
         texts: Object.fromEntries(sorted.filter((r) => r.mainText).map((r) => [r.path, r.mainText])),
       },
       null,

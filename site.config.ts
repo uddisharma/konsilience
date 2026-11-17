@@ -191,3 +191,10 @@ export const officeAddressLines = [
 
 const r = siteConfig.registeredOffice;
 export const registeredOfficeLine = `${r.street}, ${r.city}, ${r.region} ${r.postalCode}, ${r.country}`;
+
+// Opening line pre-filled in WhatsApp; the visitor can edit it before sending.
+const WHATSAPP_GREETING = "Hi Konsilience, I'd like to talk about a project.";
+/** https://wa.me link with a pre-filled greeting, or null when no WhatsApp number is set. */
+export const whatsappUrl: string | null = isSet(siteConfig.contact.whatsapp)
+  ? `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(WHATSAPP_GREETING)}`
+  : null;

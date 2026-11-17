@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { honeypotProps, submitForm } from "@/lib/submitForm";
+import { submitForm } from "@/lib/submitForm";
+import FormGuard from "@/components/FormGuard";
 import Icon from "../ui/Icon";
 import Reveal from "../ui/Reveal";
 
@@ -35,12 +36,15 @@ export default function Newsletter() {
             </p>
           ) : (
             <div className="w-full max-w-md">
-              <form onSubmit={submit} className="relative flex overflow-hidden rounded-full border border-line bg-black focus-within:border-primary">
-                <input {...honeypotProps} />
-                <input name="email" type="email" required placeholder="Your work email" className="min-w-0 flex-1 bg-transparent px-5 py-4 text-sm outline-none" />
-                <button type="submit" disabled={sending} className="m-1.5 rounded-full bg-primary px-6 text-sm font-semibold transition-colors hover:bg-primary-hover disabled:opacity-60">
-                  {sending ? "..." : "Subscribe"}
-                </button>
+              <form onSubmit={submit} className="relative">
+                <div className="flex overflow-hidden rounded-full border border-line bg-black focus-within:border-primary">
+                  <input name="email" type="email" required aria-label="Your work email" placeholder="Your work email" className="min-w-0 flex-1 bg-transparent px-5 py-4 text-sm outline-none" />
+                  <button type="submit" disabled={sending} className="m-1.5 rounded-full bg-primary px-6 text-sm font-semibold transition-colors hover:bg-primary-hover disabled:opacity-60">
+                    {sending ? "..." : "Subscribe"}
+                  </button>
+                </div>
+                {/* Outside the rounded pill so a Turnstile check box, if ever shown, is not clipped. */}
+                <FormGuard action="newsletter" className="mt-3" />
               </form>
               {error && <p role="alert" className="mt-3 text-sm text-[#ff8a8c]">{error}</p>}
             </div>
