@@ -4,26 +4,31 @@ import { useEffect, useState } from "react";
 import ContactForm from "./ContactForm";
 import Icon from "./ui/Icon";
 import { brand } from "@/lib/content";
+import { isContactModalSuppressed, suppressContactModal } from "@/lib/popups";
+
+// The home page opens this modal on its own after this delay (once per session).
+const CONTACT_MODAL_DELAY_MS = 10_000;
 
 export default function ContactModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     // Check if the modal was already dismissed in this browser session
-    const dismissed = sessionStorage.getItem("contact_modal_dismissed");
-    if (dismissed) return;
+    // (or the visitor already opened the booking popup or started a chat)
+    if (isContactModalSuppressed()) return;
 
-    // Show modal automatically after 10 seconds (10,000 ms) on home page
+    // Show modal automatically after CONTACT_MODAL_DELAY_MS on the home page
     const timer = setTimeout(() => {
-      setIsOpen(true);
-    }, 10000);
+      // Re-check: the visitor may have opened the booking popup or a chat while we waited.
+      if (!isContactModalSuppressed()) setIsOpen(true);
+    }, CONTACT_MODAL_DELAY_MS);
 
     return () => clearTimeout(timer);
   }, []);
 
   const closeModal = () => {
     setIsOpen(false);
-    sessionStorage.setItem("contact_modal_dismissed", "true");
+    suppressContactModal();
   };
 
   useEffect(() => {
@@ -63,7 +68,7 @@ export default function ContactModal() {
             <div className="flex flex-col gap-6">
               <span className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
                 <span className="size-2 rounded-full bg-primary animate-pulse" />
-                Let's Build Together
+                Let&apos;s Build Together
               </span>
 
               <h2 className="h2 font-condensed text-3xl sm:text-4xl font-semibold uppercase tracking-tight text-white leading-tight">

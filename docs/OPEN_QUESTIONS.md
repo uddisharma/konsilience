@@ -19,7 +19,7 @@ The portfolio and project work will be done later, including the real project li
 
 | Placeholder | What it is | Status |
 | --- | --- | --- |
-| `{{CALENDLY_INTRO_URL}}` | 20-min intro call | ✅ `calendly.com/konsilience/intro-call` |
+| `{{CALENDLY_INTRO_URL}}` | Intro call | ✅ `calendly.com/konsilience/intro-call`. **The Calendly event is 15 min** (the brief planned 20). Buttons say "Book a 15-min call" from `booking.introCallMinutes` in `site.config.ts`. To switch to 20, change the Calendly event **and** that value. |
 | `{{CALENDLY_AUDIT_URL}}` | 15-min free SEO audit review | ✅ `calendly.com/konsilience/free-seo-audit-review` |
 | `{{CALENDLY_TRASYS_URL}}` | 30-min Trasys demo | ✅ `calendly.com/konsilience/trasys-demo` |
 | `{{CALENDLY_FOUNDER_URL}}` | Founder call (optional) | missing |
@@ -46,7 +46,8 @@ The portfolio and project work will be done later, including the real project li
 - [x] **WhatsApp:** +91 82838 81336.
 - [x] **Cloudflare Turnstile** (free CAPTCHA): dash.cloudflare.com → Turnstile → Add site `konsilience.tech` → send the site key; put the secret key in Vercel env as `TURNSTILE_SECRET_KEY`.
 - [x] **SMTP on Vercel:** confirmed set in production (2026-11-17). Was: confirm `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, `MAIL_TO` are set in Vercel → Project → Settings → Environment Variables (Production). Without them every form fails.
-- [ ] **tawk.to dashboard:** business hours, pre-chat form (name and email), proactive message on services and pricing pages after 20-30 seconds, reply roster.
+- [ ] **tawk.to dashboard:** business hours, pre-chat form (name and email), proactive message on services and pricing pages after 20-30 seconds, reply roster. Also: the greeting ("Hi! How can we help?" plus two quick replies) pops up on mobile and covers part of the page. Consider delaying it, or turning it off on mobile (Administration → Chat Widget → Attention grabber / greeting).
+- [ ] **Home-page contact pop-up:** "Have a project in mind?" opens by itself after 10 s and fills the whole screen on mobile. Google treats full-screen pop-ups on mobile as intrusive. Keep it, show it on desktop only, or remove it? (It no longer opens once a visitor has clicked to book or started a chat.)
 
 ## Live values to confirm
 

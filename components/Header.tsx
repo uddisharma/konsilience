@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { brand, nav } from "@/lib/content";
+import BookCallButton, { BOOK_CALL_LABEL } from "./BookCallButton";
 import Button from "./ui/Button";
 import Icon from "./ui/Icon";
 
@@ -23,6 +24,14 @@ export function Logo({ className = "" }: { className?: string }) {
     </Link>
   );
 }
+
+// Header becomes solid after this much scroll, and hides on scroll-down past HIDE_AFTER_PX.
+const SOLID_AFTER_PX = 30;
+const HIDE_AFTER_PX = 400;
+// Mega menus with more groups than this switch from 3 to 4 columns.
+const MAX_THREE_COLUMN_GROUPS = 3;
+// Delay between mega-menu columns as they fade in.
+const MENU_STAGGER_MS = 60;
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -46,8 +55,8 @@ export default function Header() {
     let last = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
-      setScrolled(y > 30);
-      setHidden(y > 400 && y > last);
+      setScrolled(y > SOLID_AFTER_PX);
+      setHidden(y > HIDE_AFTER_PX && y > last);
       last = y;
     };
     onScroll();
@@ -101,7 +110,11 @@ export default function Header() {
             <a href={`tel:${brand.phoneHref}`} aria-label="Call us" className="hidden size-11 place-items-center rounded-full border border-line text-white transition-colors hover:border-white sm:grid">
               <Icon name="phone" className="size-4" />
             </a>
-            <Button className="!hidden !px-6 !py-3 sm:!inline-flex">Contact Us</Button>
+            <BookCallButton placement="header" className="!hidden !px-6 !py-3 sm:!inline-flex">
+              {/* Short label where the desktop nav leaves little room (lg to xl). */}
+              <span className="hidden lg:inline xl:hidden">Book a call</span>
+              <span className="lg:hidden xl:inline">{BOOK_CALL_LABEL}</span>
+            </BookCallButton>
             <button onClick={() => setMobile(true)} aria-label="Open menu" className="text-white lg:hidden">
               <Icon name="menu" className="size-7" />
             </button>
@@ -112,9 +125,9 @@ export default function Header() {
         {active && (
           <div key={active.label} className="anim-fade-up absolute inset-x-0 top-full hidden border-t border-line bg-black lg:block">
             <div className="wrap flex gap-12 py-12">
-              <div className={`grid flex-1 gap-10 ${active.groups.length > 3 ? "grid-cols-4" : "grid-cols-3"}`}>
+              <div className={`grid flex-1 gap-10 ${active.groups.length > MAX_THREE_COLUMN_GROUPS ? "grid-cols-4" : "grid-cols-3"}`}>
                 {active.groups.map((g, gi) => (
-                  <div key={g.title} className="anim-fade-up" style={{ animationDelay: `${gi * 60}ms` }}>
+                  <div key={g.title} className="anim-fade-up" style={{ animationDelay: `${gi * MENU_STAGGER_MS}ms` }}>
                     <p className="mb-5 border-b border-line pb-3 text-xs font-semibold tracking-[.2em] text-muted uppercase">{g.title}</p>
                     <ul className="space-y-3.5">
                       {g.links.map((l) => (
@@ -181,10 +194,11 @@ export default function Header() {
               </div>
             ))}
           </div>
-          <div className="wrap py-5">
-            <Button className="w-full justify-center" href="/contact">
-              Contact Us
-            </Button>
+          <div className="wrap flex flex-col items-center gap-3 py-5">
+            <BookCallButton placement="mobile_menu" className="w-full justify-center" onOpen={() => setMobile(false)} />
+            <Link href="/contact" className="text-sm font-medium text-white/75 underline-offset-4 hover:text-white hover:underline">
+              Or send us a message
+            </Link>
           </div>
         </div>
       </div>

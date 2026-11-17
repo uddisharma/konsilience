@@ -35,7 +35,7 @@ function ThemePickerContent() {
   }
 
   return (
-    <div className="fixed bottom-6 left-6 z-40 print:hidden">
+    <div className="fixed bottom-6 left-6 z-40 hidden lg:block print:hidden">
       {open && (
         <div className="anim-fade-up absolute bottom-16 left-0 w-72 rounded-3xl border border-line bg-card/95 p-5 shadow-2xl backdrop-blur-xl">
           <div className="flex items-center justify-between">

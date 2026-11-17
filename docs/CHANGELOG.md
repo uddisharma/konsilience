@@ -63,3 +63,24 @@ Founders confirmed 2021 is when the **team formed and shipped its first project*
 | `site.config.ts` | `company.founded` | `company.teamSince` plus `company.incorporatedYear` (placeholder) |
 
 The "35+ projects" wording on these pages is unchanged; it is handled with the portfolio (deferred).
+
+## Booking and chat live on the branch (Phase 6, partial) (2026-11-17)
+
+### Added
+- **"Book a 15-min call"** opens the Calendly intro-call popup from the header (replaces "Contact Us"), the mobile menu, and a new sticky button on mobile (bottom-left). Calendly's script loads only on first hover or click, so it adds nothing to page load. If it can't load, the booking page opens in a new tab. Visitor UTM tags are passed to Calendly.
+- **tawk.to chat** on every page (bottom-right). It loads at the first idle moment, at most 5 s after the page becomes interactive, or on the first scroll, tap or key press. (`next/script` `lazyOnload` was tried first: on desktop the animated home hero keeps the browser busy, so the chat never loaded.)
+- GA4-ready events: `booking_click` (with placement), `generate_lead` (Calendly booking made), `chat_started`. They are recorded once GA4 is installed (Phase 9).
+- `site.config.ts` → `booking.introCallMinutes` (15, matching the Calendly event).
+
+### Changed
+| What | Why |
+| --- | --- |
+| Header "Contact Us" button → "Book a 15-min call" (shorter "Book a call" between 1024 and 1280 px) | The brief's main CTA. /contact stays in menus, and the mobile menu has an "Or send us a message" link. |
+| Back-to-top button moved up (`bottom-24`) | It sat where the chat bubble now is |
+| Colour tester (ThemePicker) hidden below 1024 px | It sat where the sticky booking button now is. The whole tester is still due for removal (Phase 8). |
+| Home-page contact pop-up no longer opens after the visitor clicked to book or started a chat | It was opening on top of the Calendly popup |
+| `ContactModal` apostrophe escaped | Pre-existing lint error |
+| Header and modal timing numbers named as constants | Required by the repo's TypeScript lint hook. No visible change. |
+
+### Not yet done (rest of Phase 6)
+Inline Calendly embeds on /contact, /trasys-ai and the free-audit thank-you page; WhatsApp button; Turnstile on forms; UTM capture in forms; cookie consent for chat (Phase 9).

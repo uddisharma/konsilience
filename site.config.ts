@@ -82,7 +82,10 @@ export const siteConfig = {
 
   booking: {
     // Calendly event links (Phase 6)
-    calendlyIntroUrl: "https://calendly.com/konsilience/intro-call", // {{CALENDLY_INTRO_URL}} 20-min intro call
+    calendlyIntroUrl: "https://calendly.com/konsilience/intro-call", // {{CALENDLY_INTRO_URL}}
+    // Length shown on every "Book a N-min call" button. Must match the Calendly event:
+    // it is 15 min on Calendly today (the brief planned 20). Change both together.
+    introCallMinutes: 15,
     calendlyAuditUrl: "https://calendly.com/konsilience/free-seo-audit-review", // {{CALENDLY_AUDIT_URL}} 15-min audit review
     calendlyTrasysUrl: "https://calendly.com/konsilience/trasys-demo", // {{CALENDLY_TRASYS_URL}} 30-min Trasys demo
     calendlyFounderUrl: "{{CALENDLY_FOUNDER_URL}}", // optional: /about "Talk to a founder"

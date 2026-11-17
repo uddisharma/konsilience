@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Barlow_Condensed, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import BackToTop from "@/components/BackToTop";
+import ConversionWidgets from "@/components/ConversionWidgets";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import JsonLd from "@/components/JsonLd";
@@ -118,6 +119,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <Footer />
         <BackToTop />
+        <ConversionWidgets />
         {/* Colour tester: remove once the brand colour is final */}
         <ThemePicker />
       </body>
