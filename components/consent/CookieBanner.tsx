@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { closeCookieSettings, effectiveConsent, isBannerVisible, saveConsent, type ConsentChoice } from "@/lib/consent";
 import { useConsent } from "@/lib/useConsent";
@@ -37,14 +37,23 @@ function Switch({ checked, onChange, label }: { checked: boolean; onChange: (v: 
 
 const btn = "flex-1 rounded-full px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
 
-// Cookie banner and settings. Shown on first visit (after the region is known) and whenever the
-// visitor opens "Cookie settings" in the footer. "Accept" and "Reject" carry equal weight.
+// First-visit banner waits this long before appearing, so the page can be seen first.
+const FIRST_VISIT_DELAY_MS = 5000;
+
+// Cookie banner and settings. Shown on first visit (after the region is known and a short delay)
+// and whenever the visitor opens "Cookie settings" in the footer. "Accept" and "Reject" carry equal weight.
 export default function CookieBanner(): ReactNode {
   const s = useConsent();
-  const visible = isBannerVisible(s);
+  const [delayDone, setDelayDone] = useState(false);
   const [detail, setDetail] = useState(false);
   const [draft, setDraft] = useState<ConsentChoice | null>(null);
 
+  useEffect(() => {
+    const timer = window.setTimeout(() => setDelayDone(true), FIRST_VISIT_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  const visible = isBannerVisible(s) && (delayDone || s.settingsOpen);
   if (!visible) return null;
   const showSettings = detail || s.settingsOpen;
   const current = draft ?? effectiveConsent(s);

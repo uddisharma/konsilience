@@ -11,7 +11,7 @@ export async function proxy(req: NextRequest) {
   const session = await verifySession(req.cookies.get(SESSION_COOKIE)?.value).catch(() => null);
   if (!session) {
     const url = new URL("/admin/login", req.url);
-    if (pathname !== "/admin") url.searchParams.set("next", pathname);
+    if (pathname !== "/admin") url.searchParams.set("next", pathname + req.nextUrl.search);
     return NextResponse.redirect(url);
   }
   return NextResponse.next();

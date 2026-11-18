@@ -41,7 +41,10 @@ Open **Admin → MCP / Claude**, create a token (shown once), and copy the snipp
 
 - **Claude Code:** `claude mcp add --transport http konsilience-blog https://www.konsilience.tech/api/mcp --header "Authorization: Bearer ksk_..."`
 - **Claude Desktop:** uses `mcp-remote` with the same header (snippet on the page).
-- **claude.ai custom connector:** URL `https://www.konsilience.tech/api/mcp?key=ksk_...` (the URL contains the token; treat it as a password).
+- **claude.ai custom connector:** URL `https://www.konsilience.tech/api/mcp`, then **Connect**. A sign-in page opens on the admin site: sign in, and click **Allow**. No key is needed. The connector's access token appears in the MCP page list (created by the admin who approved it) and can be revoked there.
+- **Fallback:** the URL `https://www.konsilience.tech/api/mcp?key=ksk_...` also works (the URL contains the token; treat it as a password).
+
+Sign-in for connectors is OAuth 2.1 with dynamic client registration and PKCE: `/.well-known/oauth-protected-resource`, `/.well-known/oauth-authorization-server`, `/api/mcp/oauth/{register,token,approve}`, and the consent page `/admin/authorize-mcp`.
 
 Then ask, for example: *"Write a Konsilience post about how much an MVP costs in 2026. Save it as a draft and send me the preview link."*
 
