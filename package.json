@@ -7,15 +7,22 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "indexnow": "node scripts/indexnow.mjs"
+    "indexnow": "node scripts/indexnow.mjs",
+    "admin:create": "bun scripts/create-admin.mjs"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "bcryptjs": "^3.0.3",
+    "jose": "^6.2.17",
     "lenis": "^1.3.26",
+    "mongodb": "^7.9.0",
     "next": "16.3.6",
     "nodemailer": "^10.0.12",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "simple-icons": "^16.33.0"
+    "server-only": "^0.0.1",
+    "simple-icons": "^16.33.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

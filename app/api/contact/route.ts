@@ -1,10 +1,13 @@
 import nodemailer from "nodemailer";
+import { after } from "next/server";
+import { sendLeadToHubSpot, type HubSpotLead } from "@/lib/server/hubspot";
 import { siteConfig } from "@/site.config";
 
 const SALES_EMAIL = siteConfig.contact.salesEmail;
 
 // Receives every website form (contact, free SEO audit, job application, newsletter) and emails it to
-// the sales inbox. SMTP settings and TURNSTILE_SECRET_KEY come from environment variables; see .env.example.
+// the sales inbox. Leads (everything except job applications) are also sent to HubSpot CRM when
+// HUBSPOT_ACCESS_TOKEN is set. SMTP settings and TURNSTILE_SECRET_KEY come from environment variables; see .env.example.
 
 type FormType = "contact" | "audit" | "design_partner" | "application" | "newsletter";
 
@@ -136,6 +139,8 @@ export async function POST(request: Request) {
   let subject: string;
   let rows: [string, string][];
   const attachments: { filename: string; content: Buffer; contentType: string }[] = [];
+  // Contact details for HubSpot. Job applications are not sales leads, so they stay undefined.
+  let lead: Omit<HubSpotLead, "details"> | undefined;
 
   if (type === "contact") {
     if (!name || !get("project")) return bad("Please fill in your name and project details.");
@@ -150,6 +155,7 @@ export async function POST(request: Request) {
       ["Project", get("project")],
       ["Page", source],
     ];
+    lead = { formLabel: "Contact form", stage: "lead", email, name, phone: get("phone"), company: get("company"), jobTitle: get("designation") };
   } else if (type === "application") {
     const role = get("role");
     if (!name || !role) return bad("Please fill in your name.");
@@ -181,6 +187,7 @@ export async function POST(request: Request) {
       ["Main goal", get("goal")],
       ["Page", source],
     ];
+    lead = { formLabel: "Free SEO audit", stage: "lead", email, name, website: site };
   } else if (type === "design_partner") {
     const company = get("company");
     const useCase = get("use_case");
@@ -194,16 +201,25 @@ export async function POST(request: Request) {
       ["AI use case", useCase],
       ["Page", source],
     ];
+    lead = { formLabel: "Trasys design partner", stage: "lead", email, name, company, jobTitle: get("role") };
   } else if (type === "newsletter") {
     subject = `Newsletter sign-up: ${email}`;
     rows = [
       ["Email", email],
       ["Page", source],
     ];
+    lead = { formLabel: "Newsletter sign-up", stage: "subscriber", email };
   } else {
     return bad("Unknown form type.");
   }
   rows.push(...ATTRIBUTION_ROWS.map(([label, key]): [string, string] => [label, get(key)]));
+
+  // Runs after the response is sent, so HubSpot never slows the form down. It still runs if the
+  // email below fails, so the lead is not lost.
+  if (lead) {
+    const hubspotLead: HubSpotLead = { ...lead, details: rows };
+    after(() => sendLeadToHubSpot(hubspotLead));
+  }
 
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE, MAIL_FROM, MAIL_TO } = process.env;
   if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {

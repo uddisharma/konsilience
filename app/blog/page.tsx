@@ -4,8 +4,11 @@ import BlogGrid from "@/components/page/BlogGrid";
 import Newsletter from "@/components/page/Newsletter";
 import PageHero from "@/components/page/PageHero";
 import Reveal from "@/components/ui/Reveal";
-import { blogCategories, posts } from "@/lib/catalog";
+import { blogCategories } from "@/lib/catalog";
 import { siteUrl } from "@/lib/routes";
+import { konsiliencePosts, toCard } from "@/lib/server/blogSource";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Blog & Insights | Konsilience Engineering & AI",
@@ -13,8 +16,10 @@ export const metadata: Metadata = {
   alternates: { canonical: `${siteUrl}/blog` },
 };
 
-export default function BlogPage() {
-  const [featured, ...rest] = posts;
+export default async function BlogPage() {
+  const cards = (await konsiliencePosts()).filter((p) => !p.seo.noindex).map(toCard);
+  const [featured, ...rest] = cards;
+  const categories = [...new Set([...blogCategories, ...cards.map((c) => c.category)])].filter((c) => cards.some((p) => p.category === c));
   return (
     <>
       <PageHero
@@ -25,10 +30,12 @@ export default function BlogPage() {
       />
       <section className="sec bg-black pt-0">
         <div className="wrap flex flex-col gap-16">
-          <Reveal>
-            <BlogCard post={featured} large />
-          </Reveal>
-          <BlogGrid items={rest} categories={blogCategories} />
+          {featured && (
+            <Reveal>
+              <BlogCard post={featured} large />
+            </Reveal>
+          )}
+          <BlogGrid items={rest} categories={categories} />
         </div>
       </section>
       <Newsletter />

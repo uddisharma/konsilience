@@ -7,53 +7,53 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/thank-you", "/api/*", "/_next/*"],
+        disallow: ["/thank-you", "/admin", "/api/*", "/_next/*"],
       },
       {
         userAgent: "Googlebot",
         allow: "/",
-        disallow: ["/thank-you", "/api/*"],
+        disallow: ["/thank-you", "/admin", "/api/*"],
       },
       // LLM Crawlers & AI Search Agents
       {
         userAgent: "ChatGPT-User",
         allow: "/",
-        disallow: ["/thank-you", "/api/*"],
+        disallow: ["/thank-you", "/admin", "/api/*"],
       },
       {
         userAgent: "GPTBot",
         allow: "/",
-        disallow: ["/thank-you", "/api/*"],
+        disallow: ["/thank-you", "/admin", "/api/*"],
       },
       {
         userAgent: "PerplexityBot",
         allow: "/",
-        disallow: ["/thank-you", "/api/*"],
+        disallow: ["/thank-you", "/admin", "/api/*"],
       },
       {
         userAgent: "ClaudeBot",
         allow: "/",
-        disallow: ["/thank-you", "/api/*"],
+        disallow: ["/thank-you", "/admin", "/api/*"],
       },
       {
         userAgent: "anthropic-ai",
         allow: "/",
-        disallow: ["/thank-you", "/api/*"],
+        disallow: ["/thank-you", "/admin", "/api/*"],
       },
       {
         userAgent: "Google-Extended",
         allow: "/",
-        disallow: ["/thank-you", "/api/*"],
+        disallow: ["/thank-you", "/admin", "/api/*"],
       },
       {
         userAgent: "Applebot-Extended",
         allow: "/",
-        disallow: ["/thank-you", "/api/*"],
+        disallow: ["/thank-you", "/admin", "/api/*"],
       },
       {
         userAgent: "cohere-ai",
         allow: "/",
-        disallow: ["/thank-you", "/api/*"],
+        disallow: ["/thank-you", "/admin", "/api/*"],
       },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,

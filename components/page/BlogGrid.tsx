@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import type { posts } from "@/lib/catalog";
-import BlogCard from "./BlogCard";
+import BlogCard, { type CardPost } from "./BlogCard";
 
 // Category filter + search over the blog list.
-export default function BlogGrid({ items, categories }: { items: typeof posts; categories: string[] }) {
+export default function BlogGrid({ items, categories }: { items: CardPost[]; categories: string[] }) {
   const [cat, setCat] = useState("All");
   const [q, setQ] = useState("");
   const shown = items.filter(

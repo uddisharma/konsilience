@@ -6,6 +6,7 @@ import ConversionWidgets from "@/components/ConversionWidgets";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import JsonLd from "@/components/JsonLd";
+import SiteChrome from "@/components/SiteChrome";
 import SmoothScroll from "@/components/SmoothScroll";
 import ThemePicker from "@/components/ThemePicker";
 import { brand } from "@/lib/content";
@@ -112,14 +113,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd />
         {/* Re-applies a saved brand colour before first paint */}
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
-        <SmoothScroll />
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <BackToTop />
-        <ConversionWidgets />
-        {/* Colour tester: remove once the brand colour is final */}
-        <ThemePicker />
+        <SiteChrome
+          header={
+            <>
+              <SmoothScroll />
+              <Header />
+            </>
+          }
+          footer={
+            <>
+              <Footer />
+              <BackToTop />
+              <ConversionWidgets />
+              {/* Colour tester: remove once the brand colour is final */}
+              <ThemePicker />
+            </>
+          }
+        >
+          {children}
+        </SiteChrome>
       </body>
     </html>
   );
