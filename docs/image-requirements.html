@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Website Images: What We Need</title>
+<style>
+  :root {
+    --bg: #f6f6f4;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --muted: #63636a;
+    --line: #e3e3df;
+    --must: #b91c1c;
+    --nice: #1d4ed8;
+    --fix: #15803d;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111112; --card: #1b1b1d; --text: #f2f2f4; --muted: #a1a1a7; --line: #2e2e32;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111112; --card: #1b1b1d; --text: #f2f2f4; --muted: #a1a1a7; --line: #2e2e32;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 36px 18px 72px; }
+  h1 { font-size: 32px; margin: 0 0 10px; line-height: 1.2; }
+  h2 { font-size: 24px; margin: 44px 0 12px; }
+  h3 { font-size: 18px; margin: 0 0 8px; }
+  p { margin: 8px 0; }
+  .intro { color: var(--muted); font-size: 18px; }
+
+  .stats { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 24px 0; }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+  }
+  .stat .num { font-size: 40px; font-weight: 700; line-height: 1; }
+  .stat .label { color: var(--muted); font-size: 15px; margin-top: 8px; }
+  .stat.must .num { color: var(--must); }
+  .stat.nice .num { color: var(--nice); }
+  .stat.fix .num { color: var(--fix); }
+
+  .box {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--must);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 14px 0;
+  }
+  .box.q { border-left-color: #b45309; }
+
+  ol, ul { padding-left: 22px; margin: 8px 0; }
+  li { margin: 6px 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--bg); color: var(--muted); font-weight: 600; font-size: 14px; }
+  tr:last-child td { border-bottom: none; }
+  td.num { font-weight: 700; white-space: nowrap; }
+  .muted { color: var(--muted); font-size: 15px; }
+  .tag {
+    display: inline-block; font-size: 13px; font-weight: 600;
+    padding: 2px 10px; border-radius: 999px; color: #fff; margin-left: 6px; vertical-align: 2px;
+  }
+  .tag.must { background: var(--must); }
+  .tag.nice { background: var(--nice); }
+  .tag.none { background: #6b7280; }
+
+  @media (max-width: 600px) {
+    table, thead, tbody, tr, th, td { display: block; }
+    thead { display: none; }
+    tr { border-bottom: 1px solid var(--line); padding: 8px 0; }
+    tr:last-child { border-bottom: none; }
+    td { border: none; padding: 4px 14px; }
+    td.num { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Website images: what we need</h1>
+<p class="intro">We only need a few images. Most of the site can stay as it is. This page lists the images that really matter, the nice-to-have ones, and the fixes that need no image at all.</p>
+
+<div class="stats">
+  <div class="stat must">
+    <div class="num">16</div>
+    <div class="label"><b>Must have</b>: one screenshot per case study. Only for projects we really built.</div>
+  </div>
+  <div class="stat nice">
+    <div class="num">42</div>
+    <div class="label"><b>Nice to have</b>: team photo, service and resource photos, partner logos, and more. Optional.</div>
+  </div>
+  <div class="stat fix">
+    <div class="num">6</div>
+    <div class="label"><b>Fixes with no image</b>: remove fake names and misleading labels.</div>
+  </div>
+</div>
+
+<h2>Answer these two questions first</h2>
+<div class="box q">
+  <h3>1. Did we really build the 15 case studies (other than Trasys AI)?</h3>
+  <p>The code says they are modelled on other well-known products, and their copy is marked PLACEHOLDER. If we did <b>not</b> build them, remove them. The must-have list then shrinks to just the Trasys AI screenshot.</p>
+</div>
+<div class="box q">
+  <h3>2. Will we name individual team members?</h3>
+  <p>If yes, we need a photo of each person, with their permission. If no, skip this.</p>
+</div>
+
+<h2>Must have: 16 case study screenshots</h2>
+<p>Use one screenshot per project. The same image is used on the home page, the portfolio list and the project page. Use the main screen only, with demo data only. No real customer data.</p>
+<table>
+  <thead><tr><th>#</th><th>Case study</th><th>What the screenshot shows</th></tr></thead>
+  <tbody>
+    <tr><td class="num">1</td><td>Omnichannel Helpdesk</td><td>Ticket inbox with channels and SLA status</td></tr>
+    <tr><td class="num">2</td><td>Legal Practice Suite</td><td>Matter dashboard with time and billing totals</td></tr>
+    <tr><td class="num">3</td><td>Enterprise HRMS</td><td>Employee home: check-in, leave, requests</td></tr>
+    <tr><td class="num">4</td><td>Field Service Platform</td><td>Daily job schedule</td></tr>
+    <tr><td class="num">5</td><td>Property Management Cloud</td><td>Portfolio dashboard with rent collected</td></tr>
+    <tr><td class="num">6</td><td>Shared Inbox Help Desk</td><td>Shared inbox with assignees</td></tr>
+    <tr><td class="num">7</td><td>Browser Telehealth</td><td>Video visit screen with a demo clinician (no real patient)</td></tr>
+    <tr><td class="num">8</td><td>Trade Job Manager</td><td>Job card with stage tracker</td></tr>
+    <tr><td class="num">9</td><td>Landlord Management App</td><td>Rent collection summary</td></tr>
+    <tr><td class="num">10</td><td>Visual Inventory Tracker</td><td>Item grid with low-stock flag</td></tr>
+    <tr><td class="num">11</td><td>Construction Field Reporting</td><td>Daily site report</td></tr>
+    <tr><td class="num">12</td><td>Salon &amp; Spa Booking</td><td>Booking calendar</td></tr>
+    <tr><td class="num">13</td><td>AI Hair Intelligence Platform</td><td>Diagnostic result screen</td></tr>
+    <tr><td class="num">14</td><td>Trasys AI (our own product)</td><td>Live traces view</td></tr>
+    <tr><td class="num">15</td><td>Zero-Commission Storefronts</td><td>Storefront home</td></tr>
+    <tr><td class="num">16</td><td>Bus Operator Platform</td><td>E-ticket with QR code</td></tr>
+  </tbody>
+</table>
+<p class="muted">Pages that use these: the home page, the portfolio list, and each project page.</p>
+
+<h2>Nice to have (optional)</h2>
+<p>These improve the site but are not required. Do them in any order, or skip them.</p>
+<table>
+  <thead><tr><th>Images</th><th>What</th><th>Where</th></tr></thead>
+  <tbody>
+    <tr><td class="num">1</td><td>Team group photo</td><td>About page</td></tr>
+    <tr><td class="num">5</td><td>One photo per service category (instead of 28)</td><td>Service pages</td></tr>
+    <tr><td class="num">18</td><td>Industry photos (the current tiles are fine)</td><td>Home, Industries, industry pages</td></tr>
+    <tr><td class="num">1</td><td>AI product screenshot</td><td>AI solutions pages</td></tr>
+    <tr><td class="num">4</td><td>One cover per resource type (guide, whitepaper, press, webinar)</td><td>Resources pages</td></tr>
+    <tr><td class="num">2</td><td>Trasys AI screenshots (traces, incident alert)</td><td>Trasys AI page</td></tr>
+    <tr><td class="num">4</td><td>Partner logos: AWS, Azure, Salesforce, Oracle</td><td>Home, Partners section</td></tr>
+    <tr><td class="num">3</td><td>AI platform logos: OpenAI, Anthropic, Gemini</td><td>Home, top section</td></tr>
+    <tr><td class="num">1</td><td>Mohali office photo</td><td>Contact page</td></tr>
+    <tr><td class="num">1</td><td>Security pipeline diagram (tools we actually use)</td><td>Security page</td></tr>
+    <tr><td class="num">1</td><td>Dashboard screenshot</td><td>Services page</td></tr>
+    <tr><td class="num">1</td><td>Sample SEO audit report</td><td>Free SEO audit page</td></tr>
+  </tbody>
+</table>
+
+<h2>Fixes with no image needed</h2>
+<ol>
+  <li><b>Location pages:</b> change "{City} Studio" to the market name (for example, "Dubai"). We have no office there, so the label is misleading.</li>
+  <li><b>Case study mockups:</b> remove the invented names (such as "Maya Chen" and "Dr. Meera Rao") until real screenshots replace them.</li>
+  <li><b>Case study cards:</b> remove the first-letter circles, or replace them with product logos.</li>
+  <li><b>Testimonials:</b> keep the section hidden until we have real, approved quotes.</li>
+  <li><b>Client logo wall:</b> remove it until we have logos that clients have approved.</li>
+  <li><b>Certification badges:</b> do not add any unless we hold the certificate.</li>
+</ol>
+
+<h2>Keep as they are</h2>
+<ul>
+  <li>The home page and Trasys AI videos</li>
+  <li>The logo and the default social share image</li>
+  <li>Icons, graphics and all text sections</li>
+</ul>
+
+</main>
+</body>
+</html>
