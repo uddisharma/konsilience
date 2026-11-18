@@ -49,6 +49,7 @@ async function ensureIndexes(db: Db) {
     db.collection("oauth_codes").createIndex({ codeHash: 1 }, { unique: true }),
     // Expired one-time codes are removed by MongoDB's TTL monitor.
     db.collection("oauth_codes").createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 }),
+    db.collection("syndications").createIndex({ postId: 1, platform: 1 }, { unique: true }),
   ]);
 }
 

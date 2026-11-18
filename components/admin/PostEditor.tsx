@@ -10,18 +10,41 @@ import { postUrl, siteConfigs } from "@/lib/blog/sites";
 import { autoExcerpt, readingTime, slugify, wordCount } from "@/lib/blog/utils";
 import { api, fmtDate } from "./api";
 import BlockEditor from "./BlockEditor";
+import PublishMenu from "./PublishMenu";
 import { AutoTextarea, Button, Card, Field, Input, Notice, Select, Toggle } from "./fields";
 import { ImageField } from "./Media";
 
 
+const MS_PER_MINUTE = 60000;
+// The length of "YYYY-MM-DDTHH:mm", the value a datetime-local input takes.
+const DATETIME_LOCAL_LENGTH = 16;
+
 const toLocal = (iso?: string | null) => {
   if (!iso) return "";
   const d = new Date(iso);
-  return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+  return new Date(d.getTime() - d.getTimezoneOffset() * MS_PER_MINUTE).toISOString().slice(0, DATETIME_LOCAL_LENGTH);
 };
 
 const TABS = ["Publish", "Design", "SEO", "Markdown"] as const;
 const ICONS = ["spark", "code", "eye", "cloud", "chart", "search", "rocket", "shield", "agent", "db", "layers", "bolt", "target", "globe", "users", "doc"];
+
+// Fields the server sets itself; they are not sent back on save.
+const SERVER_MANAGED: readonly string[] = ["updatedAt", "updatedBy", "createdAt", "createdBy", "source", "computedReadTime"];
+const STATUS_STYLE: Record<string, string> = {
+  published: "bg-green-500/20 text-green-300",
+  archived: "bg-white/10 text-muted",
+  draft: "bg-primary/20 text-primary",
+};
+const SCHEDULED_STYLE = "bg-amber-500/20 text-amber-300";
+const DEFAULT_HUE = 225;
+const ARTWORK_BAR_HEIGHT = 6;
+const ARTWORK_BAR_RADIUS = 4;
+
+function saveNote(dirty: boolean, updatedAt?: string): string {
+  if (dirty) return "Unsaved changes";
+  if (updatedAt) return `Saved ${fmtDate(updatedAt)}`;
+  return "";
+}
 
 export default function PostEditor({ initial }: { initial: PostRecord | Draft }) {
   const router = useRouter();
@@ -45,9 +68,9 @@ export default function PostEditor({ initial }: { initial: PostRecord | Draft })
       setBusy(true);
       setMsg(null);
       try {
-        const { id, ...payload } = body as Draft & Partial<PostRecord>;
-        // Server-managed fields; the API would ignore them anyway.
-        for (const k of ["updatedAt", "updatedBy", "createdAt", "createdBy", "source", "computedReadTime"] as const) delete (payload as Record<string, unknown>)[k];
+        const { id, ...rest } = body as Draft & Partial<PostRecord>;
+        // Server-managed fields are dropped; the API would ignore them anyway.
+        const payload = Object.fromEntries(Object.entries(rest).filter(([k]) => !SERVER_MANAGED.includes(k)));
         const { post: res } = id
           ? await api<{ post: PostRecord }>(`/api/admin/posts/${id}`, { method: "PATCH", json: payload })
           : await api<{ post: PostRecord }>("/api/admin/posts", { method: "POST", json: payload });
@@ -112,11 +135,11 @@ export default function PostEditor({ initial }: { initial: PostRecord | Draft })
       {/* Top bar */}
       <div className="sticky top-0 z-40 -mx-4 flex flex-wrap items-center gap-2 border-b border-line bg-black/90 px-4 py-3 backdrop-blur md:-mx-8 md:px-8">
         <Link href="/admin" className="text-sm text-muted hover:text-white">← Posts</Link>
-        <span className={`ml-2 rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase ${post.status === "published" ? (scheduled ? "bg-amber-500/20 text-amber-300" : "bg-green-500/20 text-green-300") : post.status === "archived" ? "bg-white/10 text-muted" : "bg-primary/20 text-primary"}`}>
+        <span className={`ml-2 rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase ${scheduled ? SCHEDULED_STYLE : STATUS_STYLE[post.status]}`}>
           {scheduled ? "Scheduled" : post.status}
         </span>
         <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-semibold text-white/70">{cfg.name}</span>
-        <span className="text-xs text-muted">{dirty ? "Unsaved changes" : post.updatedAt ? `Saved ${fmtDate(post.updatedAt)}` : ""}</span>
+        <span className="text-xs text-muted">{saveNote(dirty, post.updatedAt)}</span>
         <div className="ml-auto flex flex-wrap gap-2">
           {post.id && <Button variant="danger" onClick={remove}>Delete</Button>}
           <Button variant="outline" onClick={preview} disabled={busy || !post.title}>Preview</Button>
@@ -126,11 +149,10 @@ export default function PostEditor({ initial }: { initial: PostRecord | Draft })
             </a>
           )}
           <Button variant="outline" onClick={() => save()} disabled={busy || !post.title}>{busy ? "Saving…" : "Save"}</Button>
-          {post.status === "published" ? (
+          {post.status === "published" && (
             <Button variant="outline" onClick={() => save({ status: "draft" })} disabled={busy}>Unpublish</Button>
-          ) : (
-            <Button variant="primary" onClick={() => save({ status: "published" })} disabled={busy || !post.title}>Publish</Button>
           )}
+          <PublishMenu post={post} dirty={dirty} busy={busy} publishSite={() => save({ status: "published" })} setMsg={setMsg} />
         </div>
       </div>
       {msg && <Notice tone={msg.tone}>{msg.text}</Notice>}
@@ -141,6 +163,7 @@ export default function PostEditor({ initial }: { initial: PostRecord | Draft })
           <AutoTextarea
             value={post.title}
             onChange={(e) => {
+              // Matches a line break ("a\nb"); rejects "a b". Tester: https://regex101.com/?regex=%5Cn&flags=g
               const title = e.target.value.replace(/\n/g, " ");
               set({ title, ...(!slugTouched && !post.id ? { slug: slugify(title) } : {}) });
             }}
@@ -200,6 +223,7 @@ export default function PostEditor({ initial }: { initial: PostRecord | Draft })
                       value={post.slug}
                       onChange={(e) => {
                         setSlugTouched(true);
+                        // Matches characters a slug cannot have ("Ä", "_", " "); rejects "a-1". Tester: https://regex101.com/?regex=%5B%5Ea-z0-9-%5D&flags=g
                         set({ slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "-") });
                       }}
                     />
@@ -254,7 +278,7 @@ export default function PostEditor({ initial }: { initial: PostRecord | Draft })
                 {post.design.hero === "art" && (
                   <>
                     <Field label={`Artwork colour (hue ${post.design.artHue ?? "auto"})`}>
-                      <input type="range" min={0} max={360} value={post.design.artHue ?? 225} onChange={(e) => setDesign({ artHue: Number(e.target.value) })} className="w-full accent-[rgb(var(--brand-rgb))]" style={{ background: "linear-gradient(90deg,hsl(0 80% 50%),hsl(60 80% 50%),hsl(120 80% 50%),hsl(180 80% 50%),hsl(240 80% 50%),hsl(300 80% 50%),hsl(360 80% 50%))", height: 6, borderRadius: 4 }} />
+                      <input type="range" min={0} max={360} value={post.design.artHue ?? DEFAULT_HUE} onChange={(e) => setDesign({ artHue: Number(e.target.value) })} className="w-full accent-[rgb(var(--brand-rgb))]" style={{ background: "linear-gradient(90deg,hsl(0 80% 50%),hsl(60 80% 50%),hsl(120 80% 50%),hsl(180 80% 50%),hsl(240 80% 50%),hsl(300 80% 50%),hsl(360 80% 50%))", height: ARTWORK_BAR_HEIGHT, borderRadius: ARTWORK_BAR_RADIUS }} />
                     </Field>
                     <Field label="Artwork icon">
                       <Select value={post.design.artIcon ?? ""} onChange={(v) => setDesign({ artIcon: v || undefined })} options={[["", "From category"], ...ICONS.map((i): [string, string] => [i, i])]} />

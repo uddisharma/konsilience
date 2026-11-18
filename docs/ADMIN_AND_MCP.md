@@ -31,6 +31,18 @@ One CMS for both blogs. Posts are stored in MongoDB.
 - **Design tab:** hero (artwork, cover image, split, text only), artwork colour and icon, per-post accent colour, layout (sidebars or centred column), table of contents / share / author / related / newsletter toggles, closing CTA, sidebar links.
 - **SEO tab:** meta title and description with a Google preview, keywords, canonical, noindex, schema type, Open Graph title / description / image with a social card preview, X card type. FAQ blocks add FAQPage schema automatically.
 - **Publish:** Draft → Publish. A future publish date schedules the post. Ctrl+S saves. **Preview** shows drafts exactly as they will look.
+- **Publish ▾ menu:** opens with **Publish to all** (the site, plus every configured platform below). Each platform also has its own **Publish** button, which publishes the site first if needed, then that platform only. A platform already showing **Posted ↗** is skipped by "Publish to all". Cross-posting is for Konsilience posts only, and only once the post is live.
+
+## Cross-posting (dev.to, Hashnode, Bluesky, Tumblr)
+
+Each platform is set up with environment variables (see `.env.example`). A platform with missing variables shows "Not set up" in the menu and is skipped. Every cross-post links back to the post on the site (dev.to and Hashnode set the canonical URL; Bluesky gets a teaser with a link card; Tumblr gets the full text with a link at the end). Results are stored in the `syndications` collection, so a platform never gets the same post twice unless it is forced.
+
+- **dev.to:** `DEVTO_API_KEY`. Publishes the full article with tags.
+- **Hashnode:** `HASHNODE_PAT` and `HASHNODE_PUBLICATION_ID`. Publishes the full article with the site post as the original article URL. The Hashnode field names should be checked with one test post.
+- **Bluesky:** `BLUESKY_IDENTIFIER` and an app password in `BLUESKY_APP_PASSWORD`. Posts a short teaser with the link (Bluesky has a 300-character limit).
+- **Tumblr:** consumer key/secret, the account's OAuth token and token secret, and `TUMBLR_BLOG`. Publishes the full text. Tumblr has no canonical tag, so the closing link does that job. The NPF body format should be checked with one test post.
+
+API: `POST /api/admin/posts/<id>/syndicate` with `{"platforms": ["devto", ...]}` (and `"force": true` to repost). `GET` on the same path shows where the post already is. `GET /api/admin/syndication` shows which platforms are configured.
 - **Media:** uploads (PNG, JPEG, WebP, GIF, AVIF, 4 MB max) are stored in MongoDB GridFS and served from `/api/media/<id>`.
 
 Published Konsilience posts appear immediately (pages are revalidated on save) and are added to `/sitemap.xml`.
