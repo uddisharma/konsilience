@@ -54,3 +54,32 @@ export function loadScript(id: string, src: string, attrs: Readonly<Record<strin
     document.head.appendChild(s);
   });
 }
+
+/**
+ * Open connections to third-party origins ahead of use (DNS + TLS), once per origin.
+ * `anonymous` must match how the origin is later fetched (e.g. a script with crossorigin), or the
+ * browser opens a second connection and the warm one is wasted.
+ */
+export function preconnect(origins: readonly string[], { anonymous = false }: { readonly anonymous?: boolean } = {}): void {
+  origins.forEach((origin) => {
+    if (document.querySelector(`link[rel="preconnect"][href="${origin}"]`)) return;
+    const link = document.createElement("link");
+    link.rel = "preconnect";
+    link.href = origin;
+    if (anonymous) link.crossOrigin = "anonymous";
+    document.head.appendChild(link);
+  });
+}
+
+/** Run `start` once, on the visitor's first scroll, tap, click or key press. Returns a cancel function. */
+export function runOnFirstInteraction(start: () => void): () => void {
+  const run = (): void => {
+    cancel();
+    start();
+  };
+  function cancel(): void {
+    FIRST_INTERACTION_EVENTS.forEach((e) => window.removeEventListener(e, run));
+  }
+  FIRST_INTERACTION_EVENTS.forEach((e) => window.addEventListener(e, run, { once: true, passive: true }));
+  return cancel;
+}

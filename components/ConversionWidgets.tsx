@@ -2,11 +2,11 @@
 
 import { useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { startGa4, stopGa4, track } from "@/lib/analytics";
-import { isCalendlyBooking } from "@/lib/calendly";
+import { isCalendlyBooking, warmCalendly } from "@/lib/calendly";
 import { effectiveConsent, initConsent, isBannerVisible } from "@/lib/consent";
-import { runWhenIdle } from "@/lib/idle";
+import { runOnFirstInteraction, runWhenIdle } from "@/lib/idle";
 import { suppressContactModal } from "@/lib/popups";
-import { hideTawk, loadTawk, TAWK_DIRECT_CHAT_URL } from "@/lib/tawk";
+import { hideTawk, loadTawk, TAWK_DIRECT_CHAT_URL, warmTawk } from "@/lib/tawk";
 import { useConsent } from "@/lib/useConsent";
 import { captureAttribution } from "@/lib/utm";
 import { isSet, siteConfig, whatsappUrl } from "@/site.config";
@@ -20,6 +20,9 @@ import WhatsAppIcon from "./ui/WhatsAppIcon";
 // • tawk.to chat: auto-loaded on desktop when consent allows and the banner is closed; otherwise
 //   (and always on mobile) our lightweight chat button loads tawk.to on tap and opens it directly,
 //   so mobile visitors never get tawk's greeting pop-up over the page
+//   On mobile, when consent allows, tawk.to is preloaded hidden on the first scroll/tap so our button
+//   opens it instantly.
+// • Calendly warmed up on the first scroll/tap when consent allows, so the booking popup opens fast
 // • sticky "Book a call" + WhatsApp bar on mobile
 // • GA4 events: Calendly bookings, and clicks on phone / WhatsApp / email links
 
@@ -115,6 +118,16 @@ export default function ConversionWidgets(): ReactNode {
     return runWhenIdle(() => void start());
   }, [desktop, regionKnown, bannerOpen, allowed.functional, chat]);
 
+  // Mobile + Calendly: once consent allows, warm up on the visitor's first interaction (never on a
+  // timer, so page-load metrics are untouched). tawk.to stays hidden until our button is tapped.
+  useEffect(() => {
+    if (!regionKnown || bannerOpen || !allowed.functional) return;
+    return runOnFirstInteraction(() => {
+      if (isSet(siteConfig.booking.calendlyIntroUrl)) warmCalendly();
+      if (chatConfigured && !isDesktopNow()) loadTawk({ hidden: true }).catch(() => undefined);
+    });
+  }, [regionKnown, bannerOpen, allowed.functional]);
+
   // Consent withdrawn after chat auto-loaded: hide it (fully gone on the next page load).
   useEffect(() => {
     if (chat === "ready" && !allowed.functional && !chatRequested) hideTawk();
@@ -126,7 +139,6 @@ export default function ConversionWidgets(): ReactNode {
     const timer = window.setTimeout(() => setChat((c) => (c === "loading" ? "failed" : c)), CHAT_LOAD_TIMEOUT_MS);
     try {
       await loadTawk({ open: true });
-      window.Tawk_API?.maximize?.();
       setChat("ready");
     } catch {
       setChat("failed");
@@ -175,6 +187,9 @@ export default function ConversionWidgets(): ReactNode {
           <button
             type="button"
             onClick={() => void openChat()}
+            onPointerEnter={warmTawk}
+            onTouchStart={warmTawk}
+            onFocus={warmTawk}
             aria-label={opening ? "Opening chat" : "Chat with us"}
             aria-busy={opening}
             className={chatButtonClass}

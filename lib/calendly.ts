@@ -2,6 +2,7 @@
 // booking button, so Calendly costs nothing on page load. If the widget fails to load, the
 // booking page opens in a new tab instead.
 
+import { preconnect } from "./idle";
 import { getAttribution, UTM_KEYS } from "./utm";
 
 const CALENDLY_JS = "https://assets.calendly.com/assets/external/widget.js";
@@ -54,6 +55,18 @@ export function loadCalendly(): Promise<void> {
     document.head.appendChild(js);
   });
   return loading;
+}
+
+/**
+ * Get Calendly ready before it is needed: connect to calendly.com (the booking page the popup
+ * frames) and fetch the widget script. Called on hover/focus/touch of a booking button, and in the
+ * background once the visitor interacts when consent allows. Never throws.
+ */
+export function warmCalendly(): void {
+  preconnect([CALENDLY_ORIGIN, "https://assets.calendly.com"]);
+  loadCalendly().catch(() => {
+    // Ignored: openCalendly() retries and falls back to a new tab on click.
+  });
 }
 
 /** Carry the visit's UTM tags (from its first page) into the booking so Calendly records the lead source. */

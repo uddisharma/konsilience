@@ -2,7 +2,7 @@
 // visitor taps our chat button, in which case the chat window opens straight away.
 
 import { track } from "./analytics";
-import { loadScript } from "./idle";
+import { loadScript, preconnect } from "./idle";
 import { suppressContactModal } from "./popups";
 import { siteConfig } from "@/site.config";
 
@@ -33,12 +33,47 @@ declare global {
 
 let ready: Promise<void> | null = null;
 
-/** Load tawk.to once. Resolves when the widget is ready; `open` maximises the chat window. */
-export function loadTawk({ open = false }: { readonly open?: boolean } = {}): Promise<void> {
+/** Connect to tawk.to's servers ahead of loading (on hover/touch of our chat button). */
+export function warmTawk(): void {
+  preconnect(["https://embed.tawk.to"], { anonymous: true });
+  preconnect(["https://va.tawk.to"]);
+}
+
+// tawk.to flashes the tab title ("(1) New message") while a message is unread, e.g. an automated
+// greeting. Watch the <title> and put the page's own title back whenever tawk swaps it.
+const TAWK_TITLE = /new messages?|^\(\d+\)/i;
+let titleGuardInstalled = false;
+
+function installTitleGuard(): void {
+  if (titleGuardInstalled) return;
+  titleGuardInstalled = true;
+  let pageTitle = TAWK_TITLE.test(document.title) ? "" : document.title;
+  const sync = (): void => {
+    if (!TAWK_TITLE.test(document.title)) {
+      pageTitle = document.title; // a real change, e.g. client-side navigation
+    } else if (pageTitle) {
+      document.title = pageTitle;
+    }
+  };
+  new MutationObserver(sync).observe(document.head, { subtree: true, childList: true, characterData: true });
+}
+
+function reveal(): void {
+  window.Tawk_API?.showWidget?.();
+  window.Tawk_API?.maximize?.();
+}
+
+/**
+ * Load tawk.to once. Resolves when the widget is ready.
+ * `open` shows and maximises the chat window; `hidden` preloads it with the bubble hidden (mobile),
+ * so a later `open` is instant.
+ */
+export function loadTawk({ open = false, hidden = false }: { readonly open?: boolean; readonly hidden?: boolean } = {}): Promise<void> {
   if (ready) {
-    if (open) window.Tawk_API?.maximize?.();
-    return ready;
+    // Still loading: reveal once ready. Already loaded: reveal now.
+    return open ? ready.then(reveal) : ready;
   }
+  installTitleGuard();
   ready = new Promise<void>((resolve, reject) => {
     const api: TawkApi = window.Tawk_API ?? {};
     window.Tawk_API = api;
@@ -50,7 +85,8 @@ export function loadTawk({ open = false }: { readonly open?: boolean } = {}): Pr
       },
     };
     api.onLoad = () => {
-      if (open) api.maximize?.();
+      if (open) reveal();
+      else if (hidden) api.hideWidget?.();
       resolve();
     };
     api.onChatStarted = () => {

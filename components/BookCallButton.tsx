@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { track } from "@/lib/analytics";
-import { loadCalendly, openCalendly } from "@/lib/calendly";
+import { openCalendly, warmCalendly } from "@/lib/calendly";
 import { suppressContactModal } from "@/lib/popups";
 import { isSet, siteConfig } from "@/site.config";
 import Button from "./ui/Button";
@@ -19,8 +19,8 @@ type Props = {
   readonly onOpen?: () => void;
 };
 
-// Opens the Calendly popup. Calendly's script is fetched on first hover or focus, so the
-// popup opens instantly on click without slowing the initial page load.
+// Opens the Calendly popup. Calendly is warmed up on hover, touch or focus (and in the background
+// by ConversionWidgets when consent allows), so the popup opens fast without slowing page load.
 /** "Book a 15-min call", with the length taken from site.config.ts. */
 export const BOOK_CALL_LABEL = `Book a ${siteConfig.booking.introCallMinutes}-min call`;
 
@@ -34,13 +34,6 @@ export default function BookCallButton({
 }: Props): ReactNode {
   if (!isSet(url)) return null;
 
-  const prefetch = async (): Promise<void> => {
-    try {
-      await loadCalendly();
-    } catch {
-      // Ignored: openCalendly() retries and falls back to a new tab on click.
-    }
-  };
   const open = (): void => {
     track("booking_click", { placement });
     suppressContactModal(); // the timed home-page modal must not pop up over the booking
@@ -49,7 +42,7 @@ export default function BookCallButton({
   };
 
   return (
-    <span onPointerEnter={prefetch} onFocusCapture={prefetch} className="contents">
+    <span onPointerEnter={warmCalendly} onTouchStart={warmCalendly} onFocusCapture={warmCalendly} className="contents">
       <Button variant={variant} className={className} onClick={open}>
         {children}
       </Button>
