@@ -4,6 +4,12 @@ import type { NextConfig } from "next";
 const MOVED_PERMANENTLY = 301;
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Cap build workers (default is one per CPU core). 11 parallel workers exhausted memory on a
+    // 16 GB Windows machine during page generation ("Fatal process out of memory").
+    cpus: 4,
+  },
+
   // Every removed or renamed URL gets a 301 here (logged in docs/CHANGELOG.md).
   async redirects() {
     return [
