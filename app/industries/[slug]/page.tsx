@@ -7,15 +7,16 @@ import ProjectCard from "@/components/page/ProjectCard";
 import Compliance from "@/components/sections/Compliance";
 import Faq from "@/components/sections/Faq";
 import Testimonials from "@/components/sections/Testimonials";
-import { SceneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
+import SiteImg from "@/components/ui/SiteImg";
 import JsonLd from "@/components/JsonLd";
 import { aiSolutions, industryList, projects, serviceList, techStack, whyUs } from "@/lib/catalog";
 import { siteUrl } from "@/lib/routes";
 import { buildIndustryPageSchema } from "@/lib/schema";
 import { industryData } from "@/lib/industryData";
+import { industryImage, ogImage } from "@/lib/images";
 
 const find = (slug: string) => industryList.find((i) => i.slug === slug);
 
@@ -27,6 +28,7 @@ export async function generateMetadata({ params }: PageProps<"/industries/[slug]
   const ind = find((await params).slug);
   if (!ind) return {};
   const url = `${siteUrl}/industries/${ind.slug}`;
+  const share = ogImage(`/industries/${ind.slug}`)!;
   return {
     title: `${ind.name} Software & AI Engineering`,
     description: `${ind.short} Custom software, SaaS platforms & AI solutions engineered for ${ind.name.toLowerCase()} companies.`,
@@ -36,20 +38,13 @@ export async function generateMetadata({ params }: PageProps<"/industries/[slug]
       title: `${ind.name} Engineering & AI | Konsilience`,
       description: ind.short,
       url,
-      images: [
-        {
-          url: `${siteUrl}/og?title=${encodeURIComponent(ind.name + " Engineering")}&subtitle=${encodeURIComponent(ind.short)}`,
-          width: 1200,
-          height: 630,
-          alt: `${ind.name} Software Development`,
-        },
-      ],
+      images: [share],
     },
     twitter: {
       card: "summary_large_image",
       title: `${ind.name} Engineering | Konsilience`,
       description: ind.short,
-      images: [`${siteUrl}/og?title=${encodeURIComponent(ind.name + " Engineering")}`],
+      images: [share.url],
     },
   };
 }
@@ -103,7 +98,7 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
             <Button variant="outline" href="/portfolio">View Work</Button>
           </>
         }
-        aside={<SceneArt hue={ind.hue} icon={ind.icon} label={ind.name} className="hidden aspect-[4/3] rounded-3xl lg:block" />}
+        aside={<SiteImg img={industryImage(ind.slug)} priority className="hidden aspect-[4/3] w-full rounded-3xl border border-line object-cover lg:block" />}
       />
 
       <section className="sec bg-black">

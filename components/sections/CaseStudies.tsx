@@ -3,9 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { caseStudies } from "@/lib/content";
-import { portfolioCard } from "@/lib/images";
 import { PhoneArt } from "../ui/Artwork";
-import SiteImg from "../ui/SiteImg";
 import Icon from "../ui/Icon";
 import { LineReveal } from "../ui/Reveal";
 
@@ -147,11 +145,7 @@ export default function CaseStudies() {
                 </div>
                 <div className="relative -mx-7 -mb-7 flex h-[46%] items-start justify-center overflow-hidden pt-5">
                   <div className="absolute inset-x-6 bottom-0 h-3/4 rounded-t-[2rem]" style={{ background: c.dark ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.05)" }} />
-                  {portfolioCard(c) ? (
-                    <SiteImg img={portfolioCard(c)!} sizes="(min-width: 640px) 400px, 82vw" className="pointer-events-none relative h-auto w-full transition-transform duration-700 group-hover:-translate-y-2" />
-                  ) : (
-                    <PhoneArt slug={c.slug} accent={c.accent} dark={c.dark} className="relative w-[78%]" />
-                  )}
+                  <PhoneArt slug={c.slug} accent={c.accent} dark={c.dark} className="relative w-[78%]" />
                 </div>
                 <span className={`absolute top-7 right-7 grid size-10 place-items-center rounded-full transition-all duration-500 group-hover:rotate-45 ${c.dark ? "bg-white text-black" : "bg-black text-white"}`}>
                   <Icon name="upRight" className="size-4" strokeWidth={2} />

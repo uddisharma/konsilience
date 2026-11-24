@@ -379,16 +379,6 @@ function CaseTrasys({ e }: P) {
   );
 }
 
-// card art: fragment · edge-cropped, transparent background (the card supplies its colour)
-function CardTrasys({ e }: P) {
-  const [, white] = e.palette;
-  return (
-    <Frame e={e} og={false} logo="bl" grain={0} style={{ background: "transparent" }}>
-      <Browser src="/render-kit/src/trasys-hero-3" host="trasys.dev" line={tint(white, 0.3)} bg="#0b0b0b" style={{ left: "7%", top: "4%", width: "106%" }} />
-    </Frame>
-  );
-}
-
 export const otherCompositions: Record<string, (p: P) => ReactNode> = {
   "res-ai-readiness": AiReadiness,
   "res-mvp": MvpGuide,
@@ -404,5 +394,4 @@ export const otherCompositions: Record<string, (p: P) => ReactNode> = {
   "res-webinar-monolith": WebinarMonolith,
   "res-webinar-copilots": WebinarCopilots,
   "case-trasys-ai": CaseTrasys,
-  "card-trasys-ai": CardTrasys,
 };

@@ -5,6 +5,7 @@ import { posts as staticPosts } from "@/lib/catalog";
 import { emptyDesign, emptySeo, type Block, type PostRecord } from "@/lib/blog/schema";
 import { siteConfigs } from "@/lib/blog/sites";
 import { readingTime } from "@/lib/blog/utils";
+import { blogCover, ogImage } from "@/lib/images";
 import { publicPost, publicPosts } from "./posts";
 
 /*
@@ -60,6 +61,9 @@ function staticToRecord(p: (typeof staticPosts)[number]): PostRecord {
 }
 
 export function toCard(p: PostRecord): CardPost {
+  // an uploaded cover wins; otherwise the generated one from /public/images/blog (lib/image-registry.ts)
+  const uploaded = p.design.hero !== "art" ? p.design.coverImage : undefined;
+  const generated = blogCover(p.slug);
   return {
     slug: p.slug,
     title: p.title,
@@ -67,8 +71,8 @@ export function toCard(p: PostRecord): CardPost {
     date: (p.publishedAt ?? p.createdAt).slice(0, 10),
     read: p.readTime || p.computedReadTime || readingTime(p.blocks),
     excerpt: p.excerpt,
-    coverImage: p.design.hero !== "art" ? p.design.coverImage : undefined,
-    coverAlt: p.design.coverAlt,
+    coverImage: uploaded || generated?.src,
+    coverAlt: uploaded ? p.design.coverAlt : generated?.alt,
     artHue: p.design.artHue,
     artIcon: p.design.artIcon,
   };
@@ -82,9 +86,16 @@ export async function konsiliencePosts(): Promise<PostRecord[]> {
   return [...db, ...builtIn].sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? ""));
 }
 
+/** Use the generated cover as the share image when the post sets neither its own share image nor a cover. */
+function withShareImage(p: PostRecord): PostRecord {
+  if (p.seo.ogImage || p.design.coverImage) return p;
+  const og = ogImage(`/blog/${p.slug}`);
+  return og ? { ...p, seo: { ...p.seo, ogImage: og.url } } : p;
+}
+
 export async function konsiliencePost(slug: string): Promise<PostRecord | null> {
   const db = await publicPost("konsilience", slug);
-  if (db) return db;
+  if (db) return withShareImage(db);
   const s = staticPosts.find((p) => p.slug === slug);
-  return s ? staticToRecord(s) : null;
+  return s ? withShareImage(staticToRecord(s)) : null;
 }

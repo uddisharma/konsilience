@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { registry } from "@/lib/image-registry";
 import { sectionCompositions } from "../compositions-a";
 import { otherCompositions } from "../compositions-b";
+import { industryCompositions } from "../compositions-c";
+import { blogCompositions } from "../compositions-d";
 
 // DEV-ONLY canvas for the static images in /public/images (see scripts/render-images.mjs).
 // /render-kit/<id> renders one registry entry full-viewport; ?og=1 renders its 1200×630 share version.
@@ -14,7 +16,7 @@ const CSS = `
   * { animation: none !important; transition: none !important; }
 `;
 
-const compositions = { ...sectionCompositions, ...otherCompositions };
+const compositions = { ...sectionCompositions, ...otherCompositions, ...industryCompositions, ...blogCompositions };
 
 export default async function RenderKit({ params, searchParams }: { params: Promise<{ key: string[] }>; searchParams: Promise<{ og?: string }> }) {
   if (process.env.NODE_ENV === "production") notFound();

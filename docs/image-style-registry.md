@@ -39,5 +39,30 @@ technique + layout + palette; images on the same page never share a technique, l
 | 26 | `resources/webinars/building-production-rag-systems.webp` | /resources/webinars | Card | UI-fragment close-up | Split | #191918 / #FFFFFF / #5E96FE | cover + share |
 | 27 | `resources/webinars/from-monolith-to-microservices.webp` | /resources/webinars | Card | Halftone / grain texture | Left-weighted | #1A69FD / #020615 / #F8F7F4 | cover |
 | 28 | `resources/webinars/ai-copilots-for-sales-teams.webp` | /resources/webinars | Card | Duotone | Right-weighted | #0B2F86 / #FFFFFF / #000000 | cover |
-| 29 | `portfolio/trasys-ai-observability-platform.webp` | /portfolio/trasys-ai | Showcase banner | UI-fragment close-up | Right-weighted | #191918 / #F8F7F4 / #1A69FD | case + share |
-| 30 | `portfolio/trasys-ai-card.webp` | portfolio cards | Card | UI-fragment close-up | Edge-cropped | #000000 / #FFFFFF / #5E96FE | card |
+| 29 | `industries/industries-we-serve.webp` | /industries | Hero | Editorial typographic poster | Typographic | #000000 / #F8F7F4 / #1A69FD | hero + share |
+| 30 | `industries/healthcare-software-development.webp` | /industries/[healthcare] | Hero | Flat geometric shapes | Asymmetric | #FFFFFF / #031432 / #1A69FD | hero + share |
+| 31 | `industries/finance-software-development.webp` | /industries/[finance] | Hero | Line-art / blueprint | Grid | #020615 / #FFFFFF / #5E96FE | hero + share |
+| 32 | `industries/retail-and-ecommerce-software-development.webp` | /industries/[retail-and-ecommerce] | Hero | Duotone | Split | #1A69FD / #F8F7F4 / #031432 | hero + share |
+| 33 | `industries/logistics-software-development.webp` | /industries/[logistics] | Hero | Halftone / grain texture | Diagonal | #F8F7F4 / #191918 / #1A69FD | hero + share |
+| 34 | `industries/education-software-development.webp` | /industries/[education] | Hero | Editorial typographic poster | Edge-cropped | #031432 / #FFFFFF / #5E96FE | hero + share |
+| 35 | `industries/real-estate-software-development.webp` | /industries/[real-estate] | Hero | Isometric diagram | Left-weighted | #F8F7F4 / #031432 / #0C4FCB | hero + share |
+| 36 | `industries/emobility-software-development.webp` | /industries/[emobility] | Hero | UI-fragment close-up | Right-weighted | #000000 / #5E96FE / #FFFFFF | hero + share |
+| 37 | `industries/wearables-app-development.webp` | /industries/[wearables] | Hero | Paper-cut layers | Typographic | #0B2F86 / #5E96FE / #FFFFFF | hero + share |
+| 38 | `industries/energy-software-development.webp` | /industries/[energy] | Hero | Mono-colour with one accent | Asymmetric | #FFFFFF / #191918 / #0C4FCB | hero + share |
+| 39 | `industries/agriculture-software-development.webp` | /industries/[agriculture] | Hero | Flat geometric shapes | Grid | #CECECE / #020615 / #1A69FD | hero + share |
+| 40 | `industries/gaming-software-development.webp` | /industries/[gaming] | Hero | Line-art / blueprint | Split | #020615 / #5E96FE / #F8F7F4 | hero + share |
+| 41 | `industries/ott-and-media-software-development.webp` | /industries/[ott-and-media] | Hero | Duotone | Diagonal | #191918 / #FFFFFF / #1A69FD | hero + share |
+| 42 | `industries/on-demand-app-development.webp` | /industries/[on-demand] | Hero | Halftone / grain texture | Edge-cropped | #5E96FE / #031432 / #FFFFFF | hero + share |
+| 43 | `industries/food-delivery-app-development.webp` | /industries/[food-delivery] | Hero | Editorial typographic poster | Left-weighted | #F8F7F4 / #1A69FD / #020615 | hero + share |
+| 44 | `industries/travel-software-development.webp` | /industries/[travel] | Hero | Isometric diagram | Right-weighted | #0C4FCB / #FFFFFF / #031432 | hero + share |
+| 45 | `industries/aviation-software-development.webp` | /industries/[aviation] | Hero | UI-fragment close-up | Typographic | #FFFFFF / #0C4FCB / #020615 | hero + share |
+| 46 | `industries/telecom-software-development.webp` | /industries/[telecom] | Hero | Paper-cut layers | Asymmetric | #031432 / #CECECE / #1A69FD | hero + share |
+| 47 | `industries/startup-product-development.webp` | /industries/[startups] | Hero | Mono-colour with one accent | Grid | #3E3E3D / #FFFFFF / #5E96FE | hero + share |
+| 48 | `blog/agentic-ai-enterprise-playbook.webp` | /blog | Card | Mono-colour with one accent | Right-weighted | #020615 / #F8F7F4 / #1A69FD | cover + share |
+| 49 | `blog/modernize-legacy-without-downtime.webp` | /blog | Card | Line-art / blueprint | Split | #FFFFFF / #191918 / #1A69FD | cover + share |
+| 50 | `blog/design-systems-that-scale.webp` | /blog | Card | Flat geometric shapes | Grid | #CECECE / #0B2F86 / #1A69FD | cover + share |
+| 51 | `blog/cloud-cost-optimization-guide.webp` | /blog | Card | Halftone / grain texture | Diagonal | #1A69FD / #FFFFFF / #0B2F86 | cover + share |
+| 52 | `blog/app-development-cost-2026.webp` | /blog | Card | Editorial typographic poster | Left-weighted | #F8F7F4 / #020615 / #0C4FCB | cover + share |
+| 53 | `blog/rag-architecture-patterns.webp` | /blog | Card | Isometric diagram | Asymmetric | #191918 / #CECECE / #5E96FE | cover + share |
+| 54 | `blog/devops-observability-consulting.webp` | /blog | Card | UI-fragment close-up | Edge-cropped | #000000 / #CECECE / #5E96FE | cover + share |
+| 55 | `portfolio/trasys-ai-observability-platform.webp` | /portfolio/trasys-ai | Share image | UI-fragment close-up | Right-weighted | #191918 / #F8F7F4 / #1A69FD | case + share |

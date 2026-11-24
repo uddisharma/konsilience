@@ -12,6 +12,8 @@ import Stats from "@/components/sections/Stats";
 import StrategyCta from "@/components/sections/StrategyCta";
 import Testimonials from "@/components/sections/Testimonials";
 import ContactModal from "@/components/ContactModal";
+import { industryList } from "@/lib/catalog";
+import { industryImage } from "@/lib/images";
 
 export default function Home() {
   return (
@@ -27,7 +29,7 @@ export default function Home() {
       <Compliance />
       <StrategyCta />
       <Partners />
-      <Industries />
+      <Industries images={Object.fromEntries(industryList.map((i) => [i.slug, industryImage(i.slug)]))} />
       <Faq />
       <ContactModal />
     </>

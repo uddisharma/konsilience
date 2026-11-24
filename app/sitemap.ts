@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { routeGroups, siteUrl } from "@/lib/routes";
 import { CONTENT_UPDATED } from "@/site.config";
 import { publicPosts } from "@/lib/server/posts";
-import { imagesByPage } from "@/lib/images";
+import { blogCover, imagesByPage } from "@/lib/images";
 
 // Priority hints for crawlers. Google largely ignores them, but they document intent.
 const PRIORITY_HOME = 1.0;
@@ -47,7 +47,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const known = new Set(pages.map((p) => p.url));
   const adminPosts = (await publicPosts("konsilience"))
     .filter((p) => !p.seo.noindex && !p.seo.canonicalUrl)
-    .map((p) => ({ url: `${siteUrl}/blog/${p.slug}`, lastModified: new Date(p.updatedAt), ...rank("/blog/x") }))
+    .map((p) => {
+      const cover = blogCover(p.slug);
+      return { url: `${siteUrl}/blog/${p.slug}`, lastModified: new Date(p.updatedAt), ...rank("/blog/x"), ...(cover ? { images: [`${siteUrl}${cover.src}`] } : {}) };
+    })
     .filter((p) => !known.has(p.url));
   return [...pages, ...adminPosts];
 }

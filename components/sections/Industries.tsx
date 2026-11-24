@@ -3,11 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { industries } from "@/lib/content";
-import { SceneArt } from "../ui/Artwork";
+import type { SiteImage } from "@/lib/images";
 import Button from "../ui/Button";
 import Reveal, { LineReveal } from "../ui/Reveal";
+import SiteImg from "../ui/SiteImg";
 
-export default function Industries() {
+// `images` (industry slug → generated hero) is resolved on the server by the page, keeping the image registry out of the client bundle.
+export default function Industries({ images }: { images: Record<string, SiteImage> }) {
   const [active, setActive] = useState(0);
 
   return (
@@ -28,7 +30,7 @@ export default function Industries() {
                   className="absolute inset-0 transition-all duration-700 ease-out"
                   style={{ opacity: i === active ? 1 : 0, transform: `scale(${i === active ? 1 : 1.08})` }}
                 >
-                  <SceneArt hue={ind.hue} icon={ind.icon} label={`${ind.name} Solutions`} className="size-full" />
+                  <SiteImg img={images[ind.slug]} sizes="(min-width: 1024px) 55vw, 1px" className="size-full object-cover" />
                 </div>
               ))}
             </div>
@@ -51,7 +53,7 @@ export default function Industries() {
         <div className="no-scrollbar -mx-4 flex snap-x gap-3 overflow-x-auto px-4 lg:hidden">
           {industries.map((ind) => (
             <Link key={ind.name} href={`/industries/${ind.slug}`} className="w-[75vw] shrink-0 snap-start sm:w-[45vw]">
-              <SceneArt hue={ind.hue} icon={ind.icon} className="aspect-[4/3] rounded-2xl" />
+              <SiteImg img={images[ind.slug]} sizes="(min-width: 640px) 45vw, 75vw" className="aspect-[4/3] w-full rounded-2xl border border-line object-cover" />
               <p className="subtitle mt-3">{ind.name}</p>
             </Link>
           ))}

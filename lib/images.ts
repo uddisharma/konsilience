@@ -1,4 +1,4 @@
-import { projects, resourceTypes, serviceList, type Project } from "./catalog";
+import { industryList, posts, resourceTypes, serviceList } from "./catalog";
 import { registry, type Entry } from "./image-registry";
 import { siteUrl } from "./routes";
 
@@ -58,12 +58,34 @@ const RESOURCE_IMAGE: Record<string, string> = {
 /** Cover for one resource item (/resources/[type]), by its title in lib/catalog.ts. */
 export const resourceCover = (title: string) => image(RESOURCE_IMAGE[title]);
 
-/** Real-screenshot images exist only for projects listed here; the rest keep their code-drawn art. */
-const PORTFOLIO: Record<string, { cover: string; card: string }> = {
-  "trasys-ai": { cover: "case-trasys-ai", card: "card-trasys-ai" },
+const INDUSTRY_IMAGE: Record<string, string> = {
+  healthcare: "ind-healthcare",
+  finance: "ind-finance",
+  "retail-and-ecommerce": "ind-retail",
+  logistics: "ind-logistics",
+  education: "ind-education",
+  "real-estate": "ind-real-estate",
+  emobility: "ind-emobility",
+  wearables: "ind-wearables",
+  energy: "ind-energy",
+  agriculture: "ind-agriculture",
+  gaming: "ind-gaming",
+  "ott-and-media": "ind-ott-media",
+  "on-demand": "ind-on-demand",
+  "food-delivery": "ind-food-delivery",
+  travel: "ind-travel",
+  aviation: "ind-aviation",
+  telecom: "ind-telecom",
+  startups: "ind-startups",
 };
-export const portfolioCover = (p: Project) => (PORTFOLIO[p.slug] ? image(PORTFOLIO[p.slug].cover) : null);
-export const portfolioCard = (p: Project) => (PORTFOLIO[p.slug] ? image(PORTFOLIO[p.slug].card) : null);
+/** Hero image for an industry page (also its card on /industries). */
+export const industryImage = (slug: string) => image(INDUSTRY_IMAGE[slug]);
+
+/** Generated cover for a blog post, by slug (null for posts without one: they keep an uploaded cover or the code-drawn art). */
+export function blogCover(slug: string): SiteImage | null {
+  const e = registry.find((x) => x.id === `blog-${slug}`);
+  return e ? toImage(e) : null;
+}
 
 /* ---------- Share images (og:image / twitter:image), 1200×630 JPEG ---------- */
 
@@ -92,12 +114,10 @@ export function imagesByPage(): Record<string, SiteImage[]> {
   for (const s of serviceList) pages[`/services/${s.slug}`] = [serviceCategoryImage(s.category)];
   for (const slug of Object.keys(AI_IMAGE)) pages[`/ai-solutions/${slug}`] = [aiSolutionImage(slug)];
   for (const t of resourceTypes) pages[`/resources/${t.slug}`] = t.items.map((it) => resourceCover(it.title));
-  const cards = projects.map(portfolioCard).filter((x): x is SiteImage => Boolean(x));
-  pages["/"] = cards;
-  pages["/portfolio"] = cards;
-  for (const p of projects) {
-    const c = portfolioCover(p);
-    if (c) pages[`/portfolio/${p.slug}`] = [c];
-  }
+  pages["/industries"] = [image("industries-overview"), ...industryList.map((i) => industryImage(i.slug))];
+  for (const i of industryList) pages[`/industries/${i.slug}`] = [industryImage(i.slug)];
+  pages["/"] = industryList.map((i) => industryImage(i.slug)); // home Industries section
+  // built-in posts; admin posts get theirs in app/sitemap.ts
+  pages["/blog"] = posts.map((p) => blogCover(p.slug)).filter((x): x is SiteImage => Boolean(x));
   return pages;
 }

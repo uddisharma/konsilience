@@ -4,18 +4,21 @@ import { CtaBand, SectionHead } from "@/components/page/Blocks";
 import PageHero from "@/components/page/PageHero";
 import ProjectCard from "@/components/page/ProjectCard";
 import Compliance from "@/components/sections/Compliance";
-import { SceneArt } from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
+import SiteImg from "@/components/ui/SiteImg";
 import { industryList, projects } from "@/lib/catalog";
 import { facts } from "@/lib/content";
+import { image, industryImage, ogImage } from "@/lib/images";
 import { siteUrl } from "@/lib/routes";
 
 export const metadata: Metadata = {
   title: "Industries We Serve | Domain-Specific Software Engineering",
   description: "Domain-specific digital solutions for healthcare, finance, retail, logistics, education and 13 more industries.",
   alternates: { canonical: `${siteUrl}/industries` },
+  openGraph: { url: `${siteUrl}/industries`, images: [ogImage("/industries")!] },
+  twitter: { card: "summary_large_image", images: [ogImage("/industries")!.url] },
 };
 
 export default function IndustriesPage() {
@@ -27,6 +30,7 @@ export default function IndustriesPage() {
         title={["Solving Complex", "Challenges Across", <span key="s" className="text-primary">Every Major Sector</span>]}
         text="We've built platforms for support, legal, HR, real estate, healthcare, construction and more, and we bring those lessons to every new domain."
         actions={<Button>Discuss Your Industry</Button>}
+        aside={<SiteImg img={image("industries-overview")} priority className="hidden aspect-[4/3] w-full rounded-3xl border border-line object-cover lg:block" />}
         stats={[[String(facts.industries), "Industries served"], ["35+", "Projects done"], [String(facts.technologies) + "+", "Technologies"], ["AI-first", "Delivery"]]}
       />
 
@@ -36,7 +40,7 @@ export default function IndustriesPage() {
             <Reveal key={ind.slug} delay={(i % 3) * 90}>
               <Link href={`/industries/${ind.slug}`} className="group block overflow-hidden rounded-3xl border border-line bg-card transition-colors hover:border-primary">
                 <div className="overflow-hidden">
-                  <SceneArt hue={ind.hue} icon={ind.icon} className="aspect-[16/10] transition-transform duration-700 group-hover:scale-105" />
+                  <SiteImg img={industryImage(ind.slug)} sizes="(min-width: 1024px) 440px, (min-width: 640px) 50vw, 92vw" className="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 </div>
                 <div className="flex items-start justify-between gap-6 p-7">
                   <div>
