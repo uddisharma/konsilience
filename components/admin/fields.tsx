@@ -121,7 +121,7 @@ export function Button({
   variant = "ghost",
   className = "",
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "primary" | "ghost" | "danger" | "outline" }) {
+}: React.ComponentProps<"button"> & { variant?: "primary" | "ghost" | "danger" | "outline" }) {
   const v = {
     primary: "bg-primary text-white hover:bg-primary-hover",
     ghost: "text-white/70 hover:bg-white/10 hover:text-white",

@@ -170,7 +170,10 @@ export const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 /** Everything a writer can set on a post. */
 export const postInputSchema = z.object({
+  /** The post's home site: its canonical URL, default author and CTA. Derived from `sites` when it is live. */
   site: z.enum(SITES),
+  /** The websites the post is published on. Empty while it is a draft. */
+  sites: z.array(z.enum(SITES)).max(SITES.length).default([]),
   title: text(300).min(1),
   slug: z.string().max(160).regex(SLUG_RE, "Use lowercase letters, numbers and hyphens"),
   excerpt: text(600).default(""),

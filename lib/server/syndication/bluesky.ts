@@ -26,39 +26,52 @@ async function xrpc(nsid: string, token: string | undefined, body: unknown): Pro
   return data;
 }
 
-export async function publishToBluesky(p: Payload): Promise<{ url: string; remoteId: string }> {
+async function login(): Promise<{ accessJwt: string; did: string }> {
   const session = await xrpc("com.atproto.server.createSession", undefined, {
     identifier: env("BLUESKY_IDENTIFIER"),
     password: env("BLUESKY_APP_PASSWORD"),
   });
-  const { accessJwt, did } = session as { accessJwt: string; did: string };
+  return session as { accessJwt: string; did: string };
+}
 
-  // The link goes last and is never cut; the title and excerpt fill the rest of the 300 characters.
+/** Deletes the post. remoteId is its AT URI: at://<did>/app.bsky.feed.post/<rkey>. Deleting twice is harmless. */
+export async function unpublishFromBluesky(remoteId: string): Promise<void> {
+  const [, , repo, collection, rkey] = remoteId.split("/");
+  if (!repo || !collection || !rkey) throw new Error("Bluesky: the saved post address is not valid");
+  const { accessJwt } = await login();
+  await xrpc("com.atproto.repo.deleteRecord", accessJwt, { repo, collection, rkey });
+}
+
+export async function publishToBluesky(p: Payload): Promise<{ url: string; remoteId: string }> {
+  const { accessJwt, did } = await login();
+
   const headline = p.excerpt ? `${p.title}${PARAGRAPH_BREAK}${p.excerpt}` : p.title;
-  const tail = `${PARAGRAPH_BREAK}${p.canonicalUrl}`;
-  const head = truncate(headline, MAX_TEXT - Array.from(tail).length);
-  const text = `${head}${tail}`;
-  const linkStart = Buffer.byteLength(`${head}${PARAGRAPH_BREAK}`, "utf8");
+  const link = p.canonicalUrl;
 
-  const record = {
-    $type: "app.bsky.feed.post",
-    text,
-    createdAt: new Date().toISOString(),
-    facets: [
-      {
-        index: { byteStart: linkStart, byteEnd: linkStart + Buffer.byteLength(p.canonicalUrl, "utf8") },
-        features: [{ $type: "app.bsky.richtext.facet#link", uri: p.canonicalUrl }],
-      },
-    ],
-    embed: {
-      $type: "app.bsky.embed.external",
-      external: {
-        uri: p.canonicalUrl,
-        title: truncate(p.title, MAX_CARD_TITLE),
-        description: truncate(p.excerpt, MAX_CARD_DESCRIPTION),
-      },
-    },
-  };
+  // Not live on the website: a text-only post, with nothing to link to.
+  const record = !link
+    ? { $type: "app.bsky.feed.post", text: truncate(headline, MAX_TEXT), createdAt: new Date().toISOString() }
+    : (() => {
+        // The link goes last and is never cut; the title and excerpt fill the rest of the 300 characters.
+        const tail = `${PARAGRAPH_BREAK}${link}`;
+        const head = truncate(headline, MAX_TEXT - Array.from(tail).length);
+        const linkStart = Buffer.byteLength(`${head}${PARAGRAPH_BREAK}`, "utf8");
+        return {
+          $type: "app.bsky.feed.post",
+          text: `${head}${tail}`,
+          createdAt: new Date().toISOString(),
+          facets: [
+            {
+              index: { byteStart: linkStart, byteEnd: linkStart + Buffer.byteLength(link, "utf8") },
+              features: [{ $type: "app.bsky.richtext.facet#link", uri: link }],
+            },
+          ],
+          embed: {
+            $type: "app.bsky.embed.external",
+            external: { uri: link, title: truncate(p.title, MAX_CARD_TITLE), description: truncate(p.excerpt, MAX_CARD_DESCRIPTION) },
+          },
+        };
+      })();
 
   const created = await xrpc("com.atproto.repo.createRecord", accessJwt, {
     repo: did,

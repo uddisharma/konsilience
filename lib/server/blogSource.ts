@@ -41,6 +41,7 @@ function staticToRecord(p: (typeof staticPosts)[number]): PostRecord {
   return {
     id: `static:${p.slug}`,
     site: "konsilience",
+    sites: ["konsilience"],
     slug: p.slug,
     title: p.title,
     excerpt: p.excerpt,

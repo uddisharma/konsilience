@@ -1,12 +1,12 @@
 import "server-only";
 import type { PostRecord } from "@/lib/blog/schema";
 import { buildPayload, type Payload } from "./content";
-import { publishToBluesky } from "./bluesky";
-import { publishToDevto } from "./devto";
-import { publishToHashnode } from "./hashnode";
+import { publishToBluesky, unpublishFromBluesky } from "./bluesky";
+import { publishToDevto, unpublishFromDevto } from "./devto";
+import { publishToHashnode, unpublishFromHashnode } from "./hashnode";
 import { PLATFORM_ENV, PLATFORM_LABELS, PLATFORMS, type Platform } from "./platforms";
-import { publishToTumblr } from "./tumblr";
-import { saveSyndication, type SyndicationRecord } from "./store";
+import { publishToTumblr, unpublishFromTumblr } from "./tumblr";
+import { removeSyndication, saveSyndication, type SyndicationRecord } from "./store";
 
 export { PLATFORM_LABELS, PLATFORMS, type Platform } from "./platforms";
 
@@ -33,6 +33,29 @@ const PUBLISHERS: Record<Platform, Publisher> = {
   tumblr: publishToTumblr,
 };
 
+const UNPUBLISHERS: Record<Platform, (remoteId: string) => Promise<void>> = {
+  devto: unpublishFromDevto,
+  hashnode: unpublishFromHashnode,
+  bluesky: unpublishFromBluesky,
+  tumblr: unpublishFromTumblr,
+};
+
+/**
+ * Takes a cross-post down (dev.to: unpublished, since its API cannot delete; the others: deleted), then
+ * forgets it so the post can be cross-posted again.
+ */
+export async function unsyndicatePost(postId: string, platform: Platform, existing: SyndicationRecord[]): Promise<void> {
+  const record = existing.find((r) => r.platform === platform);
+  if (!record) return;
+  if (record.status === "posted") {
+    const missing = missingEnv(platform);
+    if (missing.length) throw new Error(`${PLATFORM_LABELS[platform]} is not configured: ${missing.join(", ")}`);
+    if (!record.remoteId) throw new Error(`No ${PLATFORM_LABELS[platform]} post id was saved. Remove it on ${PLATFORM_LABELS[platform]} by hand.`);
+    await UNPUBLISHERS[platform](record.remoteId);
+  }
+  await removeSyndication(postId, platform);
+}
+
 /** Names of the environment variables a platform is still missing. Empty when it is configured. */
 export function missingEnv(platform: Platform): string[] {
   return PLATFORM_ENV[platform].filter((name) => !process.env[name]?.trim());
@@ -47,13 +70,13 @@ export function platformStatus() {
   }));
 }
 
-/** Whether a post may be cross-posted now. The canonical link must work, so the post has to be live. */
+/**
+ * Whether a post may be cross-posted now. It does not have to be on the website: a post that is not
+ * live there is cross-posted without the "originally published" link and canonical URL.
+ */
 export function eligibility(post: PostRecord): { ok: boolean; reason?: string } {
-  if (post.site !== "konsilience") return { ok: false, reason: "Cross-posting is set up for Konsilience posts only." };
-  if (post.status !== "published") return { ok: false, reason: "Publish the post on the site first." };
-  if (post.publishedAt && new Date(post.publishedAt) > new Date()) {
-    return { ok: false, reason: "This post is scheduled. Cross-post it once it is live." };
-  }
+  if (!post.title.trim()) return { ok: false, reason: "Give the post a title first." };
+  if (post.blocks.length === 0) return { ok: false, reason: "Write the post before sharing it." };
   return { ok: true };
 }
 

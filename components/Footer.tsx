@@ -3,9 +3,10 @@ import { brand, facts, footer } from "@/lib/content";
 import { Logo } from "./Header";
 import { OfficeDetails, OfficeMap } from "./Office";
 import Icon from "./ui/Icon";
-import { registeredOfficeLine, siteConfig, socialProfiles, whatsappUrl } from "@/site.config";
+import { directoryProfiles, registeredOfficeLine, siteConfig, socialProfiles, whatsappUrl } from "@/site.config";
 import CookieSettingsLink from "./consent/CookieSettingsLink";
 import WhatsAppIcon from "./ui/WhatsAppIcon";
+import BrandIcon from "./ui/BrandIcon";
 
 export default function Footer() {
   return (
@@ -16,9 +17,9 @@ export default function Footer() {
             <Logo />
             <p className="fs-base font-medium text-white">{brand.tagline}</p>
             <div className="flex flex-wrap gap-3">
-              {["AI-First Studio", "Startup Friendly", "NDA on Request"].map((b) => (
+              {[["AI-First Studio", "agent"], ["Startup Friendly", "rocket"], ["NDA on Request", "lock"]].map(([b, icon]) => (
                 <span key={b} className="flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-xs font-semibold">
-                  <Icon name="spark" className="size-4 text-primary" /> {b}
+                  <Icon name={icon} className="size-4 text-primary" /> {b}
                 </span>
               ))}
             </div>
@@ -68,10 +69,10 @@ export default function Footer() {
                 <WhatsAppIcon className="size-4" /> <span className="u-link">WhatsApp</span>
               </a>
             )}
-            <div className="mt-6 flex gap-2">
-              {socialProfiles.map((s) => (
-                <a key={s.label} target="_blank" rel="noopener noreferrer" href={s.url} aria-label={`${brand.name} on ${s.label}`} className="grid size-10 place-items-center rounded-full border border-line text-sm font-bold transition-all hover:-translate-y-1 hover:border-primary hover:bg-primary">
-                  {s.short}
+            <div className="mt-6 flex flex-wrap gap-2">
+              {[...socialProfiles, ...directoryProfiles].map((s) => (
+                <a key={s.label} target="_blank" rel="noopener noreferrer" href={s.url} aria-label={`${brand.name} on ${s.label}`} className="grid size-10 place-items-center rounded-full border border-line text-white/85 transition-all hover:-translate-y-1 hover:border-primary hover:bg-primary hover:text-white">
+                  <BrandIcon name={s.icon} className="size-4" />
                 </a>
               ))}
             </div>

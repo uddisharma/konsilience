@@ -1,10 +1,10 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import BlogCard, { artFor, formatDate, type CardPost } from "@/components/page/BlogCard";
+import BlogCard, { formatDate, type CardPost } from "@/components/page/BlogCard";
 import { CtaBand, SectionHead } from "@/components/page/Blocks";
 import Newsletter from "@/components/page/Newsletter";
-import { SceneArt } from "@/components/ui/Artwork";
 import Icon from "@/components/ui/Icon";
+import BrandIcon from "@/components/ui/BrandIcon";
 import Reveal from "@/components/ui/Reveal";
 import type { PostRecord } from "@/lib/blog/schema";
 import { postUrl, siteConfigs } from "@/lib/blog/sites";
@@ -23,15 +23,15 @@ export default function BlogArticle({ post, related = [] }: { post: PostRecord; 
   const cfg = siteConfigs[post.site];
   const blocks = withAnchors(post.blocks);
   const toc = d.showToc ? tableOfContents(blocks) : [];
-  const art = artFor({ category: post.category, artHue: d.artHue, artIcon: d.artIcon });
   const date = post.publishedAt ?? post.updatedAt;
   const read = post.readTime || readingTime(post.blocks);
   const share = encodeURIComponent(postUrl(post.site, post.slug));
   const accent = hexToRgbTriplet(d.accentColor);
   const style = accent ? ({ "--brand-rgb": accent } as CSSProperties) : undefined;
   const centered = d.layout === "centered";
-  const hasImage = !!d.coverImage && (d.hero === "image" || d.hero === "split");
-  const hero = hasImage ? d.hero : d.hero === "minimal" ? "minimal" : "art";
+  // The hero shows the cover image only when there is one; without it, just the title. ("art", the old
+  // default, means "show the cover image" now. The generated artwork stays on blog cards only.)
+  const hero = !d.coverImage ? "minimal" : d.hero === "split" ? "split" : d.hero === "minimal" ? "minimal" : "image";
   const band = d.ctaBand;
   const cta = band.enabled
     ? { title: band.title || cfg.defaultCta.title, text: band.text || cfg.defaultCta.text, label: band.label || cfg.defaultCta.label, href: band.href || cfg.defaultCta.href }
@@ -81,13 +81,13 @@ export default function BlogArticle({ post, related = [] }: { post: PostRecord; 
     <div>
       <p className="mb-3 text-xs font-semibold tracking-[.2em] text-muted uppercase">Share</p>
       <div className="flex gap-2">
-        {[
-          ["in", `https://www.linkedin.com/sharing/share-offsite/?url=${share}`],
-          ["X", `https://twitter.com/intent/tweet?url=${share}`],
-          ["f", `https://www.facebook.com/sharer/sharer.php?u=${share}`],
-        ].map(([l, href]) => (
-          <a key={l} href={href} target="_blank" rel="noopener noreferrer" className="grid size-10 place-items-center rounded-full border border-line text-sm font-bold transition-colors hover:border-primary hover:bg-primary">
-            {l}
+        {([
+          ["linkedin", "LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${share}`],
+          ["x", "X", `https://twitter.com/intent/tweet?url=${share}`],
+          ["facebook", "Facebook", `https://www.facebook.com/sharer/sharer.php?u=${share}`],
+        ] as const).map(([icon, label, href]) => (
+          <a key={icon} href={href} target="_blank" rel="noopener noreferrer" aria-label={`Share on ${label}`} className="grid size-10 place-items-center rounded-full border border-line text-white/85 transition-colors hover:border-primary hover:bg-primary hover:text-white">
+            <BrandIcon name={icon} className="size-4" />
           </a>
         ))}
       </div>
@@ -128,13 +128,9 @@ export default function BlogArticle({ post, related = [] }: { post: PostRecord; 
               <h1 className="anim-hero h2 mt-8" style={{ animationDelay: "120ms" }}>{post.title}</h1>
               {meta}
             </div>
-            {hero !== "minimal" && (
+            {hero === "image" && (
               <Reveal variant="zoom" className="wrap mt-14">
-                {hero === "image" ? (
-                  <Cover url={d.coverImage!} alt={d.coverAlt} className="aspect-[21/9] rounded-3xl" />
-                ) : (
-                  <SceneArt hue={art.hue} icon={art.icon} label={post.category} className="aspect-[21/9] rounded-3xl" />
-                )}
+                <Cover url={d.coverImage!} alt={d.coverAlt} className="aspect-[21/9] rounded-3xl" />
               </Reveal>
             )}
           </>

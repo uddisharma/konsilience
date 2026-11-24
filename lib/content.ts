@@ -152,13 +152,13 @@ export const nav: NavItem[] = [
 
 // Capability chips in the hero marquee.
 export const heroTags = [
-  ["AI AGENTS", "RAG · Copilots · Automation"],
-  ["SAAS", "Multi-tenant platforms"],
-  ["MOBILE", "iOS · Android · Flutter"],
-  ["WEB", "Next.js · React · Node"],
-  ["CLOUD", "AWS · Azure · GCP"],
-  ["MVP", "Idea to launch in weeks"],
-  ["DESIGN", "UX · UI · Prototypes"],
+  ["AI AGENTS", "RAG · Copilots · Automation", "agent"],
+  ["SAAS", "Multi-tenant platforms", "layers"],
+  ["MOBILE", "iOS · Android · Flutter", "mobile"],
+  ["WEB", "Next.js · React · Node", "code"],
+  ["CLOUD", "AWS · Azure · GCP", "cloud"],
+  ["MVP", "Idea to launch in weeks", "rocket"],
+  ["DESIGN", "UX · UI · Prototypes", "pen"],
 ];
 
 export const services = [

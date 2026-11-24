@@ -103,14 +103,14 @@ export const siteConfig = {
     // Only filled values are shown in the footer and used in schema `sameAs`.
     linkedin: "https://www.linkedin.com/company/konsilience", // {{LINKEDIN_URL}} (live)
     instagram: "https://www.instagram.com/konsilience",
-    youtube: "{{YOUTUBE_URL}}",
+    youtube: "https://www.youtube.com/@konsilience",
     x: "{{X_URL}}", // the @handle for twitter:creator is taken from this URL
     github: "http://github.com/trasys",
   },
 
   directories: {
     clutch: "{{CLUTCH_URL}}",
-    goodfirms: "{{GOODFIRMS_URL}}",
+    goodfirms: "https://www.goodfirms.co/company/konsilience-private-limited",
     techbehemoths: "{{TECHBEHEMOTHS_URL}}", // optional
     googleBusiness: "{{GOOGLE_BUSINESS_URL}}",
     googleReview: "{{GOOGLE_REVIEW_URL}}", // not shown on the site; for emails and thank-you page
@@ -134,15 +134,27 @@ export const siteConfig = {
 /** Profile URLs that are actually filled in, for footer icons. */
 export const socialProfiles = (
   [
-    ["LinkedIn", "in", siteConfig.social.linkedin],
-    ["X", "X", siteConfig.social.x],
-    ["Instagram", "ig", siteConfig.social.instagram],
-    ["YouTube", "▶", siteConfig.social.youtube],
-    ["GitHub", "gh", siteConfig.social.github],
+    ["LinkedIn", "linkedin", siteConfig.social.linkedin],
+    ["X", "x", siteConfig.social.x],
+    ["Instagram", "instagram", siteConfig.social.instagram],
+    ["YouTube", "youtube", siteConfig.social.youtube],
+    ["GitHub", "github", siteConfig.social.github],
   ] as const
 )
   .filter(([, , url]) => isSet(url))
-  .map(([label, short, url]) => ({ label, short, url: url as string }));
+  .map(([label, icon, url]) => ({ label, icon, url: url as string }));
+
+/** Review and business directory profiles shown as icons in the footer (only filled ones). */
+export const directoryProfiles = (
+  [
+    ["GoodFirms", "goodfirms", siteConfig.directories.goodfirms],
+    ["Clutch", "clutch", siteConfig.directories.clutch],
+    ["Google Business", "google", siteConfig.directories.googleBusiness],
+    ["Crunchbase", "crunchbase", siteConfig.directories.crunchbase],
+  ] as const
+)
+  .filter(([, , url]) => isSet(url))
+  .map(([label, icon, url]) => ({ label, icon, url: url as string }));
 
 /** Organization schema `sameAs`: every filled social and directory profile. */
 export const sameAs = [

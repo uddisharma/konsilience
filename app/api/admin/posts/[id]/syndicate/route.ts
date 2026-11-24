@@ -3,7 +3,7 @@ import { z } from "zod";
 import { requireAdmin } from "@/lib/server/auth";
 import { HttpError, readJson, route } from "@/lib/server/http";
 import { getPost } from "@/lib/server/posts";
-import { eligibility, PLATFORMS, platformStatus, syndicatePost } from "@/lib/server/syndication";
+import { eligibility, PLATFORMS, platformStatus, syndicatePost, unsyndicatePost } from "@/lib/server/syndication";
 import { listSyndications } from "@/lib/server/syndication/store";
 
 // Up to four platforms run in parallel; each has a request timeout of 20 seconds.
@@ -41,4 +41,14 @@ export const POST = route(async (req: Request, ctx: Ctx) => {
   const existing = await listSyndications(id);
   const results = await syndicatePost(post, [...new Set(platforms)], admin.name, force ?? false, existing);
   return NextResponse.json({ results });
+});
+
+/** Takes the post down from one platform: DELETE /api/admin/posts/<id>/syndicate?platform=devto */
+export const DELETE = route(async (req: Request, ctx: Ctx) => {
+  await requireAdmin(req);
+  const id = (await ctx.params).id;
+  const platform = z.enum(PLATFORMS).safeParse(new URL(req.url).searchParams.get("platform"));
+  if (!platform.success) throw new HttpError(HTTP_BAD_REQUEST, `Pass ?platform= one of ${PLATFORMS.join(", ")}`);
+  await unsyndicatePost(id, platform.data, await listSyndications(id));
+  return NextResponse.json({ ok: true, records: await listSyndications(id) });
 });

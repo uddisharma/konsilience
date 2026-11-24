@@ -1,6 +1,6 @@
 import "server-only";
 import { MongoServerError, ObjectId, type Filter, type WithId } from "mongodb";
-import { postInputSchema, postPatchSchema, type PostInput, type PostRecord, type PostStatus, type Site } from "@/lib/blog/schema";
+import { postInputSchema, postPatchSchema, SITES, type PostInput, type PostRecord, type PostStatus, type Site } from "@/lib/blog/schema";
 import { siteConfigs } from "@/lib/blog/sites";
 import { readingTime, slugify } from "@/lib/blog/utils";
 import { getDb, isDbConfigured } from "./db";
@@ -20,10 +20,17 @@ export type Actor = { id: string; name: string; source: "admin" | "mcp" };
 
 const col = async () => (await getDb()).collection<PostDoc>("posts");
 
+/** Posts saved before `sites` existed were live on their one `site` when published. */
+const sitesOf = (d: Pick<PostDoc, "site" | "status"> & { sites?: Site[] }): Site[] => d.sites ?? (d.status === "published" ? [d.site] : []);
+
+/** Matches posts live (or, for old posts, homed) on a site, whether saved before or after `sites` existed. */
+const onSite = (site: Site): Filter<PostDoc> => ({ $or: [{ sites: site }, { sites: { $exists: false }, site }] });
+
 function serialize(d: WithId<PostDoc>): PostRecord {
   const { _id, publishedAt, createdAt, updatedAt, ...rest } = d;
   return {
     ...rest,
+    sites: sitesOf(d),
     id: _id.toHexString(),
     publishedAt: publishedAt ? publishedAt.toISOString() : null,
     createdAt: createdAt.toISOString(),
@@ -43,10 +50,22 @@ function toDate(v: string | null | undefined): Date | null {
   return d;
 }
 
+/**
+ * Keeps `status` and `sites` consistent: only a published post is live anywhere, and publishing with no
+ * site chosen publishes on the home site. The home site follows the live sites, Konsilience first.
+ */
+function placement(input: PostInput): Pick<PostInput, "site" | "sites" | "status"> {
+  if (input.status !== "published") return { site: input.site, sites: [], status: input.status };
+  // SITES lists Konsilience first, so it becomes the home site whenever the post is live there.
+  const sites = SITES.filter((s) => input.sites.includes(s));
+  if (sites.length === 0) sites.push(input.site);
+  return { site: sites[0], sites, status: "published" };
+}
+
 /** Fills in what the writer left out: slug, author, closing CTA, and a publish date when publishing. */
 function normalize(input: PostInput, prev?: PostDoc): Omit<PostDoc, "createdAt" | "updatedAt"> {
-  const cfg = siteConfigs[input.site];
-  const out = { ...input };
+  const out = { ...input, ...placement(input) };
+  const cfg = siteConfigs[out.site];
   out.slug = input.slug || slugify(input.title);
   if (!out.author.name) out.author = { ...out.author, name: cfg.defaultAuthor.name, role: out.author.role || cfg.defaultAuthor.role };
   let publishedAt = toDate(input.publishedAt);
@@ -54,11 +73,19 @@ function normalize(input: PostInput, prev?: PostDoc): Omit<PostDoc, "createdAt" 
   return { ...out, publishedAt, computedReadTime: readingTime(out.blocks) };
 }
 
+const SLUG_TAKEN = "Another post already uses this slug";
+
+/** A post can be live on both sites, so slugs are unique across all posts, not per site. */
+async function assertSlugFree(slug: string, exceptId?: ObjectId) {
+  const other = await (await col()).findOne({ slug, ...(exceptId ? { _id: { $ne: exceptId } } : {}) }, { projection: { _id: 1 } });
+  if (other) throw new HttpError(409, SLUG_TAKEN);
+}
+
 async function write<T>(fn: () => Promise<T>): Promise<T> {
   try {
     return await fn();
   } catch (err) {
-    if (err instanceof MongoServerError && err.code === 11000) throw new HttpError(409, "A post with this slug already exists on this site");
+    if (err instanceof MongoServerError && err.code === 11000) throw new HttpError(409, SLUG_TAKEN);
     throw err;
   }
 }
@@ -66,13 +93,14 @@ async function write<T>(fn: () => Promise<T>): Promise<T> {
 export type ListQuery = { site?: Site; status?: PostStatus; q?: string; limit?: number; skip?: number };
 
 export async function listPosts({ site, status, q, limit = 50, skip = 0 }: ListQuery = {}) {
-  const filter: Filter<PostDoc> = {};
-  if (site) filter.site = site;
-  if (status) filter.status = status;
+  const and: Filter<PostDoc>[] = [];
+  if (site) and.push(onSite(site));
+  if (status) and.push({ status });
   if (q) {
     const rx = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
-    filter.$or = [{ title: rx }, { slug: rx }, { excerpt: rx }, { tags: rx }];
+    and.push({ $or: [{ title: rx }, { slug: rx }, { excerpt: rx }, { tags: rx }] });
   }
+  const filter: Filter<PostDoc> = and.length ? { $and: and } : {};
   const c = await col();
   const [docs, total] = await Promise.all([
     c
@@ -93,7 +121,7 @@ export async function getPost(id: string) {
 }
 
 export async function findPostBySlug(site: Site, slug: string) {
-  const d = await (await col()).findOne({ site, slug });
+  const d = await (await col()).findOne({ slug, $or: [{ site }, { sites: site }] });
   return d ? serialize(d) : null;
 }
 
@@ -102,6 +130,7 @@ export async function createPost(raw: unknown, actor: Actor) {
   const input = postInputSchema.parse({ ...r, slug: r?.slug || slugify(String(r?.title ?? "")) });
   const now = new Date();
   const doc: PostDoc = { ...normalize(input), createdAt: now, updatedAt: now, createdBy: actor.name, updatedBy: actor.name, source: actor.source };
+  await assertSlugFree(doc.slug);
   const res = await write(async () => (await col()).insertOne(doc as PostDoc & { _id?: ObjectId }));
   return serialize({ ...doc, _id: res.insertedId });
 }
@@ -128,6 +157,7 @@ export async function updatePost(id: string, raw: unknown, actor: Actor) {
     seo: { ...prev.seo, ...(isObj(raw.seo) ? raw.seo : {}) },
   });
   const next = { ...normalize(merged, prev), updatedAt: new Date(), updatedBy: actor.name };
+  if (next.slug !== prev.slug) await assertSlugFree(next.slug, prev._id);
   await write(() => c.updateOne({ _id: prev._id }, { $set: next }));
   return { before: serialize(prev), after: serialize({ ...prev, ...next }) };
 }
@@ -141,7 +171,7 @@ export async function deletePost(id: string) {
 
 /* ---------- Public reads (published and due) ---------- */
 
-const publicFilter = (site: Site): Filter<PostDoc> => ({ site, status: "published", publishedAt: { $lte: new Date() } });
+const publicFilter = (site: Site): Filter<PostDoc> => ({ ...onSite(site), status: "published", publishedAt: { $lte: new Date() } });
 
 /** Never throws: the public blog still renders (with the built-in posts) if the database is down. */
 export async function publicPosts(site: Site, opts: { limit?: number; category?: string } = {}): Promise<PostRecord[]> {

@@ -46,6 +46,7 @@ function describe(p: PostRecord, adminBase: string) {
   return {
     id: p.id,
     site: p.site,
+    liveOn: p.sites,
     title: p.title,
     slug: p.slug,
     status: dueLater ? "scheduled" : p.status,
@@ -189,6 +190,7 @@ export function buildMcpServer({ actor, adminBase }: { actor: Actor; adminBase: 
         site,
         ...contentFields,
         publish: z.boolean().optional().describe("Publish immediately. Only when the user explicitly asked."),
+        sites: z.array(z.enum(SITES)).optional().describe('With publish: the websites to publish on. Default: just "site". Use ["konsilience","trasys"] for both.'),
         publishedAt: z.string().optional().describe("ISO date-time. With publish=true and a future date, the post goes live then."),
       },
     },
@@ -208,6 +210,7 @@ export function buildMcpServer({ actor, adminBase }: { actor: Actor; adminBase: 
             seo: args.seo ?? {},
             design: { ctaBand: { enabled: true, ...cfg.defaultCta }, ...args.design },
             status: args.publish ? "published" : "draft",
+            sites: args.publish ? (args.sites?.length ? args.sites : [args.site]) : [],
             publishedAt: args.publishedAt ?? null,
           },
           actor,
@@ -252,12 +255,18 @@ export function buildMcpServer({ actor, adminBase }: { actor: Actor; adminBase: 
     "set_post_status",
     {
       title: "Publish, unpublish or archive",
-      description: 'Changes a post\'s status. "published" makes it live (or scheduled, with a future publishedAt); "draft" takes it offline; "archived" hides it and keeps it.',
-      inputSchema: { id: z.string(), status: z.enum(POST_STATUSES), publishedAt: z.string().optional().describe("ISO date-time for scheduling") },
+      description:
+        'Changes where a post is live. "published" makes it live on the given sites (default: the sites it is already on, or its home site), or scheduled with a future publishedAt; "draft" takes it off every site; "archived" hides it and keeps it.',
+      inputSchema: {
+        id: z.string(),
+        status: z.enum(POST_STATUSES),
+        sites: z.array(z.enum(SITES)).optional().describe('With "published": exactly the websites to be live on, e.g. ["konsilience","trasys"].'),
+        publishedAt: z.string().optional().describe("ISO date-time for scheduling"),
+      },
     },
-    async ({ id, status, publishedAt }) => {
+    async ({ id, status, sites, publishedAt }) => {
       try {
-        const { before, after } = await updatePost(id, { status, ...(publishedAt ? { publishedAt } : {}) }, actor);
+        const { before, after } = await updatePost(id, { status, ...(sites?.length ? { sites } : {}), ...(publishedAt ? { publishedAt } : {}) }, actor);
         revalidatePosts(before, after);
         return text({ updated: describe(after, adminBase) });
       } catch (e) {

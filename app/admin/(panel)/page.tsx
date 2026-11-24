@@ -7,12 +7,9 @@ export default function AdminPostsPage() {
     <>
       <PageTitle
         title="Posts"
-        text="Every post for konsilience.tech and trasys.dev."
+        text="Every post. Publish each one to Konsilience, Trasys and the cross-posting platforms from the editor."
         actions={
-          <div className="flex gap-2">
-            <Link href="/admin/posts/new?site=konsilience" className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover">New Konsilience post</Link>
-            <Link href="/admin/posts/new?site=trasys" className="rounded-lg border border-line px-4 py-2 text-sm font-semibold hover:border-white/40">New Trasys post</Link>
-          </div>
+          <Link href="/admin/posts/new" className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover">New post</Link>
         }
       />
       <PostsTable />

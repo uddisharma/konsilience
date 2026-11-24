@@ -26,7 +26,8 @@ const encodeRfc3986 = (s: string): string =>
 
 type Creds = { consumerKey: string; consumerSecret: string; token: string; tokenSecret: string };
 
-function oauthHeader(method: string, url: string, c: Creds): string {
+/** `formParams`: fields of a form-encoded body. OAuth 1.0a signs them too (a JSON body is not signed). */
+function oauthHeader(method: string, url: string, c: Creds, formParams: Record<string, string> = {}): string {
   const params: Record<string, string> = {
     oauth_consumer_key: c.consumerKey,
     oauth_nonce: randomBytes(NONCE_BYTES).toString("hex"),
@@ -35,9 +36,10 @@ function oauthHeader(method: string, url: string, c: Creds): string {
     oauth_token: c.token,
     oauth_version: "1.0",
   };
-  const paramString = Object.keys(params)
+  const toSign: Record<string, string> = { ...formParams, ...params };
+  const paramString = Object.keys(toSign)
     .sort()
-    .map((k) => `${encodeRfc3986(k)}=${encodeRfc3986(params[k])}`)
+    .map((k) => `${encodeRfc3986(k)}=${encodeRfc3986(toSign[k])}`)
     .join("&");
   // The body is JSON, so it is not part of the signature base string.
   const base = [method.toUpperCase(), encodeRfc3986(url), encodeRfc3986(paramString)].join("&");
@@ -61,14 +63,33 @@ function npfContent(p: Payload) {
   return [title, ...excerpt, ...body];
 }
 
+const credentials = (): Creds => ({
+  consumerKey: env("TUMBLR_CONSUMER_KEY"),
+  consumerSecret: env("TUMBLR_CONSUMER_SECRET"),
+  token: env("TUMBLR_OAUTH_TOKEN"),
+  tokenSecret: env("TUMBLR_OAUTH_TOKEN_SECRET"),
+});
+
+const HTTP_NOT_FOUND = 404;
+
+/** Deletes the post from the blog (POST /post/delete with the post id). A post already gone counts as removed. */
+export async function unpublishFromTumblr(remoteId: string): Promise<void> {
+  const url = `${ENDPOINT}/${env("TUMBLR_BLOG")}/post/delete`;
+  const form = { id: remoteId };
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { Authorization: oauthHeader("POST", url, credentials(), form), "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(form).toString(),
+    signal: requestSignal(),
+  });
+  if (res.ok || res.status === HTTP_NOT_FOUND) return;
+  const data = await parseBody(res);
+  throw new Error(`Tumblr: ${(data.meta as { msg?: string } | undefined)?.msg ?? `HTTP ${res.status}`}`);
+}
+
 export async function publishToTumblr(p: Payload): Promise<{ url: string; remoteId: string }> {
   const blog = env("TUMBLR_BLOG");
-  const creds: Creds = {
-    consumerKey: env("TUMBLR_CONSUMER_KEY"),
-    consumerSecret: env("TUMBLR_CONSUMER_SECRET"),
-    token: env("TUMBLR_OAUTH_TOKEN"),
-    tokenSecret: env("TUMBLR_OAUTH_TOKEN_SECRET"),
-  };
+  const creds = credentials();
   const url = `${ENDPOINT}/${blog}/posts`;
   const res = await fetch(url, {
     method: "POST",

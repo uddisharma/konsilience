@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { blocksToMarkdown, markdownToBlocks } from "@/lib/blog/markdown";
 import type { Draft } from "@/lib/blog/draft";
-import { SITES, type Design, type PostRecord, type Seo, type Site } from "@/lib/blog/schema";
+import { SITES, type Design, type PostRecord, type Seo } from "@/lib/blog/schema";
 import { postUrl, siteConfigs } from "@/lib/blog/sites";
 import { autoExcerpt, readingTime, slugify, wordCount } from "@/lib/blog/utils";
 import { api, fmtDate } from "./api";
@@ -124,7 +124,9 @@ export default function PostEditor({ initial }: { initial: PostRecord | Draft })
   };
 
   const stats = useMemo(() => ({ words: wordCount(post.blocks), read: readingTime(post.blocks) }), [post.blocks]);
-  const scheduled = post.status === "published" && post.publishedAt && new Date(post.publishedAt) > new Date();
+  const liveOn = post.status === "published" ? post.sites : [];
+  const scheduled = liveOn.length > 0 && post.publishedAt && new Date(post.publishedAt) > new Date();
+  // The canonical address: Konsilience when the post is (or will be) there, otherwise its home site.
   const liveUrl = post.slug ? postUrl(post.site, post.slug) : "";
   const metaTitle = post.seo.metaTitle || `${post.title} | ${cfg.name} Insights`;
   const metaDesc = post.seo.metaDescription || post.excerpt || autoExcerpt(post.blocks);
@@ -138,21 +140,15 @@ export default function PostEditor({ initial }: { initial: PostRecord | Draft })
         <span className={`ml-2 rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase ${scheduled ? SCHEDULED_STYLE : STATUS_STYLE[post.status]}`}>
           {scheduled ? "Scheduled" : post.status}
         </span>
-        <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-semibold text-white/70">{cfg.name}</span>
+        {liveOn.map((s) => (
+          <span key={s} className="rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-semibold text-white/70">{siteConfigs[s].name}</span>
+        ))}
         <span className="text-xs text-muted">{saveNote(dirty, post.updatedAt)}</span>
         <div className="ml-auto flex flex-wrap gap-2">
           {post.id && <Button variant="danger" onClick={remove}>Delete</Button>}
           <Button variant="outline" onClick={preview} disabled={busy || !post.title}>Preview</Button>
-          {post.status === "published" && liveUrl && !dirty && (
-            <a href={post.site === "konsilience" ? `/blog/${post.slug}` : liveUrl} target="_blank" rel="noreferrer" className="inline-flex items-center rounded-lg border border-line px-3.5 py-2 text-sm font-semibold text-white/85 hover:border-white/40">
-              View live ↗
-            </a>
-          )}
           <Button variant="outline" onClick={() => save()} disabled={busy || !post.title}>{busy ? "Saving…" : "Save"}</Button>
-          {post.status === "published" && (
-            <Button variant="outline" onClick={() => save({ status: "draft" })} disabled={busy}>Unpublish</Button>
-          )}
-          <PublishMenu post={post} dirty={dirty} busy={busy} publishSite={() => save({ status: "published" })} setMsg={setMsg} />
+          <PublishMenu post={post} dirty={dirty} busy={busy} save={save} setMsg={setMsg} />
         </div>
       </div>
       {msg && <Notice tone={msg.tone}>{msg.text}</Notice>}
@@ -200,20 +196,16 @@ export default function PostEditor({ initial }: { initial: PostRecord | Draft })
           {tab === "Publish" && (
             <Card>
               <div className="flex flex-col gap-4">
-                <Field label="Publish to" hint={`Live URL: ${liveUrl || "—"}`}>
-                  <Select
-                    value={post.site}
-                    onChange={(v) => {
-                      const s = v as Site;
-                      const next = siteConfigs[s];
-                      set({ site: s, category: next.categories.includes(post.category) ? post.category : next.categories[0] });
-                    }}
-                    options={SITES.map((s) => [s, `${siteConfigs[s].name} · ${siteConfigs[s].baseUrl.replace("https://", "")}${siteConfigs[s].blogPath}`])}
-                  />
-                </Field>
-                <Field label="Status">
-                  <Select value={post.status} onChange={(v) => set({ status: v as Draft["status"] })} options={[["draft", "Draft"], ["published", "Published"], ["archived", "Archived"]]} />
-                </Field>
+                <div className="rounded-lg border border-line px-3 py-2.5 text-xs text-white/70">
+                  {liveOn.length ? (
+                    <>
+                      {scheduled ? "Scheduled for" : "Live on"} <span className="font-semibold text-white">{liveOn.map((s) => siteConfigs[s].name).join(" and ")}</span>.
+                    </>
+                  ) : (
+                    "Not on a website yet."
+                  )}{" "}
+                  Use <span className="font-semibold text-white">Publish ▾</span> at the top to publish to Konsilience, Trasys or other platforms.
+                </div>
                 <Field label="Publish date" hint="A future date schedules the post. Empty = now, when published.">
                   <Input type="datetime-local" value={toLocal(post.publishedAt)} onChange={(e) => set({ publishedAt: e.target.value ? new Date(e.target.value).toISOString() : null })} />
                 </Field>
@@ -233,7 +225,7 @@ export default function PostEditor({ initial }: { initial: PostRecord | Draft })
                 <Field label="Category">
                   <Input list="categories" value={post.category} onChange={(e) => set({ category: e.target.value })} />
                   <datalist id="categories">
-                    {cfg.categories.map((c) => (
+                    {[...new Set(SITES.flatMap((s) => siteConfigs[s].categories))].map((c) => (
                       <option key={c} value={c} />
                     ))}
                   </datalist>
@@ -262,25 +254,29 @@ export default function PostEditor({ initial }: { initial: PostRecord | Draft })
           {tab === "Design" && (
             <Card>
               <div className="flex flex-col gap-4">
-                <Field label="Hero style">
-                  <Select value={post.design.hero} onChange={(v) => setDesign({ hero: v as Design["hero"] })} options={[["art", "Generated artwork"], ["image", "Cover image (wide)"], ["split", "Split: text + image"], ["minimal", "Text only"]]} />
+                <Field label="Cover image" hint="Shown at the top of the article and on cards and social shares (unless an OG image is set). 1600×900 or larger. No image = the article starts with the title only.">
+                  <ImageField value={post.design.coverImage} onChange={(coverImage) => setDesign({ coverImage: coverImage || undefined })} onAlt={(coverAlt) => setDesign({ coverAlt })} />
                 </Field>
-                {(post.design.hero === "image" || post.design.hero === "split") && (
+                {post.design.coverImage && (
                   <>
-                    <Field label="Cover image" hint="Also used for cards and social sharing, unless an OG image is set. 1600×900 or larger.">
-                      <ImageField value={post.design.coverImage} onChange={(coverImage) => setDesign({ coverImage: coverImage || undefined })} onAlt={(coverAlt) => setDesign({ coverAlt })} />
-                    </Field>
                     <Field label="Cover alt text">
                       <Input value={post.design.coverAlt ?? ""} onChange={(e) => setDesign({ coverAlt: e.target.value })} />
                     </Field>
+                    <Field label="Cover layout">
+                      <Select
+                        value={post.design.hero === "art" ? "image" : post.design.hero}
+                        onChange={(v) => setDesign({ hero: v as Design["hero"] })}
+                        options={[["image", "Wide image under the title"], ["split", "Split: title beside the image"], ["minimal", "Hide on the article (cards and shares only)"]]}
+                      />
+                    </Field>
                   </>
                 )}
-                {post.design.hero === "art" && (
+                {!post.design.coverImage && (
                   <>
-                    <Field label={`Artwork colour (hue ${post.design.artHue ?? "auto"})`}>
+                    <Field label={`Card artwork colour (hue ${post.design.artHue ?? "auto"})`}>
                       <input type="range" min={0} max={360} value={post.design.artHue ?? DEFAULT_HUE} onChange={(e) => setDesign({ artHue: Number(e.target.value) })} className="w-full accent-[rgb(var(--brand-rgb))]" style={{ background: "linear-gradient(90deg,hsl(0 80% 50%),hsl(60 80% 50%),hsl(120 80% 50%),hsl(180 80% 50%),hsl(240 80% 50%),hsl(300 80% 50%),hsl(360 80% 50%))", height: ARTWORK_BAR_HEIGHT, borderRadius: ARTWORK_BAR_RADIUS }} />
                     </Field>
-                    <Field label="Artwork icon">
+                    <Field label="Card artwork icon" hint="Blog cards show generated artwork when there is no cover image.">
                       <Select value={post.design.artIcon ?? ""} onChange={(v) => setDesign({ artIcon: v || undefined })} options={[["", "From category"], ...ICONS.map((i): [string, string] => [i, i])]} />
                     </Field>
                   </>

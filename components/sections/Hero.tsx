@@ -1,5 +1,6 @@
 import { heroTags } from "@/lib/content";
 import Button from "../ui/Button";
+import BrandIcon, { type BrandName } from "../ui/BrandIcon";
 import Icon from "../ui/Icon";
 import Marquee from "../ui/Marquee";
 import HeroCanvas from "./HeroCanvas";
@@ -40,11 +41,11 @@ export default function Hero() {
           <div className="anim-hero flex flex-col gap-3" style={{ animationDelay: "850ms" }}>
             <span className="text-xs font-semibold tracking-[3px] text-white uppercase sm:text-sm">Built on Leading AI Platforms</span>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-3 sm:gap-x-6">
-              {["OpenAI", "Anthropic", "Gemini"].map((p, i) => (
+              {([["OpenAI", "openai"], ["Anthropic", "anthropic"], ["Gemini", "gemini"]] as [string, BrandName][]).map(([p, icon], i) => (
                 <div key={p} className="flex items-center gap-4 sm:gap-6">
                   {i > 0 && <span className="hidden h-8 w-px bg-white/25 sm:block" />}
                   <span className="flex items-center gap-2 text-lg font-semibold text-white">
-                    <Icon name="spark" className="size-5 text-primary" />
+                    <BrandIcon name={icon} className="size-5 text-white" />
                     {p}
                   </span>
                 </div>
@@ -56,12 +57,12 @@ export default function Hero() {
 
       <div className="relative z-10 pb-10">
         <Marquee duration={40} pauseOnHover={false}>
-          {heroTags.map(([big, small]) => (
+          {heroTags.map(([big, small, icon]) => (
             <div
               key={big}
               className="mr-3 flex h-[88px] w-[220px] shrink-0 items-center justify-center gap-3 border border-white/15 bg-black/20 px-4 backdrop-blur-2xl"
             >
-              <Icon name="spark" className="size-6 shrink-0 text-primary" strokeWidth={1.5} />
+              <Icon name={icon} className="size-6 shrink-0 text-primary" strokeWidth={1.5} />
               <div className="leading-tight">
                 <p className="text-sm font-bold tracking-wide text-white">{big}</p>
                 <p className="text-xs text-white/60">{small}</p>

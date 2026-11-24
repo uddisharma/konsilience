@@ -57,7 +57,7 @@ export default function PostsTable() {
           <thead className="bg-card text-xs text-muted">
             <tr>
               <th className="px-4 py-3 font-semibold">Title</th>
-              <th className="px-4 py-3 font-semibold">Site</th>
+              <th className="px-4 py-3 font-semibold">Live on</th>
               <th className="px-4 py-3 font-semibold">Status</th>
               <th className="px-4 py-3 font-semibold">Category</th>
               <th className="px-4 py-3 font-semibold">Updated</th>
@@ -82,7 +82,7 @@ export default function PostsTable() {
                     <Link href={`/admin/posts/${p.id}`} className="font-semibold hover:text-primary">{p.title || "Untitled"}</Link>
                     <span className="block text-xs text-muted">/{p.slug}{p.source === "mcp" ? " · via MCP" : ""}</span>
                   </td>
-                  <td className="px-4 py-3 text-white/80">{siteConfigs[p.site].name}</td>
+                  <td className="px-4 py-3 text-white/80">{p.status === "published" && p.sites.length ? p.sites.map((s) => siteConfigs[s].name).join(", ") : <span className="text-muted">—</span>}</td>
                   <td className="px-4 py-3">{badge(p)}</td>
                   <td className="px-4 py-3 text-white/70">{p.category}</td>
                   <td className="px-4 py-3 text-xs text-muted">
@@ -92,7 +92,7 @@ export default function PostsTable() {
                   <td className="px-4 py-3 text-right whitespace-nowrap">
                     <Link href={`/admin/preview/${p.id}`} target="_blank" className="mr-3 text-xs text-muted hover:text-white">Preview</Link>
                     {p.status === "published" && (
-                      <a href={p.site === "konsilience" ? `/blog/${p.slug}` : postUrl(p.site, p.slug)} target="_blank" rel="noreferrer" className="text-xs text-muted hover:text-white">Live ↗</a>
+                      <a href={p.sites.includes("konsilience") ? `/blog/${p.slug}` : postUrl(p.site, p.slug)} target="_blank" rel="noreferrer" className="text-xs text-muted hover:text-white">Live ↗</a>
                     )}
                   </td>
                 </tr>

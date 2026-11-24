@@ -11,6 +11,21 @@ const ENDPOINT = "https://dev.to/api/articles";
 const MAX_TAGS = 4;
 const MAX_DESCRIPTION = 160;
 
+const HTTP_NOT_FOUND = 404;
+
+/** dev.to's API cannot delete an article, so this unpublishes it (it goes back to the author's drafts). */
+export async function unpublishFromDevto(remoteId: string): Promise<void> {
+  const res = await fetch(`${ENDPOINT}/${encodeURIComponent(remoteId)}`, {
+    method: "PUT",
+    headers: { "api-key": env("DEVTO_API_KEY"), "Content-Type": "application/json", Accept: "application/vnd.forem.api-v1+json" },
+    body: JSON.stringify({ article: { published: false } }),
+    signal: requestSignal(),
+  });
+  if (res.ok || res.status === HTTP_NOT_FOUND) return;
+  const data = await parseBody(res);
+  throw new Error(`dev.to: ${typeof data.error === "string" ? data.error : `HTTP ${res.status}`}`);
+}
+
 export async function publishToDevto(p: Payload): Promise<{ url: string; remoteId: string }> {
   const article = {
     title: p.title,

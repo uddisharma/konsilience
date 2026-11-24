@@ -23,6 +23,27 @@ type GraphQLResponse = {
   errors?: { message?: string }[];
 };
 
+const REMOVE_POST = `mutation RemovePost($input: RemovePostInput!) {
+  removePost(input: $input) {
+    post { id }
+  }
+}`;
+
+/** Deletes the post from the Hashnode publication. A post that is already gone counts as removed. */
+export async function unpublishFromHashnode(remoteId: string): Promise<void> {
+  const res = await fetch(ENDPOINT, {
+    method: "POST",
+    headers: { Authorization: env("HASHNODE_PAT"), "Content-Type": "application/json" },
+    body: JSON.stringify({ query: REMOVE_POST, variables: { input: { id: remoteId } } }),
+    signal: requestSignal(),
+  });
+  const data = (await parseBody(res)) as { errors?: { message?: string; extensions?: { code?: string } }[] };
+  const err = data.errors?.[0];
+  if (res.ok && !err) return;
+  if (err?.extensions?.code === "NOT_FOUND" || /not found/i.test(err?.message ?? "")) return;
+  throw new Error(`Hashnode: ${err?.message ?? `HTTP ${res.status}`}`);
+}
+
 export async function publishToHashnode(p: Payload): Promise<{ url: string; remoteId: string }> {
   const input = {
     title: p.title,

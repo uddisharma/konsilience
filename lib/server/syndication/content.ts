@@ -1,6 +1,6 @@
 import "server-only";
 import { blocksToMarkdown } from "@/lib/blog/markdown";
-import type { PostRecord } from "@/lib/blog/schema";
+import { SITES, type PostRecord, type Site } from "@/lib/blog/schema";
 import { postUrl, siteConfigs } from "@/lib/blog/sites";
 import { autoExcerpt } from "@/lib/blog/utils";
 
@@ -16,7 +16,8 @@ export type Payload = {
   markdown: string;
   /** The same text as plain paragraphs. Headings start with "## ". */
   paragraphs: string[];
-  canonicalUrl: string;
+  /** The post on the website, when it is live there. Cross-posts of an unpublished post have no link back. */
+  canonicalUrl?: string;
   tags: string[];
 };
 
@@ -85,11 +86,19 @@ function plainBlock(block: string): string {
     .trim();
 }
 
+/** The website the post is live on now (Konsilience first), or undefined if it is not live yet. */
+function liveHome(post: PostRecord): Site | undefined {
+  const due = !post.publishedAt || new Date(post.publishedAt) <= new Date();
+  if (post.status !== "published" || !due) return undefined;
+  return SITES.find((s) => post.sites.includes(s));
+}
+
 export function buildPayload(post: PostRecord): Payload {
-  const cfg = siteConfigs[post.site];
-  const canonicalUrl = postUrl(post.site, post.slug);
-  const body = toPortableMarkdown(blocksToMarkdown(post.blocks), cfg.baseUrl).trim();
-  const markdown = `${body}\n\nOriginally published on ${cfg.name}: ${canonicalUrl}\n`;
+  const home = liveHome(post);
+  const canonicalUrl = home ? post.seo.canonicalUrl || postUrl(home, post.slug) : undefined;
+  // Site-relative links ("/services/...") always point at the Konsilience site.
+  const body = toPortableMarkdown(blocksToMarkdown(post.blocks), siteConfigs.konsilience.baseUrl).trim();
+  const markdown = home ? `${body}\n\nOriginally published on ${siteConfigs[home].name}: ${canonicalUrl}\n` : `${body}\n`;
   return {
     title: post.title,
     excerpt: post.excerpt.trim() || autoExcerpt(post.blocks),

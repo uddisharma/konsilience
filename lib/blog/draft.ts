@@ -9,6 +9,7 @@ export function newDraft(site: Site): Draft {
   const cfg = siteConfigs[site];
   return {
     site,
+    sites: [],
     title: "",
     slug: "",
     excerpt: "",
