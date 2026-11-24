@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { routeGroups, siteUrl } from "@/lib/routes";
 import { CONTENT_UPDATED } from "@/site.config";
 import { publicPosts } from "@/lib/server/posts";
+import { imagesByPage } from "@/lib/images";
 
 // Priority hints for crawlers. Google largely ignores them, but they document intent.
 const PRIORITY_HOME = 1.0;
@@ -32,11 +33,14 @@ export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const contentDate = new Date(CONTENT_UPDATED);
+  const images = imagesByPage();
   const pages = routeGroups.flatMap((g) =>
     g.links.map((l) => ({
       url: `${siteUrl}${l.href === "/" ? "" : l.href}`,
       lastModified: l.updated ? new Date(l.updated) : contentDate,
       ...rank(l.href),
+      // Image sitemap entries (<image:image>) for the generated WebP illustrations on this page.
+      ...(images[l.href] ? { images: images[l.href].map((i) => `${siteUrl}${i.src}`) } : {}),
     })),
   );
   // Posts published from the admin (built-in posts are already in routeGroups).

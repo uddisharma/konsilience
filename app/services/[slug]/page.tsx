@@ -5,7 +5,8 @@ import PageHero from "@/components/page/PageHero";
 import ProjectCard from "@/components/page/ProjectCard";
 import Faq from "@/components/sections/Faq";
 import Testimonials from "@/components/sections/Testimonials";
-import { SceneArt } from "@/components/ui/Artwork";
+import SiteImg from "@/components/ui/SiteImg";
+import { serviceCategoryImage, serviceOgImage } from "@/lib/images";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import JsonLd from "@/components/JsonLd";
@@ -33,20 +34,13 @@ export async function generateMetadata({ params }: PageProps<"/services/[slug]">
       title: `${s.name} Services | Konsilience`,
       description: s.short,
       url,
-      images: [
-        {
-          url: `${siteUrl}/og?title=${encodeURIComponent(s.name + " Services")}&subtitle=${encodeURIComponent(s.short)}`,
-          width: 1200,
-          height: 630,
-          alt: `${s.name} Services`,
-        },
-      ],
+      images: [serviceOgImage(s.category)],
     },
     twitter: {
       card: "summary_large_image",
       title: `${s.name} Services | Konsilience`,
       description: s.short,
-      images: [`${siteUrl}/og?title=${encodeURIComponent(s.name + " Services")}`],
+      images: [serviceOgImage(s.category).url],
     },
   };
 }
@@ -88,7 +82,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             <Button variant="outline" href="/portfolio">View Case Studies</Button>
           </>
         }
-        aside={<SceneArt hue={220} icon={s.icon} label={s.category} className="hidden aspect-[4/3] rounded-3xl lg:block" />}
+        aside={<SiteImg img={serviceCategoryImage(s.category)} priority className="hidden aspect-[4/3] w-full rounded-3xl border border-line object-cover lg:block" />}
         stats={heroStats}
       />
 

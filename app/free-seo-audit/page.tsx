@@ -46,6 +46,7 @@ export default function FreeSeoAuditPage() {
         </div>
       </section>
 
+
       <section className="sec bg-black pt-0">
         <div className="wrap">
           <SectionHead title={["How it works"]} />

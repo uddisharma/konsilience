@@ -4,7 +4,8 @@ import PageHero from "@/components/page/PageHero";
 import ProjectCard from "@/components/page/ProjectCard";
 import AiSection from "@/components/sections/AiSection";
 import Faq from "@/components/sections/Faq";
-import { SceneArt } from "@/components/ui/Artwork";
+import SiteImg from "@/components/ui/SiteImg";
+import { image, ogImage } from "@/lib/images";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import { aiProcess, aiSolutions, aiStack, projects, responsibleAi } from "@/lib/catalog";
@@ -20,8 +21,9 @@ export const metadata: Metadata = {
     title: "Enterprise AI & Agentic Solutions | Konsilience",
     description: "Agentic, generative and multimodal AI solutions engineered for production by Konsilience.",
     url: `${siteUrl}/ai-solutions`,
-    images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630, alt: "Enterprise AI & Agentic Solutions | Konsilience" }],
+    images: [ogImage("/ai-solutions")!],
   },
+  twitter: { card: "summary_large_image", images: [ogImage("/ai-solutions")!.url] },
 };
 
 export default function AiSolutionsPage() {
@@ -40,7 +42,7 @@ export default function AiSolutionsPage() {
             <Button variant="outline" href="#solutions">Explore Solutions</Button>
           </>
         }
-        aside={<SceneArt hue={225} icon="spark" label="AI Solutions" className="hidden aspect-[4/3] rounded-3xl lg:block" />}
+        aside={<SiteImg img={image("ai-overview")} priority className="hidden aspect-[4/3] w-full rounded-3xl border border-line object-cover lg:block" />}
         stats={[["AI-first", "Every project"], ["Model-agnostic", "OpenAI · Claude · Gemini"], ["4–6 wks", "Typical POC"], ["Evals", "Before launch"]]}
       />
 

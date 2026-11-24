@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { CardGrid, Chips, CtaBand, NumberedRows, SectionHead, Split } from "@/components/page/Blocks";
 import PageHero from "@/components/page/PageHero";
-import { SceneArt } from "@/components/ui/Artwork";
+import SiteImg from "@/components/ui/SiteImg";
+import { image, ogImage } from "@/lib/images";
 import Button from "@/components/ui/Button";
 import { siteUrl } from "@/lib/routes";
 
@@ -9,6 +10,8 @@ export const metadata: Metadata = {
   title: "Security Engineering & Data Protection | Konsilience",
   description: "Enterprise security practices that protect client data, code, secrets and cloud infrastructure at Konsilience.",
   alternates: { canonical: `${siteUrl}/security` },
+  openGraph: { url: `${siteUrl}/security`, images: [ogImage("/security")!] },
+  twitter: { card: "summary_large_image", images: [ogImage("/security")!.url] },
 };
 
 export default function SecurityPage() {
@@ -20,7 +23,7 @@ export default function SecurityPage() {
         title={["Your Data,", <span key="p" className="text-primary">Protected</span>]}
         text="Security is part of how we work every day: people, processes and technology."
         actions={<Button>Request Our Security Pack</Button>}
-        aside={<SceneArt hue={220} icon="shield" label="Security first" className="hidden aspect-[4/3] rounded-3xl lg:block" />}
+        aside={<SiteImg img={image("security")} priority className="hidden aspect-[4/3] w-full rounded-3xl border border-line object-cover lg:block" />}
       />
       <section className="sec bg-black">
         <div className="wrap">

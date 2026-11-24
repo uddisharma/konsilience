@@ -3,6 +3,7 @@ import { siteUrl } from "@/lib/routes";
 import type { Industry, Job, Post, Project, Service } from "@/lib/catalog";
 import type { RegionalService, CountryHub } from "@/lib/regionalServiceData";
 import { isSet, sameAs, siteConfig } from "@/site.config";
+import { portfolioCover } from "./images";
 
 const toPostalAddress = (a: { street: string; city: string; region: string; postalCode: string; countryCode: string }) => ({
   "@type": "PostalAddress",
@@ -394,6 +395,7 @@ ${job.niceToHave.map((n) => `• ${n}`).join("\n")}`,
  */
 export function buildCaseStudySchema(project: Project) {
   const pageUrl = `${siteUrl}/portfolio/${project.slug}`;
+  const cover = portfolioCover(project);
 
   return [
     {
@@ -408,6 +410,7 @@ export function buildCaseStudySchema(project: Project) {
       "publisher": { "@id": `${siteUrl}/#organization` },
       "inLanguage": "en-US",
       "url": pageUrl,
+      ...(cover ? { "image": { "@type": "ImageObject", "url": `${siteUrl}${cover.src}`, "width": cover.width, "height": cover.height, "caption": cover.alt } } : {}),
       "keywords": [...project.platforms, ...project.tech, project.industry].join(", "),
     },
     buildBreadcrumbSchema([

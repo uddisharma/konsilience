@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { CardGrid, Chips, CtaBand, NumberedRows, ProcessSteps, SectionHead, Split } from "@/components/page/Blocks";
 import PageHero from "@/components/page/PageHero";
 import Faq from "@/components/sections/Faq";
-import { SceneArt } from "@/components/ui/Artwork";
+import SiteImg from "@/components/ui/SiteImg";
+import { aiSolutionImage, ogImage } from "@/lib/images";
 import Button from "@/components/ui/Button";
 import JsonLd from "@/components/JsonLd";
 import { aiProcess, aiSolutions, aiStack, industryList, responsibleAi } from "@/lib/catalog";
@@ -29,20 +30,13 @@ export async function generateMetadata({ params }: PageProps<"/ai-solutions/[slu
       title: `${a.name} Solutions | Konsilience AI Studio`,
       description: a.short,
       url,
-      images: [
-        {
-          url: `${siteUrl}/og?title=${encodeURIComponent(a.name + " Solutions")}&subtitle=${encodeURIComponent(a.short)}`,
-          width: 1200,
-          height: 630,
-          alt: `${a.name} Solutions`,
-        },
-      ],
+      images: [ogImage(`/ai-solutions/${a.slug}`)!],
     },
     twitter: {
       card: "summary_large_image",
       title: `${a.name} Solutions | Konsilience`,
       description: a.short,
-      images: [`${siteUrl}/og?title=${encodeURIComponent(a.name + " Solutions")}`],
+      images: [ogImage(`/ai-solutions/${a.slug}`)!.url],
     },
   };
 }
@@ -167,7 +161,7 @@ export default async function AiSolutionPage({ params }: PageProps<"/ai-solution
             <Button variant="outline" href="/ai-solutions">All AI Solutions</Button>
           </>
         }
-        aside={<SceneArt hue={230} icon={a.icon} label={a.name} className="hidden aspect-[4/3] rounded-3xl lg:block" />}
+        aside={<SiteImg img={aiSolutionImage(a.slug)} priority className="hidden aspect-[4/3] w-full rounded-3xl border border-line object-cover lg:block" />}
       />
 
       <section className="sec bg-black">

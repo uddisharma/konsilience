@@ -5,6 +5,8 @@ import { CardGrid, Chips, CtaBand, SectionHead, Split } from "@/components/page/
 import PageHero from "@/components/page/PageHero";
 import ProjectCard from "@/components/page/ProjectCard";
 import { PhoneArt } from "@/components/ui/Artwork";
+import SiteImg from "@/components/ui/SiteImg";
+import { ogImage, portfolioCover } from "@/lib/images";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
@@ -23,6 +25,13 @@ export async function generateMetadata({ params }: PageProps<"/portfolio/[slug]"
   const p = find((await params).slug);
   if (!p) return {};
   const url = `${siteUrl}/portfolio/${p.slug}`;
+  // real screenshot cover when we have one, otherwise the generic text card from /og
+  const share = ogImage(`/portfolio/${p.slug}`) ?? {
+    url: `${siteUrl}/og?title=${encodeURIComponent(p.client + " Case Study")}&subtitle=${encodeURIComponent(p.category)}`,
+    width: 1200,
+    height: 630,
+    alt: `${p.client} Case Study`,
+  };
   return {
     title: `${p.client} Case Study | ${p.category}`,
     description: `${p.text} Engineered by Konsilience.`,
@@ -32,20 +41,13 @@ export async function generateMetadata({ params }: PageProps<"/portfolio/[slug]"
       title: `${p.client} Case Study | Konsilience`,
       description: p.text,
       url,
-      images: [
-        {
-          url: `${siteUrl}/og?title=${encodeURIComponent(p.client + " Case Study")}&subtitle=${encodeURIComponent(p.category)}`,
-          width: 1200,
-          height: 630,
-          alt: `${p.client} Case Study`,
-        },
-      ],
+      images: [share],
     },
     twitter: {
       card: "summary_large_image",
       title: `${p.client} Case Study | Konsilience`,
       description: p.text,
-      images: [`${siteUrl}/og?title=${encodeURIComponent(p.client + " Case Study")}`],
+      images: [share.url],
     },
   };
 }
@@ -62,6 +64,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
   const linkLabel = p.live ? "Visit Live Platform" : `Visit ${p.style}`;
   const host = new URL(p.url).hostname.replace(/^www./, "");
   const schema = buildCaseStudySchema(p);
+  const cover = portfolioCover(p); // real screenshot when we have one
 
   return (
     <>
@@ -90,10 +93,14 @@ export default async function CaseStudyPage({ params }: PageProps<"/portfolio/[s
       {/* Showcase banner */}
       <section className="bg-black">
         <Reveal variant="zoom" className="wrap">
-          <div className="relative flex h-[420px] items-end justify-center overflow-hidden rounded-3xl sm:h-[560px]" style={{ backgroundColor: p.bg }}>
-            <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_100%,rgba(255,255,255,.35),transparent_70%)]" />
-            <PhoneArt slug={p.slug} accent={p.accent} dark={p.dark} className="float-a relative w-[70%] max-w-md translate-y-16" />
-          </div>
+          {cover ? (
+            <SiteImg img={cover} priority sizes="(min-width: 1600px) 1600px, 100vw" className="aspect-[16/10] w-full rounded-3xl object-cover" style={{ backgroundColor: p.bg }} />
+          ) : (
+            <div className="relative flex h-[420px] items-end justify-center overflow-hidden rounded-3xl sm:h-[560px]" style={{ backgroundColor: p.bg }}>
+              <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_100%,rgba(255,255,255,.35),transparent_70%)]" />
+              <PhoneArt slug={p.slug} accent={p.accent} dark={p.dark} className="float-a relative w-[70%] max-w-md translate-y-16" />
+            </div>
+          )}
         </Reveal>
       </section>
 

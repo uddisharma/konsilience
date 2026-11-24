@@ -46,3 +46,6 @@ next-env.d.ts
 # Audit artifacts (regenerate with scripts/audit/crawl.mjs and Lighthouse)
 /docs/reports/raw/
 /docs/reports/*-crawl.json
+
+# image render sources (scripts/render-images.mjs)
+/.render-cache/

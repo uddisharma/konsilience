@@ -4,7 +4,8 @@ import PageHero from "@/components/page/PageHero";
 import { RoleCard } from "@/components/page/People";
 import Clients from "@/components/sections/Clients";
 import Stats from "@/components/sections/Stats";
-import { SceneArt } from "@/components/ui/Artwork";
+import SiteImg from "@/components/ui/SiteImg";
+import { image, ogImage } from "@/lib/images";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import { team } from "@/lib/catalog";
@@ -15,6 +16,8 @@ export const metadata: Metadata = {
   title: "About Us",
   description: `${brand.name} is an AI-first product studio from Mohali: a senior team building SaaS platforms, apps and AI systems.`,
   alternates: { canonical: `${siteUrl}/about` },
+  openGraph: { url: `${siteUrl}/about`, images: [ogImage("/about")!] },
+  twitter: { card: "summary_large_image", images: [ogImage("/about")!.url] },
 };
 
 const values = [
@@ -72,7 +75,7 @@ export default function AboutPage() {
               </p>
             </Reveal>
             <Reveal delay={200}>
-              <SceneArt hue={220} icon="users" label="One team, every discipline" className="aspect-[16/9] rounded-3xl" />
+              <SiteImg img={image("about")} className="aspect-[16/9] w-full rounded-3xl border border-line object-cover" />
             </Reveal>
           </div>
         </Split>

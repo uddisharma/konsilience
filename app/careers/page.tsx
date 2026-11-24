@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CardGrid, CtaBand, NumberedRows, SectionHead, Split } from "@/components/page/Blocks";
 import PageHero from "@/components/page/PageHero";
-import { SceneArt } from "@/components/ui/Artwork";
+import SiteImg from "@/components/ui/SiteImg";
+import { image, ogImage } from "@/lib/images";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Reveal from "@/components/ui/Reveal";
@@ -14,6 +15,8 @@ export const metadata: Metadata = {
   title: "Careers",
   description: "Join Konsilience and build products that matter with people who care about craft.",
   alternates: { canonical: `${siteUrl}/careers` },
+  openGraph: { url: `${siteUrl}/careers`, images: [ogImage("/careers")!] },
+  twitter: { card: "summary_large_image", images: [ogImage("/careers")!.url] },
 };
 
 const benefits = [
@@ -42,7 +45,7 @@ export default function CareersPage() {
         title={["Build What's Next", <span key="w" className="text-primary">With Us</span>]}
         text="Join a small, senior, AI-first team building SaaS platforms, apps and AI systems from Mohali."
         actions={<Button href="#openings">View Open Roles</Button>}
-        aside={<SceneArt hue={250} icon="users" label="Life at Konsilience" className="hidden aspect-[4/3] rounded-3xl lg:block" />}
+        aside={<SiteImg img={image("careers")} priority className="hidden aspect-[4/3] w-full rounded-3xl border border-line object-cover lg:block" />}
         stats={[["35+", "Projects done"], [String(facts.industries), "Industries served"], ["AI-first", "Tooling"], ["HQ", "Mohali, Punjab"]]}
       />
 

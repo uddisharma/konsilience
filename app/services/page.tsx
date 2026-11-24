@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { CardGrid, Chips, CtaBand, ProcessSteps, SectionHead, Split } from "@/components/page/Blocks";
 import PageHero from "@/components/page/PageHero";
 import Testimonials from "@/components/sections/Testimonials";
-import { DashboardArt } from "@/components/ui/Artwork";
+import SiteImg from "@/components/ui/SiteImg";
+import { image, ogImage } from "@/lib/images";
 import Button from "@/components/ui/Button";
 import JsonLd from "@/components/JsonLd";
 import { deliveryProcess, engagementModels, serviceCategories, serviceList, techStack } from "@/lib/catalog";
@@ -19,8 +20,9 @@ export const metadata: Metadata = {
     title: "Technology & Software Engineering Services | Konsilience",
     description: "End-to-end capabilities from strategy and UI/UX design to full-stack engineering, AI, and cloud operations.",
     url: `${siteUrl}/services`,
-    images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630, alt: "Technology & Software Engineering Services | Konsilience" }],
+    images: [ogImage("/services")!],
   },
+  twitter: { card: "summary_large_image", images: [ogImage("/services")!.url] },
 };
 
 export default function ServicesPage() {
@@ -40,7 +42,7 @@ export default function ServicesPage() {
             <Button variant="outline" href="/portfolio">See Our Work</Button>
           </>
         }
-        aside={<DashboardArt hue={220} className="hidden aspect-[4/3] rounded-3xl border border-line lg:block" />}
+        aside={<SiteImg img={image("services-overview")} priority className="hidden aspect-[4/3] w-full rounded-3xl border border-line object-cover lg:block" />}
         stats={[[`${serviceList.length}`, "Specialized services"], ["35+", "Projects done"], [String(facts.industries), "Industries served"], ["24h", "Response time"]]}
       />
 

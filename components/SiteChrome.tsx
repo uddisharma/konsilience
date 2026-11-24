@@ -3,10 +3,11 @@
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
-/** Hides the public site's header, footer and widgets inside the admin panel. */
+/** Hides the public site's header, footer and widgets inside the admin panel and the render canvas. */
 export default function SiteChrome({ header, footer, children }: { header: ReactNode; footer: ReactNode; children: ReactNode }) {
-  const admin = usePathname()?.startsWith("/admin");
-  if (admin) return <>{children}</>;
+  const path = usePathname() ?? "";
+  // Admin panel and the dev-only image render canvas (/render-kit) get no site chrome.
+  if (path.startsWith("/admin") || path.startsWith("/render-kit")) return <>{children}</>;
   return (
     <>
       {header}

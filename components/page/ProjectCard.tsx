@@ -1,11 +1,14 @@
 import Link from "next/link";
 import type { Project } from "@/lib/catalog";
+import { portfolioCard } from "@/lib/images";
 import { PhoneArt } from "../ui/Artwork";
+import SiteImg from "../ui/SiteImg";
 import Icon from "../ui/Icon";
 
 // Brand-coloured case-study card (grid version of the home portfolio slider card).
 export default function ProjectCard({ p }: { p: Project }) {
   const muted = p.dark ? "text-white/75" : "text-black/60";
+  const card = portfolioCard(p); // real screenshot when we have one
   return (
     <Link
       href={`/portfolio/${p.slug}`}
@@ -34,7 +37,11 @@ export default function ProjectCard({ p }: { p: Project }) {
       </div>
       <div className="relative -mx-7 -mb-7 flex h-[42%] items-start justify-center overflow-hidden pt-5">
         <div className="absolute inset-x-6 bottom-0 h-3/4 rounded-t-[2rem]" style={{ background: p.dark ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.05)" }} />
-        <PhoneArt slug={p.slug} accent={p.accent} dark={p.dark} className="relative w-[74%]" />
+        {card ? (
+          <SiteImg img={card} sizes="(min-width: 1024px) 400px, 92vw" className="relative h-auto w-full transition-transform duration-700 group-hover:-translate-y-2" />
+        ) : (
+          <PhoneArt slug={p.slug} accent={p.accent} dark={p.dark} className="relative w-[74%]" />
+        )}
       </div>
       <span className={`absolute top-7 right-7 grid size-10 place-items-center rounded-full transition-all duration-500 group-hover:rotate-45 ${p.dark ? "bg-white text-black" : "bg-black text-white"}`}>
         <Icon name="upRight" className="size-4" strokeWidth={2} />

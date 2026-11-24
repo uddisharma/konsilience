@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/page/Blocks";
 import Newsletter from "@/components/page/Newsletter";
 import PageHero from "@/components/page/PageHero";
-import { SceneArt } from "@/components/ui/Artwork";
+import SiteImg from "@/components/ui/SiteImg";
+import { ogImage, resourceCover } from "@/lib/images";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import { resourceTypes } from "@/lib/catalog";
@@ -24,6 +25,7 @@ export async function generateMetadata({ params }: PageProps<"/resources/[type]"
     title: `${r.name} | Konsilience Resources`,
     description: r.intro,
     alternates: { canonical: url },
+    openGraph: { url, images: ogImage(`/resources/${r.slug}`) ? [ogImage(`/resources/${r.slug}`)!] : undefined },
     robots: {
       index: false,
       follow: true,
@@ -65,7 +67,7 @@ export default async function ResourcePage({ params }: PageProps<"/resources/[ty
             <Reveal key={it.title} delay={(i % 3) * 90}>
               <div className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-card transition-colors hover:border-primary">
                 <div className="overflow-hidden">
-                  <SceneArt hue={200 + i * 25} icon={r.icon} className="aspect-[16/10] transition-transform duration-700 group-hover:scale-105" />
+                  <SiteImg img={resourceCover(it.title)} className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 </div>
                 <div className="flex flex-1 flex-col gap-3 p-7">
                   <span className="text-xs font-semibold tracking-wider text-muted uppercase">{it.meta}</span>
