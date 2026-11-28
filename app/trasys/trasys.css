@@ -1,0 +1,74 @@
+/* Trasys AI product page (/trasys). Everything here is scoped under .kt so the page can carry its own
+   look (black, brand blue, sentence-case product headings, monospace details, and the three status
+   colours an observability tool uses: ok, warning, error) without touching the rest of the site. */
+
+.kt {
+  --kt-bg: #030407;
+  --kt-panel: #0a0c12;
+  --kt-panel-2: #11141d;
+  --kt-line: rgba(255, 255, 255, 0.1);
+  --kt-blue: rgb(var(--brand-rgb));
+  --kt-sky: rgb(var(--brand-light-rgb));
+  /* status colours: only on dots, tags and the small charts */
+  --kt-ok: #34d399;
+  --kt-warn: #fbbf24;
+  --kt-err: #f87171;
+  background: var(--kt-bg);
+}
+
+/* ---------- Type ---------- */
+.kt-title { font-weight: 700; line-height: 1.02; letter-spacing: -0.04em; }
+.kt-hero-title { font-size: clamp(2.6rem, 1.3rem + 4.4vw, 5.6rem); }
+.kt-h2 { font-size: clamp(2.1rem, 1.3rem + 2.9vw, 4rem); }
+.kt-h3 { font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.6rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.025em; }
+.kt-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+/* Eyebrow written like a status line: a live dot, then the label. */
+.kt-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--kt-sky); }
+.kt-eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 999px; background: var(--kt-ok); box-shadow: 0 0 0 4px rgb(52 211 153 / 0.18); }
+.kt-grad { background: linear-gradient(100deg, var(--kt-sky) 0%, var(--kt-blue) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* ---------- Hero backdrop ---------- */
+.kt-grid {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 70% at 70% 30%, #000 15%, transparent 75%);
+}
+.kt-glow { position: absolute; border-radius: 999px; filter: blur(120px); animation: kt-breathe 10s ease-in-out infinite; }
+@keyframes kt-breathe { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.85; transform: scale(1.1); } }
+
+/* ---------- Video frame (hero) ---------- */
+.kt-player { position: relative; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 28px; padding: 10px; background: linear-gradient(160deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02)); box-shadow: 0 60px 140px -50px rgb(var(--brand-rgb) / 0.7); }
+.kt-player video { border-radius: 20px; }
+/* Small status cards pinned over the frame's corners. Shown from tablet width up (display is set by the hidden / sm:flex classes). */
+.kt-pin { position: absolute; align-items: center; gap: 10px; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 14px; background: rgba(10, 12, 18, 0.92); backdrop-filter: blur(8px); padding: 10px 14px; font-size: 12px; white-space: nowrap; box-shadow: 0 20px 50px -20px #000; animation: floaty 8s ease-in-out infinite; }
+.kt-dot { width: 8px; height: 8px; flex-shrink: 0; border-radius: 999px; }
+
+/* ---------- Problems ---------- */
+.kt-problem { transition: background 0.4s, padding 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.kt-problem:hover { background: rgba(255, 255, 255, 0.035); padding-inline: 20px; }
+
+/* ---------- Feature cards ---------- */
+.kt-card { position: relative; overflow: hidden; border: 1px solid var(--kt-line); border-radius: 24px; background: linear-gradient(160deg, var(--kt-panel-2), var(--kt-panel)); transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.4s, box-shadow 0.5s; }
+.kt-card:hover { transform: translateY(-5px); border-color: rgb(var(--brand-light-rgb) / 0.6); box-shadow: 0 30px 70px -40px rgb(var(--brand-rgb) / 0.8); }
+.kt-card-icon { transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), background 0.4s, color 0.4s; }
+.kt-card:hover .kt-card-icon { transform: rotate(-8deg) scale(1.08); background: var(--kt-blue); color: #fff; }
+
+/* ---------- How it works ---------- */
+.kt-step { position: relative; border: 1px solid var(--kt-line); border-radius: 24px; background: var(--kt-panel); transition: border-color 0.4s, transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.kt-step:hover { border-color: var(--kt-blue); transform: translateY(-4px); }
+.kt-step-num { font-size: clamp(3.5rem, 2.6rem + 2.6vw, 5.5rem); font-weight: 700; line-height: 0.9; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.22); transition: color 0.4s, -webkit-text-stroke-color 0.4s; }
+.kt-step:hover .kt-step-num { color: var(--kt-blue); -webkit-text-stroke-color: var(--kt-blue); }
+
+/* ---------- Integrations marquee ---------- */
+.kt-marquee { display: flex; overflow: hidden; user-select: none; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.kt-marquee > div { display: flex; flex-shrink: 0; align-items: center; min-width: 100%; animation: kt-scroll var(--kt-speed, 44s) linear infinite; }
+.kt-marquee[data-reverse] > div { animation-direction: reverse; }
+.kt-marquee:hover > div { animation-play-state: paused; }
+@keyframes kt-scroll { to { transform: translateX(-100%); } }
+
+/* ---------- Panel (demo) ---------- */
+.kt-panel { border: 1px solid var(--kt-line); border-radius: 32px; background: var(--kt-panel); }
+
+/* ---------- Closing call to action ---------- */
+.kt-cta { position: relative; overflow: hidden; border-radius: 36px; background: linear-gradient(130deg, rgb(var(--brand-rgb)) 0%, rgb(var(--brand-strong-rgb)) 50%, #0a2a78 100%); }
+.kt-cta-grid { background-image: linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(ellipse 60% 100% at 100% 50%, #000 5%, transparent 75%); }

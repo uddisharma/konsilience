@@ -636,7 +636,135 @@ function AiProductionStack({ e, og }: P) {
   );
 }
 
+/* ---------- Trasys AI, LLM call tracing: trace UI fragment, waterfall left and span detail right ---------- */
+// One traced request: [span name, start %, width %, duration]. The second span is the one opened in the detail panel.
+const TRACE_SPANS: [string, number, number, string][] = [
+  ["agent.run", 0, 100, "1.21 s"],
+  ["llm.plan", 0, 27, "420 ms"],
+  ["tool.orders.lookup", 29, 14, "180 ms"],
+  ["guard.refund_policy", 45, 7, "60 ms"],
+  ["tool.refunds.create", 54, 22, "310 ms"],
+  ["llm.reply", 78, 22, "240 ms"],
+];
+const TRACE_OPEN_SPAN = 1;
+// What the detail panel shows for the open span, as [field, value]: the text fields, then the numbers side by side.
+const TRACE_DETAIL_TEXT: [string, string][] = [
+  ["input", "Refund order #4821 and let the customer know"],
+  ["output", "Look up order, check policy, refund, email"],
+];
+const TRACE_DETAIL_NUMBERS: [string, string][] = [
+  ["tokens", "310"],
+  ["latency", "420 ms"],
+];
+
+function TrasysLlmTrace({ e, og }: P) {
+  const [, ink, ac] = e.palette;
+  const rule = `1px solid ${tint(ink, 0.22)}`;
+  return (
+    <Frame e={e} og={og} logo="tr">
+      <div className="absolute flex flex-col" style={{ inset: "7% 5%", fontFamily: MONO }}>
+        <div className="flex justify-between" style={{ fontFamily: "var(--font-jakarta), sans-serif", fontWeight: 600, fontSize: u(1.9), color: tint(ink, 0.6), paddingBottom: u(1.6), borderBottom: rule }}>
+          <span>trace / support-refund</span>
+          <span>{TRACE_SPANS.length} spans</span>
+        </div>
+        <div className="flex flex-1" style={{ gap: u(3.5), paddingTop: u(2.4), minHeight: 0 }}>
+          <div className="flex flex-col justify-between" style={{ width: "58%" }}>
+            {TRACE_SPANS.map(([name, start, width, time], i) => {
+              const open = i === TRACE_OPEN_SPAN;
+              return (
+                <div key={name} style={{ color: open ? ac : ink }}>
+                  <div className="flex justify-between" style={{ fontSize: u(1.9), fontWeight: open ? 600 : 500, paddingLeft: u(i ? 1.6 : 0) }}>
+                    <span>{name}</span>
+                    <span style={{ color: open ? ac : tint(ink, 0.55) }}>{time}</span>
+                  </div>
+                  <div className="relative" style={{ height: u(1.5), marginTop: u(0.7), background: tint(ink, 0.07) }}>
+                    <span className="absolute inset-y-0" style={{ left: `${start}%`, width: `${width}%`, background: open ? ac : tint(ink, i ? 0.55 : 0.3) }} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex flex-1 flex-col" style={{ border: `1px solid ${ac}`, padding: `${u(1.8)} ${u(2.2)}`, gap: u(1.5) }}>
+            <span style={{ fontSize: u(2.2), fontWeight: 600, color: ac }}>{TRACE_SPANS[TRACE_OPEN_SPAN][0]}</span>
+            {TRACE_DETAIL_TEXT.map(([field, value]) => (
+              <div key={field} style={{ borderTop: rule, paddingTop: u(1.3) }}>
+                <div style={{ fontSize: u(1.5), letterSpacing: ".14em", textTransform: "uppercase", color: tint(ink, 0.5) }}>{field}</div>
+                <div style={{ fontSize: u(1.9), lineHeight: 1.35, marginTop: u(0.5) }}>{value}</div>
+              </div>
+            ))}
+            <div className="flex" style={{ borderTop: rule, paddingTop: u(1.3), gap: u(4) }}>
+              {TRACE_DETAIL_NUMBERS.map(([field, value]) => (
+                <div key={field}>
+                  <div style={{ fontSize: u(1.5), letterSpacing: ".14em", textTransform: "uppercase", color: tint(ink, 0.5) }}>{field}</div>
+                  <div style={{ fontSize: u(1.9), marginTop: u(0.5) }}>{value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Frame>
+  );
+}
+
+/* ---------- Trasys AI, token cost tracking: flat bars against a budget line, right-weighted ---------- */
+// Daily spend as a share of the chart height, Monday to Sunday. Shapes only: no amounts are claimed.
+const SPEND_DAYS: [string, number][] = [["Mon", 38], ["Tue", 46], ["Wed", 42], ["Thu", 55], ["Fri", 51], ["Sat", 60], ["Sun", 88]];
+const SPEND_BUDGET = 70; // where the budget line sits, in % of the chart height
+// Share of spend by feature, in % of the row width.
+const SPEND_FEATURES: [string, number][] = [["Support agent", 78], ["Search", 46], ["Summaries", 24]];
+
+function TrasysTokenCost({ e, og }: P) {
+  const [bg, ink, ac] = e.palette;
+  return (
+    <Frame e={e} og={og} logo="tl">
+      <div className="absolute flex" style={{ inset: "8% 5%", gap: u(5) }}>
+        <div className="flex flex-col" style={{ width: "27%" }}>
+          <Label style={{ fontSize: u(1.5), color: tint(ink, 0.6) }}>Spend by feature</Label>
+          <div className="flex flex-1 flex-col justify-center" style={{ gap: u(3.4) }}>
+            {SPEND_FEATURES.map(([name, share], i) => (
+              <div key={name}>
+                <div style={{ fontSize: u(2.2), fontWeight: 600 }}>{name}</div>
+                <div style={{ height: u(1.3), marginTop: u(1), background: tint(ink, 0.1) }}>
+                  <div style={{ width: `${share}%`, height: "100%", background: i ? tint(ink, 0.6) : ac }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-1 flex-col">
+          <Label style={{ fontSize: u(1.5), color: tint(ink, 0.6) }}>Token spend · last 7 days</Label>
+          <div className="relative flex flex-1 items-end" style={{ gap: u(1.5), marginTop: u(2.2), borderBottom: `1px solid ${tint(ink, 0.3)}` }}>
+            <div className="absolute inset-x-0" style={{ bottom: `${SPEND_BUDGET}%`, borderTop: `1px dashed ${tint(ink, 0.6)}` }}>
+              <span className="absolute" style={{ left: 0, bottom: u(0.7), fontFamily: MONO, fontSize: u(1.6), color: tint(ink, 0.7) }}>budget</span>
+            </div>
+            {SPEND_DAYS.map(([day, h]) => {
+              const over = h > SPEND_BUDGET;
+              return (
+                <div key={day} className="relative flex-1" style={{ height: `${h}%`, background: over ? ac : tint(ink, 0.28) }}>
+                  {over && (
+                    <span className="absolute" style={{ right: 0, bottom: "100%", marginBottom: u(1), whiteSpace: "nowrap", fontFamily: MONO, fontSize: u(1.6), fontWeight: 600, color: bg, background: ink, padding: `${u(0.5)} ${u(1.1)}` }}>
+                      over budget · alert sent
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex" style={{ gap: u(1.5), marginTop: u(1.1), fontFamily: MONO, fontSize: u(1.6), color: tint(ink, 0.6) }}>
+            {SPEND_DAYS.map(([day]) => (
+              <span key={day} className="flex-1 text-center">{day}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Frame>
+  );
+}
+
 export const sectionCompositions: Record<string, (p: P) => ReactNode> = {
+  "trasys-llm-trace": TrasysLlmTrace,
+  "trasys-token-cost": TrasysTokenCost,
   "services-overview": ServicesOverview,
   "svc-product-engineering": ProductEngineering,
   "svc-digital-marketing": DigitalMarketing,

@@ -109,6 +109,7 @@ export function imagesByPage(): Record<string, SiteImage[]> {
   const pages: Record<string, SiteImage[]> = {
     "/services": [image("services-overview")],
     "/ai": [image("ai-production-stack")],
+    "/trasys": [image("trasys-llm-trace"), image("trasys-token-cost")],
     "/about": [image("about")],
     "/careers": [image("careers")],
     "/security": [image("security")],
