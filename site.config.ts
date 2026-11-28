@@ -188,4 +188,4 @@ export const whatsappUrl: string | null = isSet(siteConfig.contact.whatsapp)
 
 // Date of the last content change to the site (YYYY-MM-DD). The sitemap uses it as the
 // <lastmod> for pages without their own date. Bump it when you change page content.
-export const CONTENT_UPDATED = "2026-11-17";
+export const CONTENT_UPDATED = "2026-11-28";

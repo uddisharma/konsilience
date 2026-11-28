@@ -104,6 +104,6 @@ AI-built apps usually fail in four places once real users arrive: logins, paymen
 
 ## Internal link spots
 
-- `[INTERNAL LINK: custom software service page]` in the "Fix it or rebuild it?" section: `/services/custom-software-development`.
+- `[INTERNAL LINK: custom software service page]` in the "Fix it or rebuild it?" section: `/services/saas-and-mvp-development`.
 - `[INTERNAL LINK: security checklist for AI-generated apps]` in the secrets section.
 - `[INTERNAL LINK: booking]` at the end, pointing to `/contact#book`.

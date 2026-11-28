@@ -19,13 +19,10 @@ export const brand = {
   email: siteConfig.contact.salesEmail,
 };
 
-import { aiSolutions, industryList, projects, serviceCategories, serviceList } from "./catalog";
+import { industryList, projects, serviceCategories, serviceList, slugify, type Project } from "./catalog";
 
 // NEEDS_CONFIRMATION (Phase 2/4): claimed count; the catalog currently holds 16 project records.
 const CLAIMED_PROJECT_COUNT = 35;
-// Mega-menu layout for Industries: column titles, and how many industries each column lists.
-const INDUSTRY_NAV_COLUMNS = ["Core", "Emerging", "Services"] as const;
-const INDUSTRIES_PER_NAV_COLUMN = 6;
 
 export const facts = {
   platforms: `${CLAIMED_PROJECT_COUNT}+`,
@@ -34,34 +31,52 @@ export const facts = {
   technologies: new Set(projects.flatMap((p) => p.tech)).size,
 };
 
-export type NavLink = { label: string; href: string };
-export type NavGroup = { title: string; links: NavLink[] };
-export type NavItem = { label: string; href: string; groups: NavGroup[]; featured?: { title: string; text: string; href: string } };
+export type NavLink = { label: string; href: string; text?: string; note?: string }; // text: one-line description; note: small suffix after the label
+export type NavGroup = { title: string; icon?: string; text?: string; href?: string; links: NavLink[] };
+export type NavItem = {
+  label: string;
+  href: string;
+  groups: NavGroup[];
+  featured?: { title: string; text: string; href: string };
+  tabs?: boolean; // desktop layout: groups listed on the left, the chosen group's links on the right (Services)
+  cases?: Project[]; // desktop layout: case-study tiles with logos (Portfolio)
+  wideOnly?: boolean; // header shows it only on screens wider than a 14-inch laptop (About)
+};
+
+// Case studies featured in the Portfolio mega menu, in display order.
+const NAV_CASE_STUDIES = ["trasys-ai", "omnichannel-helpdesk", "legal-practice-suite", "enterprise-hrms", "browser-telehealth", "ai-hair-intelligence-platform"];
 
 export const nav: NavItem[] = [
   {
-    label: brand.product.name,
-    href: "/trasys-ai",
+    label: "Services",
+    href: "/services",
+    groups: serviceCategories.map((c) => ({
+      title: c.name,
+      icon: c.icon,
+      text: c.text,
+      href: `/services#${slugify(c.name)}`,
+      links: serviceList.filter((s) => s.category === c.name).map((s) => ({ label: s.name, href: `/services/${s.slug}`, text: s.short, note: s.note })),
+    })),
+    tabs: true,
+  },
+  {
+    label: "Portfolio",
+    href: "/portfolio",
     groups: [
-      {
-        title: brand.product.name,
-        links: [
-          { label: "Product Overview", href: "/trasys-ai" },
-          { label: "Features", href: "/trasys-ai#features" },
-          { label: "Integrations", href: "/trasys-ai#integrations" },
-          { label: `Try ${brand.product.name}`, href: siteConfig.trasys.signupUrl },
-        ],
-      },
-      {
-        title: "AI Services",
-        links: [{ label: "All AI Solutions", href: "/ai-solutions" }, ...aiSolutions.map((a) => ({ label: a.name, href: `/ai-solutions/${a.slug}` }))],
-      },
-    ],
-    featured: { title: brand.product.name, text: "Our own AI observability platform: trace LLM calls, track token spend and catch incidents early.", href: "/trasys-ai" },
+      { title: "Support & Business Ops", industries: ["Customer Support", "Legal", "HR & Workforce", "Inventory & Operations"] },
+      { title: "Field Service & Property", industries: ["Field Services", "Construction", "Real Estate"] },
+      { title: "Health, Commerce & AI", industries: ["Healthcare", "Beauty & Wellness", "Retail & Ecommerce", "Travel", "Developer Tools"] },
+    ].map((g) => ({
+      title: g.title,
+      links: projects.filter((p) => g.industries.includes(p.industry)).map((p) => ({ label: p.client, href: `/portfolio/${p.slug}` })),
+    })),
+    cases: NAV_CASE_STUDIES.map((slug) => projects.find((p) => p.slug === slug)!),
+    featured: { title: `${CLAIMED_PROJECT_COUNT}+ projects done`, text: "SaaS products, apps and AI tools our team has designed and engineered.", href: "/portfolio" },
   },
   {
     label: "About",
     href: "/about",
+    wideOnly: true,
     groups: [
       {
         title: "Company",
@@ -94,60 +109,15 @@ export const nav: NavItem[] = [
     ],
     featured: { title: "Global Delivery Hubs", text: "Senior offshore engineering pods delivering across Dubai, North America, UK and Europe.", href: "/locations" },
   },
-  {
-    label: "Services",
-    href: "/services",
-    groups: serviceCategories.map((c) => ({
-      title: c.name,
-      links: serviceList.filter((s) => s.category === c.name).map((s) => ({ label: s.name, href: `/services/${s.slug}` })),
-    })),
-    featured: {
-      title: "Digital Marketing & Growth",
-      text: "Full-funnel PPC, technical SEO, and conversion rate optimization engineered for ROI.",
-      href: "/digital-marketing",
-    },
-  },
-  {
-    label: "Industries",
-    href: "/industries",
-    groups: INDUSTRY_NAV_COLUMNS.map((title, g) => ({
-      title,
-      links: industryList
-        .slice(g * INDUSTRIES_PER_NAV_COLUMN, (g + 1) * INDUSTRIES_PER_NAV_COLUMN)
-        .map((i) => ({ label: i.name, href: `/industries/${i.slug}` })),
-    })),
-    featured: { title: `${facts.industries} industries and counting`, text: "Platforms built for support, legal, HR, real estate, healthcare, construction and more.", href: "/industries" },
-  },
-  {
-    label: "Portfolio",
-    href: "/portfolio",
-    groups: [
-      { title: "Support & Business Ops", industries: ["Customer Support", "Legal", "HR & Workforce", "Inventory & Operations"] },
-      { title: "Field Service & Property", industries: ["Field Services", "Construction", "Real Estate"] },
-      { title: "Health, Commerce & AI", industries: ["Healthcare", "Beauty & Wellness", "Retail & Ecommerce", "Travel", "Developer Tools"] },
-    ].map((g) => ({
-      title: g.title,
-      links: projects.filter((p) => g.industries.includes(p.industry)).map((p) => ({ label: p.client, href: `/portfolio/${p.slug}` })),
-    })),
-    featured: { title: "35+ projects done", text: "SaaS products, apps and AI tools our team has designed and engineered.", href: "/portfolio" },
-  },
-  {
-    label: "Resources",
-    href: "/blog",
-    groups: [
-      {
-        title: "Learn",
-        links: [
-          { label: "Blog", href: "/blog" },
-          { label: "Guides", href: "/resources/guides" },
-          { label: "Whitepapers", href: "/resources/whitepapers" },
-          { label: "Press Releases", href: "/resources/press-releases" },
-          { label: "Webinars", href: "/resources/webinars" },
-        ],
-      },
-    ],
-    featured: { title: "Insights", text: "Ideas and playbooks from our engineers, designers and AI team.", href: "/blog" },
-  },
+];
+
+// Our own product: a plain header link (no dropdown), shown just before the division buttons.
+export const navProduct = { label: brand.product.name, href: "/trasys" };
+
+// Dedicated header buttons for the two practice areas, shown after the nav links.
+export const navDivisions = [
+  { name: "AI", href: "/ai", shine: false },
+  { name: "Digital", href: "/digital", shine: true }, // animated highlight sweep on the label
 ];
 
 // Capability chips in the hero marquee.
@@ -161,12 +131,20 @@ export const heroTags = [
   ["DESIGN", "UX · UI · Prototypes", "pen"],
 ];
 
-export const services = [
-  { icon: "compass", title: ["Strategic Technology", "Consulting"], text: "Define the right technology strategy to solve complex business challenges.", links: [["IT Consulting", "/services/it-consulting"], ["Software Consulting", "/services/software-consulting"], ["Mobile App Consulting", "/services/mobile-app-consulting"], ["FinTech Consulting", "/services/fintech-consulting"]] },
-  { icon: "layers", title: ["Digital Product Development", "& Engineering"], text: "Design, build and scale digital products engineered for performance.", links: [["Mobile App Development", "/services/mobile-app-development"], ["Web Development", "/services/web-development"], ["Custom Software", "/services/custom-software-development"], ["UI/UX Design", "/services/ui-ux-design"]] },
-  { icon: "spark", title: ["AI, Data &", "Analytics"], text: "Turn data into intelligent systems that drive real business decisions.", links: [["Generative AI", "/ai-solutions/generative-ai"], ["Agentic AI", "/ai-solutions/agentic-ai"], ["Big Data", "/services/big-data"], ["Business Intelligence", "/services/business-intelligence"]] },
-  { icon: "shield", title: ["Cloud Operations", "& Cybersecurity"], text: "Run resilient, secure cloud infrastructure that scales with your growth.", links: [["Cloud Services", "/services/cloud-services"], ["DevOps", "/services/devops"], ["Managed IT", "/services/managed-it-services"], ["Cybersecurity", "/services/cybersecurity"]] },
-];
+// Home page service cards: one per main service, linking to each of its services. Titles are split over two lines.
+const HOME_SERVICE_TITLES: Record<string, [string, string]> = {
+  "AI & Automation": ["AI &", "Automation"],
+  "Cloud & DevOps": ["Cloud &", "DevOps"],
+  Security: ["Security &", "Compliance"],
+  "Product Engineering": ["Product", "Engineering"],
+  "Digital Marketing": ["Digital", "Marketing"],
+};
+export const services = serviceCategories.map((c) => ({
+  icon: c.icon,
+  title: HOME_SERVICE_TITLES[c.name],
+  text: c.text,
+  links: serviceList.filter((x) => x.category === c.name).map((x): [string, string] => [x.name, `/services/${x.slug}`]),
+}));
 
 // Portfolio cards on the home page come from the project catalog.
 export const caseStudies = projects;
@@ -212,7 +190,7 @@ export const faqs = [
 
 export const footer = {
   columns: [
-    { title: "Services", links: [{ label: "Mobile App Development", href: "/services/mobile-app-development" }, { label: "Web Development", href: "/services/web-development" }, { label: "Trasys AI", href: "/trasys-ai" }, { label: "Cloud Services", href: "/services/cloud-services" }, { label: "UI/UX Design", href: "/services/ui-ux-design" }, { label: "QA & Testing", href: "/services/qa-and-testing" }] },
+    { title: "Services", links: [{ label: "AI Agents & Automation", href: "/services/ai-agents-and-workflow-automation" }, { label: "Cloud Migration", href: "/services/cloud-migration" }, { label: "Penetration Testing", href: "/services/penetration-testing" }, { label: "SaaS & MVP Development", href: "/services/saas-and-mvp-development" }, { label: "SEO & Local SEO", href: "/services/seo-and-local-seo" }, { label: "Trasys AI", href: "/trasys" }] },
     { title: "Industries", links: [{ label: "Travel & Hospitality", href: "/industries/travel" }, { label: "Aviation", href: "/industries/aviation" }, { label: "Healthcare", href: "/industries/healthcare" }, { label: "Finance", href: "/industries/finance" }, { label: "Logistics", href: "/industries/logistics" }, { label: "All 18 Industries →", href: "/industries" }] },
     { title: "Global Delivery", links: [{ label: "Dubai / UAE (App Dev)", href: "/ae/mobile-app-development-company-dubai" }, { label: "Canada (Software Dev)", href: "/ca/software-development-company-canada" }, { label: "USA (Enterprise Dev)", href: "/us/software-development-company-usa" }, { label: "UK / London (Mobile Apps)", href: "/uk/mobile-app-development-company-london" }, { label: "Australia (Tech Studio)", href: "/au/mobile-app-development-company-australia" }, { label: "All Global Locations →", href: "/locations" }] },
     { title: "Company", links: [{ label: "About Us", href: "/about" }, { label: "Careers", href: "/careers" }, { label: "Portfolio", href: "/portfolio" }, { label: "Our Team", href: "/about/team" }, { label: "How We Work", href: "/how-we-work" }, { label: "Contact", href: "/contact" }] },

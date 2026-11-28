@@ -17,10 +17,10 @@ export function generateStaticParams() {
   return aiSolutions.map((a) => ({ slug: a.slug }));
 }
 
-export async function generateMetadata({ params }: PageProps<"/ai-solutions/[slug]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/ai/[slug]">): Promise<Metadata> {
   const a = find((await params).slug);
   if (!a) return {};
-  const url = `${siteUrl}/ai-solutions/${a.slug}`;
+  const url = `${siteUrl}/ai/${a.slug}`;
   return {
     title: `${a.name} Solutions & Development | Agentic AI`,
     description: `${a.short} Build custom, production-grade ${a.name.toLowerCase()} with senior AI engineers at Konsilience.`,
@@ -30,13 +30,13 @@ export async function generateMetadata({ params }: PageProps<"/ai-solutions/[slu
       title: `${a.name} Solutions | Konsilience AI Studio`,
       description: a.short,
       url,
-      images: [ogImage(`/ai-solutions/${a.slug}`)!],
+      images: [ogImage(`/ai/${a.slug}`)!],
     },
     twitter: {
       card: "summary_large_image",
       title: `${a.name} Solutions | Konsilience`,
       description: a.short,
-      images: [ogImage(`/ai-solutions/${a.slug}`)!.url],
+      images: [ogImage(`/ai/${a.slug}`)!.url],
     },
   };
 }
@@ -134,7 +134,7 @@ const aiFaqs: Record<string, { q: string; a: string }[]> = {
   ],
 };
 
-export default async function AiSolutionPage({ params }: PageProps<"/ai-solutions/[slug]">) {
+export default async function AiSolutionPage({ params }: PageProps<"/ai/[slug]">) {
   const a = find((await params).slug);
   if (!a) notFound();
   const n = a.name;
@@ -151,14 +151,14 @@ export default async function AiSolutionPage({ params }: PageProps<"/ai-solution
     <>
       <JsonLd data={schema} />
       <PageHero
-        crumbs={[{ label: "AI Solutions", href: "/ai-solutions" }, { label: a.name }]}
+        crumbs={[{ label: "AI Solutions", href: "/ai" }, { label: a.name }]}
         eyebrow="AI Solutions"
         title={[a.name, <span key="d" className="text-primary">Development</span>]}
         text={`${a.short} Built on your data, integrated with your systems and governed for enterprise use.`}
         actions={
           <>
             <Button>Book an AI Advisory Session</Button>
-            <Button variant="outline" href="/ai-solutions">All AI Solutions</Button>
+            <Button variant="outline" href="/ai">All AI Solutions</Button>
           </>
         }
         aside={<SiteImg img={aiSolutionImage(a.slug)} priority className="hidden aspect-[4/3] w-full rounded-3xl border border-line object-cover lg:block" />}

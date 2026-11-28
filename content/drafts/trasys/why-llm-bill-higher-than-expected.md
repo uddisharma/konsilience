@@ -7,7 +7,7 @@ title: "Why your LLM bill is higher than you expect: 8 common causes"
 intent: "Problem"
 cta: "Start free"
 cta_link: "https://www.trasys.dev/sign-up"
-target_page: "/trasys-ai"
+target_page: "/trasys"
 blocked_by: "none"
 ---
 # Why your LLM bill is higher than you expect: 8 common causes

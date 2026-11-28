@@ -9,60 +9,179 @@ export const slugify = (s: string) =>
 export type Service = {
   slug: string;
   name: string;
+  note?: string; // shown after the name in menus and lists, e.g. the standards a service covers
   category: string;
   icon: string;
   short: string;
   offerings: string[];
+  offeringText: Record<string, string>; // one line per offering, shown on the service page
   tech: string[];
 };
 
-const svc = (name: string, category: string, icon: string, short: string, offerings: string[], tech: string[]): Service => ({
-  slug: slugify(name),
+// offerings: [title, one-line description]. `slug` and `note` only where the name alone would not do.
+const svc = (name: string, category: string, icon: string, short: string, offerings: [string, string][], tech: string[], extra: { slug?: string; note?: string } = {}): Service => ({
+  slug: extra.slug ?? slugify(name),
   name,
+  note: extra.note,
   category,
   icon,
   short,
-  offerings,
+  offerings: offerings.map(([title]) => title),
+  offeringText: Object.fromEntries(offerings),
   tech,
 });
 
+// The five main services. Each groups the services below it in the header menu and on /services.
 export const serviceCategories = [
-  { name: "Product Engineering", icon: "layers", text: "Design, build and scale digital products engineered for performance." },
-  { name: "Digital Transformation", icon: "rocket", text: "Modernize legacy estates and adopt the technologies that move the needle." },
-  { name: "Digital Marketing & Growth", icon: "chart", text: "Data-driven marketing, SEO, paid performance ads and conversion engineering." },
-  { name: "Consulting", icon: "compass", text: "Define the right technology strategy to solve complex business challenges." },
-  { name: "Data & Managed IT", icon: "db", text: "Turn data into decisions and keep critical systems running around the clock." },
+  { name: "AI & Automation", icon: "agent", text: "Agents, assistants and guardrails that put AI to work in your business, reliably." },
+  { name: "Cloud & DevOps", icon: "cloud", text: "Move to the cloud, ship faster and keep both the bill and the uptime under control." },
+  { name: "Security", icon: "shield", text: "Find the weaknesses, fix them and stay ready for audits." },
+  { name: "Product Engineering", icon: "layers", text: "Design, build and modernize the software your business runs on." },
+  { name: "Digital Marketing", icon: "chart", text: "Get found, earn the click and turn visitors into customers." },
 ];
 
 export const serviceList: Service[] = [
-  svc("UI/UX Design", "Product Engineering", "eye", "Research-led product design that users love and businesses measure.", ["User Research", "Wireframing & Prototyping", "Design Systems", "Usability Testing", "Interaction Design", "Accessibility Audits"], ["Figma", "Framer", "Maze", "Lottie", "Storybook", "Principle"]),
-  svc("Mobile App Development", "Product Engineering", "phone", "Native and cross-platform apps built for scale, speed and store success.", ["iOS App Development", "Android App Development", "Flutter Apps", "React Native Apps", "Wearable Apps", "App Modernization"], ["Swift", "Kotlin", "Flutter", "React Native", "Firebase", "GraphQL"]),
-  svc("Web Development", "Product Engineering", "grid", "High-performance web platforms, portals and progressive web apps.", ["Web Applications", "Enterprise Portals", "Progressive Web Apps", "Headless Commerce", "CMS Development", "API Development"], ["Next.js", "React", "Node.js", "TypeScript", "PostgreSQL", "Vercel"]),
-  svc("Custom Software Development", "Product Engineering", "layers", "Bespoke software engineered around your workflows, not the other way round.", ["Enterprise Software", "SaaS Products", "ERP & CRM", "Workflow Automation", "System Integration", "MVP Development"], ["Java", ".NET", "Python", "Go", "Kubernetes", "Kafka"]),
-  svc("QA & Testing", "Product Engineering", "check", "Automated and manual testing that ships quality at release velocity.", ["Test Automation", "Performance Testing", "Security Testing", "Mobile Testing", "API Testing", "QA Consulting"], ["Playwright", "Cypress", "Appium", "JMeter", "k6", "Selenium"]),
-  svc("DevOps", "Product Engineering", "cloud", "CI/CD, infrastructure as code and observability for confident releases.", ["CI/CD Pipelines", "Infrastructure as Code", "Containerization", "Observability", "Release Management", "SRE"], ["GitHub Actions", "Terraform", "Docker", "Kubernetes", "Datadog", "ArgoCD"]),
-  svc("Product Management", "Product Engineering", "compass", "Product strategy, roadmaps and discovery that de-risk what you build.", ["Product Discovery", "Roadmapping", "MVP Scoping", "Product Analytics", "Go-to-Market", "Growth Experiments"], ["Jira", "Productboard", "Amplitude", "Mixpanel", "Notion", "Miro"]),
-  svc("Search Engine Optimization", "Digital Marketing & Growth", "search", "Technical SEO, programmatic architectures, and generative engine optimization.", ["Technical SEO Audits", "Enterprise & Programmatic SEO", "AI Search Optimization (GEO)", "Core Web Vitals Tuning", "International SEO", "Link Authority Building"], ["Semrush", "Ahrefs", "Google Search Console", "Screaming Frog", "Next.js", "Schema.org"]),
-  svc("Performance Marketing & PPC", "Digital Marketing & Growth", "target", "Multi-channel paid campaigns engineered for maximum ROAS and lower customer acquisition cost.", ["Google Search & PMax", "Meta Ads (FB & IG)", "LinkedIn B2B Lead Gen", "Retargeting Funnels", "App Install Campaigns", "Cross-Platform Attribution"], ["Google Ads", "Meta Ads Manager", "LinkedIn Ads", "AppsFlyer", "Triple Whale", "GA4"]),
-  svc("Social Media Marketing", "Digital Marketing & Growth", "share", "Organic social growth, executive personal branding, and viral community management.", ["B2B LinkedIn Growth", "Executive Thought Leadership", "Short-Form Video (Reels/TikTok)", "Community Management", "Influencer Partnerships", "Brand Narrative Strategy"], ["LinkedIn", "Instagram", "TikTok", "Buffer", "Canva", "CapCut"]),
-  svc("Content Marketing & Copywriting", "Digital Marketing & Growth", "doc", "High-converting copy, technical whitepapers, and thought leadership that drives pipeline.", ["Technical Whitepapers", "Conversion Copywriting", "SEO Pillar Articles", "Case Studies & E-books", "Email Sequence Copy", "Content Refresh Sprints"], ["Notion", "SurferSEO", "Clearscope", "Grammarly", "Storyblok", "HubSpot"]),
-  svc("Conversion Rate Optimization", "Digital Marketing & Growth", "chart", "Data-backed UX audits, A/B testing, and checkout funnel optimization that turns traffic into revenue.", ["A/B & Multivariate Testing", "User Session Recording Audits", "Checkout & Sign-Up Optimization", "Landing Page Redesign", "Heatmap Behavioral Analysis", "Friction Point Elimination"], ["VWO", "Optimizely", "Hotjar", "Microsoft Clarity", "Google Tag Manager", "PostHog"]),
-  svc("Email Marketing & Automation", "Digital Marketing & Growth", "mail", "Automated lifecycle journeys, behavioral flows, and retention engines that maximize LTV.", ["Automated Welcome & Onboarding", "Abandoned Cart & Funnel Recovery", "Predictive Churn Mitigation", "HubSpot & Klaviyo Workflows", "B2B Nurture Cadences", "Deliverability & Warmup"], ["Klaviyo", "HubSpot", "ActiveCampaign", "Customer.io", "Apollo.io", "Mailgun"]),
-  svc("Legacy Modernization", "Digital Transformation", "rocket", "Re-platform and refactor legacy systems without stopping the business.", ["Application Re-engineering", "Cloud Re-platforming", "Monolith to Microservices", "Database Migration", "UI Modernization", "Mainframe Offloading"], ["AWS", "Azure", "Kubernetes", "Java", ".NET", "PostgreSQL"]),
-  svc("Cloud Services", "Digital Transformation", "cloud", "Cloud strategy, migration and management across AWS, Azure and GCP.", ["Cloud Strategy", "Cloud Migration", "Cloud-Native Development", "Serverless", "Cost Optimization", "Multi-Cloud"], ["AWS", "Azure", "Google Cloud", "Terraform", "Lambda", "Cloudflare"]),
-  svc("Blockchain Development", "Digital Transformation", "lock", "Secure distributed ledgers, smart contracts and tokenization platforms.", ["Smart Contracts", "DeFi Platforms", "NFT Marketplaces", "Tokenization", "Private Blockchains", "Wallet Development"], ["Solidity", "Ethereum", "Hyperledger", "Polygon", "Rust", "Web3.js"]),
-  svc("Cybersecurity", "Digital Transformation", "shield", "Security engineering, audits and managed defence for modern enterprises.", ["Security Audits", "Penetration Testing", "DevSecOps", "Identity & Access", "Cloud Security", "Compliance Readiness"], ["OWASP", "Snyk", "Okta", "CrowdStrike", "Vault", "Wiz"]),
-  svc("IoT Development", "Digital Transformation", "bolt", "Connected devices, edge computing and real-time IoT platforms.", ["IoT Platforms", "Firmware Development", "Edge Computing", "Device Management", "Industrial IoT", "IoT Analytics"], ["MQTT", "AWS IoT", "Azure IoT", "C/C++", "Zephyr", "InfluxDB"]),
-  svc("AR/VR Development", "Digital Transformation", "eye", "Immersive experiences for training, retail, real estate and more.", ["AR Apps", "VR Experiences", "Virtual Showrooms", "3D Configurators", "Mixed Reality", "Metaverse Spaces"], ["Unity", "Unreal", "ARKit", "ARCore", "WebXR", "Blender"]),
-  svc("IT Consulting", "Consulting", "compass", "Technology strategy and architecture advice from senior practitioners.", ["IT Strategy", "Architecture Review", "Technology Due Diligence", "Digital Roadmaps", "Vendor Selection", "CTO as a Service"], ["TOGAF", "C4 Model", "AWS Well-Architected", "Azure CAF", "Miro", "Lucid"]),
-  svc("Software Consulting", "Consulting", "layers", "Pragmatic guidance to build, buy or fix the software that runs your business.", ["Software Audits", "Build vs Buy", "Code Quality Review", "Process Improvement", "Team Scaling", "Delivery Rescue"], ["SonarQube", "GitHub", "Jira", "Linear", "Datadog", "Sentry"]),
-  svc("FinTech Consulting", "Consulting", "chart", "Regulation-aware strategy for payments, lending, banking and wealth.", ["Digital Banking Strategy", "Payments Architecture", "Regulatory Compliance", "Open Banking", "Fraud & Risk", "Core Modernization"], ["Stripe", "Plaid", "Mambu", "Temenos", "PCI DSS", "ISO 20022"]),
-  svc("Mobile App Consulting", "Consulting", "phone", "Validate, plan and scale your mobile product with a clear strategy.", ["App Strategy", "Platform Selection", "Monetization", "App Store Optimization", "Performance Audit", "Scaling Plan"], ["App Store Connect", "Google Play", "Firebase", "RevenueCat", "Branch", "Amplitude"]),
-  svc("Big Data", "Data & Managed IT", "db", "Data lakes, pipelines and platforms that handle scale gracefully.", ["Data Lakes", "Data Pipelines", "Stream Processing", "Data Warehousing", "Data Governance", "Data Migration"], ["Databricks", "Snowflake", "Spark", "Kafka", "Airflow", "dbt"]),
-  svc("Data Analytics", "Data & Managed IT", "chart", "From raw data to insights your teams can act on every day.", ["Descriptive Analytics", "Predictive Analytics", "Customer Analytics", "Self-Service Analytics", "Data Visualization", "Analytics Consulting"], ["Python", "R", "Looker", "Tableau", "BigQuery", "dbt"]),
-  svc("Business Intelligence", "Data & Managed IT", "grid", "Dashboards and reporting that give leadership a single source of truth.", ["BI Strategy", "Dashboard Development", "KPI Frameworks", "Embedded Analytics", "Report Automation", "BI Migration"], ["Power BI", "Tableau", "Looker", "Metabase", "Snowflake", "SQL Server"]),
-  svc("Managed IT Services", "Data & Managed IT", "shield", "24/7 monitoring, support and operations for business-critical systems.", ["24/7 Monitoring", "Application Support", "Infrastructure Management", "Incident Response", "Patch Management", "SLA Reporting"], ["PagerDuty", "Datadog", "ServiceNow", "Grafana", "Ansible", "Jira SM"]),
-  svc("Dedicated Teams", "Data & Managed IT", "users", "Vetted engineers, designers and PMs who work as an extension of your team.", ["Dedicated Developers", "Team Augmentation", "Offshore Development Center", "Build-Operate-Transfer", "Agile Pods", "Technical Leadership"], ["Slack", "Jira", "GitHub", "Figma", "Notion", "Zoom"]),
+  /* AI & Automation */
+  svc("AI Agents & Workflow Automation", "AI & Automation", "agent", "AI agents that take over multi-step work across your tools, with a human in the loop where it matters.", [
+    ["Workflow Discovery", "Map the manual steps in a process and pick the ones an agent can take over safely."],
+    ["Custom AI Agents", "Agents that plan, call your tools and APIs, and finish multi-step tasks end to end."],
+    ["Tool & System Integration", "Connect agents to your CRM, helpdesk, ERP and internal APIs with scoped permissions."],
+    ["Human-in-the-Loop Controls", "Approval steps, spend limits and audit trails so people stay in charge of the decisions that matter."],
+  ], ["OpenAI", "Claude", "LangGraph", "n8n", "Python", "PostgreSQL"]),
+  svc("RAG & Knowledge Assistants", "AI & Automation", "book", "Assistants that answer from your own documents and data, with sources cited.", [
+    ["Knowledge Base Ingestion", "Pipelines that clean, chunk and index your documents, tickets and wikis."],
+    ["Retrieval Pipeline Design", "Hybrid search, re-ranking and access rules tuned to return the right passage."],
+    ["Internal & Customer Assistants", "Chat and search assistants for staff or customers, embedded in the tools they already use."],
+    ["Answer Quality Evaluation", "Test sets and scoring that measure accuracy and catch regressions before release."],
+  ], ["LlamaIndex", "pgvector", "Pinecone", "OpenAI", "Claude", "Elasticsearch"]),
+  svc("AI Reliability & Observability", "AI & Automation", "eye", "Tracing, evaluation and cost control for AI features that are already in production.", [
+    ["LLM Tracing", "See every model call, tool call and retrieval step for a request in one trace."],
+    ["Evaluation Pipelines", "Automated checks that score outputs on every change to prompts, models or data."],
+    ["Cost & Token Monitoring", "Track spend per user, feature and model, with alerts before budgets are exceeded."],
+    ["Loop & Incident Alerts", "Detect runaway agents, failures and latency spikes, and route them to the right person."],
+  ], ["Trasys AI", "OpenTelemetry", "Grafana", "Python", "TypeScript", "PostgreSQL"]),
+  svc("AI Compliance Engineering", "AI & Automation", "check", "Engineering controls that keep AI features inside your legal, privacy and policy limits.", [
+    ["AI Risk Assessment", "Review each AI use case for data, privacy and regulatory risk before it is built."],
+    ["Data Privacy & PII Controls", "Redaction, data residency and retention rules applied before data reaches a model."],
+    ["Guardrails & Policy Enforcement", "Input and output filters that block unsafe, off-policy or out-of-scope responses."],
+    ["Audit Trails & Documentation", "Logged decisions and model documentation ready for auditors and customers."],
+  ], ["Guardrails", "Presidio", "OpenTelemetry", "Python", "AWS Bedrock", "Azure OpenAI"]),
+
+  /* Cloud & DevOps */
+  svc("Cloud Migration", "Cloud & DevOps", "cloud", "Move applications and data to AWS, Azure or Google Cloud with a planned, low-risk cutover.", [
+    ["Migration Assessment", "Inventory workloads, dependencies and costs, and choose the right approach for each."],
+    ["Landing Zone Setup", "Accounts, networking, identity and guardrails in place before anything moves."],
+    ["Application & Data Migration", "Move services and databases in stages, with rollback plans at every step."],
+    ["Cutover & Validation", "Rehearsed cutovers, performance checks and a clean decommission of the old estate."],
+  ], ["AWS", "Azure", "Google Cloud", "Terraform", "Kubernetes", "PostgreSQL"]),
+  svc("CI/CD & Infrastructure as Code", "Cloud & DevOps", "code", "Automated pipelines and versioned infrastructure, so every release is repeatable.", [
+    ["Pipeline Design", "Build, test and deploy pipelines that take a commit to production without manual steps."],
+    ["Infrastructure as Code", "Environments defined in Terraform and reviewed like any other code change."],
+    ["Containerization", "Docker images and Kubernetes or serverless runtimes sized for your workloads."],
+    ["Release Strategies", "Blue-green, canary and feature-flag releases that make rollbacks routine."],
+  ], ["GitHub Actions", "GitLab CI", "Terraform", "Docker", "Kubernetes", "ArgoCD"]),
+  svc("Cloud Cost Optimization", "Cloud & DevOps", "chart", "Find and remove cloud waste, then keep spend visible to the teams that create it.", [
+    ["Cost Audit", "A line-by-line review of your bill to find idle, oversized and forgotten resources."],
+    ["Rightsizing & Autoscaling", "Match compute, storage and databases to real usage, and scale with demand."],
+    ["Commitment Planning", "Savings plans and reserved capacity sized to your steady baseline."],
+    ["Cost Dashboards & Alerts", "Spend broken down by team, service and environment, with budget alerts."],
+  ], ["AWS Cost Explorer", "Azure Cost Management", "Kubecost", "Terraform", "Grafana", "Datadog"]),
+  svc("Observability & SRE", "Cloud & DevOps", "target", "Monitoring, alerting and reliability practices that catch problems before your customers do.", [
+    ["Metrics, Logs & Traces", "One place to see how every service behaves and where a request slows down."],
+    ["SLOs & Error Budgets", "Reliability targets agreed with the business and tracked on every release."],
+    ["Alerting & On-Call", "Alerts that point to a cause, routed to the right person with a runbook attached."],
+    ["Incident Response", "Clear roles during an incident and blameless reviews that prevent a repeat."],
+  ], ["Prometheus", "Grafana", "OpenTelemetry", "Datadog", "PagerDuty", "Sentry"]),
+  svc("Managed DevOps", "Cloud & DevOps", "users", "A DevOps team on retainer that runs your pipelines, infrastructure and releases.", [
+    ["Pipeline & Release Management", "We own the build and deploy pipeline and keep releases moving."],
+    ["Infrastructure Operations", "Patching, upgrades, backups and capacity handled on a schedule."],
+    ["Monitoring & Incident Support", "Alert handling and incident support with agreed response times."],
+    ["Monthly Reporting", "Uptime, deployment frequency, incidents and cost in one report."],
+  ], ["AWS", "Kubernetes", "Terraform", "GitHub Actions", "Grafana", "PagerDuty"]),
+
+  /* Security */
+  svc("Application Security Audit", "Security", "search", "A full review of your application's code, configuration and architecture for security weaknesses.", [
+    ["Secure Code Review", "Manual and automated review of your code for injection, auth and data-handling flaws."],
+    ["Dependency & Secrets Scan", "Find vulnerable packages, leaked keys and unsafe defaults across your repositories."],
+    ["Architecture & Threat Modeling", "Walk through how the system could be attacked and where the controls are thin."],
+    ["Prioritized Fix Plan", "Findings ranked by risk, with clear steps to fix each one and a retest."],
+  ], ["OWASP ASVS", "Semgrep", "Snyk", "Burp Suite", "Trivy", "GitHub Advanced Security"]),
+  svc("Penetration Testing", "Security", "lock", "Authorized attack simulation against your web apps, APIs, mobile apps and cloud.", [
+    ["Web & API Testing", "Manual testing of authentication, access control, business logic and input handling."],
+    ["Mobile App Testing", "Testing of iOS and Android apps, their storage and the APIs behind them."],
+    ["Cloud & Network Testing", "Testing of exposed services, cloud misconfigurations and internal network paths."],
+    ["Report & Retest", "Reproducible findings with severity ratings, and a retest once fixes are in."],
+  ], ["Burp Suite", "OWASP ZAP", "Nmap", "Metasploit", "Kali Linux", "MobSF"]),
+  svc("Compliance Readiness", "Security", "award", "Get ready for SOC 2, ISO 27001 and GDPR with the controls, policies and evidence auditors ask for.", [
+    ["Gap Assessment", "Compare your current controls with the standard and list exactly what is missing."],
+    ["Policies & Procedures", "Write the security policies your team will actually follow, mapped to each requirement."],
+    ["Control Implementation", "Put the technical controls in place: access, logging, encryption, backups and vendor checks."],
+    ["Audit Preparation", "Collect evidence continuously and prepare your team for the auditor's questions."],
+  ], ["SOC 2", "ISO 27001", "GDPR", "Vanta", "Drata", "AWS Security Hub"], { note: "SOC 2 / ISO 27001 / GDPR" }),
+  svc("Managed Security Monitoring", "Security", "shield", "Continuous monitoring of your cloud and applications, with alerts triaged by security engineers.", [
+    ["Log Collection & SIEM", "Bring cloud, application and identity logs into one place and keep them searchable."],
+    ["Threat Detection", "Detection rules tuned to your environment, so real threats stand out from noise."],
+    ["Alert Triage & Response", "Engineers investigate alerts and guide or carry out the response."],
+    ["Monthly Security Reports", "What was detected, what was done and what to fix next."],
+  ], ["Wazuh", "AWS GuardDuty", "Microsoft Sentinel", "CrowdStrike", "Elastic Security", "Cloudflare"]),
+
+  /* Product Engineering */
+  svc("SaaS & MVP Development", "Product Engineering", "rocket", "Take a product from idea to a launched MVP, then grow it into a multi-tenant SaaS.", [
+    ["Product Discovery & Scoping", "Agree the smallest product that proves the idea, and what it will cost to build."],
+    ["MVP Build", "Design and engineering of the first release, with a working demo every week."],
+    ["Multi-Tenant Architecture", "Tenant isolation, roles and data models that hold up as customers grow."],
+    ["Billing & Subscriptions", "Plans, trials, invoices and payments built on proven providers."],
+  ], ["Next.js", "Node.js", "Python", "PostgreSQL", "Stripe", "AWS"]),
+  svc("Backend & API Development", "Product Engineering", "db", "Reliable backends, APIs and integrations that keep up as usage grows.", [
+    ["API Design & Development", "REST and GraphQL APIs with clear contracts, versioning and documentation."],
+    ["Database Design", "Schemas, indexes and queries designed for your real read and write patterns."],
+    ["Third-Party Integrations", "Payments, CRMs, ERPs and partner APIs connected with retries and monitoring."],
+    ["Performance & Scaling", "Caching, queues and load testing to remove bottlenecks before they hurt users."],
+  ], ["Node.js", "Python", "Go", "PostgreSQL", "Redis", "Kafka"]),
+  svc("Legacy Modernization", "Product Engineering", "bolt", "Re-platform and refactor legacy systems without stopping the business.", [
+    ["Application Re-engineering", "Rewrite or refactor ageing code in stages, keeping the system live throughout."],
+    ["Cloud Re-platforming", "Move on-premise applications to managed cloud services with minimal change."],
+    ["Monolith to Microservices", "Split a monolith along clear boundaries, one service at a time."],
+    ["Database Migration", "Move data to a modern database with verified, zero-loss cutovers."],
+  ], ["AWS", "Azure", "Kubernetes", "Java", ".NET", "PostgreSQL"]),
+  svc("Web & Mobile Apps", "Product Engineering", "mobile", "Web platforms and iOS and Android apps designed and built by one team.", [
+    ["Web Applications", "Fast, accessible web apps and portals built with Next.js and React."],
+    ["iOS & Android Apps", "Native and cross-platform apps built with Swift, Kotlin, Flutter or React Native."],
+    ["UI/UX Design", "Research, wireframes, prototypes and a design system your engineers build from."],
+    ["QA & Release", "Automated and manual testing, store submission and release management."],
+  ], ["Next.js", "React", "Flutter", "React Native", "Swift", "Kotlin"]),
+
+  /* Digital Marketing */
+  svc("Website & SEO Audit", "Digital Marketing", "search", "A clear report on what is holding your website back in search, speed and conversions.", [
+    ["Technical SEO Audit", "Crawling, indexing, site structure and schema checked page by page."],
+    ["Speed & Core Web Vitals", "Find what slows your pages down and how to fix it."],
+    ["Content & Keyword Gaps", "The searches your customers make that your site does not yet answer."],
+    ["Prioritized Action Plan", "Every finding ranked by impact and effort, ready to hand to a developer."],
+  ], ["Google Search Console", "Screaming Frog", "Ahrefs", "Semrush", "PageSpeed Insights", "GA4"]),
+  svc("SEO & Local SEO", "Digital Marketing", "pin", "Rank for the searches that bring customers, nationally and in the places you serve.", [
+    ["Technical & On-Page SEO", "Fix the foundations and optimize the pages that matter most."],
+    ["Local SEO & Google Business Profile", "Show up in the map pack and local results for your service areas."],
+    ["AI Search Optimization", "Structure content so AI assistants and answer engines can find and cite it."],
+    ["Link & Authority Building", "Earn relevant links and mentions that raise your site's authority."],
+  ], ["Google Search Console", "Google Business Profile", "Ahrefs", "Semrush", "Schema.org", "GA4"]),
+  svc("Performance Marketing", "Digital Marketing", "target", "Paid campaigns on search and social, managed against cost per lead and return on ad spend.", [
+    ["Google Search & Performance Max", "Campaigns built around buyer intent, with tight keyword and budget control."],
+    ["Meta & LinkedIn Ads", "Audience targeting and creative testing on the platforms your buyers use."],
+    ["Retargeting Funnels", "Bring back visitors who did not convert the first time."],
+    ["Tracking & Attribution", "Conversion tracking you can trust, so budget goes to what works."],
+  ], ["Google Ads", "Meta Ads Manager", "LinkedIn Ads", "GA4", "Google Tag Manager", "Looker Studio"]),
+  svc("Content & Social Media", "Digital Marketing", "share", "Articles, case studies and social posts that build trust and bring in leads.", [
+    ["Content Strategy", "Topics chosen from what your buyers search for and ask about."],
+    ["Blogs & Case Studies", "Well-researched articles and customer stories written for readers first."],
+    ["Social Media Management", "A steady calendar of posts on the channels your audience follows."],
+    ["Founder & Brand Voice", "Thought-leadership posts that sound like the people behind the company."],
+  ], ["LinkedIn", "Instagram", "YouTube", "Notion", "Canva", "Buffer"]),
+  svc("AI Marketing Automation", "Digital Marketing", "spark", "Use AI and automation to capture, qualify and follow up with leads around the clock.", [
+    ["Lead Capture & Qualification", "Chat and forms that qualify leads and book meetings automatically."],
+    ["Email & WhatsApp Journeys", "Automated follow-ups triggered by what each lead does."],
+    ["CRM Automation", "Leads routed, scored and updated in your CRM without manual entry."],
+    ["AI Content Workflows", "Drafting and repurposing workflows that keep a human editor in control."],
+  ], ["HubSpot", "Zoho CRM", "n8n", "Zapier", "OpenAI", "WhatsApp Business API"]),
 ];
 
 /* ---------------- AI solutions ---------------- */
@@ -140,7 +259,7 @@ export const projects: Project[] = [
     live: true,
     category: "Helpdesk & ticketing SaaS",
     industry: "Customer Support",
-    service: "Custom Software Development",
+    service: "SaaS & MVP Development",
     text: "An AI-assisted helpdesk that turns email, chat, phone and social messages into one trackable ticket queue.",
     about: "A multi-tenant customer service platform where support teams manage every conversation from one workspace, backed by automation, SLAs, a self-service portal and AI copilots for agents.",
     challenge: "Support requests were landing in scattered inboxes, chat tools and phone lines. Tickets got lost or duplicated, agents lacked customer context from CRM and order systems, and repetitive questions consumed headcount.",
@@ -158,7 +277,7 @@ export const projects: Project[] = [
     live: true,
     category: "Legal practice management SaaS",
     industry: "Legal",
-    service: "Custom Software Development",
+    service: "SaaS & MVP Development",
     text: "Cloud practice management for law firms: matters, time, billing, trust accounting and client intake in one place.",
     about: "A cloud platform that replaces on-premise legal software and spreadsheets, giving firms a single system for matters, billable time, trust accounting, payments and client communication.",
     challenge: "Firms ran on legacy desktop tools, spreadsheets and paper, which made it hard to track matters, capture every billable hour, stay compliant with trust accounting rules and get paid on time.",
@@ -176,7 +295,7 @@ export const projects: Project[] = [
     live: true,
     category: "HCM / HRMS platform",
     industry: "HR & Workforce",
-    service: "Custom Software Development",
+    service: "SaaS & MVP Development",
     text: "A cloud HCM suite covering the full employee lifecycle, from hiring and onboarding to payroll and performance.",
     about: "A single, mobile-first HR platform for large and distributed workforces, replacing disconnected systems for recruitment, attendance, payroll, performance and engagement.",
     challenge: "HR ran on separate legacy systems for hiring, attendance, payroll and reviews. Employee data was duplicated, processes were manual and the employee experience on mobile was poor.",
@@ -194,7 +313,7 @@ export const projects: Project[] = [
     live: true,
     category: "Field service management SaaS",
     industry: "Field Services",
-    service: "Mobile App Development",
+    service: "Web & Mobile Apps",
     text: "An all-in-one app for home service businesses to quote, schedule, dispatch, invoice and get paid.",
     about: "A web and mobile platform for landscaping, cleaning, plumbing and contracting businesses that covers the full job workflow from request to payment.",
     challenge: "Small service businesses juggled paper quotes, whiteboard schedules and separate invoicing tools. Jobs were double-booked, crews lacked job details in the field and owners waited weeks to get paid.",
@@ -212,7 +331,7 @@ export const projects: Project[] = [
     live: true,
     category: "Property management SaaS",
     industry: "Real Estate",
-    service: "Web Development",
+    service: "Web & Mobile Apps",
     text: "A cloud platform for property managers covering accounting, leasing, maintenance, payments and resident communication.",
     about: "An end-to-end property management system for residential and commercial portfolios, with a resident portal and AI assistants for leasing and maintenance.",
     challenge: "Property managers ran rent collection, accounting, leasing and maintenance across spreadsheets and disconnected tools, creating manual work, slow responses and little visibility into portfolio performance.",
@@ -230,7 +349,7 @@ export const projects: Project[] = [
     live: true,
     category: "Help desk & shared inbox",
     industry: "Customer Support",
-    service: "Web Development",
+    service: "Web & Mobile Apps",
     text: "A help desk built around a shared inbox, knowledge base and embeddable chat widget that still feels like personal email.",
     about: "A collaborative support tool for growing teams: shared inboxes with clear ownership, a self-service docs site and a website widget for help content and live chat.",
     challenge: "As the company grew, support email piled up in personal and shared accounts. Nobody knew who owned which conversation, replies were duplicated or missed, and customers could not help themselves.",
@@ -248,7 +367,7 @@ export const projects: Project[] = [
     live: true,
     category: "Telehealth platform",
     industry: "Healthcare",
-    service: "Web Development",
+    service: "Web & Mobile Apps",
     text: "A HIPAA-compliant telemedicine platform where patients join video visits from a browser, with no download.",
     about: "A simple, secure virtual care platform for clinicians of every size: branded virtual waiting rooms, browser-based video and add-ons for consent, payments and file sharing.",
     challenge: "Telemedicine tools were expensive, complicated and hard for patients to join, while consumer video apps did not meet HIPAA and GDPR requirements, which kept smaller practices from offering remote care.",
@@ -266,7 +385,7 @@ export const projects: Project[] = [
     live: true,
     category: "Job management for trades",
     industry: "Field Services",
-    service: "Mobile App Development",
+    service: "Web & Mobile Apps",
     text: "A job management app for tradespeople: job cards, scheduling, staff tracking, quotes, invoices and payments.",
     about: "An iPhone-first platform for electricians, plumbers and other trades that digitises every job and syncs automatically with the accounting software.",
     challenge: "Trade businesses ran on paper job cards, phone calls and spreadsheets, causing scheduling mix-ups, lost notes, late invoices and double entry into accounting software.",
@@ -284,7 +403,7 @@ export const projects: Project[] = [
     live: true,
     category: "Property management for landlords",
     industry: "Real Estate",
-    service: "Web Development",
+    service: "Web & Mobile Apps",
     text: "Free-to-landlord software to collect rent online, sign leases, screen tenants and track maintenance.",
     about: "A cloud platform for independent landlords with small to mid-size portfolios, monetised through optional tenant-side services instead of monthly fees.",
     challenge: "Independent landlords managed rent, leases and maintenance with checks, paper and spreadsheets, because professional software and management companies were too expensive for small portfolios.",
@@ -302,7 +421,7 @@ export const projects: Project[] = [
     live: true,
     category: "Inventory & asset management",
     industry: "Inventory & Operations",
-    service: "Mobile App Development",
+    service: "Web & Mobile Apps",
     text: "A mobile-first inventory app to track supplies, tools and equipment with photos, barcodes and QR codes.",
     about: "Simple, visual inventory management for small and mid-size businesses, working offline in the field and syncing across teams and locations.",
     challenge: "Teams tracked inventory and equipment in spreadsheets or on paper, which meant lost tools, stock-outs, slow physical counts and no real-time view across locations.",
@@ -320,7 +439,7 @@ export const projects: Project[] = [
     live: true,
     category: "Construction field management",
     industry: "Construction",
-    service: "Mobile App Development",
+    service: "Web & Mobile Apps",
     text: "A field-first construction app for daily reports, time cards, production tracking and jobsite safety.",
     about: "A mobile and web platform used by superintendents and foremen to capture what happens on site every day, from photos and weather to crew hours and safety talks.",
     challenge: "Contractors documented field work on paper or in scattered tools, leaving reports late or incomplete and causing disputes, inaccurate payroll and job costing, and poor visibility into progress and safety.",
@@ -338,7 +457,7 @@ export const projects: Project[] = [
     live: true,
     category: "Beauty & wellness business software",
     industry: "Beauty & Wellness",
-    service: "Mobile App Development",
+    service: "Web & Mobile Apps",
     text: "Booking, payments and business software for salons, spas and fitness studios, with a consumer marketplace.",
     about: "An all-in-one platform for beauty, wellness and fitness businesses plus a marketplace app where consumers discover and book services.",
     challenge: "Independent salons and studios juggled separate tools for appointments, payments, client records and marketing, adding admin work, causing missed bookings and making it hard to reach new clients online.",
@@ -356,7 +475,7 @@ export const projects: Project[] = [
     live: true,
     category: "AI hair care & strand analysis platform",
     industry: "Beauty & Wellness",
-    service: "Agentic AI",
+    service: "AI Agents & Workflow Automation",
     text: "An AI-driven hair care platform delivering HairAI™ strand diagnostics, digital HairID™ profiles and salon CRM.",
     about: "A pioneering beauty tech ecosystem combining HairAI™ computer vision strand diagnostics, microscopic laboratory testing (HairSI™) and personalized hair health scoring for consumers, salons and enterprise cosmetic brands.",
     challenge: "Consumers suffer from trial-and-error product choices due to generic hair typing, while stylists and hair care brands lack data-driven diagnostics to prescribe precise hair health regimens.",
@@ -381,7 +500,7 @@ export const projects: Project[] = [
     live: true, // our own product
     category: "AI / LLM observability",
     industry: "Developer Tools",
-    service: "DevOps",
+    service: "AI Reliability & Observability",
     text: "One place to trace LLM calls, track token spend, catch runaway agents and route incidents.",
     about: "An observability platform for teams running AI in production, combining distributed tracing, cost monitoring, log clustering and alerting across services and model providers.",
     challenge: "We built Trasys AI because teams shipping AI features, including our own, could not see token costs, agent loops, latency regressions or noisy logs across services and model providers, so incidents and overspend went unnoticed.",
@@ -399,7 +518,7 @@ export const projects: Project[] = [
     live: true,
     category: "D2C storefront builder",
     industry: "Retail & Ecommerce",
-    service: "Web Development",
+    service: "Web & Mobile Apps",
     text: "An online store builder for independent labels and boutiques to sell direct, with payments and shipping built in.",
     about: "A D2C commerce platform that lets small brands launch a customisable storefront quickly and keep their margins, with Indian payment methods and courier partners integrated.",
     challenge: "Independent fashion labels and boutiques were losing margin to marketplace commissions, while setting up their own store, payments, GST compliance and delivery was complex and expensive.",
@@ -417,7 +536,7 @@ export const projects: Project[] = [
     live: true,
     category: "Bus fleet & ticketing SaaS",
     industry: "Travel",
-    service: "Web Development",
+    service: "Web & Mobile Apps",
     text: "A complete bus operator system: live fleet tracking, trip scheduling, QR ticketing and passenger apps under the operator's own brand.",
     about: "A platform that helps Indian bus operators go digital and compete with large booking aggregators, with separate admin, driver and passenger experiences.",
     challenge: "Independent bus operators relied on walk-in counters, phone bookings and aggregators that charged commissions and owned the customer relationship, with little visibility into where buses and drivers were.",

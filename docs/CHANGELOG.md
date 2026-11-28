@@ -148,3 +148,15 @@ Inline Calendly embeds on /contact, /trasys-ai and the free-audit thank-you page
 
 - On phones, the "Book a 15-min call" and WhatsApp bar is hidden while reading and fades in once the footer is in view. The chat bubble stays visible throughout. Desktop is unchanged.
 - The footer has extra bottom padding on phones so the bar never covers the last links.
+
+## Shorter page slugs (2026-11-28)
+
+### Changed
+| Old URL | New URL |
+| --- | --- |
+| `/trasys-ai` | `/trasys` |
+| `/ai-solutions` and `/ai-solutions/<solution>` | `/ai` and `/ai/<solution>` |
+| `/digital-marketing` | `/digital` |
+
+- Each old URL has a 301 to its new one in `next.config.ts`. Internal links, canonicals, schema, the sitemap, `llms.txt` and the blog drafts' `target_page` now use the new URLs.
+- Not changed: the `/portfolio/trasys-ai` case study, the regional `/<country>/digital-marketing-agency-…` pages, and image file names under `ai-solutions/`.

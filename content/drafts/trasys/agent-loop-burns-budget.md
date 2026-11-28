@@ -7,7 +7,7 @@ title: "How an agent loop can burn your budget, and how to stop it"
 intent: "Problem (labelled example)"
 cta: "Start free"
 cta_link: "https://www.trasys.dev/sign-up"
-target_page: "/trasys-ai"
+target_page: "/trasys"
 blocked_by: "none"
 ---
 # How an agent loop can burn your budget, and how to stop it

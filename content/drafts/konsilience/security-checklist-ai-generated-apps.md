@@ -7,7 +7,7 @@ title: "Security checklist for AI-generated apps"
 intent: "Checklist"
 cta: "Get a free app review"
 cta_link: "/contact#book"
-target_page: "/services/cybersecurity"
+target_page: "/services/application-security-audit"
 blocked_by: "Confirmed 2026-11-17: free app review is offered"
 ---
 # Security checklist for AI-generated apps

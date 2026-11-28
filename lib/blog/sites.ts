@@ -43,8 +43,8 @@ Writing rules:
   sure of with [VERIFY] so the team can check it before publishing.
 - Every statistic needs a linked source, or leave it out.
 - One clear CTA. Default: "Book a 15-min call" -> /contact#book. SEO posts: "Free SEO audit" -> /free-seo-audit.
-- Link to the matching service page at least once (internal links: /services/..., /ai-solutions/...,
-  /digital-marketing, /free-seo-audit, /portfolio, /contact#book).
+- Link to the matching service page at least once (internal links: /services/..., /ai/...,
+  /digital, /free-seo-audit, /portfolio, /contact#book).
 - Use H2 headings for the main sections (they build the "On this page" menu), H3 for sub-points.
 - Add an FAQ block at the end when the topic has common questions (it becomes FAQ rich results).`,
   },

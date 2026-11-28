@@ -76,7 +76,7 @@ async function guidelines(s: Site) {
           .filter((g) => ["Services", "AI", "Industries", "Company"].includes(g.title))
           .flatMap((g) => g.links.map((l) => `- ${l.label}: ${l.href}`))
           .join("\n")
-      : "- Sign up: https://www.trasys.dev/sign-up\n- Product page on konsilience.tech: https://www.konsilience.tech/trasys-ai";
+      : "- Sign up: https://www.trasys.dev/sign-up\n- Product page on konsilience.tech: https://www.konsilience.tech/trasys";
   return `# ${cfg.name} blog guidelines
 
 Published at: ${cfg.baseUrl}${cfg.blogPath}/<slug>

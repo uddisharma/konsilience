@@ -13,7 +13,7 @@ Tick the box when a value is added.
 | Done | Placeholder | What it is | Where to get it | Where it goes on the site | Value |
 | --- | --- | --- | --- | --- | --- |
 | [ ] | `{{CALENDLY_INTRO_URL}}` | 20-min Intro Call link (IT Solutions) | Calendly, Event types, open the event, **Copy link** | Header and sticky mobile "Book a 20-min call" popup; home hero button; /it-solutions CTA; /contact inline embed; footer CTA; IT blog post CTAs | |
-| [ ] | `{{CALENDLY_AUDIT_URL}}` | Free SEO Audit Review (15 min) link | Same, for the audit event | /free-seo-audit thank-you page (inline embed); /digital-marketing CTA; SEO blog post CTAs; audit email auto-reply | |
+| [ ] | `{{CALENDLY_AUDIT_URL}}` | Free SEO Audit Review (15 min) link | Same, for the audit event | /free-seo-audit thank-you page (inline embed); /digital CTA; SEO blog post CTAs; audit email auto-reply | |
 | [ ] | `{{CALENDLY_TRASYS_URL}}` | Trasys Demo (30 min) link | Same, for the demo event | /trasys "Book a demo" button; design-partner thank-you page; Trasys blog CTAs | |
 | [ ] | `{{CALENDLY_FOUNDER_URL}}` (optional) | Founder call link | Same | /about page, "Talk to a founder" button | |
 

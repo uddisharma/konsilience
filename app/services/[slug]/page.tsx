@@ -26,9 +26,9 @@ export async function generateMetadata({ params }: PageProps<"/services/[slug]">
   if (!s) return {};
   const url = `${siteUrl}/services/${s.slug}`;
   return {
-    title: `${s.name} Services | Custom Software & AI Engineering`,
-    description: `${s.short} Partner with senior Konsilience engineers for scalable, enterprise-grade ${s.name.toLowerCase()} services.`,
-    keywords: [s.name, `${s.name} Services`, `${s.name} Development`, "Digital Engineering", ...s.tech],
+    title: `${s.name} Services | ${s.category}`,
+    description: `${s.short} Delivered by the senior team at Konsilience.`,
+    keywords: [s.name, `${s.name} Services`, s.category, ...s.offerings, ...s.tech],
     alternates: { canonical: url },
     openGraph: {
       title: `${s.name} Services | Konsilience`,
@@ -53,17 +53,17 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
   const related = serviceList.filter((x) => x.category === s.category && x.slug !== s.slug).slice(0, 3);
   const work = [...projects.filter((p) => p.service === s.name), ...projects.filter((p) => p.service !== s.name)].slice(0, 3);
   const faqs = details?.faqs ?? [
-    { q: `What is included in your ${s.name} engagement?`, a: `Our senior team provides architecture, design, end-to-end implementation and SLA-backed support for ${s.name.toLowerCase()}.` },
-    { q: `How long does a typical ${s.name} initiative take?`, a: "Most teams deliver a working milestone in 6–12 weeks with continuous integration and weekly demos." },
-    { q: "Will we own the intellectual property and code?", a: "Yes. All source code, design systems, infrastructure blueprints, and IP belong entirely to you." },
-    { q: "Can you embed with our existing engineers?", a: "Yes. We work inside your Slack, Jira, and GitHub, following your engineering practices and mentoring your team." },
+    { q: `What is included in your ${s.name} engagement?`, a: `It covers ${s.offerings.join(", ")}. We agree the exact scope with you before work starts.` },
+    { q: `How long does a typical ${s.name} engagement take?`, a: "It depends on scope. After a short discovery call we share a plan with milestones and dates, and report progress every week." },
+    { q: "Who owns the work you produce?", a: "You do. Code, configurations, reports and documents produced in the engagement belong to you." },
+    { q: "Can you work alongside our existing team?", a: "Yes. We work in your tools and channels, follow your processes and hand over with documentation." },
   ];
 
   const heroStats = details?.heroStats ?? [
-    ["Senior", "Engineers Only"],
-    ["100%", "IP Ownership"],
-    ["8–14 wks", "MVP Production"],
-    ["Enterprise", "Security SLA"],
+    ["Senior", "Specialists Only"],
+    ["100%", "Yours to Keep"],
+    ["Weekly", "Progress Updates"],
+    ["24h", "Response Time"],
   ];
 
   const schema = buildServicePageSchema(s, faqs, details?.offeringsDescriptions);
@@ -86,14 +86,14 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         stats={heroStats}
       />
 
-      <section className="sec bg-black">
+      <section id="offerings" className="sec scroll-mt-28 bg-black">
         <div className="wrap">
-          <SectionHead title={[`Our ${s.name}`, "Capabilities"]} text={`Comprehensive ${s.name.toLowerCase()} capabilities tailored to your organizational scale.`} />
+          <SectionHead title={["What's Included"]} text={s.short} />
           <div className="mt-14">
             <CardGrid
               items={s.offerings.map((o) => ({
                 title: o,
-                text: details?.offeringsDescriptions?.[o] ?? `Architect, build and optimize ${o.toLowerCase()} with senior Konsilience specialists, with automated CI/CD and observability built in.`,
+                text: details?.offeringsDescriptions?.[o] ?? s.offeringText[o],
               }))}
             />
           </div>

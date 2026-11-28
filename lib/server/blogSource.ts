@@ -31,8 +31,8 @@ function sectionsToBlocks(sections: ArticleSection[]): Block[] {
 const LEGACY_SIDEBAR_LINKS = [
   { label: "Travel & Hospitality", href: "/industries/travel" },
   { label: "Bus Operator Platform", href: "/portfolio/bus-operator-platform" },
-  { label: "Web & Booking Engines", href: "/services/web-development" },
-  { label: "Conversational AI", href: "/ai-solutions/conversational-ai" },
+  { label: "Web & Booking Engines", href: "/services/web-and-mobile-apps" },
+  { label: "Conversational AI", href: "/ai/conversational-ai" },
 ];
 
 function staticToRecord(p: (typeof staticPosts)[number]): PostRecord {

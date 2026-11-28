@@ -7,7 +7,7 @@ title: "OpenTelemetry for LLM apps: getting started"
 intent: "Pillar: getting started"
 cta: "Start free"
 cta_link: "https://www.trasys.dev/sign-up"
-target_page: "/trasys-ai"
+target_page: "/trasys"
 blocked_by: "Confirm which OpenTelemetry GenAI conventions Trasys follows, and the version"
 ---
 # OpenTelemetry for LLM apps: getting started

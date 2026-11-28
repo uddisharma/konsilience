@@ -194,7 +194,7 @@ export const blogArticles: Record<string, ArticleSection[]> = {
       id: "the-finops-imperative",
       h: "The Cloud Economics Reckoning: Moving from Growth to Efficiency",
       p: [
-        "For years, venture-backed startups and growing enterprises treated cloud infrastructure costs as an afterthought in pursuit of pure growth. In 2026, cloud spending is under strict executive scrutiny. In high-volume consumer domains like [Travel & Hospitality](/industries/travel) and eCommerce, unmonitored autoscaling and unoptimized managed databases quietly erode gross margins without dedicated [Cloud Services](/services/cloud-services) strategy.",
+        "For years, venture-backed startups and growing enterprises treated cloud infrastructure costs as an afterthought in pursuit of pure growth. In 2026, cloud spending is under strict executive scrutiny. In high-volume consumer domains like [Travel & Hospitality](/industries/travel) and eCommerce, unmonitored autoscaling and unoptimized managed databases quietly erode gross margins without dedicated [Cloud Services](/services/cloud-migration) strategy.",
         "Effective cloud cost optimization does not mean cutting engineering velocity or compromising system resilience. By applying disciplined FinOps engineering practices, most organizations can reduce their monthly AWS, GCP, or Azure bills by 30% to 45% within 90 days.",
         "The journey begins by building real-time cost visibility and attributing cloud expenditures directly to specific products, features, and engineering teams.",
       ],

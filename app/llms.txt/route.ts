@@ -1,3 +1,4 @@
+import { serviceCategories, serviceList } from "@/lib/catalog";
 import { isSet, registeredOfficeLine, siteConfig as c } from "@/site.config";
 
 // /llms.txt: plain-text site summary for AI crawlers and answer engines.
@@ -10,6 +11,10 @@ const phones = [c.contact.inPhone, c.contact.usPhone]
   .filter(isSet)
   .map((p) => `- Phone: ${p}`)
   .join("\n");
+
+const services = serviceCategories
+  .map((cat) => `### ${cat.name}\n${serviceList.filter((x) => x.category === cat.name).map((x) => `- [${x.name}](${u}/services/${x.slug}): ${x.short}`).join("\n")}`)
+  .join("\n\n");
 
 const body = `# Konsilience
 
@@ -26,31 +31,21 @@ ${phones}
 ---
 
 ## Flagship Products
-- [Trasys AI](${u}/trasys-ai): Full-stack LLM observability, distributed tracing, token spend tracking, loop detection, and incident routing for production AI applications.
+- [Trasys AI](${u}/trasys): Full-stack LLM observability, distributed tracing, token spend tracking, loop detection, and incident routing for production AI applications.
 
 ---
 
-## Core Engineering & Consulting Services
-- [Custom Software Development](${u}/services/custom-software-development): Bespoke enterprise platforms, SaaS architecture, microservices, and workflow automation.
-- [Web Development](${u}/services/web-development): Modern web platforms, progressive web apps, and headless commerce using Next.js, React, Node.js, and TypeScript.
-- [Mobile App Development](${u}/services/mobile-app-development): Native iOS (Swift), Android (Kotlin), and cross-platform (Flutter, React Native) engineering.
-- [UI/UX Design](${u}/services/ui-ux-design): Design systems, user research, wireframing, high-fidelity prototyping, and design tokens in Figma.
-- [DevOps & Cloud Engineering](${u}/services/devops): CI/CD pipelines, Infrastructure as Code (Terraform), Kubernetes, Docker, and site reliability engineering.
-- [Cloud Services](${u}/services/cloud-services): Architecture, cloud migration, serverless development, and FinOps cost optimization across AWS, Azure, and GCP.
-- [QA & Automated Testing](${u}/services/qa-and-testing): Automated end-to-end testing, performance profiling, security audits with Playwright, Cypress, and k6.
-- [Legacy Modernization](${u}/services/legacy-modernization): Strangler-fig refactoring from monolithic legacy codebases to cloud-native microservices without business downtime.
-- [Cybersecurity](${u}/services/cybersecurity): DevSecOps, identity and access management (IAM), penetration testing, and security hardening.
-- [Data Analytics & Big Data](${u}/services/data-analytics): High-throughput streaming data pipelines, modern data stack (Snowflake, Databricks, dbt), and executive BI dashboards.
-- [IT & CTO Advisory](${u}/services/it-consulting): Fractional CTO services, technology due diligence, architectural reviews, and roadmap planning.
+## Services
+${services}
 
 ---
 
 ## AI & Autonomous Agent Solutions
-- [Agentic AI Systems](${u}/ai-solutions/agentic-ai): Autonomous multi-agent workflows, tool-use execution, self-healing tasks, and human-in-the-loop validation frameworks.
-- [Generative AI & RAG](${u}/ai-solutions/generative-ai): Enterprise search, retrieval-augmented generation (RAG) over proprietary knowledge bases, vector indexing, and embeddings.
-- [AI Copilots](${u}/ai-solutions/ai-copilots): Embedded in-product intelligent assistants tailored to user workflows with real-time UI synchronization.
-- [Computer Vision](${u}/ai-solutions/computer-vision): Image and video intelligence, quality inspection, OCR, and multimodal diagnostics.
-- [Conversational AI](${u}/ai-solutions/conversational-ai): Sub-500ms voice bots, omnichannel WhatsApp and CRM chat assistants with warm human handoff.
+- [Agentic AI Systems](${u}/ai/agentic-ai): Autonomous multi-agent workflows, tool-use execution, self-healing tasks, and human-in-the-loop validation frameworks.
+- [Generative AI & RAG](${u}/ai/generative-ai): Enterprise search, retrieval-augmented generation (RAG) over proprietary knowledge bases, vector indexing, and embeddings.
+- [AI Copilots](${u}/ai/ai-copilots): Embedded in-product intelligent assistants tailored to user workflows with real-time UI synchronization.
+- [Computer Vision](${u}/ai/computer-vision): Image and video intelligence, quality inspection, OCR, and multimodal diagnostics.
+- [Conversational AI](${u}/ai/conversational-ai): Sub-500ms voice bots, omnichannel WhatsApp and CRM chat assistants with warm human handoff.
 
 ---
 
@@ -86,7 +81,7 @@ ${phones}
 ## Key Site Endpoints
 - Homepage: ${u}
 - All Services: ${u}/services
-- AI Solutions: ${u}/ai-solutions
+- AI Solutions: ${u}/ai
 - Portfolio & Case Studies: ${u}/portfolio
 - Careers: ${u}/careers
 - Frequently Asked Questions: ${u}/faq

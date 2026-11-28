@@ -7,7 +7,7 @@ title: "B2B SEO audit checklist: 20 checks (free)"
 intent: "Checklist"
 cta: "Get a free SEO audit"
 cta_link: "/free-seo-audit"
-target_page: "/digital-marketing"
+target_page: "/digital"
 blocked_by: "none"
 ---
 # B2B SEO audit checklist: 20 checks (free)

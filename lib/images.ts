@@ -20,12 +20,14 @@ const toImage = (e: Entry): SiteImage => ({ src: `/images/${e.file}.webp`, alt: 
 /** Image by registry id, e.g. "services-overview". */
 export const image = (id: string) => toImage(byId(id));
 
+// Main service → hero and share image. The artwork predates the current service list, so three of
+// the five borrow the closest existing illustration until new ones are rendered.
 const CATEGORY_IMAGE: Record<string, string> = {
+  "AI & Automation": "ai-overview",
+  "Cloud & DevOps": "svc-digital-transformation",
+  Security: "security",
   "Product Engineering": "svc-product-engineering",
-  "Digital Marketing & Growth": "svc-digital-marketing",
-  "Digital Transformation": "svc-digital-transformation",
-  Consulting: "svc-consulting",
-  "Data & Managed IT": "svc-data-managed-it",
+  "Digital Marketing": "svc-digital-marketing",
 };
 const AI_IMAGE: Record<string, string> = {
   "agentic-ai": "ai-agentic",
@@ -92,13 +94,13 @@ export function blogCover(slug: string): SiteImage | null {
 export type OgImage = { url: string; width: number; height: number; alt: string };
 const og = (e: Entry): OgImage => ({ url: `${siteUrl}/images/og/${e.file.split("/").pop()}.jpg`, width: 1200, height: 630, alt: e.alt });
 
-/** Share image for a page key: "/services", "/ai-solutions/agentic-ai", "/resources/guides", "/portfolio/trasys-ai"… */
+/** Share image for a page key: "/services", "/ai/agentic-ai", "/resources/guides", "/portfolio/trasys-ai"… */
 export function ogImage(page: string): OgImage | null {
   const e = registry.find((x) => x.og === page);
   return e ? og(e) : null;
 }
 /** Share image for a service page, by its category. */
-export const serviceOgImage = (category: string) => og(registry.find((x) => x.og === `services:${category}`)!);
+export const serviceOgImage = (category: string) => og(byId(CATEGORY_IMAGE[category]));
 
 /* ---------- Image sitemap ---------- */
 
@@ -106,13 +108,13 @@ export const serviceOgImage = (category: string) => og(registry.find((x) => x.og
 export function imagesByPage(): Record<string, SiteImage[]> {
   const pages: Record<string, SiteImage[]> = {
     "/services": [image("services-overview")],
-    "/ai-solutions": [image("ai-overview")],
+    "/ai": [image("ai-overview")],
     "/about": [image("about")],
     "/careers": [image("careers")],
     "/security": [image("security")],
   };
   for (const s of serviceList) pages[`/services/${s.slug}`] = [serviceCategoryImage(s.category)];
-  for (const slug of Object.keys(AI_IMAGE)) pages[`/ai-solutions/${slug}`] = [aiSolutionImage(slug)];
+  for (const slug of Object.keys(AI_IMAGE)) pages[`/ai/${slug}`] = [aiSolutionImage(slug)];
   for (const t of resourceTypes) pages[`/resources/${t.slug}`] = t.items.map((it) => resourceCover(it.title));
   pages["/industries"] = [image("industries-overview"), ...industryList.map((i) => industryImage(i.slug))];
   for (const i of industryList) pages[`/industries/${i.slug}`] = [industryImage(i.slug)];

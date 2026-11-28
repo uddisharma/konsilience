@@ -7,7 +7,7 @@ title: "Why your B2B website is not ranking: 7 reasons"
 intent: "Problem"
 cta: "Get a free SEO audit"
 cta_link: "/free-seo-audit"
-target_page: "/digital-marketing"
+target_page: "/digital"
 blocked_by: "none"
 ---
 # Why your B2B website is not ranking: 7 reasons

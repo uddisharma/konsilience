@@ -16,14 +16,14 @@ export const metadata: Metadata = {
   title: "Enterprise AI & Agentic Solutions",
   description: "Agentic AI systems, custom LLM fine-tuning, RAG architecture, and production copilots built by Konsilience.",
   keywords: ["Agentic AI", "Enterprise AI Solutions", "Custom LLM Development", "RAG Systems", "AI Copilots", "AI Observability"],
-  alternates: { canonical: `${siteUrl}/ai-solutions` },
+  alternates: { canonical: `${siteUrl}/ai` },
   openGraph: {
     title: "Enterprise AI & Agentic Solutions | Konsilience",
     description: "Agentic, generative and multimodal AI solutions engineered for production by Konsilience.",
-    url: `${siteUrl}/ai-solutions`,
-    images: [ogImage("/ai-solutions")!],
+    url: `${siteUrl}/ai`,
+    images: [ogImage("/ai")!],
   },
-  twitter: { card: "summary_large_image", images: [ogImage("/ai-solutions")!.url] },
+  twitter: { card: "summary_large_image", images: [ogImage("/ai")!.url] },
 };
 
 export default function AiSolutionsPage() {
@@ -52,7 +52,7 @@ export default function AiSolutionsPage() {
         <div className="wrap">
           <SectionHead title={["AI Solutions"]} text="Proven patterns we take from prototype to production." />
           <div className="mt-14">
-            <CardGrid items={aiSolutions.map((a) => ({ icon: a.icon, title: a.name, text: a.short, href: `/ai-solutions/${a.slug}` }))} />
+            <CardGrid items={aiSolutions.map((a) => ({ icon: a.icon, title: a.name, text: a.short, href: `/ai/${a.slug}` }))} />
           </div>
         </div>
       </section>

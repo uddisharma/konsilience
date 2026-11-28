@@ -138,7 +138,7 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
           <SectionHead
             title={["AI Capabilities for", ind.name]}
             text={`Production-ready artificial intelligence to automate ${ind.name.toLowerCase()} workflows, personalize customer interactions, and optimize costs.`}
-            action={<Button variant="ghost" href="/ai-solutions">All AI Solutions</Button>}
+            action={<Button variant="ghost" href="/ai">All AI Solutions</Button>}
           />
           <div className="mt-14">
             <CardGrid
@@ -147,7 +147,7 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
                 icon: a.icon,
                 title: a.name,
                 text: a.short,
-                href: `/ai-solutions/${a.slug}`,
+                href: `/ai/${a.slug}`,
               }))}
             />
           </div>

@@ -13,7 +13,7 @@ const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
 function Card({ s }: { s: (typeof services)[number] }) {
   return (
-    <div className="group flex h-full flex-col justify-between gap-8 border-y border-black/10 bg-cream p-8 text-[#111] transition-colors duration-500 hover:bg-white lg:border-y-0 lg:border-x lg:p-9 xl:px-11">
+    <div className="group flex h-full flex-col justify-between gap-8 border-y border-black/10 bg-cream p-8 text-[#111] transition-colors duration-500 hover:bg-white lg:border-y-0 lg:border-x lg:p-6 2xl:p-8">
       <span className="grid size-16 place-items-center rounded-2xl bg-white text-primary shadow-[0_8px_24px_-12px_rgba(0,0,0,.25)] transition-all duration-500 group-hover:bg-primary group-hover:text-white">
         <Icon name={s.icon} className="size-8" strokeWidth={1.4} />
       </span>
@@ -68,7 +68,7 @@ export default function Services() {
       <div ref={ref} className="relative hidden lg:block" style={{ height: box.h ? `calc(${box.h}px + 160vh)` : "260vh" }}>
         <div ref={pinned} className="sticky flex min-h-screen flex-col pt-24 pb-16" style={{ top: box.top }}>
           <LineReveal className="h2 wrap-sm text-center" lines={["Technology Services Built", "Around Your Business Goals"]} />
-          <div className="wrap mt-10 grid flex-1 grid-cols-4 overflow-hidden [&>div+div>div]:border-l-0">
+          <div className="wrap mt-10 grid flex-1 grid-cols-5 overflow-hidden [&>div+div>div]:border-l-0">
             {services.map((s, i) => {
               const t = ease(clamp((p - i * 0.14) / 0.42));
               return (

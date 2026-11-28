@@ -2,7 +2,7 @@
 // Run with `npm run dev` running: node scripts/capture-sources.mjs
 //   trasys-hero-3   https://www.trasys.dev hero (our own product), after its typing animation
 //   home-hero       our home page hero, below the header (no logo in frame)
-//   copilots-hero   our /ai-solutions/ai-copilots hero, below the header
+//   copilots-hero   our /ai/ai-copilots hero, below the header
 
 import { mkdirSync, writeFileSync } from "node:fs";
 import puppeteer from "puppeteer-core";
@@ -41,6 +41,6 @@ const tidy = () => {
 
 if (!process.argv.includes("--local")) await grab("trasys-hero-3", "https://www.trasys.dev", { wait: 9000 });
 await grab("home-hero", `${BASE}/`, { wait: 3500, settle: tidy, clip: { x: 0, y: 150, width: 1440, height: 680 } });
-await grab("copilots-hero", `${BASE}/ai-solutions/ai-copilots`, { wait: 3500, settle: tidy, clip: { x: 0, y: 150, width: 760, height: 620 } }); // text column only
+await grab("copilots-hero", `${BASE}/ai/ai-copilots`, { wait: 3500, settle: tidy, clip: { x: 0, y: 150, width: 760, height: 620 } }); // text column only
 await b.close().catch(() => {});
 process.exit(0);

@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Konsilience Digital: colour options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Each palette sets these seven values; everything below reads only from them. */
+  :root {
+    --ink: #0a0a09;        /* dark sections */
+    --ink-2: #191918;      /* raised panels on dark */
+    --paper: #f8f7f4;      /* light sections */
+    --accent: #ffd60a;     /* highlight colour as a flat value (text, lines, dots) */
+    --accent-bg: #ffd60a;  /* highlight as a surface (may be a gradient) */
+    --on-accent: #0a0a09;  /* text placed on the highlight surface */
+    --btn: #1a69fd;        /* primary button */
+    --on-btn: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #111; color: #fff; font-family: "Plus Jakarta Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { width: min(100% - 48px, 1280px); margin-inline: auto; }
+  .display { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 600; text-transform: uppercase; line-height: .92; letter-spacing: -.015em; }
+
+  /* ---------- Picker ---------- */
+  .picker { position: sticky; top: 0; z-index: 20; background: rgba(17,17,17,.92); backdrop-filter: blur(14px); border-bottom: 1px solid #2c2c2c; }
+  .picker-in { display: flex; align-items: center; gap: 18px; padding-block: 12px; }
+  .picker h1 { font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #9a9a96; white-space: nowrap; }
+  .opts { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; }
+  .opt { display: flex; align-items: center; gap: 10px; flex-shrink: 0; border: 1.5px solid #333; background: #1a1a1a; color: #ddd; border-radius: 999px; padding: 7px 14px 7px 8px; font: 600 13px "Plus Jakarta Sans", sans-serif; cursor: pointer; transition: border-color .2s, background .2s, color .2s; }
+  .opt:hover { border-color: #666; }
+  .opt[aria-pressed="true"] { border-color: #fff; background: #fff; color: #111; }
+  .opt .num { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 999px; background: #000; color: #fff; font-size: 12px; font-weight: 700; }
+  .opt .dots { display: flex; }
+  .opt .dots i { width: 16px; height: 16px; border-radius: 999px; border: 2px solid #1a1a1a; margin-left: -6px; }
+  .opt .dots i:first-child { margin-left: 0; }
+  .opt[aria-pressed="true"] .dots i { border-color: #fff; }
+  .now { padding-block: 10px 14px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; font-size: 13px; color: #b5b5b0; }
+  .now b { color: #fff; font-size: 15px; }
+  .now code { font: 500 12px ui-monospace, Consolas, monospace; color: #ddd; }
+  .now .sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; border: 1px solid rgba(255,255,255,.25); }
+
+  /* ---------- Preview ---------- */
+  .preview { background: var(--ink); transition: background .4s; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+  .mark { position: relative; display: inline-block; padding-inline: .12em; color: var(--on-accent); isolation: isolate; }
+  .mark::before { content: ""; position: absolute; inset: .06em -.02em .02em; z-index: -1; background: var(--accent-bg); border-radius: .08em; transform: rotate(-1.2deg); animation: sweep .9s cubic-bezier(.19,1,.22,1) both; transform-origin: left; }
+  @keyframes sweep { from { transform: scaleX(0) rotate(-1.2deg); } }
+  /* On the light sections a white highlight would vanish, so that palette swaps to ink there. */
+  .paper .mark { color: var(--paper-mark-fg, var(--on-accent)); }
+  .paper .mark::before { background: var(--paper-mark-bg, var(--accent-bg)); }
+  .btn { display: inline-flex; align-items: center; gap: 14px; border-radius: 999px; padding: 8px 8px 8px 26px; font-weight: 700; font-size: 15px; white-space: nowrap; transition: transform .3s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn i { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 999px; font-style: normal; font-size: 17px; transition: transform .4s; }
+  .btn:hover i { transform: rotate(45deg); }
+  .btn-main { background: var(--btn); color: var(--on-btn); }
+  .btn-main i { background: var(--on-btn); color: var(--btn); }
+  .btn-ghost { color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.28); }
+  .btn-ghost i { background: rgba(255,255,255,.12); }
+  .btn-ink { background: var(--ink); color: #fff; }
+  .btn-ink i { background: #fff; color: var(--ink); }
+
+  .hero { position: relative; overflow: hidden; padding-top: 84px; }
+  .hero::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse 90% 75% at 60% 35%, #000 25%, transparent 78%); }
+  .hero::after { content: ""; position: absolute; top: -140px; right: -8%; width: 560px; height: 560px; border-radius: 999px; background: var(--accent); opacity: .2; filter: blur(110px); }
+  .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
+  .hero h2 { font-size: clamp(3.2rem, 1.2rem + 6.2vw, 8rem); margin-top: 22px; }
+  .hero .eyebrow { display: flex; align-items: center; gap: 12px; color: var(--accent); }
+  .hero .eyebrow::before { content: ""; width: 40px; height: 1px; background: var(--accent); }
+  .hero p.lead { margin-top: 30px; max-width: 34rem; font-size: 18px; line-height: 1.65; font-weight: 500; color: rgba(255,255,255,.7); }
+  .hero .cta { margin-top: 38px; display: flex; flex-wrap: wrap; gap: 14px; }
+  .board { position: relative; padding: 26px; border-radius: 28px; border: 1px solid rgba(255,255,255,.13); background: linear-gradient(160deg, rgba(255,255,255,.09), rgba(255,255,255,.025)); }
+  .board-top { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+  .board-top span:first-child::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); margin-right: 9px; }
+  .board-top span:last-child { letter-spacing: 0; text-transform: none; font-weight: 500; font-size: 11px; color: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.15); border-radius: 999px; padding: 4px 12px; }
+  .chart { position: relative; margin-top: 18px; }
+  .chart svg { display: block; width: 100%; }
+  .chart path.line { stroke: var(--accent); }
+  .chart circle { fill: var(--accent); }
+  .chart stop { stop-color: var(--accent); }
+  .chip { position: absolute; display: flex; align-items: center; gap: 7px; border-radius: 999px; padding: 8px 14px; font-size: 12px; font-weight: 700; box-shadow: 0 16px 30px -12px rgba(0,0,0,.6); animation: float 7s ease-in-out infinite; }
+  .chip.a { top: 2px; left: 8px; background: #fff; color: #111; }
+  .chip.b { top: 46%; right: 18%; background: var(--accent-bg); color: var(--on-accent); animation-delay: -3s; }
+  .chip.c { bottom: 10px; left: 22%; background: var(--btn); color: var(--on-btn); animation-delay: -5s; }
+  @keyframes float { 0%,100% { transform: none; } 50% { transform: translateY(-10px); } }
+  .board-bot { display: grid; grid-template-columns: 1fr 1.15fr; gap: 18px; margin-top: 22px; }
+  .bars { display: flex; align-items: flex-end; gap: 8px; height: 112px; padding: 16px; border-radius: 16px; background: rgba(255,255,255,.05); }
+  .bars span { flex: 1; border-radius: 6px 6px 0 0; background: rgba(255,255,255,.28); }
+  .bars span:last-child { background: var(--accent); }
+  .meters { display: flex; flex-direction: column; justify-content: center; gap: 13px; padding: 16px; border-radius: 16px; background: rgba(255,255,255,.05); font-size: 12px; font-weight: 500; color: rgba(255,255,255,.7); }
+  .meters b { display: block; height: 6px; margin-top: 6px; border-radius: 999px; background: rgba(255,255,255,.1); overflow: hidden; }
+  .meters b::after { content: ""; display: block; height: 100%; width: var(--w); border-radius: 999px; background: var(--accent-bg); }
+
+  .marquee { position: relative; z-index: 1; margin-top: 72px; border-block: 1px solid rgba(255,255,255,.1); padding-block: 18px; overflow: hidden; display: flex; }
+  .marquee div { display: flex; flex-shrink: 0; align-items: center; animation: scroll 38s linear infinite; }
+  .marquee span { display: flex; align-items: center; gap: 30px; padding-right: 30px; font-size: 68px; white-space: nowrap; }
+  .marquee span::after { content: ""; width: 15px; height: 15px; border-radius: 999px; background: var(--accent); }
+  .marquee span:nth-child(even) { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,.6); }
+  @keyframes scroll { to { transform: translateX(-100%); } }
+
+  .stats { background: var(--accent-bg); color: var(--on-accent); transition: background .4s, color .4s; }
+  .stats .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .stats div div { padding: 52px 30px; border-left: 1px solid color-mix(in srgb, var(--on-accent) 18%, transparent); }
+  .stats div div:first-child { border-left: 0; padding-left: 0; }
+  .stats strong { display: block; font-size: 88px; font-weight: 600; }
+  .stats small { display: block; margin-top: 10px; font-size: 13px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; opacity: .72; }
+
+  .paper { background: var(--paper); color: var(--ink); padding-block: 96px; transition: background .4s; }
+  .paper .eyebrow { color: color-mix(in srgb, var(--ink) 50%, transparent); }
+  .h2 { font-size: clamp(2.6rem, 1.4rem + 4.6vw, 6rem); margin-top: 14px; }
+  .rows { margin-top: 56px; border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+  .row { display: flex; align-items: center; gap: 30px; padding: 30px 32px; border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+  .row .n { width: 34px; font: 600 14px ui-monospace, Consolas, monospace; opacity: .4; }
+  .row .t { flex: 1; font-size: 42px; }
+  .row .tag { font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; opacity: .45; }
+  .row .ar { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent); font-size: 16px; }
+  .row.on { display: block; background: var(--ink); color: #fff; border-bottom-color: transparent; }
+  .row.on .head { display: flex; align-items: center; gap: 30px; }
+  .row.on .n, .row.on .tag { opacity: 1; color: var(--accent); }
+  .row.on .ar { background: var(--accent-bg); color: var(--on-accent); border-color: transparent; transform: rotate(45deg); }
+  .row.on .body { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; padding: 26px 0 8px 64px; }
+  .row.on p { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,.75); margin-bottom: 26px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 10px; align-content: flex-start; }
+  .tags span { border: 1px solid rgba(255,255,255,.2); border-radius: 999px; padding: 8px 16px; font-size: 14px; font-weight: 500; }
+
+  .bento { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { display: flex; flex-direction: column; justify-content: space-between; gap: 44px; min-height: 300px; padding: 34px; border-radius: 28px; background: #fff; transition: transform .45s; }
+  .card:hover { transform: translateY(-6px); }
+  .card .ic { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--ink); color: var(--accent); font-size: 22px; }
+  .card h3 { font-size: 34px; line-height: 1; }
+  .card p { margin-top: 14px; font-size: 15px; line-height: 1.6; opacity: .68; }
+  .card.dark { background: var(--ink); color: #fff; }
+  .card.dark .ic { background: var(--accent-bg); color: var(--on-accent); }
+  .card.hot { background: var(--accent-bg); color: var(--on-accent); }
+  .card.hot .ic { background: var(--on-accent); color: var(--accent); }
+
+  .close { padding: 96px 24px; }
+  .band { position: relative; overflow: hidden; width: min(100%, 1328px); margin-inline: auto; border-radius: 36px; padding: 76px 72px; background: var(--accent-bg); color: var(--on-accent); transition: background .4s, color .4s; }
+  .band p { margin: 22px 0 36px; max-width: 34rem; font-size: 18px; line-height: 1.6; font-weight: 500; opacity: .78; }
+  .band .stamp { position: absolute; top: 50%; right: 72px; width: 230px; height: 230px; margin-top: -115px; animation: spin 18s linear infinite; }
+  .band .stamp text { font: 700 10.5px "Plus Jakarta Sans", sans-serif; letter-spacing: .21em; text-transform: uppercase; fill: currentColor; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .note { background: #111; color: #9a9a96; font-size: 13px; line-height: 1.6; padding: 26px 0 60px; }
+  .note b { color: #fff; }
+
+  @media (max-width: 900px) {
+    .hero-grid, .board-bot, .row.on .body, .bento { grid-template-columns: 1fr; }
+    .stats .wrap { grid-template-columns: repeat(2, 1fr); }
+    .stats strong { font-size: 60px; } .stats div div { padding: 34px 18px; }
+    .marquee span { font-size: 44px; } .row .t { font-size: 30px; } .row .tag { display: none; } .row { padding-inline: 16px; gap: 16px; }
+    .row.on .body { padding-left: 0; } .band { padding: 48px 28px; } .band .stamp { display: none; } .picker h1 { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="picker">
+  <div class="wrap">
+    <div class="picker-in">
+      <h1>Pick a colour</h1>
+      <div class="opts" id="opts"></div>
+    </div>
+    <div class="now" id="now"></div>
+  </div>
+</div>
+
+<div class="preview" id="preview">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Konsilience Digital</p>
+        <h2 class="display">Marketing<br>that shows up<br>in <span class="mark">revenue</span></h2>
+        <p class="lead">SEO, paid media, content and marketing automation, run by marketers who sit next to engineers.</p>
+        <div class="cta">
+          <a class="btn btn-main" href="#">Claim free marketing audit <i>↗</i></a>
+          <a class="btn btn-ghost" href="#">See what we run <i>↗</i></a>
+        </div>
+      </div>
+      <div class="board">
+        <div class="board-top"><span>Growth board</span><span>Illustration</span></div>
+        <div class="chart">
+          <svg viewBox="0 0 400 190" aria-hidden="true">
+            <defs><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-opacity=".38"/><stop offset="1" stop-opacity="0"/></linearGradient></defs>
+            <path d="M0 160C40 150 60 128 100 124S160 140 200 104s60-16 100-48 60-34 100-44V190H0z" fill="url(#fill)"/>
+            <path class="line" d="M0 160C40 150 60 128 100 124S160 140 200 104s60-16 100-48 60-34 100-44" fill="none" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="396" cy="13" r="6"/>
+          </svg>
+          <span class="chip a">Organic ↑</span><span class="chip b">Paid ROAS ↑</span><span class="chip c">Qualified leads ↑</span>
+        </div>
+        <div class="board-bot">
+          <div class="bars"><span style="height:34%"></span><span style="height:46%"></span><span style="height:41%"></span><span style="height:58%"></span><span style="height:66%"></span><span style="height:61%"></span><span style="height:78%"></span><span style="height:92%"></span></div>
+          <div class="meters"><span>Organic search<b style="--w:82%"></b></span><span>Paid media<b style="--w:64%"></b></span><span>Content &amp; social<b style="--w:48%"></b></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="marquee display" aria-hidden="true">
+      <div><span>Website &amp; SEO Audit</span><span>SEO &amp; Local SEO</span><span>Performance Marketing</span><span>Content &amp; Social Media</span><span>AI Marketing Automation</span></div>
+      <div><span>Website &amp; SEO Audit</span><span>SEO &amp; Local SEO</span><span>Performance Marketing</span><span>Content &amp; Social Media</span><span>AI Marketing Automation</span></div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="wrap"><div style="display:contents">
+      <div><strong class="display">4.8x</strong><small>Average client ROAS</small></div>
+      <div><strong class="display">$25M+</strong><small>Ad spend managed</small></div>
+      <div><strong class="display">240%+</strong><small>Organic search lift</small></div>
+      <div><strong class="display">60%</strong><small>Cost advantage</small></div>
+    </div></div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="eyebrow">What we run</p>
+      <h2 class="display h2">Five services.<br>One <span class="mark">growth team</span>.</h2>
+      <div class="rows">
+        <div class="row on">
+          <div class="head"><span class="n">01</span><span class="t display">Website &amp; SEO Audit</span><span class="tag">Site health check</span><span class="ar">↗</span></div>
+          <div class="body">
+            <div><p>A clear report on what is holding your website back in search, speed and conversions.</p><a class="btn btn-main" href="#">Explore Website &amp; SEO Audit <i>↗</i></a></div>
+            <div class="tags"><span>Technical SEO Audit</span><span>Speed &amp; Core Web Vitals</span><span>Content &amp; Keyword Gaps</span><span>Prioritized Action Plan</span></div>
+          </div>
+        </div>
+        <div class="row"><span class="n">02</span><span class="t display">SEO &amp; Local SEO</span><span class="tag">Organic search</span><span class="ar">↗</span></div>
+        <div class="row"><span class="n">03</span><span class="t display">Performance Marketing</span><span class="tag">Paid media</span><span class="ar">↗</span></div>
+      </div>
+      <div class="bento">
+        <div class="card dark"><span class="ic">&lt;/&gt;</span><div><h3 class="display">Full-stack technical SEO</h3><p>Engineers who fix Core Web Vitals, crawl budgets and schema directly in your code.</p></div></div>
+        <div class="card hot"><span class="ic">◎</span><div><h3 class="display">You own every ad account</h3><p>Full admin ownership of Google Ads, Meta, LinkedIn and GA4 from day one.</p></div></div>
+        <div class="card"><span class="ic">↗</span><div><h3 class="display">Code-level split testing</h3><p>Continuous tests on forms, landing pages and checkout that lift conversion.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="close">
+    <div class="band">
+      <svg class="stamp" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="ring" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><text><textPath href="#ring">Konsilience Digital • SEO • Ads • Content •</textPath></text></svg>
+      <h2 class="display h2" style="margin-top:0">Ready to grow<br>what converts?</h2>
+      <p>Start with a free audit. We show you where the leaks are and what to fix first.</p>
+      <a class="btn btn-ink" href="#">Claim free marketing audit <i>↗</i></a>
+    </div>
+  </section>
+</div>
+
+<div class="note"><div class="wrap">This is a shortened mock-up of the <b>/digital</b> page for comparing colours only. Tell me the <b>number</b> you like (or two to mix, for example "the accent from 3 with the buttons from 1"). Use the ← → keys to flip through quickly.</div></div>
+
+<script>
+  // name, note, then the seven values. accentBg may be a gradient; accent is always a flat colour.
+  const PALETTES = [
+    { name: "Sun Yellow", note: "Brand blue buttons with a yellow highlight. Bold, high contrast, classic blue-and-yellow pairing.", ink: "#06080f", ink2: "#101522", paper: "#f8f7f4", accent: "#ffd60a", accentBg: "#ffd60a", onAccent: "#06080f", btn: "#1a69fd", onBtn: "#ffffff" },
+    { name: "Hot Coral", note: "Warm coral-orange against black and cream. Energetic, the natural contrast to blue.", ink: "#0c0a09", ink2: "#1b1614", paper: "#faf6f1", accent: "#ff5a36", accentBg: "#ff5a36", onAccent: "#ffffff", btn: "#ff5a36", onBtn: "#ffffff" },
+    { name: "Electric Cyan", note: "Navy with a neon cyan highlight and blue buttons. Stays in the blue family, more 'digital'.", ink: "#020615", ink2: "#0a1330", paper: "#f4f8fb", accent: "#19e3ff", accentBg: "#19e3ff", onAccent: "#020615", btn: "#1a69fd", onBtn: "#ffffff" },
+    { name: "Blue to Violet", note: "A blue-to-violet gradient on every highlight. Glowy and modern, close to the brand.", ink: "#07061a", ink2: "#12102e", paper: "#f7f6fb", accent: "#8b7bff", accentBg: "linear-gradient(110deg,#1a69fd,#7c3aed 60%,#c026d3)", onAccent: "#ffffff", btn: "#ffffff", onBtn: "#07061a" },
+    { name: "Hot Pink", note: "Magenta highlight with blue buttons. Loud and youthful, very 'social media'.", ink: "#0b0614", ink2: "#170d26", paper: "#faf6f9", accent: "#ff2e93", accentBg: "#ff2e93", onAccent: "#ffffff", btn: "#1a69fd", onBtn: "#ffffff" },
+    { name: "Amber Orange", note: "Deep navy with an amber-orange highlight and blue buttons. Warm, confident, less aggressive than coral.", ink: "#040b1c", ink2: "#0c1830", paper: "#f8f7f4", accent: "#ff9f1c", accentBg: "#ff9f1c", onAccent: "#040b1c", btn: "#1a69fd", onBtn: "#ffffff" },
+    { name: "Sunset Gradient", note: "Orange-to-pink gradient highlight on black. The most eye-catching option.", ink: "#0b0809", ink2: "#1a1315", paper: "#faf6f3", accent: "#ff6a3d", accentBg: "linear-gradient(110deg,#ffb020,#ff5a36 50%,#ff2e93)", onAccent: "#0b0809", btn: "#ffffff", onBtn: "#0b0809" },
+    { name: "Aqua Mint", note: "Navy with a soft aqua-mint highlight and blue buttons. Fresh, calmer than the lime you saw first.", ink: "#03101a", ink2: "#0a1f2e", paper: "#f3f8f7", accent: "#3df0c2", accentBg: "#3df0c2", onAccent: "#03101a", btn: "#1a69fd", onBtn: "#ffffff" },
+    { name: "Brand Blue", note: "For comparison: solid brand blue highlights (the second version you saw).", ink: "#020615", ink2: "#0a1330", paper: "#f8f7f4", accent: "#5e96fe", accentBg: "#1a69fd", onAccent: "#ffffff", btn: "#1a69fd", onBtn: "#ffffff" },
+    { name: "Black & Cream", note: "For comparison: the current page, with white highlights and blue buttons only.", ink: "#0a0a09", ink2: "#191918", paper: "#f8f7f4", accent: "#ffffff", accentBg: "#ffffff", onAccent: "#0a0a09", btn: "#1a69fd", onBtn: "#ffffff" },
+  ];
+
+  const opts = document.getElementById("opts");
+  const now = document.getElementById("now");
+  const preview = document.getElementById("preview");
+  let current = 0;
+
+  function apply(i) {
+    current = (i + PALETTES.length) % PALETTES.length;
+    const p = PALETTES[current];
+    const set = (k, v) => preview.style.setProperty(k, v);
+    set("--ink", p.ink); set("--ink-2", p.ink2); set("--paper", p.paper); set("--accent", p.accent);
+    set("--accent-bg", p.accentBg); set("--on-accent", p.onAccent); set("--btn", p.btn); set("--on-btn", p.onBtn);
+    const whiteHighlight = p.accentBg === "#ffffff";
+    set("--paper-mark-bg", whiteHighlight ? p.ink : p.accentBg); set("--paper-mark-fg", whiteHighlight ? "#ffffff" : p.onAccent);
+    [...opts.children].forEach((b, k) => b.setAttribute("aria-pressed", String(k === current)));
+    opts.children[current].scrollIntoView({ block: "nearest", inline: "nearest" });
+    const sw = (label, c) => `<span><span class="sw" style="background:${c}"></span>${label} <code>${c.startsWith("linear") ? "gradient" : c}</code></span>`;
+    now.innerHTML = `<b>${current + 1}. ${p.name}</b><span>${p.note}</span>` + sw("Dark", p.ink) + sw("Light", p.paper) + sw("Highlight", p.accentBg) + sw("Button", p.btn);
+    try { localStorage.setItem("kd-palette", String(current)); } catch {}
+  }
+
+  PALETTES.forEach((p, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "opt";
+    b.innerHTML = `<span class="num">${i + 1}</span>${p.name}<span class="dots"><i style="background:${p.ink}"></i><i style="background:${p.accentBg}"></i><i style="background:${p.btn}"></i><i style="background:${p.paper}"></i></span>`;
+    b.addEventListener("click", () => apply(i));
+    opts.appendChild(b);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") apply(current + 1);
+    if (e.key === "ArrowLeft") apply(current - 1);
+  });
+
+  let saved = 0;
+  try { saved = Number(localStorage.getItem("kd-palette")) || 0; } catch {}
+  apply(saved);
+</script>
+</body>
+</html>

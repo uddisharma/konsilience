@@ -126,6 +126,19 @@ body {
 .u-link { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.4s; }
 .u-link:hover { background-size: 100% 1px; }
 
+/* Text with a highlight that sweeps across it on a loop (header division buttons). */
+.shine-text {
+  --shine-base: #fff;
+  --shine-hi: rgb(var(--brand-light-rgb));
+  background: linear-gradient(100deg, var(--shine-base) 40%, var(--shine-hi) 50%, var(--shine-base) 60%) 100% 0 / 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: text-shine 3.2s linear infinite;
+}
+.shine-text.on { --shine-base: rgb(var(--brand-rgb)); --shine-hi: #fff; }
+@keyframes text-shine { to { background-position: 0 0; } }
+
 /* ---------- Marquee ---------- */
 .marquee { overflow: hidden; }
 .marquee.fade-edges { mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }

@@ -7,7 +7,7 @@ title: "Self-hosted vs SaaS LLM observability"
 intent: "Comparison"
 cta: "Start free"
 cta_link: "https://www.trasys.dev/sign-up"
-target_page: "/trasys-ai"
+target_page: "/trasys"
 blocked_by: "Self-hosting confirmed 2026-11-17. Still needed: supported install method and version [VERIFY]"
 ---
 # Self-hosted vs SaaS LLM observability

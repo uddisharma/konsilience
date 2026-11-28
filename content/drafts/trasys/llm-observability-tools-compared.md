@@ -7,7 +7,7 @@ title: "LLM observability tools compared: what to look for"
 intent: "Comparison (criteria first)"
 cta: "Start free"
 cta_link: "https://www.trasys.dev/sign-up"
-target_page: "/trasys-ai"
+target_page: "/trasys"
 blocked_by: "Sources for every product claim; date the post"
 ---
 # LLM observability tools compared: what to look for

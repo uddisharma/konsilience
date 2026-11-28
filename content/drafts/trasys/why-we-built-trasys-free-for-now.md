@@ -7,7 +7,7 @@ title: "Why we built Trasys, and why it is free for now"
 intent: "Story"
 cta: "Start free"
 cta_link: "https://www.trasys.dev/sign-up"
-target_page: "/trasys-ai"
+target_page: "/trasys"
 blocked_by: "Founders own words on why it is free (NEEDS_CONFIRMATION). Free as of 2026-11-17."
 ---
 # Why we built Trasys, and why it is free for now

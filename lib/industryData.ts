@@ -98,12 +98,10 @@ export const industryData: Record<string, IndustryDetailData> = {
   },
   logistics: {
     featuredServices: [
-      "mobile-app-development",
-      "iot-development",
-      "web-development",
-      "cloud-services",
-      "custom-software-development",
-      "data-analytics",
+      "web-and-mobile-apps",
+      "cloud-migration",
+      "saas-and-mvp-development",
+      "backend-and-api-development",
     ],
     featuredAiSolutions: [
       "agentic-ai",
@@ -402,14 +400,10 @@ export const industryData: Record<string, IndustryDetailData> = {
   },
   travel: {
     featuredServices: [
-      "web-development",
-      "mobile-app-development",
-      "cloud-services",
-      "custom-software-development",
-      "iot-development",
-      "devops",
-      "qa-and-testing",
-      "ui-ux-design",
+      "web-and-mobile-apps",
+      "cloud-migration",
+      "saas-and-mvp-development",
+      "managed-devops",
     ],
     featuredAiSolutions: [
       "conversational-ai",
@@ -430,11 +424,11 @@ export const industryData: Record<string, IndustryDetailData> = {
     faqs: [
       {
         q: "How do you speed up flight and hotel search queries?",
-        a: "We implement intelligent caching layers using Redis and asynchronous streaming responses on modern [cloud infrastructure](/services/cloud-services), displaying preliminary options in under 1 second while deeper vendor queries complete.",
+        a: "We implement intelligent caching layers using Redis and asynchronous streaming responses on modern [cloud infrastructure](/services/cloud-migration), displaying preliminary options in under 1 second while deeper vendor queries complete.",
       },
       {
         q: "Which travel APIs and Global Distribution Systems (GDS) do you work with?",
-        a: "We connect with Amadeus, Sabre, Travelport, Duffel, Expedia Partner Solutions, and Hotelbeds via modern NDC and REST/JSON interfaces through our [custom software engineering](/services/custom-software-development).",
+        a: "We connect with Amadeus, Sabre, Travelport, Duffel, Expedia Partner Solutions, and Hotelbeds via modern NDC and REST/JSON interfaces through our [custom software engineering](/services/saas-and-mvp-development).",
       },
       {
         q: "Have you built production transportation or booking platforms before?",
@@ -446,18 +440,17 @@ export const industryData: Record<string, IndustryDetailData> = {
       },
       {
         q: "Can you build offline mobile itinerary apps for travelers?",
-        a: "Yes. We develop [mobile companion apps](/services/mobile-app-development) that save boarding passes, hotel vouchers, and offline maps, sending push notifications for gate changes or flight delays.",
+        a: "Yes. We develop [mobile companion apps](/services/web-and-mobile-apps) that save boarding passes, hotel vouchers, and offline maps, sending push notifications for gate changes or flight delays.",
       },
     ],
   },
   aviation: {
     featuredServices: [
-      "mobile-app-development",
-      "custom-software-development",
-      "cloud-services",
+      "web-and-mobile-apps",
+      "saas-and-mvp-development",
+      "cloud-migration",
       "legacy-modernization",
-      "cybersecurity",
-      "qa-and-testing",
+      "application-security-audit",
     ],
     featuredAiSolutions: [
       "conversational-ai",

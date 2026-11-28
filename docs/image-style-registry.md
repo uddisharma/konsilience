@@ -17,12 +17,12 @@ technique + layout + palette; images on the same page never share a technique, l
 | 4 | `services/digital-transformation-services.webp` | /services/[digital-transformation] | Hero | Line-art / blueprint | Split | #031432 / #5E96FE / #F8F7F4 | hero + share |
 | 5 | `services/technology-consulting-services.webp` | /services/[consulting] | Hero | Paper-cut layers | Asymmetric | #FFFFFF / #0B2F86 / #1A69FD | hero + share |
 | 6 | `services/data-and-managed-it-services.webp` | /services/[data-managed-it] | Hero | Flat geometric shapes | Grid | #0C4FCB / #FFFFFF / #000000 | hero + share |
-| 7 | `ai-solutions/ai-solutions-overview.webp` | /ai-solutions | Hero | UI-fragment close-up | Edge-cropped | #191918 / #F8F7F4 / #5E96FE | hero + share |
-| 8 | `ai-solutions/agentic-ai-development.webp` | /ai-solutions/agentic-ai | Hero | Mono-colour with one accent | Right-weighted | #020615 / #888886 / #1A69FD | hero + share |
-| 9 | `ai-solutions/generative-ai-development.webp` | /ai-solutions/generative-ai | Hero | Editorial typographic poster | Split | #5E96FE / #020615 / #FFFFFF | hero + share |
-| 10 | `ai-solutions/ai-copilot-development.webp` | /ai-solutions/ai-copilots | Hero | Line-art / blueprint | Asymmetric | #FFFFFF / #000000 / #1A69FD | hero + share |
-| 11 | `ai-solutions/computer-vision-development.webp` | /ai-solutions/computer-vision | Hero | Halftone / grain texture | Edge-cropped | #F8F7F4 / #0C4FCB / #020615 | hero + share |
-| 12 | `ai-solutions/conversational-ai-development.webp` | /ai-solutions/conversational-ai | Hero | Paper-cut layers | Right-weighted | #0B2F86 / #F8F7F4 / #5E96FE | hero + share |
+| 7 | `ai-solutions/ai-solutions-overview.webp` | /ai | Hero | UI-fragment close-up | Edge-cropped | #191918 / #F8F7F4 / #5E96FE | hero + share |
+| 8 | `ai-solutions/agentic-ai-development.webp` | /ai/agentic-ai | Hero | Mono-colour with one accent | Right-weighted | #020615 / #888886 / #1A69FD | hero + share |
+| 9 | `ai-solutions/generative-ai-development.webp` | /ai/generative-ai | Hero | Editorial typographic poster | Split | #5E96FE / #020615 / #FFFFFF | hero + share |
+| 10 | `ai-solutions/ai-copilot-development.webp` | /ai/ai-copilots | Hero | Line-art / blueprint | Asymmetric | #FFFFFF / #000000 / #1A69FD | hero + share |
+| 11 | `ai-solutions/computer-vision-development.webp` | /ai/computer-vision | Hero | Halftone / grain texture | Edge-cropped | #F8F7F4 / #0C4FCB / #020615 | hero + share |
+| 12 | `ai-solutions/conversational-ai-development.webp` | /ai/conversational-ai | Hero | Paper-cut layers | Right-weighted | #0B2F86 / #F8F7F4 / #5E96FE | hero + share |
 | 13 | `about/konsilience-team-disciplines.webp` | /about | Our story | Duotone | Edge-cropped | #020615 / #F8F7F4 / #5E96FE | wide + share |
 | 14 | `careers/life-at-konsilience.webp` | /careers | Hero | Editorial typographic poster | Grid | #F8F7F4 / #000000 / #0C4FCB | hero + share |
 | 15 | `security/secure-software-delivery.webp` | /security | Hero | Mono-colour with one accent | Grid | #FFFFFF / #020615 / #0C4FCB | hero + share |

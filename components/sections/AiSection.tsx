@@ -67,7 +67,7 @@ export default function AiSection() {
           </div>
           <div className="flex flex-col gap-4 sm:flex-row">
             <Button variant="white" href={brand.product.url}>Try {brand.product.name} Free</Button>
-            <Button variant="outline" href="/trasys-ai">Explore {brand.product.name}</Button>
+            <Button variant="outline" href="/trasys">Explore {brand.product.name}</Button>
           </div>
         </div>
       </div>

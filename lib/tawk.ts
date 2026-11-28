@@ -1,5 +1,5 @@
-// tawk.to live chat. Loaded either automatically (desktop, when chat consent applies) or when the
-// visitor taps our chat button, in which case the chat window opens straight away.
+// tawk.to live chat. Preloaded hidden (when chat consent applies), and shown only when the
+// visitor clicks our chat button, in which case the chat window opens straight away.
 
 import { track } from "./analytics";
 import { loadScript, preconnect } from "./idle";
@@ -65,7 +65,7 @@ function reveal(): void {
 
 /**
  * Load tawk.to once. Resolves when the widget is ready.
- * `open` shows and maximises the chat window; `hidden` preloads it with the bubble hidden (mobile),
+ * `open` shows and maximises the chat window; `hidden` preloads it with the bubble hidden,
  * so a later `open` is instant.
  */
 export function loadTawk({ open = false, hidden = false }: { readonly open?: boolean; readonly hidden?: boolean } = {}): Promise<void> {
@@ -104,9 +104,4 @@ export function loadTawk({ open = false, hidden = false }: { readonly open?: boo
     void inject();
   });
   return ready;
-}
-
-/** Hide the chat bubble (used when the visitor withdraws consent after chat has loaded). */
-export function hideTawk(): void {
-  window.Tawk_API?.hideWidget?.();
 }

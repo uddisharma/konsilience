@@ -83,7 +83,7 @@ export function RichText({ value, onChange, placeholder, className = "" }: { val
   };
 
   const link = () => {
-    const href = window.prompt("Link URL (e.g. /services/web-development or https://...)");
+    const href = window.prompt("Link URL (e.g. /services/web-and-mobile-apps or https://...)");
     if (href) wrap("[", `](${href})`, "link text");
   };
 

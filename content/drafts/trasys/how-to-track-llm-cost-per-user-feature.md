@@ -7,7 +7,7 @@ title: "How to track LLM cost per user and per feature (with code)"
 intent: "How-to (with code)"
 cta: "Start free"
 cta_link: "https://www.trasys.dev/sign-up"
-target_page: "/trasys-ai"
+target_page: "/trasys"
 blocked_by: "Code examples must run against the current SDKs; test before publishing"
 ---
 # How to track LLM cost per user and per feature (with code)

@@ -1,0 +1,212 @@
+/* Konsilience Digital landing page (/digital). Everything here is scoped under .kd so the page can
+   carry its own look (black, white and cream, with brand blue only on buttons and small details; condensed uppercase display type) without touching the rest
+   of the site. */
+
+.kd {
+  --kd-accent: rgb(var(--brand-rgb)); /* buttons only */
+  --kd-glow: rgb(var(--brand-light-rgb)); /* small details on ink: eyebrows, dots, meters */
+  --kd-ink: #0a0a09;
+  --kd-ink-2: #191918;
+  --kd-paper: #f8f7f4;
+  --kd-paper-2: #ebe8df;
+  --kd-line: rgba(10, 15, 13, 0.14);
+  background: var(--kd-ink);
+}
+
+/* Display type: condensed, uppercase, tight. */
+.kd-display {
+  font-family: var(--font-barlow), var(--font-jakarta), sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.015em;
+}
+.kd-hero-title { font-size: clamp(3.2rem, 1.2rem + 6.2vw, 8.5rem); }
+.kd-h2 { font-size: clamp(2.6rem, 1.4rem + 4.6vw, 6.25rem); }
+.kd-h3 { font-size: clamp(1.7rem, 1.3rem + 1.4vw, 2.75rem); line-height: 1; }
+.kd-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+
+/* Word with a marker drawn behind it: white on the dark sections, ink on the paper ones. */
+.kd-on-paper .kd-mark { color: #fff; }
+.kd-on-paper .kd-mark::before { background: var(--kd-ink); }
+.kd-mark { position: relative; display: inline-block; color: var(--kd-ink); padding-inline: 0.12em; isolation: isolate; }
+.kd-mark::before {
+  content: "";
+  position: absolute;
+  inset: 0.06em -0.02em 0.02em;
+  z-index: -1;
+  background: #fff;
+  border-radius: 0.08em;
+  transform: scaleX(0) rotate(-1.2deg);
+  transform-origin: left;
+  transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1) 0.55s;
+}
+[data-shown] .kd-mark::before { transform: scaleX(1) rotate(-1.2deg); }
+
+/* Outlined text (marquee rows). */
+.kd-outline { color: transparent; -webkit-text-stroke: 1.5px currentColor; }
+
+/* Buttons: a pill whose arrow disc slides on hover. */
+.kd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: 999px;
+  padding: 8px 8px 8px 26px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s, background 0.3s, color 0.3s;
+}
+.kd-btn > .kd-btn-dot {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), background 0.3s, color 0.3s;
+}
+.kd-btn:hover { transform: translateY(-2px); }
+.kd-btn:hover > .kd-btn-dot { transform: rotate(45deg) scale(1.06); }
+.kd-btn-accent { background: var(--kd-accent); color: #fff; }
+.kd-btn-accent > .kd-btn-dot { background: #fff; color: var(--kd-accent); }
+.kd-btn-accent:hover { box-shadow: 0 14px 40px -12px rgb(var(--brand-rgb) / 0.8); }
+.kd-btn-ink { background: var(--kd-ink); color: #fff; }
+.kd-btn-ink > .kd-btn-dot { background: #fff; color: var(--kd-ink); }
+.kd-btn-ghost { color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.28); }
+.kd-btn-ghost > .kd-btn-dot { background: rgba(255, 255, 255, 0.12); color: #fff; }
+.kd-btn-ghost:hover { box-shadow: inset 0 0 0 1.5px var(--kd-glow); color: var(--kd-glow); }
+
+/* ---------- Hero ---------- */
+.kd-grid-bg {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 90% 75% at 60% 35%, #000 25%, transparent 78%);
+  animation: kd-grid-pan 26s linear infinite;
+}
+@keyframes kd-grid-pan { to { background-position: 64px 64px; } }
+
+.kd-glow { position: absolute; border-radius: 999px; filter: blur(110px); animation: kd-breathe 9s ease-in-out infinite; }
+@keyframes kd-breathe { 0%, 100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.12); } }
+
+/* Rotating stamp: text set on a circle. */
+.kd-stamp { animation: spin-slow 18s linear infinite; }
+.kd-stamp text { font-family: var(--font-jakarta), sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: 0.21em; text-transform: uppercase; }
+
+/* Growth board (the hero illustration). */
+.kd-board {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025));
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 28px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 50px 120px -50px rgba(255, 255, 255, 0.22);
+}
+.kd-line-path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 2.2s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards; }
+.kd-area { opacity: 0; animation: fade-in 1.2s ease 1.9s forwards; }
+.kd-dot { opacity: 0; animation: fade-in 0.4s ease 2.6s forwards, kd-pulse 2.4s ease-in-out 3s infinite; transform-origin: center; transform-box: fill-box; }
+@keyframes kd-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.5); } }
+.kd-bar { transform: scaleY(0); transform-origin: bottom; animation: kd-rise 1s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
+@keyframes kd-rise { to { transform: scaleY(1); } }
+.kd-chip { animation: floaty 7s ease-in-out infinite; }
+.kd-chip:nth-of-type(2) { animation-duration: 9s; animation-delay: -3s; }
+.kd-chip:nth-of-type(3) { animation-duration: 8s; animation-delay: -5s; }
+.kd-meter { transform: scaleX(0); transform-origin: left; animation: grow 1.4s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
+
+/* ---------- Marquee rows ---------- */
+.kd-marquee { display: flex; overflow: hidden; user-select: none; }
+.kd-marquee > div { display: flex; flex-shrink: 0; align-items: center; min-width: 100%; animation: kd-scroll var(--kd-speed, 40s) linear infinite; }
+.kd-marquee[data-reverse] > div { animation-direction: reverse; }
+.kd-marquee:hover > div { animation-play-state: paused; }
+@keyframes kd-scroll { to { transform: translateX(-100%); } }
+
+/* ---------- Service rows ---------- */
+.kd-row { transition: background 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.45s, padding 0.45s; }
+.kd-row[data-on] { background: var(--kd-ink); color: #fff; }
+.kd-row-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.55s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.kd-row[data-on] .kd-row-body { grid-template-rows: 1fr; }
+.kd-row-arrow { transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), background 0.3s, color 0.3s; }
+.kd-row[data-on] .kd-row-arrow { transform: rotate(45deg); background: #fff; color: var(--kd-ink); border-color: #fff; }
+.kd-tag { opacity: 0; transform: translateY(8px); transition: opacity 0.45s, transform 0.45s; }
+.kd-row[data-on] .kd-tag { opacity: 1; transform: none; }
+
+/* ---------- Timeline ---------- */
+.kd-step-num { transition: color 0.5s, -webkit-text-stroke-color 0.5s; }
+.kd-step[data-done] .kd-step-num { color: #fff; -webkit-text-stroke-color: #fff; }
+.kd-step-node { transition: background 0.4s, box-shadow 0.4s, transform 0.4s; }
+.kd-step[data-done] .kd-step-node { background: var(--kd-glow); box-shadow: 0 0 0 6px rgb(var(--brand-rgb) / 0.3); transform: scale(1.15); }
+
+/* ---------- Bento cards ---------- */
+.kd-card { transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.5s; }
+.kd-card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -30px rgba(10, 15, 13, 0.45); }
+.kd-card:hover .kd-card-icon { transform: rotate(-8deg) scale(1.08); }
+.kd-card-icon { transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+/* ---------- Market tiles ---------- */
+.kd-tile { position: relative; overflow: hidden; transition: color 0.4s; }
+.kd-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--kd-paper);
+  transform: translateY(101%);
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.kd-tile:hover::before { transform: none; }
+.kd-tile:hover { color: var(--kd-ink); }
+.kd-tile > * { position: relative; }
+.kd-tile:hover .kd-tile-muted { color: rgba(10, 10, 9, 0.68); }
+.kd-tile:hover .kd-tile-arrow { transform: rotate(45deg); background: var(--kd-ink); color: #fff; border-color: var(--kd-ink); }
+.kd-tile-arrow { transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), background 0.3s, color 0.3s, border-color 0.3s; }
+.kd-tile-muted { transition: color 0.4s; }
+
+/* ---------- Sheets: paper sections round off where they meet the ink ---------- */
+.kd-sheet-top { border-top-left-radius: clamp(24px, 3.2vw, 48px); border-top-right-radius: clamp(24px, 3.2vw, 48px); }
+.kd-sheet-bottom { border-bottom-left-radius: clamp(24px, 3.2vw, 48px); border-bottom-right-radius: clamp(24px, 3.2vw, 48px); }
+
+/* Sticker: the stamp on a white disc, pinned over a corner. */
+.kd-sticker { place-items: center; border-radius: 999px; background: #fff; color: var(--kd-ink); box-shadow: 0 18px 44px -14px rgba(0, 0, 0, 0.7); transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.kd-sticker:hover { transform: rotate(-10deg) scale(1.06); }
+
+/* ---------- Stats ---------- */
+.kd-stat-rule { display: block; height: 3px; width: 56px; background: var(--kd-ink); transform: scaleX(0); transform-origin: left; transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1) 0.35s; }
+[data-shown] .kd-stat-rule { transform: scaleX(1); }
+
+/* ---------- Service rows: extras ---------- */
+.kd-row { position: relative; overflow: hidden; }
+.kd-row[data-on] { border-radius: 24px; border-color: transparent; }
+/* the row above an open one drops its rule, so the rounded block has clean edges */
+.kd-row:has(+ .kd-row[data-on]) { border-color: transparent; }
+.kd-row > * { position: relative; }
+.kd-row > .kd-row-icon { position: absolute; right: -24px; bottom: -36px; width: 260px; height: 260px; color: rgba(255, 255, 255, 0.06); opacity: 0; transform: rotate(-12deg) scale(0.9); transition: opacity 0.5s 0.15s, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s; pointer-events: none; }
+.kd-row[data-on] > .kd-row-icon { opacity: 1; transform: rotate(-12deg); }
+/* thin bar that fills while the list is waiting to move to the next row */
+.kd-row > .kd-row-timer { position: absolute; left: 24px; right: 24px; bottom: 0; height: 2px; overflow: hidden; border-radius: 2px; }
+.kd-row-timer > span { display: block; height: 100%; background: var(--kd-glow); transform-origin: left; animation: grow var(--kd-rotate, 4200ms) linear both; }
+
+/* ---------- Timeline: extras ---------- */
+.kd-step-body { opacity: 0.45; transform: translateY(10px); transition: opacity 0.5s, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.kd-step[data-done] .kd-step-body { opacity: 1; transform: none; }
+
+/* ---------- Bento cards: extras ---------- */
+.kd-card { position: relative; overflow: hidden; }
+.kd-card > * { position: relative; }
+.kd-card > .kd-card-num { position: absolute; top: 18px; right: 26px; font-size: clamp(4.5rem, 3rem + 4vw, 8rem); line-height: 1; color: rgba(10, 10, 9, 0.08); transition: color 0.4s, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); pointer-events: none; }
+.kd-card-ink > .kd-card-num { color: rgba(255, 255, 255, 0.13); }
+.kd-card:hover > .kd-card-num { transform: translateY(-4px); color: rgba(10, 10, 9, 0.16); }
+.kd-card-ink:hover > .kd-card-num { color: rgba(255, 255, 255, 0.26); }
+.kd-card-ink::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 80% 90% at 85% 0%, #000 10%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ---------- Closing call to action ---------- */
+.kd-cta-grid {
+  background-image: linear-gradient(rgba(10, 10, 9, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(10, 10, 9, 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 100% at 100% 50%, #000 10%, transparent 75%);
+}

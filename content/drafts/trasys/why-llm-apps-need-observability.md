@@ -7,7 +7,7 @@ title: "Why LLM apps need observability: traces, tokens and latency"
 intent: "Education"
 cta: "Start free"
 cta_link: "https://www.trasys.dev/sign-up"
-target_page: "/trasys-ai"
+target_page: "/trasys"
 blocked_by: "none"
 ---
 # Why LLM apps need observability: traces, tokens and latency

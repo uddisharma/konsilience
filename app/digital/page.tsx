@@ -1,15 +1,17 @@
+import type { CSSProperties, ReactNode } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CtaBand, ProcessSteps, SectionHead, Split } from "@/components/page/Blocks";
 import FaqList from "@/components/FaqList";
-import Button from "@/components/ui/Button";
 import BookCallButton from "@/components/BookCallButton";
 import { OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from "@/lib/og";
 import Icon from "@/components/ui/Icon";
 import Reveal, { LineReveal } from "@/components/ui/Reveal";
 import JsonLd from "@/components/JsonLd";
+import { serviceList } from "@/lib/catalog";
 import { siteUrl } from "@/lib/routes";
 import { buildDigitalMarketingSchema } from "@/lib/schema";
+import { CountUp, ServiceRows, Timeline } from "./Interactive";
+import "./digital.css";
 
 export const metadata: Metadata = {
   title: "Digital Marketing & Performance Growth Agency | Konsilience",
@@ -25,11 +27,11 @@ export const metadata: Metadata = {
     "AI Search Optimization GEO",
     "Konsilience",
   ],
-  alternates: { canonical: `${siteUrl}/digital-marketing` },
+  alternates: { canonical: `${siteUrl}/digital` },
   openGraph: {
     title: "Digital Marketing & Performance Growth Agency | Konsilience",
     description: "Scale customer acquisition with engineering-grade digital marketing, technical SEO, and conversion rate optimization.",
-    url: `${siteUrl}/digital-marketing`,
+    url: `${siteUrl}/digital`,
     images: [{ url: `${siteUrl}/og-image.png`, width: OG_IMAGE_WIDTH, height: OG_IMAGE_HEIGHT, alt: "Digital Marketing & Performance Growth Agency | Konsilience" }],
   },
   twitter: {
@@ -39,56 +41,17 @@ export const metadata: Metadata = {
   },
 };
 
-const marketingServices = [
-  {
-    icon: "search",
-    title: "Search Engine Optimization (SEO)",
-    tag: "Organic Search Authority",
-    text: "Technical crawl audits, programmatic page engines, and generative engine optimization (GEO) to dominate Google and AI search answers like ChatGPT and Perplexity.",
-    href: "/services/search-engine-optimization",
-    deliverables: ["Core Web Vitals & Next.js SSR", "Programmatic Long-Tail SEO", "Generative Engine Optimization (GEO)", "Authority Digital PR & Backlinks"],
-  },
-  {
-    icon: "target",
-    title: "Performance Marketing & PPC",
-    tag: "High-ROAS Paid Media",
-    text: "Multi-channel paid search and social campaigns across Google Ads, Meta, and LinkedIn engineered for maximum ROAS, lower CPA, and closed-loop revenue.",
-    href: "/services/performance-marketing-and-ppc",
-    deliverables: ["Google Search & Performance Max", "Meta Ads High-Velocity Testing", "LinkedIn B2B ABM Funnels", "Server CAPI & Enhanced Conversions"],
-  },
-  {
-    icon: "chart",
-    title: "Conversion Rate Optimization (CRO)",
-    tag: "Funnel Engineering",
-    text: "Heuristic UX audits, continuous A/B code testing, and checkout friction reduction that converts your existing traffic into qualified revenue.",
-    href: "/services/conversion-rate-optimization",
-    deliverables: ["Hypothesis-Driven A/B Split Tests", "Session Recording & Friction Audits", "Checkout & Lead Flow Streamlining", "Dynamic Intent Personalization"],
-  },
-  {
-    icon: "share",
-    title: "Social Media & Brand Growth",
-    tag: "Brand Authority",
-    text: "Executive LinkedIn thought leadership, short-form video production, and viral community management that builds lasting brand equity and inbound deal flow.",
-    href: "/services/social-media-marketing",
-    deliverables: ["Founder & Executive Personal Branding", "Vertical Short-Form Video Assets", "Organic B2B Community Building", "Narrative & Creative Direction"],
-  },
-  {
-    icon: "doc",
-    title: "Content Marketing & Copywriting",
-    tag: "Thought Leadership",
-    text: "Subject-matter expert whitepapers, conversion landing page copy, and SEO topic clusters that educate and convert technical and enterprise buyers.",
-    href: "/services/content-marketing-and-copywriting",
-    deliverables: ["Architectural Technical Whitepapers", "High-Converting Page Copy", "Topical Authority Content Hubs", "Sales Enablement Case Studies"],
-  },
-  {
-    icon: "mail",
-    title: "Email Marketing & Automation",
-    tag: "Lifecycle Retention",
-    text: "Automated onboarding, cart recovery, and lifecycle nurture journeys built in Klaviyo and HubSpot to maximize customer lifetime value (LTV).",
-    href: "/services/email-marketing-and-automation",
-    deliverables: ["Behavioral Trigger Automation", "Abandoned Cart & Funnel Recovery", "Predictive Churn Prevention Flows", "SPF, DKIM, DMARC Deliverability"],
-  },
-];
+// Short label shown beside each service title.
+const SERVICE_TAGS: Record<string, string> = {
+  "website-and-seo-audit": "Site Health Check",
+  "seo-and-local-seo": "Organic Search",
+  "performance-marketing": "Paid Media",
+  "content-and-social-media": "Brand & Content",
+  "ai-marketing-automation": "Lead Automation",
+};
+const marketingServices = serviceList
+  .filter((x) => x.category === "Digital Marketing")
+  .map((x) => ({ icon: x.icon, title: x.name, tag: SERVICE_TAGS[x.slug], text: x.short, href: `/services/${x.slug}`, deliverables: x.offerings }));
 
 const growthSteps = [
   {
@@ -139,7 +102,6 @@ const differentiators = [
 const regionalHubs = [
   {
     city: "Dubai & UAE",
-    flag: "🇦🇪",
     service: "Digital Marketing & Bilingual Arabic/EN SEO",
     href: "/ae/digital-marketing-agency-dubai",
     savings: "60% Cost Advantage",
@@ -147,7 +109,6 @@ const regionalHubs = [
   },
   {
     city: "United States",
-    flag: "🇺🇸",
     service: "B2B SaaS Demand Gen & Enterprise PPC",
     href: "/us/digital-marketing-agency-usa",
     savings: "65% Cost Advantage",
@@ -155,7 +116,6 @@ const regionalHubs = [
   },
   {
     city: "London & UK",
-    flag: "🇬🇧",
     service: "UK GDPR-Compliant PPC & Growth Engineering",
     href: "/uk/digital-marketing-agency-london",
     savings: "60% Cost Advantage",
@@ -163,7 +123,6 @@ const regionalHubs = [
   },
   {
     city: "Canada (Toronto)",
-    flag: "🇨🇦",
     service: "Bilingual English/French Digital Marketing",
     href: "/ca/digital-marketing-agency-canada",
     savings: "60% Cost Advantage",
@@ -171,7 +130,6 @@ const regionalHubs = [
   },
   {
     city: "Australia (Sydney)",
-    flag: "🇦🇺",
     service: "Google.com.au SEO & Performance Ads",
     href: "/au/digital-marketing-agency-australia",
     savings: "60% Cost Advantage",
@@ -179,7 +137,6 @@ const regionalHubs = [
   },
   {
     city: "Saudi Arabia (Riyadh)",
-    flag: "🇸🇦",
     service: "Arabic-First Performance & Snapchat Marketing",
     href: "/sa/digital-marketing-agency-saudi-arabia",
     savings: "55% Cost Advantage",
@@ -187,7 +144,6 @@ const regionalHubs = [
   },
   {
     city: "Germany & DACH",
-    flag: "🇩🇪",
     service: "GDPR/TTDSG B2B Lead Gen & Technical SEO",
     href: "/de/digital-marketing-agency-germany",
     savings: "55% Cost Advantage",
@@ -229,284 +185,400 @@ const platforms = [
   "VWO & Split Testing",
 ];
 
+// Headline numbers shown in the cream band under the hero.
+const stats: [string, string][] = [
+  ["4.8x", "Average client ROAS"],
+  ["$25M+", "Ad spend managed"],
+  ["240%+", "Organic search lift"],
+  ["60%", "Cost advantage"],
+];
+
+// Short reassurances under the hero buttons; each is explained further down the page.
+const HERO_POINTS = ["You own every ad account", "Server-side tracking", "No lock-in"];
+
+// What the free audit looks at, shown as chips in the closing call to action.
+const AUDIT_COVERS = ["Site speed", "Search gaps", "Tracking", "Paid accounts"];
+
+// One icon per differentiator, in order.
+const DIFFERENTIATOR_ICONS = ["code", "target", "chart", "lock", "users"];
+
+// Growth board (hero illustration): bar heights in % and the three channel meters. Decorative, not client data.
+const BOARD_BARS = [34, 46, 41, 58, 66, 61, 78, 92];
+const BOARD_CHANNELS: [string, number][] = [["Organic search", 0.82], ["Paid media", 0.64], ["Content & social", 0.48]];
+const BAR_STAGGER_MS = 90;
+
+const Arrow = () => (
+  <span className="kd-btn-dot">
+    <Icon name="upRight" className="size-4" strokeWidth={2} />
+  </span>
+);
+
+/** Circular "Konsilience Digital" stamp that spins slowly. */
+function Stamp({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 120 120" className={className} aria-hidden>
+      <defs>
+        <path id="kd-stamp-ring" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0" />
+      </defs>
+      <g className="kd-stamp" style={{ transformOrigin: "60px 60px" }}>
+        <text fill="currentColor">
+          {/* textLength = the ring's circumference (2π × 46), so the words close the circle exactly */}
+          <textPath href="#kd-stamp-ring" textLength={289} lengthAdjust="spacingAndGlyphs">
+            Konsilience Digital • SEO • Ads • Content •
+          </textPath>
+        </text>
+      </g>
+      <path d="M48 72 72 48M54 48h18v18" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** Hero illustration: a chart that draws itself, bars that rise and channel meters that fill. */
+function GrowthBoard() {
+  return (
+    <div className="kd-board relative p-5 sm:p-7">
+      <div className="flex items-center justify-between">
+        <span className="flex items-center gap-2 text-xs font-semibold tracking-[.16em] text-white/70 uppercase">
+          <span className="relative flex size-2">
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-[var(--kd-glow)] opacity-70" />
+            <span className="relative inline-flex size-2 rounded-full bg-[var(--kd-glow)]" />
+          </span>
+          Growth board
+        </span>
+        <span className="rounded-full border border-white/15 px-3 py-1 text-[11px] font-medium text-white/55">Illustration</span>
+      </div>
+
+      <div className="relative mt-5">
+        <svg viewBox="0 0 400 190" className="w-full" aria-hidden>
+          <defs>
+            <linearGradient id="kd-area-fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#ffffff" stopOpacity=".38" />
+              <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          {[40, 90, 140].map((y) => (
+            <line key={y} x1="0" x2="400" y1={y} y2={y} stroke="rgba(255,255,255,.09)" strokeDasharray="3 6" />
+          ))}
+          <path className="kd-area" d="M0 160C40 150 60 128 100 124S160 140 200 104s60-16 100-48 60-34 100-44V190H0z" fill="url(#kd-area-fill)" />
+          <path className="kd-line-path" pathLength={1} d="M0 160C40 150 60 128 100 124S160 140 200 104s60-16 100-48 60-34 100-44" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" />
+          <circle className="kd-dot" cx="396" cy="13" r="6" fill="#ffffff" />
+        </svg>
+        <div className="kd-chip absolute top-1 left-2 flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-xs font-bold text-[var(--kd-ink)] shadow-xl">
+          <Icon name="search" className="size-3.5" strokeWidth={2.2} /> Organic
+          <Icon name="up" className="size-3.5 text-primary" strokeWidth={2.6} />
+        </div>
+        <div className="kd-chip absolute top-[46%] right-[18%] flex items-center gap-2 rounded-full bg-[var(--kd-accent)] px-3.5 py-2 text-xs font-bold text-white shadow-xl">
+          <Icon name="target" className="size-3.5" strokeWidth={2.2} /> Paid ROAS
+          <Icon name="up" className="size-3.5" strokeWidth={2.6} />
+        </div>
+        <div className="kd-chip absolute bottom-3 left-[22%] hidden items-center gap-2 rounded-full border border-white/15 bg-[var(--kd-ink-2)] px-3.5 py-2 text-xs font-bold text-white shadow-xl sm:flex">
+          <Icon name="users" className="size-3.5" strokeWidth={2.2} /> Qualified leads
+          <Icon name="up" className="size-3.5" strokeWidth={2.6} />
+        </div>
+      </div>
+
+      <div className="mt-6 grid gap-5 sm:grid-cols-[1fr_1.15fr]">
+        <div className="flex h-28 items-end gap-2 rounded-2xl bg-white/[.05] p-4">
+          {BOARD_BARS.map((h, i) => (
+            <span key={i} className="kd-bar flex-1 rounded-t-md" style={{ height: `${h}%`, animationDelay: `${900 + i * BAR_STAGGER_MS}ms`, background: i === BOARD_BARS.length - 1 ? "var(--kd-glow)" : "rgba(255,255,255,.28)" }} />
+          ))}
+        </div>
+        <ul className="flex flex-col justify-center gap-3.5 rounded-2xl bg-white/[.05] p-4">
+          {BOARD_CHANNELS.map(([label, share], i) => (
+            <li key={label}>
+              <span className="text-xs font-medium text-white/70">{label}</span>
+              <span className="mt-1.5 block h-1.5 overflow-hidden rounded-full bg-white/10">
+                <span className="kd-meter block h-full rounded-full bg-[var(--kd-glow)]" style={{ width: `${share * 100}%`, animationDelay: `${1400 + i * 200}ms` }} />
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+/** One endlessly scrolling row; the content is repeated so the loop has no gap. */
+function Marquee({ children, reverse, speed }: { children: ReactNode; reverse?: boolean; speed?: string }) {
+  return (
+    <div className="kd-marquee" data-reverse={reverse || undefined} style={speed ? ({ "--kd-speed": speed } as CSSProperties) : undefined}>
+      <div>{children}</div>
+      <div aria-hidden>{children}</div>
+    </div>
+  );
+}
+
 export default function DigitalMarketingPage() {
   const schema = buildDigitalMarketingSchema(faqs);
 
   return (
-    <>
+    <div className="kd">
       <JsonLd data={schema} />
 
-      {/* =========================================================================
-          HERO SECTION (Center-Aligned, Cinematic Ambient Glow, Open Editorial Layout)
-         ========================================================================= */}
-      <section className="relative overflow-hidden bg-black pt-36 pb-20 sm:pt-44 sm:pb-28 lg:pt-48 lg:pb-32 border-b border-line/60">
-        {/* Ambient Gradient Glows */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="size-[640px] rounded-full bg-primary/20 blur-[140px] opacity-80 animate-pulse" />
-          <div className="absolute top-1/4 -right-24 size-[440px] rounded-full bg-indigo-600/15 blur-[130px]" />
-          <div className="absolute top-1/3 -left-24 size-[440px] rounded-full bg-blue-500/15 blur-[130px]" />
-        </div>
+      {/* ---------- Hero: ink, with the growth board ---------- */}
+      <section className="relative overflow-hidden pt-36 sm:pt-40 lg:pt-44">
+        <div className="kd-grid-bg pointer-events-none absolute inset-0" />
+        <div className="kd-glow pointer-events-none -top-32 right-[-10%] size-[560px] bg-white/[.07]" />
+        <div className="kd-glow pointer-events-none bottom-[-20%] left-[-12%] size-[520px] bg-primary/15" style={{ animationDelay: "-4s" }} />
 
-        {/* Delicate Tech Dot Texture */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-            maskImage: "radial-gradient(ellipse 70% 60% at 50% 30%, #000 20%, transparent 80%)",
-          }}
-        />
-
-        <div className="wrap relative z-10 flex flex-col items-center text-center">
-          {/* Breadcrumbs */}
-          <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-2 text-xs sm:text-sm text-muted">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
-            <Icon name="chevron" className="size-3 -rotate-90 text-white/40" />
-            <span className="text-white font-medium">Digital Marketing & Growth</span>
+        <div className="wrap relative z-10">
+          <nav aria-label="Breadcrumb" className="anim-hero mb-8 flex items-center gap-2 text-xs text-white/50 sm:text-sm">
+            <Link href="/" className="transition-colors hover:text-white">Home</Link>
+            <Icon name="chevron" className="size-3 -rotate-90 text-white/30" />
+            <span className="font-medium text-white">Konsilience Digital</span>
           </nav>
 
-          {/* Eyebrow Pill */}
-          <div className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-semibold tracking-widest uppercase text-primary shadow-sm shadow-primary/20 backdrop-blur-md">
-            <span className="relative flex size-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-            </span>
-            <span>AI-Driven Performance & Growth Engineering</span>
+          <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_.85fr] lg:gap-10 xl:gap-16">
+            <div>
+              <p className="kd-eyebrow anim-hero flex items-center gap-3 text-[var(--kd-glow)]">
+                <span className="h-px w-10 bg-[var(--kd-glow)]" />
+                Konsilience Digital
+              </p>
+              <LineReveal
+                as="h1"
+                className="kd-display kd-hero-title mt-6 text-white"
+                lines={[
+                  "Marketing",
+                  "that shows up",
+                  <span key="l3">
+                    in <span className="kd-mark">revenue</span>
+                  </span>,
+                ]}
+              />
+              <p className="anim-hero mt-8 max-w-xl text-base leading-relaxed font-medium text-white/70 sm:text-lg" style={{ animationDelay: "250ms" }}>
+                SEO, paid media, content and marketing automation, run by marketers who sit next to engineers. We fix what holds your site back, track what actually converts and scale the channels that pay.
+              </p>
+              <div className="anim-hero mt-10 flex flex-wrap items-center gap-4" style={{ animationDelay: "380ms" }}>
+                <Link href="/free-seo-audit" className="kd-btn kd-btn-accent">
+                  Claim free marketing audit <Arrow />
+                </Link>
+                <Link href="#capabilities" className="kd-btn kd-btn-ghost">
+                  See what we run <Arrow />
+                </Link>
+              </div>
+              <ul className="anim-hero mt-9 flex flex-wrap gap-x-7 gap-y-3 text-sm font-medium text-white/65" style={{ animationDelay: "500ms" }}>
+                {HERO_POINTS.map((point) => (
+                  <li key={point} className="flex items-center gap-2.5">
+                    <span className="grid size-5 place-items-center rounded-full bg-white text-[var(--kd-ink)]">
+                      <Icon name="check" className="size-3" strokeWidth={3} />
+                    </span>
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="anim-hero relative" style={{ animationDelay: "300ms" }}>
+              <GrowthBoard />
+              <span className="kd-sticker absolute -bottom-12 -left-12 hidden size-28 lg:grid">
+                <Stamp className="size-[104px]" />
+              </span>
+            </div>
           </div>
+        </div>
 
-          {/* Hero Headline */}
-          <h1 className="h1 max-w-5xl mx-auto leading-[1.06] tracking-tight">
-            High-Performance Marketing, <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-blue-400 via-primary to-indigo-300 bg-clip-text text-transparent">
-              Engineered for Pure ROI
-            </span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="mt-6 text-base sm:text-lg md:text-xl text-white/75 max-w-3xl mx-auto leading-relaxed font-medium">
-            We merge software engineering, first-party server attribution, and high-velocity conversion testing.
-            Acquire high-intent customers, dominate organic and AI search, and compound enterprise revenue.
-          </p>
-
-          {/* CTAs */}
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Button href="/free-seo-audit">Claim Free Marketing Audit</Button>
-            <Button variant="outline" href="#capabilities">Explore Capabilities</Button>
-          </div>
-
-          {/* Mastered Channels Strip */}
-          <div className="mt-14 flex flex-wrap items-center justify-center gap-x-6 gap-y-2.5 text-xs font-mono uppercase tracking-wider text-muted max-w-4xl">
-            <span className="text-white/40">Platforms Mastered:</span>
-            {platforms.map((p, idx) => (
-              <span key={p} className="inline-flex items-center gap-2 text-white/80">
-                {idx > 0 && <span className="text-white/20">•</span>}
-                <span>{p}</span>
+        {/* Two marquee rows: services in display type, then the platforms we work in */}
+        <div className="relative z-10 mt-20 border-y border-white/10 py-5 sm:mt-24">
+          <Marquee speed="46s">
+            {marketingServices.map((s, i) => (
+              <span key={s.href} className={`kd-display flex items-center gap-8 pr-8 text-5xl sm:text-7xl ${i % 2 ? "kd-outline text-white/60" : "text-white"}`}>
+                {s.title}
+                <span className="size-3 rounded-full bg-[var(--kd-glow)] sm:size-4" />
               </span>
             ))}
-          </div>
+          </Marquee>
+        </div>
+        <div className="relative z-10 py-5">
+          <Marquee reverse speed="34s">
+            {platforms.map((p) => (
+              <span key={p} className="mr-3 rounded-full border border-white/15 px-5 py-2 text-sm font-medium whitespace-nowrap text-white/70">
+                {p}
+              </span>
+            ))}
+          </Marquee>
+        </div>
+      </section>
 
-          {/* Open Typographic Metrics Bar (Zero Boxes, Pure Line Dividers) */}
-          <div className="mt-20 w-full border-t border-line/60 pt-12">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 divide-y lg:divide-y-0 lg:divide-x divide-line/40">
-              <div className="flex flex-col items-center text-center px-4">
-                <span className="font-condensed text-5xl sm:text-6xl font-bold text-white tracking-tight">4.8x</span>
-                <span className="mt-2 text-xs sm:text-sm text-muted font-medium uppercase tracking-wider">Average Client ROAS</span>
-              </div>
-              <div className="flex flex-col items-center text-center px-4 pt-6 lg:pt-0">
-                <span className="font-condensed text-5xl sm:text-6xl font-bold text-white tracking-tight">$25M+</span>
-                <span className="mt-2 text-xs sm:text-sm text-muted font-medium uppercase tracking-wider">Ad Spend Managed</span>
-              </div>
-              <div className="flex flex-col items-center text-center px-4 pt-6 lg:pt-0">
-                <span className="font-condensed text-5xl sm:text-6xl font-bold text-white tracking-tight">240%+</span>
-                <span className="mt-2 text-xs sm:text-sm text-muted font-medium uppercase tracking-wider">Organic Search Lift</span>
-              </div>
-              <div className="flex flex-col items-center text-center px-4 pt-6 lg:pt-0">
-                <span className="font-condensed text-5xl sm:text-6xl font-bold text-primary tracking-tight">60%</span>
-                <span className="mt-2 text-xs sm:text-sm text-muted font-medium uppercase tracking-wider">Cost Advantage</span>
-              </div>
+      {/* ---------- Numbers: cream band ---------- */}
+      <section className="kd-sheet-top border-b border-[var(--kd-line)] bg-[var(--kd-paper)] text-[var(--kd-ink)]">
+        <div className="wrap grid grid-cols-2 lg:grid-cols-4">
+          {stats.map(([value, label], i) => (
+            <Reveal key={label} delay={i * 90} className={`border-[var(--kd-line)] px-2 py-10 sm:px-8 sm:py-14 ${i % 2 ? "border-l" : ""} ${i > 1 ? "border-t lg:border-t-0" : ""} ${i ? "lg:border-l" : ""}`}>
+              <span className="block font-mono text-xs font-semibold text-black/40">
+                {String(i + 1).padStart(2, "0")} / {String(stats.length).padStart(2, "0")}
+              </span>
+              <CountUp value={value} className="kd-display mt-5 block text-6xl sm:text-7xl xl:text-8xl" />
+              <span className="kd-stat-rule mt-5" />
+              <span className="mt-4 block text-sm font-semibold tracking-wide text-black/60 uppercase">{label}</span>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ---------- Services: paper, rows that open ---------- */}
+      <section id="capabilities" className="kd-on-paper kd-sheet-bottom sec scroll-mt-24 bg-[var(--kd-paper)] text-[var(--kd-ink)]">
+        <div className="wrap">
+          <div className="flex flex-wrap items-end justify-between gap-8">
+            <div>
+              <p className="kd-eyebrow text-black/50">What we run</p>
+              <LineReveal className="kd-display kd-h2 mt-4" lines={["Five services.", <span key="l2">One <span className="kd-mark">growth team</span>.</span>]} />
+            </div>
+            <Reveal variant="fade" className="max-w-md">
+              <p className="text-base leading-relaxed font-medium text-black/65">
+                Strategy and execution in the same room. Every campaign is backed by engineers who can change your site, your tracking and your funnel, not only your ads.
+              </p>
+            </Reveal>
+          </div>
+          <div className="mt-12 sm:mt-16">
+            <ServiceRows items={marketingServices} />
+          </div>
+          <div className="mt-10 flex flex-wrap items-center justify-between gap-5">
+            <span className="text-sm font-medium text-black/60">Need a plan across several channels?</span>
+            <BookCallButton placement="digital_marketing">Schedule a growth call</BookCallButton>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- Process: ink, timeline that fills on scroll ---------- */}
+      <section className="sec relative overflow-hidden">
+        <div className="wrap">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="kd-eyebrow text-[var(--kd-glow)]">How it works</p>
+            <LineReveal className="kd-display kd-h2 mt-4 text-white" lines={["From audit", "to compounding growth"]} />
+            <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/65">Five phases that cut wasted spend first, then scale what converts.</p>
+          </div>
+          <div className="mx-auto mt-16 max-w-5xl sm:mt-20">
+            <Timeline steps={growthSteps} />
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- Why us: paper, bento grid ---------- */}
+      <section className="kd-on-paper kd-sheet-top kd-sheet-bottom sec bg-[var(--kd-paper)] text-[var(--kd-ink)]">
+        <div className="wrap">
+          <p className="kd-eyebrow text-black/50">Why Konsilience Digital</p>
+          <LineReveal className="kd-display kd-h2 mt-4 max-w-5xl" lines={["Marketers who can", <span key="l2">touch the <span className="kd-mark">code</span></span>]} />
+          <div className="mt-12 grid gap-4 sm:mt-16 md:grid-cols-6">
+            {differentiators.map((d, i) => {
+              // first two cards are wide, the last three share a row; the first is ink and the fourth a darker cream
+              const tone = i === 0 ? "kd-card-ink bg-[var(--kd-ink)] text-white" : i === 3 ? "bg-[var(--kd-paper-2)]" : "bg-white";
+              const muted = i === 0 ? "text-white/65" : "text-black/65";
+              return (
+                <Reveal key={d.title} delay={(i % 3) * 90} variant="zoom" className={i < 2 ? "md:col-span-3" : "md:col-span-2"}>
+                  <article className={`kd-card flex h-full flex-col justify-between gap-10 rounded-[28px] p-7 sm:p-9 ${tone}`}>
+                    <span aria-hidden className="kd-display kd-card-num">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className={`kd-card-icon grid size-14 place-items-center rounded-2xl ${i === 0 ? "bg-white text-[var(--kd-ink)]" : "bg-[var(--kd-ink)] text-white"}`}>
+                      <Icon name={DIFFERENTIATOR_ICONS[i]} className="size-6" />
+                    </span>
+                    <div>
+                      <h3 className="kd-display kd-h3">{d.title}</h3>
+                      <p className={`mt-4 text-[15px] leading-relaxed ${muted}`}>{d.text}</p>
+                    </div>
+                  </article>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- Markets: ink, tiles that fill with cream ---------- */}
+      <section className="sec">
+        <div className="wrap">
+          <div className="flex flex-wrap items-end justify-between gap-8">
+            <div>
+              <p className="kd-eyebrow text-[var(--kd-glow)]">Where we work</p>
+              <LineReveal className="kd-display kd-h2 mt-4 text-white" lines={["Local fluency,", "global reach"]} />
+            </div>
+            <p className="max-w-md text-base leading-relaxed text-white/65">Growth pods that know the search habits, ad platforms and privacy rules of each market.</p>
+          </div>
+          <div className="mt-12 grid gap-px overflow-hidden rounded-[28px] border border-white/10 bg-white/10 sm:mt-16 sm:grid-cols-2 lg:grid-cols-4">
+            {regionalHubs.map((hub, i) => (
+              <Reveal key={hub.city} delay={(i % 4) * 70} variant="fade">
+                <Link href={hub.href} className="kd-tile flex h-full min-h-56 flex-col justify-between gap-8 bg-[var(--kd-ink)] p-7 text-white">
+                  <div className="flex items-start justify-between gap-4">
+                    {/* country code from the page URL: flag emoji do not render on Windows */}
+                    <span className="kd-tile-muted rounded-full border border-current px-3 py-1 font-mono text-xs font-bold tracking-[.18em] text-[var(--kd-glow)] uppercase">{hub.href.split("/")[1]}</span>
+                    <span className="kd-tile-arrow grid size-10 place-items-center rounded-full border border-white/25">
+                      <Icon name="upRight" className="size-4" strokeWidth={2} />
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="kd-display kd-h3">{hub.city}</h3>
+                    <p className="kd-tile-muted mt-3 text-sm leading-relaxed text-white/60">{hub.service}</p>
+                    <p className="kd-tile-muted mt-3 text-xs font-bold tracking-[.14em] text-[var(--kd-glow)] uppercase">{hub.highlight}</p>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+            {/* closing tile fills the eighth cell of the grid */}
+            <div className="flex min-h-56 flex-col justify-between gap-8 bg-[var(--kd-ink-2)] p-7">
+              <Stamp className="size-20 text-white/80" />
+              <p className="text-sm leading-relaxed text-white/60">
+                Somewhere else? <Link href="/contact" className="font-semibold text-white underline decoration-[var(--kd-glow)] underline-offset-4">Tell us your market</Link>.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* =========================================================================
-          CORE CAPABILITIES (Split Layout with Editorial Rows - Zero Card Boxes)
-         ========================================================================= */}
-      <section id="capabilities" className="sec bg-black">
-        <Split
-          title={["Full-Funnel Capabilities,", "Built for Revenue"]}
-          text="We eliminate the disconnect between marketing strategy and technical execution. Every campaign is supported by software engineers, first-party data pipelines, and continuous code-level split testing."
-        >
-          <div className="flex flex-col border-t border-line/60">
-            {marketingServices.map((service, index) => (
-              <div
-                key={service.title}
-                className="group relative border-b border-line/60 py-8 transition-colors duration-300 hover:border-primary/50"
-              >
-                {/* Header: Serial Number + Tag + Arrow */}
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs font-semibold text-primary">[ {String(index + 1).padStart(2, "0")} ]</span>
-                    <span className="text-xs font-medium uppercase tracking-wider text-muted">{service.tag}</span>
-                  </div>
-                  <Link
-                    href={service.href}
-                    className="flex items-center gap-1.5 text-xs font-semibold text-primary transition-colors group-hover:text-white"
-                  >
-                    <span>View Service</span>
-                    <Icon name="upRight" className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </Link>
-                </div>
-
-                {/* Service Title */}
-                <h3 className="mt-3 text-xl sm:text-2xl font-bold text-white transition-colors duration-300 group-hover:text-primary">
-                  <Link href={service.href}>{service.title}</Link>
-                </h3>
-
-                {/* Description */}
-                <p className="mt-3 text-sm text-muted leading-relaxed max-w-2xl">
-                  {service.text}
-                </p>
-
-                {/* Deliverable Tags */}
-                <div className="mt-5 flex flex-wrap items-center gap-2">
-                  {service.deliverables.map((item) => (
-                    <span
-                      key={item}
-                      className="inline-flex items-center gap-1.5 text-xs text-white/75 bg-white/[0.04] px-3 py-1 rounded-full border border-white/10"
-                    >
-                      <span className="size-1 rounded-full bg-primary" />
-                      {item}
-                    </span>
-                  ))}
-                </div>
+      {/* ---------- FAQ ---------- */}
+      <section className="sec border-t border-white/10">
+        <div className="wrap grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
+          <div>
+            <p className="kd-eyebrow text-[var(--kd-glow)]">FAQ</p>
+            <LineReveal className="kd-display kd-h2 mt-4 text-white" lines={["Questions,", "answered"]} />
+            <p className="mt-6 max-w-sm text-base leading-relaxed text-white/65">What to expect when you work with our digital marketing team.</p>
+            <Reveal variant="fade" className="mt-10 max-w-sm">
+              <div className="rounded-[28px] border border-white/10 bg-[var(--kd-ink-2)] p-7">
+                <span className="grid size-12 place-items-center rounded-2xl bg-white text-[var(--kd-ink)]">
+                  <Icon name="chat" className="size-5" />
+                </span>
+                <h3 className="kd-display mt-6 text-3xl text-white">Something else?</h3>
+                <p className="mt-3 text-sm leading-relaxed text-white/60">Ask the team directly. You get a straight answer from someone who runs campaigns.</p>
+                <Link href="/contact" className="kd-btn kd-btn-ghost mt-6">
+                  Talk to the team <Arrow />
+                </Link>
               </div>
-            ))}
+            </Reveal>
           </div>
-
-          <div className="mt-8 flex items-center justify-between pt-4">
-            <span className="text-xs text-muted font-medium">Need a custom multi-channel strategy?</span>
-            <BookCallButton variant="outline" placement="digital_marketing">Schedule Growth Call</BookCallButton>
-          </div>
-        </Split>
-      </section>
-
-      {/* =========================================================================
-          5-PHASE GROWTH ENGINE (Continuous ProcessSteps Line Grid - Zero Boxes)
-         ========================================================================= */}
-      <section className="sec bg-black border-t border-line/60">
-        <div className="wrap">
-          <SectionHead
-            title={["The Scientific Growth Engine"]}
-            text="A proven, 5-phase execution model that eliminates wasted ad spend and scales what converts."
-          />
-          <div className="mt-14">
-            <ProcessSteps steps={growthSteps} />
-          </div>
+          <FaqList items={faqs} />
         </div>
       </section>
 
-      {/* =========================================================================
-          THE KONSILIENCE DIFFERENCE (Numbered Editorial Rows - Zero Spreadsheets)
-         ========================================================================= */}
-      <section className="sec bg-black border-t border-line/60">
-        <Split
-          title={["Why High-Growth Brands", "Partner With Konsilience"]}
-          text="Traditional agencies are media buyers who can't touch your codebase. In-house teams are often bottlenecked by developer backlogs. Konsilience delivers dedicated, full-stack growth pods."
-        >
-          <div className="border-t border-line">
-            {differentiators.map((diff, i) => (
-              <Reveal key={diff.title} delay={i * 70} variant="fade">
-                <div className="group grid gap-3 border-b border-line py-8 transition-colors md:grid-cols-[70px_1fr_1.4fr] md:gap-8">
-                  <span className="fs-base font-mono font-medium text-muted transition-colors group-hover:text-primary">
-                    [ 0{i + 1} ]
-                  </span>
-                  <h3 className="subtitle text-white group-hover:text-primary transition-colors">
-                    {diff.title}
-                  </h3>
-                  <p className="fs-para font-medium text-muted leading-relaxed">
-                    {diff.text}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
+      {/* ---------- Closing call to action: cream ---------- */}
+      <section className="px-[clamp(16px,3.4vw,48px)] pb-[clamp(56px,5.5vw,110px)]">
+        <Reveal variant="zoom">
+          <div className="relative overflow-hidden kd-on-paper rounded-[36px] bg-[var(--kd-paper)] px-7 py-14 text-[var(--kd-ink)] sm:px-14 sm:py-20 lg:px-20">
+            <div className="kd-cta-grid pointer-events-none absolute inset-0" />
+            <Stamp className="absolute -top-8 -right-8 size-40 opacity-90 sm:size-56 lg:top-1/2 lg:right-16 lg:size-64 lg:-translate-y-1/2" />
+            <div className="relative max-w-4xl">
+              <LineReveal className="kd-display kd-h2" lines={["Ready to grow", "what converts?"]} />
+              <p className="mt-6 max-w-xl text-base leading-relaxed font-medium text-black/65 sm:text-lg">
+                Start with a free audit. We look at your site speed, search gaps, tracking and paid accounts, then show you where the leaks are and what to fix first.
+              </p>
+              <ul className="mt-8 flex flex-wrap gap-2.5">
+                {AUDIT_COVERS.map((item) => (
+                  <li key={item} className="flex items-center gap-2 rounded-full border border-[var(--kd-line)] bg-white px-4 py-2 text-sm font-semibold">
+                    <Icon name="check" className="size-3.5" strokeWidth={3} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-10 flex flex-wrap items-center gap-4">
+                <Link href="/free-seo-audit" className="kd-btn kd-btn-accent">
+                  Claim free marketing audit <Arrow />
+                </Link>
+                <Link href="/contact" className="text-sm font-bold underline decoration-2 underline-offset-4">
+                  Or talk to the team
+                </Link>
+              </div>
+            </div>
           </div>
-        </Split>
+        </Reveal>
       </section>
-
-      {/* =========================================================================
-          GLOBAL REGIONAL GROWTH HUBS (International Directory Table - Zero Boxes)
-         ========================================================================= */}
-      <section className="sec bg-black border-t border-line/60">
-        <div className="wrap">
-          <SectionHead
-            title={["Local Market Fluency,", "Global Scale"]}
-            text="Dedicated localized growth pods engineered for high-intent queries and compliance in key international markets."
-          />
-
-          <div className="mt-12 border-t border-line/60 divide-y divide-line/40">
-            {regionalHubs.map((hub) => (
-              <Link
-                key={hub.city}
-                href={hub.href}
-                className="group flex flex-col md:flex-row md:items-center justify-between gap-4 py-6 transition-colors duration-300 hover:bg-white/[0.02] px-2 -mx-2 rounded-xl"
-              >
-                <div className="flex items-center gap-4 md:w-1/4">
-                  <span className="text-2xl">{hub.flag}</span>
-                  <div>
-                    <h3 className="text-base font-bold text-white group-hover:text-primary transition-colors">
-                      {hub.city}
-                    </h3>
-                    <span className="text-xs font-mono text-muted">{hub.highlight}</span>
-                  </div>
-                </div>
-
-                <div className="md:w-1/2">
-                  <p className="text-sm text-white/70 font-medium">
-                    {hub.service}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between md:justify-end gap-6 md:w-1/4">
-                  <span className="text-xs font-mono font-semibold text-primary px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
-                    {hub.savings}
-                  </span>
-                  <span className="flex items-center gap-1 text-xs font-semibold text-white/80 group-hover:text-primary transition-colors">
-                    <span>View Strategy</span>
-                    <Icon name="upRight" className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          FAQS (Clean Native FaqList - Zero Card Boxes)
-         ========================================================================= */}
-      <section className="sec bg-black border-t border-line/60">
-        <div className="wrap max-w-4xl mx-auto">
-          <SectionHead
-            title={["Frequently Asked Questions"]}
-            text="Everything you need to know about partnering with our digital marketing and growth squads."
-            center
-          />
-          <div className="mt-12">
-            <FaqList items={faqs} />
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          CLOSING CTA BAND
-         ========================================================================= */}
-      <CtaBand
-        title="Ready to Scale Your Customer Acquisition?"
-        text="Book a complimentary growth audit with our senior marketing architects. We'll pinpoint your biggest conversion leaks, audit your Core Web Vitals, and outline a high-converting roadmap."
-        label="Claim Free Marketing Audit"
-        href="/free-seo-audit"
-      />
-    </>
+    </div>
   );
 }

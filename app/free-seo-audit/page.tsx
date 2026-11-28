@@ -24,7 +24,7 @@ export default function FreeSeoAuditPage() {
   return (
     <>
       <PageHero
-        crumbs={[{ label: "Digital Marketing", href: "/digital-marketing" }, { label: "Free SEO audit" }]}
+        crumbs={[{ label: "Digital Marketing", href: "/digital" }, { label: "Free SEO audit" }]}
         eyebrow="Free SEO audit"
         title={["Find out what is", "holding your site", <span key="b" className="text-primary">back in Google</span>]}
         text="Send us your website and your main goal. We review the site and take you through what we found, and what we would fix first, on a 15-minute call. No cost and no obligation."

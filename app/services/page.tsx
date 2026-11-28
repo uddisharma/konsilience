@@ -6,19 +6,19 @@ import SiteImg from "@/components/ui/SiteImg";
 import { image, ogImage } from "@/lib/images";
 import Button from "@/components/ui/Button";
 import JsonLd from "@/components/JsonLd";
-import { deliveryProcess, engagementModels, serviceCategories, serviceList, techStack } from "@/lib/catalog";
+import { deliveryProcess, engagementModels, serviceCategories, serviceList, slugify, techStack } from "@/lib/catalog";
 import { brand, facts } from "@/lib/content";
 import { siteUrl } from "@/lib/routes";
 import { buildServicesIndexSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Digital Engineering & Technology Services",
-  description: "Product engineering, cloud architecture, custom SaaS development, AI integration, and consulting services from Konsilience.",
-  keywords: ["Software Engineering Services", "SaaS Development", "AI Integration", "Cloud Architecture", "CTO Consulting"],
+  description: "AI and automation, cloud and DevOps, security, product engineering and digital marketing services from Konsilience.",
+  keywords: ["AI Automation Services", "Cloud and DevOps Services", "Security Services", "Product Engineering", "Digital Marketing Services"],
   alternates: { canonical: `${siteUrl}/services` },
   openGraph: {
     title: "Technology & Software Engineering Services | Konsilience",
-    description: "End-to-end capabilities from strategy and UI/UX design to full-stack engineering, AI, and cloud operations.",
+    description: "Five practices under one roof: AI and automation, cloud and DevOps, security, product engineering and digital marketing.",
     url: `${siteUrl}/services`,
     images: [ogImage("/services")!],
   },
@@ -35,7 +35,7 @@ export default function ServicesPage() {
         crumbs={[{ label: "Services" }]}
         eyebrow="What we do"
         title={["Technology Services", "Built Around Your", <span key="g" className="text-primary">Business Goals</span>]}
-        text="From strategy and design to engineering, data and 24/7 operations: every capability you need to launch, modernize and scale."
+        text="AI and automation, cloud and DevOps, security, product engineering and digital marketing: the capabilities you need to launch, run and grow."
         actions={
           <>
             <Button>Get a Free Consultation</Button>
@@ -47,13 +47,13 @@ export default function ServicesPage() {
       />
 
       {serviceCategories.map((c, i) => (
-        <section key={c.name} className={`sec bg-black ${i ? "pt-0" : ""}`}>
+        <section key={c.name} id={slugify(c.name)} className={`sec scroll-mt-28 bg-black ${i ? "pt-0" : ""}`}>
           <Split title={[c.name]} text={c.text}>
             <CardGrid
               cols={2}
               items={serviceList
                 .filter((s) => s.category === c.name)
-                .map((s) => ({ icon: s.icon, title: s.name, text: s.short, href: `/services/${s.slug}` }))}
+                .map((s) => ({ icon: s.icon, title: s.note ? `${s.name} (${s.note})` : s.name, text: s.short, href: `/services/${s.slug}` }))}
             />
           </Split>
         </section>

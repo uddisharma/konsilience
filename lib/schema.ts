@@ -1,6 +1,6 @@
 import { brand } from "@/lib/content";
 import { siteUrl } from "@/lib/routes";
-import type { Industry, Job, Post, Project, Service } from "@/lib/catalog";
+import { serviceList, type Industry, type Job, type Post, type Project, type Service } from "@/lib/catalog";
 import type { RegionalService, CountryHub } from "@/lib/regionalServiceData";
 import { isSet, sameAs, siteConfig } from "@/site.config";
 import { ogImage } from "./images";
@@ -209,7 +209,7 @@ export function buildAiSolutionPageSchema(
   ai: { slug: string; name: string; short: string; useCases: string[] },
   faqs?: FaqItem[]
 ) {
-  const pageUrl = `${siteUrl}/ai-solutions/${ai.slug}`;
+  const pageUrl = `${siteUrl}/ai/${ai.slug}`;
   const graph: Record<string, unknown>[] = [
     {
       "@type": "Service",
@@ -234,7 +234,7 @@ export function buildAiSolutionPageSchema(
     },
     buildBreadcrumbSchema([
       { name: "Home", item: siteUrl },
-      { name: "AI Solutions", item: `${siteUrl}/ai-solutions` },
+      { name: "AI Solutions", item: `${siteUrl}/ai` },
       { name: ai.name, item: pageUrl },
     ]),
   ];
@@ -614,7 +614,7 @@ export function buildCountryHubSchema(hub: CountryHub) {
  * Digital Marketing Hub Overview Schema
  */
 export function buildDigitalMarketingSchema(faqs: { q: string; a: string }[]) {
-  const pageUrl = `${siteUrl}/digital-marketing`;
+  const pageUrl = `${siteUrl}/digital`;
 
   const breadcrumb = buildBreadcrumbSchema([
     { name: "Home", item: siteUrl },
@@ -635,63 +635,10 @@ export function buildDigitalMarketingSchema(faqs: { q: string; a: string }[]) {
     },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": "Digital Marketing & Growth Services",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Search Engine Optimization (SEO)",
-            "description": "Technical SEO, programmatic architectures, and generative engine optimization.",
-            "url": `${siteUrl}/services/search-engine-optimization`,
-          },
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Performance Marketing & PPC",
-            "description": "Multi-channel paid campaigns engineered for maximum ROAS across Google, Meta, and LinkedIn.",
-            "url": `${siteUrl}/services/performance-marketing-and-ppc`,
-          },
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Social Media Marketing",
-            "description": "Organic social growth, executive personal branding, and viral community management.",
-            "url": `${siteUrl}/services/social-media-marketing`,
-          },
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Content Marketing & Copywriting",
-            "description": "High-converting copy, technical whitepapers, and thought leadership that drives pipeline.",
-            "url": `${siteUrl}/services/content-marketing-and-copywriting`,
-          },
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Conversion Rate Optimization (CRO)",
-            "description": "Data-backed UX audits, A/B testing, and checkout funnel optimization that turns traffic into revenue.",
-            "url": `${siteUrl}/services/conversion-rate-optimization`,
-          },
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Email Marketing & Automation",
-            "description": "Automated lifecycle journeys, behavioral flows, and retention engines that maximize LTV.",
-            "url": `${siteUrl}/services/email-marketing-and-automation`,
-          },
-        },
-      ],
+      "name": "Digital Marketing Services",
+      "itemListElement": serviceList
+        .filter((x) => x.category === "Digital Marketing")
+        .map((x) => ({ "@type": "Offer", "itemOffered": { "@type": "Service", "name": x.name, "description": x.short, "url": `${siteUrl}/services/${x.slug}` } })),
     },
   };
 

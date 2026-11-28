@@ -19,11 +19,11 @@ export const metadata: Metadata = {
   title: `${p.name} | AI Observability & LLM Tracing Platform`,
   description: `${p.tagline} Monitor LLM token spend, trace agent loops, and catch incidents in real time with ${p.name}.`,
   keywords: ["Trasys AI", "AI Observability", "LLM Tracing", "Token Spend Analytics", "Agent Loop Detection", "Prompt Engineering"],
-  alternates: { canonical: `${siteUrl}/trasys-ai` },
+  alternates: { canonical: `${siteUrl}/trasys` },
   openGraph: {
     title: `${p.name} | AI Observability & LLM Tracing Platform`,
     description: p.tagline,
-    url: `${siteUrl}/trasys-ai`,
+    url: `${siteUrl}/trasys`,
     images: [{ url: `${siteUrl}/og-image.png`, width: OG_IMAGE_WIDTH, height: OG_IMAGE_HEIGHT, alt: `${p.name} | AI Observability & LLM Tracing Platform` }],
   },
 };

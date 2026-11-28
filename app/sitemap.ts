@@ -21,7 +21,7 @@ function rank(href: string): Rank {
   if (href === "/") return { priority: PRIORITY_HOME, changeFrequency: "weekly" };
   const isCategory = segments.length === 1 || href.startsWith("/locations") || COUNTRY_CODES.includes(segments[0] ?? "");
   if (isCategory) return { priority: PRIORITY_CATEGORY, changeFrequency: "weekly" };
-  if (href.startsWith("/services") || href.startsWith("/ai-solutions")) return { priority: PRIORITY_SERVICE, changeFrequency: "weekly" };
+  if (href.startsWith("/services") || href.startsWith("/ai")) return { priority: PRIORITY_SERVICE, changeFrequency: "weekly" };
   if (href.startsWith("/blog") || href.startsWith("/resources")) return { priority: PRIORITY_CONTENT, changeFrequency: "weekly" };
   return { priority: PRIORITY_DEFAULT, changeFrequency: "monthly" };
 }
