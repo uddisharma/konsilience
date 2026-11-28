@@ -1,0 +1,114 @@
+/* Konsilience AI landing page (/ai). Everything here is scoped under .ka so the page can carry its
+   own look (near-black navy, brand blue, one pale sheet; condensed display type with monospace
+   details, like a run log) without touching the rest of the site. */
+
+.ka {
+  --ka-bg: #04060c;
+  --ka-panel: #0a0e19;
+  --ka-panel-2: #101626;
+  --ka-line: rgba(255, 255, 255, 0.1);
+  --ka-blue: rgb(var(--brand-rgb));
+  --ka-sky: rgb(var(--brand-light-rgb));
+  --ka-mist: #eef2fb; /* the one light section */
+  --ka-ink: #070a12;
+  --ka-ink-line: rgba(7, 10, 18, 0.12);
+  background: var(--ka-bg);
+}
+
+/* ---------- Type ---------- */
+.ka-display {
+  font-family: var(--font-barlow), var(--font-jakarta), sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 0.94;
+  letter-spacing: -0.012em;
+}
+.ka-hero-title { font-size: clamp(3rem, 1.2rem + 5.6vw, 7.75rem); }
+.ka-h2 { font-size: clamp(2.5rem, 1.4rem + 4.2vw, 5.75rem); }
+.ka-h3 { font-size: clamp(1.6rem, 1.3rem + 1.1vw, 2.4rem); line-height: 1; }
+.ka-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+/* Eyebrow written like a log prefix. */
+.ka-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+.ka-eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 2px; background: currentColor; }
+/* Words in a white-to-blue gradient. */
+.ka-grad { background: linear-gradient(100deg, #fff 0%, var(--ka-sky) 45%, var(--ka-blue) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* ---------- Buttons ---------- */
+.ka-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: 999px;
+  padding: 8px 8px 8px 26px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s, background 0.3s, color 0.3s;
+}
+.ka-btn > .ka-btn-dot { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 999px; transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.ka-btn:hover { transform: translateY(-2px); }
+.ka-btn:hover > .ka-btn-dot { transform: rotate(45deg) scale(1.06); }
+.ka-btn-blue { background: var(--ka-blue); color: #fff; }
+.ka-btn-blue > .ka-btn-dot { background: #fff; color: var(--ka-blue); }
+.ka-btn-blue:hover { box-shadow: 0 14px 40px -12px rgb(var(--brand-rgb) / 0.85); }
+.ka-btn-ghost { color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.26); }
+.ka-btn-ghost > .ka-btn-dot { background: rgba(255, 255, 255, 0.12); }
+.ka-btn-ghost:hover { box-shadow: inset 0 0 0 1.5px var(--ka-sky); color: var(--ka-sky); }
+.ka-btn-ink { background: var(--ka-ink); color: #fff; }
+.ka-btn-ink > .ka-btn-dot { background: #fff; color: var(--ka-ink); }
+
+/* ---------- Hero backdrop ---------- */
+.ka-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1.4px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 85% 70% at 65% 30%, #000 20%, transparent 75%);
+}
+.ka-aurora { position: absolute; border-radius: 999px; filter: blur(120px); animation: ka-breathe 10s ease-in-out infinite; }
+@keyframes ka-breathe { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.85; transform: scale(1.12); } }
+
+/* ---------- Marquee ---------- */
+.ka-marquee { display: flex; overflow: hidden; user-select: none; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.ka-marquee > div { display: flex; flex-shrink: 0; align-items: center; min-width: 100%; animation: ka-scroll 48s linear infinite; }
+.ka-marquee:hover > div { animation-play-state: paused; }
+@keyframes ka-scroll { to { transform: translateX(-100%); } }
+
+/* ---------- Solutions ---------- */
+.ka-tab { position: relative; cursor: pointer; color: rgba(255, 255, 255, 0.42); transition: color 0.35s, background 0.35s; }
+.ka-tab:hover { color: rgba(255, 255, 255, 0.8); }
+.ka-tab[data-on] { color: #fff; background: rgba(255, 255, 255, 0.045); }
+.ka-tab::before { content: ""; position: absolute; left: 0; top: 18%; bottom: 18%; width: 3px; border-radius: 3px; background: var(--ka-blue); transform: scaleY(0); transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.ka-tab[data-on]::before { transform: scaleY(1); }
+.ka-tab-arrow { opacity: 0; transform: translateX(-8px); transition: opacity 0.35s, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.ka-tab[data-on] .ka-tab-arrow { opacity: 1; transform: none; }
+.ka-detail { position: relative; overflow: hidden; border: 1px solid var(--ka-line); border-radius: 28px; background: linear-gradient(150deg, var(--ka-panel-2), var(--ka-panel)); animation: ka-swap 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@keyframes ka-swap { from { opacity: 0; transform: translateY(14px); } }
+.ka-detail-glow { position: absolute; top: -40%; right: -20%; width: 70%; aspect-ratio: 1; border-radius: 999px; background: rgb(var(--brand-rgb) / 0.3); filter: blur(90px); pointer-events: none; }
+.ka-detail-icon { position: absolute; right: -30px; bottom: -40px; width: 280px; height: 280px; color: rgba(255, 255, 255, 0.045); transform: rotate(-10deg); pointer-events: none; }
+.ka-use { animation: ka-swap 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+/* ---------- Process ---------- */
+/* the rendered stack image (hero), framed like the other panels */
+.ka-shot { height: auto; border: 1px solid var(--ka-line); border-radius: 28px; box-shadow: 0 50px 120px -60px rgb(var(--brand-rgb) / 0.6); }
+.ka-flow-line { transform: scaleX(0); transform-origin: left; transition: transform 1.8s cubic-bezier(0.19, 1, 0.22, 1) 0.2s; }
+[data-shown] .ka-flow-line { transform: scaleX(1); }
+.ka-flow-node { transition: background 0.5s, border-color 0.5s, box-shadow 0.5s, transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+[data-shown] .ka-flow-node { background: var(--ka-blue); border-color: var(--ka-blue); box-shadow: 0 0 0 7px rgb(var(--brand-rgb) / 0.2); }
+.ka-flow-step:hover .ka-flow-node { transform: scale(1.1); }
+
+/* ---------- Light sheet + its cards ---------- */
+.ka-sheet { background: var(--ka-mist); color: var(--ka-ink); border-radius: clamp(24px, 3.2vw, 48px); }
+.ka-card { position: relative; overflow: hidden; background: #fff; border: 1px solid var(--ka-ink-line); border-radius: 24px; transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.5s, border-color 0.4s; }
+.ka-card:hover { transform: translateY(-6px); border-color: var(--ka-blue); box-shadow: 0 30px 60px -32px rgb(var(--brand-rgb) / 0.55); }
+.ka-card-icon { transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.ka-card:hover .ka-card-icon { transform: rotate(-8deg) scale(1.08); }
+
+/* ---------- Observability band (trace waterfall) ---------- */
+.ka-span { transform: scaleX(0); transform-origin: left; transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1); }
+[data-shown] .ka-span { transform: scaleX(1); }
+
+/* ---------- Closing call to action ---------- */
+.ka-cta { position: relative; overflow: hidden; border-radius: 36px; background: linear-gradient(130deg, rgb(var(--brand-rgb)) 0%, rgb(var(--brand-strong-rgb, var(--brand-rgb))) 55%, #0a2a78 100%); }
+.ka-cta-dots { background-image: radial-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1.4px); background-size: 24px 24px; mask-image: radial-gradient(ellipse 60% 100% at 100% 50%, #000 5%, transparent 75%); }
+.ka-ring { position: absolute; border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 999px; animation: ka-ping 5s cubic-bezier(0.2, 0.7, 0.2, 1) infinite; }
+@keyframes ka-ping { from { transform: scale(0.4); opacity: 0.9; } to { transform: scale(1.5); opacity: 0; } }

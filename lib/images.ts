@@ -108,7 +108,7 @@ export const serviceOgImage = (category: string) => og(byId(CATEGORY_IMAGE[categ
 export function imagesByPage(): Record<string, SiteImage[]> {
   const pages: Record<string, SiteImage[]> = {
     "/services": [image("services-overview")],
-    "/ai": [image("ai-overview")],
+    "/ai": [image("ai-production-stack")],
     "/about": [image("about")],
     "/careers": [image("careers")],
     "/security": [image("security")],

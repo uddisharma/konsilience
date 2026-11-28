@@ -581,6 +581,61 @@ function Security({ e, og }: P) {
   );
 }
 
+/* ---------- Production AI stack: isometric layers, labels left and stack right ---------- */
+// Layers from the bottom up: [name, what it covers]. The guardrails layer is drawn in the accent colour.
+const AI_STACK_LAYERS: [string, string][] = [
+  ["Data & retrieval", "Clean, connected, governed"],
+  ["Models", "OpenAI, Claude, Gemini, open source"],
+  ["Agents & tools", "Plans, tool calls, workflows"],
+  ["Guardrails", "Filtering, PII redaction, approvals"],
+  ["Evals & monitoring", "Quality, cost and regressions"],
+];
+const AI_STACK_ACCENT_LAYER = 3; // Guardrails
+const AI_STACK_SIDE = 34; // slab width and depth, in SVG units
+const AI_STACK_THICK = 2.2;
+const AI_STACK_GAP = 7; // vertical distance from one slab to the next
+// Small blocks standing on the top layer (x, y on the slab), back to front.
+const AI_STACK_BLOCKS: [number, number][] = [[5, 5], [14, 14], [23, 23]];
+
+function AiProductionStack({ e, og }: P) {
+  const [bg, ink, ac] = e.palette;
+  const last = AI_STACK_LAYERS.length - 1;
+  const topZ = last * AI_STACK_GAP + AI_STACK_THICK;
+  return (
+    <Frame e={e} og={og} logo="tr">
+      <div className="absolute" style={{ left: "6%", top: "8%" }}>
+        <Label style={{ color: tint(ink, 0.55) }}>Konsilience AI</Label>
+        <h2 style={{ fontSize: u(5.8), fontWeight: 600, lineHeight: 1, letterSpacing: "-0.03em", marginTop: u(2), whiteSpace: "nowrap" }}>
+          The production <span style={{ color: ac }}>AI stack</span>
+        </h2>
+      </div>
+      <svg viewBox="-100 -40 132 78" className="absolute" style={{ right: "0%", bottom: "3%", height: "76%", width: "auto", fontFamily: "inherit" }} aria-hidden>
+        {AI_STACK_LAYERS.map(([name, covers], i) => {
+          const z = i * AI_STACK_GAP;
+          const accent = i === AI_STACK_ACCENT_LAYER;
+          const [lx, ly] = iso(0, AI_STACK_SIDE, z + AI_STACK_THICK);
+          // front corner: the request path runs up it from this slab to the next
+          const [fx, fy] = iso(AI_STACK_SIDE, AI_STACK_SIDE, z + AI_STACK_THICK);
+          return (
+            <g key={name}>
+              <Slab x={0} y={0} z={z} w={AI_STACK_SIDE} d={AI_STACK_SIDE} h={AI_STACK_THICK} top={accent ? ac : bg} left={accent ? tint(ac, 0.7) : bg} right={accent ? tint(ac, 0.85) : bg} stroke={accent ? ac : ink} sw={0.22} />
+              {i < last && <line x1={fx} y1={fy} x2={fx} y2={fy - (AI_STACK_GAP - AI_STACK_THICK)} stroke={ac} strokeWidth={0.5} />}
+              <circle cx={fx} cy={fy} r={0.9} fill={accent ? ink : ac} />
+              <line x1={-56} y1={ly} x2={lx - 1} y2={ly} stroke={tint(ink, 0.4)} strokeWidth={0.15} />
+              <text x={-96} y={ly + 1} fontSize={2.3} fontFamily={MONO} fill={tint(ink, 0.5)}>0{i + 1}</text>
+              <text x={-90} y={ly + 1} fontSize={3.3} fontWeight={600} fill={accent ? ac : ink}>{name}</text>
+              <text x={-90} y={ly + 4.2} fontSize={2.1} fontWeight={500} fill={tint(ink, 0.55)}>{covers}</text>
+            </g>
+          );
+        })}
+        {AI_STACK_BLOCKS.map(([x, y]) => (
+          <Slab key={x} x={x} y={y} z={topZ} w={6} d={6} h={4} top={ac} left={tint(ac, 0.7)} right={tint(ac, 0.85)} stroke={ac} sw={0.2} />
+        ))}
+      </svg>
+    </Frame>
+  );
+}
+
 export const sectionCompositions: Record<string, (p: P) => ReactNode> = {
   "services-overview": ServicesOverview,
   "svc-product-engineering": ProductEngineering,
@@ -589,6 +644,7 @@ export const sectionCompositions: Record<string, (p: P) => ReactNode> = {
   "svc-consulting": Consulting,
   "svc-data-managed-it": DataManagedIt,
   "ai-overview": AiOverview,
+  "ai-production-stack": AiProductionStack,
   "ai-agentic": AgenticAi,
   "ai-generative": GenerativeAi,
   "ai-copilots": AiCopilots,

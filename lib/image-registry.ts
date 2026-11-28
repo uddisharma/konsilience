@@ -70,9 +70,12 @@ export const registry: Entry[] = [
     alt: "Grid of geometric tiles for big data, data analytics, business intelligence, managed IT services and dedicated teams" },
 
   /* ---------- AI solutions ---------- */
-  { id: "ai-overview", file: "ai-solutions/ai-solutions-overview", page: "/ai", section: "Hero", purpose: "AI practice overview",
+  { id: "ai-overview", file: "ai-solutions/ai-solutions-overview", page: "/services/[ai-automation]", section: "Hero", purpose: "AI & Automation category, and the /ai share image",
     technique: "fragment", layout: "edge", palette: ["#191918", "#F8F7F4", "#5E96FE"], size: "hero", og: "/ai",
     alt: "Close-up of TypeScript code defining an AI agent with its tools, spend limit and human approval step" },
+  { id: "ai-production-stack", file: "ai-solutions/production-ai-stack", page: "/ai", section: "Hero", purpose: "The layers of a production AI system",
+    technique: "isometric", layout: "split", palette: ["#020615", "#FFFFFF", "#1A69FD"], size: "hero",
+    alt: "Isometric stack of the five layers of a production AI system: data and retrieval, models, agents and tools, guardrails, evals and monitoring" },
   { id: "ai-agentic", file: "ai-solutions/agentic-ai-development", page: "/ai/agentic-ai", section: "Hero", purpose: "Agentic AI",
     technique: "mono", layout: "right", palette: ["#020615", "#888886", "#1A69FD"], size: "hero", og: "/ai/agentic-ai",
     alt: "Terminal log of an AI agent planning a refund, calling the order, policy and payment tools, then replying to the customer" },
