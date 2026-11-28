@@ -40,7 +40,7 @@ export type NavItem = {
   featured?: { title: string; text: string; href: string };
   tabs?: boolean; // desktop layout: groups listed on the left, the chosen group's links on the right (Services)
   cases?: Project[]; // desktop layout: case-study tiles with logos (Portfolio)
-  wideOnly?: boolean; // header shows it only on screens wider than a 14-inch laptop (About)
+  wideOnly?: boolean; // header shows it only on screens wider than a 12-inch laptop (About)
 };
 
 // Case studies featured in the Portfolio mega menu, in display order.

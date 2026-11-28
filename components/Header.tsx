@@ -36,8 +36,8 @@ const MAX_THREE_COLUMN_GROUPS = 3;
 const MENU_STAGGER_MS = 60;
 // One gap for every item in the header's right-hand group (links, buttons, menu toggle).
 const NAV_GAP = "gap-4 lg:gap-7";
-// Links flagged wideOnly appear only past 14-inch laptop widths (those top out near 1536px).
-const WIDE_ONLY = "hidden min-[1600px]:flex";
+// Links flagged wideOnly appear only past 12-inch laptop widths (those top out near 1366px).
+const WIDE_ONLY = "hidden min-[1400px]:flex";
 
 /** Right-hand card in a mega menu: the item's featured link, or a "view all" for Portfolio. */
 function FeaturedCard({ item, cta = "Learn More", children }: { item: NavItem; cta?: string; children?: ReactNode }) {
